@@ -4,27 +4,42 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
-import AnalysisResults from "@/components/pfas/AnalysisResults";
+import { Loader2, Download } from "lucide-react";
+import { AnalyzeResponse } from "@/types/pfas";
+import RiskScoreHero from "@/components/pfas/RiskScoreHero";
+import PathwayCard from "@/components/pfas/PathwayCard";
+import AlternativesTable from "@/components/pfas/AlternativesTable";
+
+const COMMON_MATERIALS = [
+  "FEP",
+  "PTFE", 
+  "PFA",
+  "ETFE",
+  "PVDF",
+  "Opteon YF",
+  "R-134a",
+  "Custom"
+];
 
 const PFASAnalysis = () => {
   const { toast } = useToast();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<AnalyzeResponse | null>(null);
   
   const [formData, setFormData] = useState({
     material: "",
-    temperature: "",
+    temperature: 385,
     atmosphere: "air",
-    time: ""
+    time: 6
   });
 
   const handleAnalyze = async () => {
-    if (!formData.material || !formData.temperature || !formData.time) {
+    if (!formData.material) {
       toast({
-        title: "Missing inputs",
-        description: "Please fill in all required fields",
+        title: "Missing Material",
+        description: "Please select a material to analyze",
         variant: "destructive"
       });
       return;
@@ -37,9 +52,11 @@ const PFASAnalysis = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           material: formData.material,
-          temperature: parseFloat(formData.temperature),
-          atmosphere: formData.atmosphere,
-          time: parseFloat(formData.time)
+          conditions: {
+            temperature: formData.temperature,
+            atmosphere: formData.atmosphere,
+            time_hours: formData.time
+          }
         })
       });
 
@@ -47,10 +64,15 @@ const PFASAnalysis = () => {
       
       const data = await response.json();
       setResults(data);
+      
+      toast({
+        title: "Analysis Complete",
+        description: `Found ${data.pathways?.length || 0} degradation pathways`
+      });
     } catch (error) {
       toast({
-        title: "Analysis failed",
-        description: "Could not connect to PFAS Engine backend",
+        title: "Analysis Failed",
+        description: "Could not connect to PFAS Engine backend. Ensure the FastAPI server is running on localhost:8000",
         variant: "destructive"
       });
     } finally {
@@ -60,14 +82,16 @@ const PFASAnalysis = () => {
 
   const handleDownloadPDF = async () => {
     try {
-      const response = await fetch("http://localhost:8000/pfas/analyze?format=pdf", {
+      const response = await fetch("http://localhost:8000/pfas/analyze/pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           material: formData.material,
-          temperature: parseFloat(formData.temperature),
-          atmosphere: formData.atmosphere,
-          time: parseFloat(formData.time)
+          conditions: {
+            temperature: formData.temperature,
+            atmosphere: formData.atmosphere,
+            time_hours: formData.time
+          }
         })
       });
 
@@ -79,14 +103,15 @@ const PFASAnalysis = () => {
       a.href = url;
       a.download = `pfas-analysis-${formData.material}-${Date.now()}.pdf`;
       a.click();
+      window.URL.revokeObjectURL(url);
       
       toast({
-        title: "Report downloaded",
+        title: "Report Downloaded",
         description: "PDF report generated successfully"
       });
     } catch (error) {
       toast({
-        title: "Download failed",
+        title: "Download Failed",
         description: "Could not generate PDF report",
         variant: "destructive"
       });
@@ -96,76 +121,91 @@ const PFASAnalysis = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8 px-4 max-w-7xl">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">PFAS Engine</h1>
-          <p className="text-muted-foreground text-lg">Fluorochemical Risk Intelligence & Degradation Analysis</p>
+        <header className="mb-8 border-b pb-6">
+          <h1 className="text-5xl font-bold text-foreground mb-3">PFAS Engine</h1>
+          <p className="text-muted-foreground text-xl">Fluorochemical Risk Intelligence & Degradation Analysis</p>
         </header>
 
-        <Card className="p-6 mb-8">
-          <h2 className="text-2xl font-semibold mb-6">Analysis Parameters</h2>
+        <Card className="p-8 mb-8 bg-card shadow-lg">
+          <h2 className="text-3xl font-bold mb-6">Analysis Parameters</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
             <div>
-              <Label htmlFor="material">Material</Label>
-              <Input
-                id="material"
-                placeholder="e.g., FEP, PTFE"
-                value={formData.material}
-                onChange={(e) => setFormData({ ...formData, material: e.target.value })}
-                className="mt-2"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="temperature">Temperature (°C)</Label>
-              <Input
-                id="temperature"
-                type="number"
-                placeholder="e.g., 385"
-                value={formData.temperature}
-                onChange={(e) => setFormData({ ...formData, temperature: e.target.value })}
-                className="mt-2"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="atmosphere">Atmosphere</Label>
-              <Select value={formData.atmosphere} onValueChange={(val) => setFormData({ ...formData, atmosphere: val })}>
-                <SelectTrigger id="atmosphere" className="mt-2">
-                  <SelectValue />
+              <Label htmlFor="material" className="text-base font-semibold">Material</Label>
+              <Select value={formData.material} onValueChange={(val) => setFormData({ ...formData, material: val })}>
+                <SelectTrigger id="material" className="mt-2 h-12">
+                  <SelectValue placeholder="Select fluoropolymer or refrigerant" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="air">Air</SelectItem>
-                  <SelectItem value="inert">Inert</SelectItem>
-                  <SelectItem value="nitrogen">Nitrogen</SelectItem>
-                  <SelectItem value="oxygen">Oxygen</SelectItem>
+                  {COMMON_MATERIALS.map((mat) => (
+                    <SelectItem key={mat} value={mat}>{mat}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="time">Time (hours)</Label>
-              <Input
-                id="time"
-                type="number"
-                placeholder="e.g., 6"
-                value={formData.time}
-                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+              <div className="flex items-center justify-between mb-2">
+                <Label htmlFor="temperature" className="text-base font-semibold">Temperature</Label>
+                <span className="text-lg font-bold text-primary">{formData.temperature}°C</span>
+              </div>
+              <Slider
+                id="temperature"
+                min={0}
+                max={500}
+                step={5}
+                value={[formData.temperature]}
+                onValueChange={(val) => setFormData({ ...formData, temperature: val[0] })}
                 className="mt-2"
               />
+              <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                <span>0°C</span>
+                <span>250°C</span>
+                <span>500°C</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="atmosphere" className="text-base font-semibold">Atmosphere</Label>
+                <Select value={formData.atmosphere} onValueChange={(val) => setFormData({ ...formData, atmosphere: val })}>
+                  <SelectTrigger id="atmosphere" className="mt-2 h-12">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="air">Air</SelectItem>
+                    <SelectItem value="inert">Inert</SelectItem>
+                    <SelectItem value="nitrogen">Nitrogen (N₂)</SelectItem>
+                    <SelectItem value="oxygen">Oxygen (O₂)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="time" className="text-base font-semibold">Exposure Time (hours)</Label>
+                <Input
+                  id="time"
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  value={formData.time}
+                  onChange={(e) => setFormData({ ...formData, time: parseFloat(e.target.value) || 0 })}
+                  className="mt-2 h-12 text-lg"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="mt-6 flex gap-4">
+          <div className="mt-8 flex gap-4">
             <Button 
               onClick={handleAnalyze} 
               disabled={isAnalyzing}
               size="lg"
-              className="min-w-[200px]"
+              className="min-w-[200px] h-12 text-lg"
             >
               {isAnalyzing ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   Analyzing...
                 </>
               ) : "Run Analysis"}
@@ -176,14 +216,31 @@ const PFASAnalysis = () => {
                 onClick={handleDownloadPDF} 
                 variant="outline"
                 size="lg"
+                className="h-12"
               >
+                <Download className="mr-2 h-5 w-5" />
                 Download PDF Report
               </Button>
             )}
           </div>
         </Card>
 
-        {results && <AnalysisResults data={results} />}
+        {results && (
+          <div className="space-y-8">
+            <RiskScoreHero data={results} />
+
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Degradation Pathways ({results.pathways?.length || 0})</h2>
+              <div className="space-y-6">
+                {results.pathways?.map((pathway, idx) => (
+                  <PathwayCard key={idx} pathway={pathway} />
+                ))}
+              </div>
+            </div>
+
+            <AlternativesTable alternatives={results.alternatives || []} />
+          </div>
+        )}
       </div>
     </div>
   );
