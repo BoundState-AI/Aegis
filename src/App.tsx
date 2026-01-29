@@ -13,6 +13,7 @@ import PortfolioAssessment from "./pages/PortfolioAssessment";
 import ExecutiveReports from "./pages/ExecutiveReports";
 import EvidenceChain from "./pages/EvidenceChain";
 import StructuralSimilarity from "./pages/StructuralSimilarity";
+import Ensurance from "./pages/Ensurance";
 import { Shield, Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
 import { BoundStateLogo } from "./components/layout/BoundStateLogo";
 
@@ -28,6 +29,9 @@ const navItems = [
   { path: "/analysis", label: "Analysis", icon: FlaskConical },
   { path: "/tier1", label: "Tier 1", icon: Fingerprint },
 ];
+
+// Routes that should NOT show the platform navigation
+const standaloneRoutes = ['/ensurance'];
 
 const Disclaimer = () => (
   <div className="container mx-auto px-4 py-2 text-left">
@@ -75,27 +79,37 @@ const Navigation = () => {
   );
 };
 
+const AppContent = () => {
+  const location = useLocation();
+  const isStandalone = standaloneRoutes.includes(location.pathname);
+  
+  return (
+    <div className={isStandalone ? '' : 'pb-20'}>
+      <Routes>
+        <Route path="/" element={<FateExplorer />} />
+        <Route path="/litigation" element={<LitigationRisk />} />
+        <Route path="/regulatory" element={<RegulatoryCompliance />} />
+        <Route path="/portfolio" element={<PortfolioAssessment />} />
+        <Route path="/reports" element={<ExecutiveReports />} />
+        <Route path="/evidence" element={<EvidenceChain />} />
+        <Route path="/analysis" element={<PFASAnalysis />} />
+        <Route path="/tier1" element={<StructuralSimilarity />} />
+        <Route path="/ensurance" element={<Ensurance />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {!isStandalone && <Navigation />}
+    </div>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="pb-20">
-          <Routes>
-            <Route path="/" element={<FateExplorer />} />
-            <Route path="/litigation" element={<LitigationRisk />} />
-            <Route path="/regulatory" element={<RegulatoryCompliance />} />
-            <Route path="/portfolio" element={<PortfolioAssessment />} />
-            <Route path="/reports" element={<ExecutiveReports />} />
-            <Route path="/evidence" element={<EvidenceChain />} />
-            <Route path="/analysis" element={<PFASAnalysis />} />
-            <Route path="/tier1" element={<StructuralSimilarity />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Navigation />
-        </div>
+        <AppContent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
