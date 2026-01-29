@@ -1,0 +1,72 @@
+{
+  "high_confidence": [
+    "NASA", "MSFC", "ESSCA", "ASED", "JTOMS", "MAF", "ISS", "SLS", "SATERN",
+    "ASTM", "ISO", "ANSI", "IEEE", "NIST", "MIL", "STD",
+    "DOD", "DOE", "EPA", "FAA", "FDA", "ITAR", "EAR", "FAR", "DFARS",
+    "API", "AWS", "CAD", "CPU", "PDF", "SQL", "XML", "JSON", "HTML", "AI", "ML",
+    "CEO", "CFO", "CTO", "HR", "PTO", "FTE", "LOE", "SOW", "RFP", "RFQ",
+    "TQP", "DDM", "IWA", "CY", "EA", "NPR", "NID", "ODC", "NTE", "BOE", "EAC",
+    "QA", "QC", "PPE", "SDS", "MSDS", "JSA", "JHA", "LOTO", "HAZMAT", "HAZOP",
+    "SOP", "WI", "CDRL", "TBD", "TBR", "TBC"
+  ],
+  "medium_confidence": [
+    "ACGP", "AED", "AGENCY", "AGREEMENT", "AL", "ANALYSIS", "APPROVAL", "AREA",
+    "ASSESSMENT", "AVL", "AWARENESS", "BFO", "BOARD", "CAD", "CARD", "CATEGORIES",
+    "CAUSE", "CCB", "CED", "CENTER", "CES", "CFR", "CHANGES", "CHECKLIST", "CLASSIFIED",
+    "CO", "COLLECTION", "CONTACT", "CONTRACT", "CONTROL", "CONUS", "COR", "COTS",
+    "CUI", "CUSTOMER", "DATA", "DD", "DDM", "DELIVERY", "DESIGN", "DESK", "DEVELOPER",
+    "DIVISION", "DM", "DOCUMENT", "DOCUMENTS", "DRD", "EB", "EMPLOYEE", "EMPLOYEES",
+    "EMWC", "ENTERED", "EQUIPMENT", "EQUIREMENT", "ES", "ESCRIPTION", "ESD", "ESENTATIVE",
+    "ESSCA", "EVALUATION", "EXAMPLE", "FILE", "FOLDER", "FORM", "FTR", "GIS", "GPS",
+    "GROUP", "GSA", "HARDWARE", "HDBK", "HEADINGS", "HELP", "HORIZATION", "HOURS",
+    "HR", "ID", "II", "III", "IMPACT", "IN", "INCLUDING", "INISTRATOR", "INSPECTION",
+    "IRONMENTAL", "ISO", "IT", "ITEM", "ITEMS", "IV", "JADE", "JAMIS", "JHA", "JOB",
+    "JSEG", "JT", "JTOMS", "LEAD", "LIST", "LOCATION", "MAF", "MANAGEMENT", "MANAGER",
+    "MEMBER", "METHOD", "MODEL", "MPP", "MPR", "MS", "MSFC", "MSR", "MWI", "NAME",
+    "NASA", "NAVIGATION", "NDE", "NFORMATION", "NID", "NISTRATION", "NOTE", "NOTICE",
+    "NPR", "NSTRUCTION", "NUMBER", "NW", "OCONUS", "ODC", "OFF", "OFFICE", "OFFICER",
+    "OK", "ONFORMANCE", "OPERATION", "OPERATIONS", "OPERATOR", "OPM", "OPTIONAL", "OR",
+    "ORDER", "ORIGINATOR", "OSHA", "OUT", "OWI", "PA", "PACKAGE", "PAGE", "PANE", "PDF",
+    "PERSON", "PII", "PIN", "PL", "PLAN", "PLANS", "PM", "PMO", "PO", "POC", "PPE",
+    "PPLICATION", "PR", "PRINCIPAL", "PROCEDURE", "PROCEDURES", "PROCESS", "PROCESSES",
+    "PROCESSING", "PRODUCT", "PRODUCTS", "PROGRAM", "PROPERTY", "PTO", "QS", "QUIREMENTS",
+    "RECORD", "RECORDS", "REPORT", "REPORTS", "REQUEST", "RESOURCES", "REVIEW", "REVIEWER",
+    "RISK", "ROLE", "SA", "SATERN", "SBU", "SC1", "SC2", "SCHEDULE", "SDS", "SECTION",
+    "SERVICES", "SEVEN", "SHE", "SHEET", "SITE", "SOW", "SPA", "STATES", "STD", "STEP",
+    "STRIPS", "SUPPORT", "SYSTEM", "SYSTEMS", "TABLE", "TAGOUT", "TASK", "TECHNOLOGY",
+    "TEMPLATE", "TESTING", "TIFICATION", "TIME", "TIPI", "TL", "TO", "TOAR", "TOCR",
+    "TOOLS", "TOP", "TPS", "TQP", "TRAINING", "TWO", "UL", "URL", "US", "VENDOR", "WI",
+    "WORK", "XX", "YEAR"
+  ],
+  "review_needed": [
+    "ABET", "ACTIVE", "AQL", "ASNT", "BCBS", "BOE", "CAE", "CAUTION", "CC", "CDM",
+    "CONCERNS", "CONFORMING", "CPE", "CPR", "CR", "DCR", "DDT", "DIRECT", "DPM",
+    "DRAFT", "DVO", "ECLSS", "ED04", "EFT", "EG", "EMS", "EPA", "FLIGHT", "FORMAT",
+    "FY", "FYI", "GFP", "GOVERNMENT", "HAZARD", "IIA", "ILLNESS", "INJURY", "IS",
+    "JACOBS", "LEADERSHIP", "LEVEL", "LSE", "MIL", "MVI", "NA", "NON", "NR", "NSC",
+    "ON", "OP", "OTHER", "PAYROLL", "POST", "QIP", "RED", "REPORTING", "RQMT", "RUN",
+    "SAFE", "SIPOC", "SN", "SPACE", "SPC", "SPECIFIC", "SPIE", "TD", "TEAMS", "TEST",
+    "WORKSITE", "YELLOW"
+  ],
+  "exclude_words": [
+    "THE", "AND", "FOR", "WITH", "ARE", "NOT", "FROM", "THIS", "THAT", "HAVE",
+    "WILL", "CAN", "MAY", "SHALL", "MUST", "SHOULD", "WOULD", "ALL", "ANY",
+    "SOME", "NONE", "YES", "NO", "TRUE", "FALSE", "NEW", "OLD", "GOOD", "BAD",
+    "BIG", "SMALL", "HIGH", "LOW", "FIRST", "LAST", "NEXT", "ONLY", "ALSO",
+    "JUST", "VERY", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN",
+    "EIGHT", "NINE", "TEN", "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY",
+    "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+    "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY",
+    "IF", "THEN", "ELSE", "WHEN", "WHERE", "WHO", "WHAT", "WHY", "HOW"
+  ],
+  "metadata": {
+    "generated_by": "acronym_discovery.py",
+    "source": "NASA_MSFC_Amentum_2025",
+    "stats": {
+      "total_discovered": 633,
+      "high_confidence_count": 251,
+      "medium_confidence_count": 312,
+      "review_needed_count": 70
+    }
+  }
+}

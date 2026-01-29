@@ -1,0 +1,308 @@
+{
+    "name": "amentum_rules",
+    "version": "1.0.0",
+    "author": "BoundStateAI",
+    "description": "Amentum-specific tagging rules for defense and aerospace applications",
+    "rules": [
+        {
+            "tag": "Defense",
+            "pattern": "\\b(defense|military|DoD|Department of Defense)\\b",
+            "description": "Defense and military organizations",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Defense",
+            "pattern": "\\b(classified|secret|confidential|FOUO)\\b",
+            "description": "Security classifications",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Defense",
+            "pattern": "\\b(security clearance|clearance level|background investigation)\\b",
+            "description": "Personnel security",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Aerospace",
+            "pattern": "\\b(aerospace|aircraft|aviation|flight|missile)\\b",
+            "description": "Aerospace vehicles and systems",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Aerospace",
+            "pattern": "\\b(spacecraft|satellite|launch|orbital|space)\\b",
+            "description": "Space systems",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Aerospace",
+            "pattern": "\\b(avionics|navigation|guidance|propulsion)\\b",
+            "description": "Aerospace subsystems",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Nuclear",
+            "pattern": "\\b(nuclear|reactor|uranium|plutonium|enrichment)\\b",
+            "description": "Nuclear materials and processes",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Nuclear",
+            "pattern": "\\b(radiological|radioactive|contamination|decontamination)\\b",
+            "description": "Radiological safety",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Nuclear",
+            "pattern": "\\b(waste management|storage|disposal|transport)\\b",
+            "description": "Nuclear waste handling",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Engineering",
+            "pattern": "\\b(engineering|design|analysis|simulation|modeling)\\b",
+            "description": "Engineering activities",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Engineering",
+            "pattern": "\\b(systems engineering|software engineering|civil engineering)\\b",
+            "description": "Engineering disciplines",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Engineering",
+            "pattern": "\\b(structural|mechanical|electrical|chemical)\\b",
+            "description": "Engineering specialties",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Project_Management",
+            "pattern": "\\b(project management|schedule|milestone|deliverable)\\b",
+            "description": "Project planning and tracking",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Project_Management",
+            "pattern": "\\b(risk management|cost control|quality assurance)\\b",
+            "description": "Project controls",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Project_Management",
+            "pattern": "\\b(work breakdown|statement of work|SOW)\\b",
+            "description": "Project documentation",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Logistics",
+            "pattern": "\\b(logistics|supply chain|inventory|warehouse)\\b",
+            "description": "Supply chain management",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Logistics",
+            "pattern": "\\b(transportation|shipping|delivery|distribution)\\b",
+            "description": "Transportation and distribution",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Logistics",
+            "pattern": "\\b(spare parts|maintenance|repair|overhaul)\\b",
+            "description": "Maintenance and support",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Quality",
+            "pattern": "\\b(quality|ISO 9001|AS9100|quality management)\\b",
+            "description": "Quality standards",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Quality",
+            "pattern": "\\b(inspection|audit|certification|accreditation)\\b",
+            "description": "Quality verification",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Quality",
+            "pattern": "\\b(nonconformance|corrective action|preventive action)\\b",
+            "description": "Quality improvement",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Safety",
+            "pattern": "\\b(hazard|risk assessment|safety plan|emergency response)\\b",
+            "description": "Safety planning",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Safety",
+            "pattern": "\\b(personal protective equipment|PPE|safety training)\\b",
+            "description": "Safety equipment and training",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Environmental",
+            "pattern": "\\b(environmental|EPA|NEPA|environmental impact)\\b",
+            "description": "Environmental regulations",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Environmental",
+            "pattern": "\\b(remediation|cleanup|contamination|monitoring)\\b",
+            "description": "Environmental remediation",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Environmental",
+            "pattern": "\\b(air quality|water quality|soil|groundwater)\\b",
+            "description": "Environmental monitoring",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Cybersecurity",
+            "pattern": "\\b(cybersecurity|information security|cyber|NIST)\\b",
+            "description": "Cybersecurity frameworks",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Cybersecurity",
+            "pattern": "\\b(encryption|authentication|access control|firewall)\\b",
+            "description": "Security controls",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Cybersecurity",
+            "pattern": "\\b(vulnerability|threat|malware|incident response)\\b",
+            "description": "Security threats and response",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Training",
+            "pattern": "\\b(training|education|certification|professional development)\\b",
+            "description": "Personnel development",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Training",
+            "pattern": "\\b(competency|skill|knowledge|learning)\\b",
+            "description": "Skills and competencies",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Training",
+            "pattern": "\\b(curriculum|course|workshop|seminar)\\b",
+            "description": "Training delivery",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Facilities",
+            "pattern": "\\b(facility|infrastructure|building|construction)\\b",
+            "description": "Physical infrastructure",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Facilities",
+            "pattern": "\\b(maintenance|utilities|HVAC|electrical|plumbing)\\b",
+            "description": "Facility systems",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Facilities",
+            "pattern": "\\b(security|access control|surveillance|perimeter)\\b",
+            "description": "Physical security",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Research",
+            "pattern": "\\b(research|development|R&D|innovation|technology)\\b",
+            "description": "Research and development",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Research",
+            "pattern": "\\b(prototype|testing|validation|verification)\\b",
+            "description": "Testing and validation",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Research",
+            "pattern": "\\b(experiment|data analysis|report|publication)\\b",
+            "description": "Research outputs",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Government",
+            "pattern": "\\b(government|federal|state|local|agency)\\b",
+            "description": "Government entities",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Government",
+            "pattern": "\\b(NASA|DOE|DOD|DHS|EPA|USACE)\\b",
+            "description": "Federal agencies",
+            "case_sensitive": true
+        },
+        {
+            "tag": "Government",
+            "pattern": "\\b(contract|subcontract|prime|vendor|supplier)\\b",
+            "description": "Contracting relationships",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Technology",
+            "pattern": "\\b(artificial intelligence|AI|machine learning|ML)\\b",
+            "description": "AI and ML technologies",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Technology",
+            "pattern": "\\b(digital|automation|robotics|sensors|IoT)\\b",
+            "description": "Digital technologies",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Technology",
+            "pattern": "\\b(cloud|software|database|network|system)\\b",
+            "description": "IT infrastructure",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Financial",
+            "pattern": "\\b(financial|budget|cost|revenue|profit)\\b",
+            "description": "Financial metrics",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Financial",
+            "pattern": "\\b(accounting|audit|invoice|payment|billing)\\b",
+            "description": "Financial processes",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Financial",
+            "pattern": "\\b(proposal|bid|award|contract value)\\b",
+            "description": "Business development",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Emergency",
+            "pattern": "\\b(emergency|disaster|response|recovery|continuity)\\b",
+            "description": "Emergency management",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Emergency",
+            "pattern": "\\b(evacuation|shelter|rescue|relief|assistance)\\b",
+            "description": "Emergency operations",
+            "case_sensitive": false
+        },
+        {
+            "tag": "Emergency",
+            "pattern": "\\b(hurricane|flood|earthquake|fire|pandemic)\\b",
+            "description": "Disaster types",
+            "case_sensitive": false
+        }
+    ]
+}

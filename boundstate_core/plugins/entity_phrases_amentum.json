@@ -1,0 +1,22 @@
+{
+  "MATERIAL": [
+    "laptop", "desktop", "monitor", "printer", "scanner",
+    "server", "network equipment", "cable", "software license",
+    "office supplies", "furniture", "badge", "access card"
+  ],
+  "SYSTEM": [
+    "active directory", "sharepoint", "teams", "outlook",
+    "sap", "oracle", "workday", "concur", "servicenow",
+    "vpn", "firewall", "backup system", "timekeeping",
+    "badge system", "cctv", "hvac", "building management"
+  ],
+  "PPE": [
+    "safety glasses", "hard hat", "steel toe boots",
+    "high visibility vest", "gloves", "hearing protection"
+  ],
+  "HAZARD": [
+    "data breach", "unauthorized access", "phishing",
+    "malware", "confidential information", "pii",
+    "slip hazard", "trip hazard", "ergonomic risk"
+  ]
+}

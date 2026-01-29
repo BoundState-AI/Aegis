@@ -1,0 +1,48 @@
+{
+  "domain_keywords": {
+    "NASA_Standards": {
+      "weight": 1.5,
+      "keywords": ["nasa-std", "nasa-hdbk", "nasa-tm", "nasa-sp", "msfc-std", "msfc-spec"]
+    },
+    "EM32_Manufacturing": {
+      "weight": 1.4,
+      "keywords": ["friction stir welding", "fsw", "em32", "friction pull plug", "weld program", "manufacturing tools"]
+    },
+    "Friction_Welding": {
+      "weight": 1.3,
+      "keywords": ["friction welding", "friction stir", "fsw", "pull plug", "weld joint", "friction", "welding"]
+    },
+    "Manufacturing_Tools": {
+      "weight": 1.2,
+      "keywords": ["tui", "mandrel", "fixture", "platform", "clamp", "tool", "equipment"]
+    },
+    "Maintenance_Operations": {
+      "weight": 1.1,
+      "keywords": ["maintenance", "calibration", "checklist", "inspection", "repair", "service"]
+    },
+    "CAD_Engineering": {
+      "weight": 1.1,
+      "keywords": ["cad", "drawing", "blueprint", "part number", "revision", "assembly", "step", "iges"]
+    },
+    "Quality_Assurance": {
+      "weight": 1.0,
+      "keywords": ["quality", "qa", "qc", "as9100", "iso", "compliance", "audit"]
+    }
+  },
+  "part_number_patterns": [
+    "\\b[A-Z]{2,4}[-_]?\\d{3,8}[-_]?[A-Z]?\\d*\\b",
+    "\\bVAT-\\d+-\\d+\\b",
+    "\\b\\d{2}ME-\\d+\\b"
+  ],
+  "standard_patterns": [
+    "\\bNASA[-_]?(STD|HDBK|TM|SP)[-_]?\\d+[A-Z]?\\b",
+    "\\bMSFC[-_]?(STD|SPEC|HDBK|PRC)[-_]?\\d+[A-Z]?\\b",
+    "\\bAS9100\\b",
+    "\\bISO[-_]?\\d+[-_]?\\d*\\b"
+  ],
+  "technical_patterns": [
+    "\\b\\d+\\.?\\d*\\s*[x×]\\s*\\d+\\.?\\d*\\s*[x×]?\\s*\\d*\\.?\\d*\\b",
+    "\\b\\d+\\.?\\d*\\s*[°]?\\s*[FfCc]\\b",
+    "\\b\\d+\\.?\\d*\\s*(psi|PSI|bar|BAR|Pa|kPa|MPa)\\b"
+  ]
+}

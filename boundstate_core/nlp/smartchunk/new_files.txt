@@ -1,0 +1,321 @@
+Heck yes—this is in great shape. Below are small, surgical diffs to make the modules safer and more robust with NV-Embed-v2 (true token-aligned spans, optional NASA software class, and clear wiring into `smart_indexer`). After the diffs I show exactly how to “plug” the new chunker into your indexer so we avoid micro-chunks and double-chunking.
+
+---
+
+# Diffs
+
+## 1) `document_chunker.py` — token-aligned spans + safer chunking
+
+**Why:** your current `source_span` is token-index based (not character-aligned) and may be off when decoding. This patch uses the fast tokenizer’s `offset_mapping` so spans are precise, and adds a small guard to avoid negative overlaps.
+
+```diff
+*** a/document_chunker.py
+--- b/document_chunker.py
+@@
+ from dataclasses import dataclass
+ from enum import Enum
+-from typing import Any, List, Tuple
++from typing import Any, List, Tuple
+ 
+ from transformers import AutoTokenizer
+ 
+ from adaptive_chunk_profile import ChunkProfile
+@@
+ class DocumentChunker:
+@@
+-    def __init__(self, tokenizer_model: str = "nvidia/NV-Embed-v2"):
++    def __init__(self, tokenizer_model: str = "nvidia/NV-Embed-v2"):
+         """Initialize with tokenizer.
+ 
+         Args:
+             tokenizer_model: Hugging Face tokenizer model name
+         """
+-        self.tokenizer = AutoTokenizer.from_pretrained(
+-            tokenizer_model, trust_remote_code=True
+-        )
++        self.tokenizer = AutoTokenizer.from_pretrained(
++            tokenizer_model,
++            trust_remote_code=True,
++            use_fast=True,  # enables offset_mapping
++        )
+         self.__safety_critical__ = True
+@@
+-        tokens = self.tokenizer.encode(text)
+-        total_tokens = len(tokens)
+-        chunk_size = max(profile.chunk_size, 64)  # Enforce minimum
+-        overlap = max(profile.overlap, 0)
++        enc_full = self.tokenizer(
++            text,
++            add_special_tokens=False,
++            return_offsets_mapping=True,
++        )
++        tokens = enc_full["input_ids"]
++        offsets = enc_full["offset_mapping"]
++        total_tokens = len(tokens)
++        chunk_size = max(profile.chunk_size, 64)  # Enforce minimum
++        overlap = max(profile.overlap, 0)
++        if overlap >= chunk_size:
++            overlap = max(chunk_size // 5, 0)  # prevent non-forward progress
+@@
+-        for section_start, section_end in sections:
+-            section_text = text[section_start:section_end]
+-            section_tokens = self.tokenizer.encode(section_text)
++        for section_start, section_end in sections:
++            section_text = text[section_start:section_end]
++            enc_sec = self.tokenizer(
++                section_text,
++                add_special_tokens=False,
++                return_offsets_mapping=True,
++            )
++            section_tokens = enc_sec["input_ids"]
++            section_offsets = enc_sec["offset_mapping"]
+ 
+             if not section_tokens:
+                 continue
+ 
+             pos = 0
+             while pos < len(section_tokens):
+-                chunk_end = min(pos + chunk_size, len(section_tokens))
+-                chunk_tokens = section_tokens[pos:chunk_end]
+-                chunk_text = self.tokenizer.decode(chunk_tokens)
++                chunk_end = min(pos + chunk_size, len(section_tokens))
++                # Compute accurate char bounds using token offsets
++                start_char = section_offsets[pos][0] if pos < len(section_offsets) else 0
++                end_char = section_offsets[chunk_end - 1][1] if chunk_end - 1 < len(section_offsets) else len(section_text)
++                # Slice by chars for decode stability
++                chunk_text = section_text[start_char:end_char]
+ 
+                 # Detect special content
+                 contains_table = self._detect_table(chunk_text)
+                 contains_reqs = self._detect_requirements(chunk_text)
+@@
+-                chunk = ChunkResult(
++                chunk = ChunkResult(
+                     text=chunk_text,
+-                    token_count=len(chunk_tokens),
++                    token_count=(chunk_end - pos),
+                     chunk_index=chunk_index,
+                     total_chunks=-1,
+                     metadata={
+                         "section_index": sections.index((section_start, section_end)),
+                         "file_metadata": file_metadata or {},
+                     },
+-                    source_span=(section_start + pos, section_start + chunk_end),
++                    source_span=(
++                        section_start + start_char,
++                        section_start + end_char,
++                    ),
+                     profile_used=profile.rationale[0] if profile.rationale else "default",
+                     contains_table=contains_table,
+                     contains_requirements=contains_reqs,
+                     source=source,
+                 )
+                 chunks.append(chunk)
+                 chunk_index += 1
+-                pos += chunk_size - overlap
++                step = max(chunk_size - overlap, 1)
++                pos += step
+                 if pos + overlap >= len(section_tokens):
+                     break
+```
+
+## 2) `athena_integration.py` — optional NASA software classification + import fix
+
+**Why:** you had a validator for a `software_class` field that isn’t in the model, which can trip Pydantic. This adds the field as optional, and imports `ChunkProfile` for type hints.
+
+```diff
+*** a/athena_integration.py
+--- b/athena_integration.py
+@@
+-from adaptive_chunk_profile import AdaptiveChunkProfile
++from adaptive_chunk_profile import AdaptiveChunkProfile, ChunkProfile
+ from content_analyzer import ContentAnalyzer
+ from document_chunker import ChunkingMode, ChunkingProfiles, ChunkResult, DocumentChunker
+@@
+ class AthenaChunkingConfig(BaseModel):
+@@
+-    tokenizer_model: str = Field(default="nvidia/NV-Embed-v2")
++    tokenizer_model: str = Field(default="nvidia/NV-Embed-v2")
++    # Optional NASA classification for projects where it’s specified
++    software_class: str | None = Field(default=None, description="NASA software class A–F")
+@@
+-    @field_validator("software_class", mode="after")
+-    def validate_software_class(cls, v: Any, info: Any) -> None:
++    @field_validator("software_class", mode="after")
++    def validate_software_class(cls, v: Any, info: Any) -> Any:
+         """Enforce NASA software classification per Appendix D."""
+-        if "software_class" in info.data:
+-            valid_classes = ["A", "B", "C", "D", "E", "F"]
+-            if info.data["software_class"] not in valid_classes:
+-                raise ValueError(f"Software class must be one of {valid_classes}")
+-        return None
++        if v is None:
++            return v
++        valid = {"A", "B", "C", "D", "E", "F"}
++        if v not in valid:
++            raise ValueError(f"software_class must be one of {sorted(valid)}")
++        return v
+@@
+-            # Ensure chunk size is within bounds
++            # Ensure chunk size is within bounds
+             if profile.chunk_size > self.config.max_chunk_size:
+                 profile.chunk_size = self.config.max_chunk_size
+             elif profile.chunk_size < self.config.min_chunk_size:
+                 profile.chunk_size = self.config.min_chunk_size
+```
+
+## 3) `athena_adapter.py` — thin helper to convert chunks into sections (idempotent)
+
+**Why:** makes `smart_indexer` wiring clean; ensures `embed_text` includes title/source, and prepares `bm25_text` without touching materials logic.
+
+```diff
+*** a/athena_adapter.py
+--- b/athena_adapter.py
+@@
+-from typing import Any, Dict, List
++from typing import Any, Dict, List
++import hashlib
+ 
+-def chunks_to_sections(chunks: List[dict]) -> List[Dict[str, Any]]:
++def chunks_to_sections(chunks: List[dict]) -> List[Dict[str, Any]]:
+     """Convert Athena chunk dicts into indexable 'section' dicts."""
+     sections: List[Dict[str, Any]] = []
+     for ch in chunks:
+         text = ch.get("text", "")
+         meta = ch.get("metadata", {})
+-        src = meta.get("source") or ""
++        src = meta.get("source") or ""
++        title = meta.get("file_metadata", {}).get("filename") or src.split("/")[-1]
++        # Stable doc_id-ish fragment for dedup
++        digest = hashlib.md5((src + str(meta.get("chunk_index")) + text[:64]).encode()).hexdigest()[:8]
++        doc_id = f"{title}_{digest}"
+ 
+         sections.append(
+             {
+-                "text": text,
+-                "metadata": meta,
+-                "doc_id": meta.get("doc_id") or src,
+-                "file_name": meta.get("file_metadata", {}).get("filename") or src,
+-                "source": src,
+-            }
++                "text": text,
++                "embed_text": f"{title}\n{text}".strip(),
++                "bm25_text": text,  # keep plain; upstream BM25 adds headers if needed
++                "metadata": meta,
++                "doc_id": doc_id,
++                "base_doc_id": doc_id,
++                "file_name": title,
++                "section": str(meta.get("chunk_index", 0)),
++                "title": title,
++                "source": src,
++                "tags": meta.get("tags", []),
++            }
+         )
+     return sections
+```
+
+## 4) `smart_indexer.py` — wire in Athena chunking; avoid double-chunking
+
+**Why:** stop micro-chunks at the source. If a parser yields tiny lines, consolidate and let Athena chunk once with token-aware profiles; then add sections.
+
+```diff
+*** a/smart_indexer.py
+--- b/smart_indexer.py
+@@
+-import os
++import os
++from pathlib import Path
+@@
+-from .parsers import parse_file  # existing
++from .parsers import parse_file  # existing
++from .athena_integration import AthenaIntegration, AthenaChunkingConfig, ChunkingMode
++from .athena_adapter import chunks_to_sections
+@@
+ class SmartIndexer:
+     def __init__(self, ...):
+         ...
++        # Athena smart chunking (NV-Embed-v2 tokenizer)
++        self.athena = AthenaIntegration(
++            config=AthenaChunkingConfig(
++                mode=ChunkingMode.HYBRID,
++                tokenizer_model=os.getenv("BOUNDSTATE_TOKENIZER_MODEL", "nvidia/NV-Embed-v2"),
++                max_chunk_size=int(os.getenv("BOUNDSTATE_MAX_CHUNK", "768")),
++                min_chunk_size=int(os.getenv("BOUNDSTATE_MIN_CHUNK", "128")),
++            )
++        )
+@@
+-        sections = parse_file(file_path)  # may produce micro-chunks
++        sections = parse_file(file_path)  # may produce micro-chunks
+         if not sections:
+             return 0
+@@
+-        # If parser returned many tiny sections, re-chunk
+-        avg_chars = sum(len(s.get("text", "")) for s in sections) / max(1, len(sections))
+-        if avg_chars < 600:
+-            logger.info("Parser produced micro-chunks, re-chunking with 420/60 tokens")
+-            full_text = "\n\n".join(s.get("text", "") for s in sections if s.get("text"))
+-            sections = self._smart_chunk(full_text, metadata, doc_type)
++        # If parser returned many tiny sections, re-chunk once with Athena
++        avg_chars = sum(len(s.get("text", "")) for s in sections) / max(1, len(sections))
++        if avg_chars < 600:
++            logger.info("Parser produced micro-chunks, re-chunking via Athena NV-Embed-v2 profiles")
++            full_text = "\n\n".join(s.get("text", "") for s in sections if s.get("text"))
++            athena_chunks = self.athena.process_file(Path(file_path), content=full_text)
++            sections = chunks_to_sections(athena_chunks)
+@@
+-        # record metrics (existing) and add to index
++        # record metrics (existing) and add to index
+         for sec in sections:
+             emb = None
+             if self.embedder is not None:
+-                txt = sec.get("embed_text") or sec.get("text") or ""
+-                emb = self.embedder.encode(f"search_document: {txt}", normalize_embeddings=True, convert_to_numpy=True)
++                txt = sec.get("embed_text") or sec.get("text") or ""
++                emb = self.embedder.encode(
++                    f"search_document: {txt}",
++                    normalize_embeddings=True,
++                    convert_to_numpy=True,
++                )
+             self.metrics.record_chunk(sec, emb)
+-        self.index.add(sections)
++        self.index.add(sections)
+         return len(sections)
+```
+
+> Note: if your `SmartIndexer` already has its own `_smart_chunk`, this wiring bypasses it when the parser output is clearly “micro”; for already-coherent outputs we keep them as-is to avoid double-chunking.
+
+---
+
+# How this wires in cleanly
+
+1. **Token truth from the source**
+   `DocumentChunker` now uses `offset_mapping` so every chunk has a correct `(start_char, end_char)` span even with subword pieces.
+
+2. **Profiles tuned for NV-Embed-v2**
+   Defaults remain conservative (384–512), but you can set:
+
+   ```
+   BOUNDSTATE_MAX_CHUNK=768
+   BOUNDSTATE_MIN_CHUNK=128
+   BOUNDSTATE_TOKENIZER_MODEL=nvidia/NV-Embed-v2
+   ```
+
+   and it will flow through `AthenaChunkingConfig` automatically.
+
+3. **Single pass, no double-chunking**
+   If the parser produces tiny lines / spans (avg < 600 chars), we concatenate text and let Athena do one token-aware pass. Otherwise we trust the parser’s structure (tables, sections) to preserve author intent.
+
+4. **Index-friendly sections**
+   `athena_adapter.chunks_to_sections` turns chunks into the exact section shape you’ve been adding: `text`, `embed_text` (title+text), `bm25_text`, stable-ish `doc_id`, `base_doc_id`, `file_name`, `section`, `title`, `source`, `tags`. That means your existing FAISS add + rerank + BM25 hybrid continues to work with zero changes.
+
+---
+
+# Sanity checks I recommend
+
+* **Dry run on one doc with lots of tables** (e.g., a test report): confirm chunk sizes \~512–768 tokens, no mid-row splits, and `contains_table=True` appears on relevant chunks.
+* **Metrics glance**: you should see `embedding_density ~ 1.0`, `chunk_coherence` jump materially (>0.5 is a good sign for prose).
+* **No double saves**: make sure `smart_indexer` isn’t calling any legacy `_smart_chunk` after Athena wiring; with the patch above, it won’t.
+
+---
+
+If you want, I can also share a tiny script to A/B one document through (a) old path vs (b) Athena chunking and print token histograms—handy to prove you’re in the 384–768 sweet spot.
