@@ -1,35 +1,37 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Download } from "lucide-react";
+import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangle } from "lucide-react";
 import { AnalyzeResponse } from "@/types/pfas";
-import RiskScoreHero from "@/components/pfas/RiskScoreHero";
-import PathwayCard from "@/components/pfas/PathwayCard";
-import AlternativesTable from "@/components/pfas/AlternativesTable";
+import AnalysisResults from "@/components/pfas/AnalysisResults";
+import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import helpContent from "@/config/helpContent";
+
+const API_BASE = "http://localhost:8002";
 
 const COMMON_MATERIALS = [
   "FEP",
-  "PTFE", 
+  "PTFE",
   "PFA",
   "ETFE",
   "PVDF",
   "Opteon YF",
   "R-134a",
-  "Custom"
 ];
 
 const PFASAnalysis = () => {
   const { toast } = useToast();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<AnalyzeResponse | null>(null);
-  
+
   const [formData, setFormData] = useState({
-    material: "",
+    material: "PTFE",
     temperature: 385,
     atmosphere: "air",
     time: 6
@@ -47,32 +49,32 @@ const PFASAnalysis = () => {
 
     setIsAnalyzing(true);
     try {
-      const response = await fetch("http://localhost:8000/pfas/analyze", {
+      const response = await fetch(`${API_BASE}/api/pfas/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          material: formData.material,
-          conditions: {
-            temperature: formData.temperature,
+          source_compound: formData.material,
+          context: {
+            incident_temp_c: formData.temperature,
             atmosphere: formData.atmosphere,
-            time_hours: formData.time
+            residence_time_s: formData.time * 3600
           }
         })
       });
 
       if (!response.ok) throw new Error("Analysis failed");
-      
-      const data = await response.json();
+
+      const data: AnalyzeResponse = await response.json();
       setResults(data);
-      
+
       toast({
         title: "Analysis Complete",
-        description: `Found ${data.pathways?.length || 0} degradation pathways`
+        description: `Evaluated ${data.compound_evaluated} - Found ${data.pfas_findings.length} potential PFAS pathways`
       });
     } catch (error) {
       toast({
         title: "Analysis Failed",
-        description: "Could not connect to PFAS Engine backend. Ensure the FastAPI server is running on localhost:8000",
+        description: "Could not connect to PFAS Engine backend on port 8001.",
         variant: "destructive"
       });
     } finally {
@@ -82,7 +84,7 @@ const PFASAnalysis = () => {
 
   const handleDownloadPDF = async () => {
     try {
-      const response = await fetch("http://localhost:8000/pfas/analyze/pdf", {
+      const response = await fetch(`${API_BASE}/pfas/analyze/pdf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -96,7 +98,7 @@ const PFASAnalysis = () => {
       });
 
       if (!response.ok) throw new Error("PDF generation failed");
-      
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -104,7 +106,7 @@ const PFASAnalysis = () => {
       a.download = `pfas-analysis-${formData.material}-${Date.now()}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
-      
+
       toast({
         title: "Report Downloaded",
         description: "PDF report generated successfully"
@@ -118,62 +120,85 @@ const PFASAnalysis = () => {
     }
   };
 
+  const getTempColor = (temp: number) => {
+    if (temp >= 400) return "text-red-400";
+    if (temp >= 300) return "text-orange-400";
+    if (temp >= 200) return "text-yellow-400";
+    return "text-green-400";
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto py-8 px-4 max-w-7xl">
-        <header className="mb-8 border-b pb-6">
-          <h1 className="text-5xl font-bold text-foreground mb-3">PFAS Engine</h1>
-          <p className="text-muted-foreground text-xl">Fluorochemical Risk Intelligence & Degradation Analysis</p>
-        </header>
+    <div className="min-h-screen bg-gray-50">
+      <ChemoursHeader title="PFAS Degradation Analysis" subtitle="Evaluate thermal degradation pathways and PFAS formation" helpContent={helpContent.analysis} />
 
-        <Card className="p-8 mb-8 bg-card shadow-lg">
-          <h2 className="text-3xl font-bold mb-6">Analysis Parameters</h2>
-          
-          <div className="space-y-6">
-            <div>
-              <Label htmlFor="material" className="text-base font-semibold">Material</Label>
-              <Select value={formData.material} onValueChange={(val) => setFormData({ ...formData, material: val })}>
-                <SelectTrigger id="material" className="mt-2 h-12">
-                  <SelectValue placeholder="Select fluoropolymer or refrigerant" />
-                </SelectTrigger>
-                <SelectContent>
-                  {COMMON_MATERIALS.map((mat) => (
-                    <SelectItem key={mat} value={mat}>{mat}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <Label htmlFor="temperature" className="text-base font-semibold">Temperature</Label>
-                <span className="text-lg font-bold text-primary">{formData.temperature}°C</span>
-              </div>
-              <Slider
-                id="temperature"
-                min={0}
-                max={500}
-                step={5}
-                value={[formData.temperature]}
-                onValueChange={(val) => setFormData({ ...formData, temperature: val[0] })}
-                className="mt-2"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                <span>0°C</span>
-                <span>250°C</span>
-                <span>500°C</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Input Panel */}
+          <Card className="bg-white border-gray-200 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-chemours-dark">Analysis Parameters</CardTitle>
+              <CardDescription>Configure degradation conditions</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Material Selection */}
               <div>
-                <Label htmlFor="atmosphere" className="text-base font-semibold">Atmosphere</Label>
+                <Label className="text-gray-700">Material</Label>
+                <Select value={formData.material} onValueChange={(val) => setFormData({ ...formData, material: val })}>
+                  <SelectTrigger className="mt-2 bg-white border-gray-300">
+                    <SelectValue placeholder="Select material" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {COMMON_MATERIALS.map((mat) => (
+                      <SelectItem key={mat} value={mat}>{mat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Temperature */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-gray-700 flex items-center gap-2">
+                    <Thermometer className="h-4 w-4" />
+                    Temperature
+                  </Label>
+                  <span className={`text-lg font-bold ${getTempColor(formData.temperature)}`}>
+                    {formData.temperature}°C
+                  </span>
+                </div>
+                <Slider
+                  min={0}
+                  max={500}
+                  step={5}
+                  value={[formData.temperature]}
+                  onValueChange={(val) => setFormData({ ...formData, temperature: val[0] })}
+                  className="mt-2"
+                />
+                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                  <span>0°C</span>
+                  <span>250°C</span>
+                  <span>500°C</span>
+                </div>
+                {formData.temperature >= 400 && (
+                  <div className="flex items-center gap-2 mt-2 text-red-500 text-sm">
+                    <AlertTriangle className="h-4 w-4" />
+                    High degradation risk
+                  </div>
+                )}
+              </div>
+
+              {/* Atmosphere */}
+              <div>
+                <Label className="text-gray-700 flex items-center gap-2">
+                  <Wind className="h-4 w-4" />
+                  Atmosphere
+                </Label>
                 <Select value={formData.atmosphere} onValueChange={(val) => setFormData({ ...formData, atmosphere: val })}>
-                  <SelectTrigger id="atmosphere" className="mt-2 h-12">
+                  <SelectTrigger className="mt-2 bg-white border-gray-300">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="air">Air</SelectItem>
+                    <SelectItem value="air">Air (Oxidative)</SelectItem>
                     <SelectItem value="inert">Inert</SelectItem>
                     <SelectItem value="nitrogen">Nitrogen (N₂)</SelectItem>
                     <SelectItem value="oxygen">Oxygen (O₂)</SelectItem>
@@ -181,67 +206,175 @@ const PFASAnalysis = () => {
                 </Select>
               </div>
 
+              {/* Exposure Time */}
               <div>
-                <Label htmlFor="time" className="text-base font-semibold">Exposure Time (hours)</Label>
+                <Label className="text-gray-700 flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  Exposure Time (hours)
+                </Label>
                 <Input
-                  id="time"
                   type="number"
                   min="0"
                   step="0.5"
                   value={formData.time}
                   onChange={(e) => setFormData({ ...formData, time: parseFloat(e.target.value) || 0 })}
-                  className="mt-2 h-12 text-lg"
+                  className="mt-2 bg-white border-gray-300"
                 />
               </div>
-            </div>
-          </div>
 
-          <div className="mt-8 flex gap-4">
-            <Button 
-              onClick={handleAnalyze} 
-              disabled={isAnalyzing}
-              size="lg"
-              className="min-w-[200px] h-12 text-lg"
-            >
-              {isAnalyzing ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Analyzing...
-                </>
-              ) : "Run Analysis"}
-            </Button>
-
-            {results && (
-              <Button 
-                onClick={handleDownloadPDF} 
-                variant="outline"
-                size="lg"
-                className="h-12"
+              {/* Analyze Button */}
+              <Button
+                onClick={handleAnalyze}
+                disabled={isAnalyzing || !formData.material}
+                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
               >
-                <Download className="mr-2 h-5 w-5" />
-                Download PDF Report
+                {isAnalyzing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Analyzing...
+                  </>
+                ) : (
+                  <>
+                    <FlaskConical className="mr-2 h-4 w-4" />
+                    Run Analysis
+                  </>
+                )}
               </Button>
+
+              {results && (
+                <Button
+                  onClick={handleDownloadPDF}
+                  variant="outline"
+                  className="w-full border-gray-300 text-gray-600 hover:bg-gray-100"
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Download PDF Report
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Results Panel */}
+          <div className="lg:col-span-2 space-y-6">
+            {results ? (
+              <>
+                {/* Summary Card */}
+                <Card className="bg-white border-gray-200 shadow-sm">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-chemours-dark">{results.compound_evaluated} Analysis Results</CardTitle>
+                      <Badge className="bg-gradient-to-r from-chemours-red to-chemours-orange text-white">{results.pfas_findings.length} Pathways</Badge>
+                    </div>
+                    <CardDescription>{results.summary}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <p className="text-2xl font-bold text-chemours-dark">{formData.temperature}°C</p>
+                        <p className="text-sm text-gray-500">Temperature</p>
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <p className="text-2xl font-bold text-chemours-dark capitalize">{formData.atmosphere}</p>
+                        <p className="text-sm text-gray-500">Atmosphere</p>
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <p className="text-2xl font-bold text-chemours-dark">{formData.time}h</p>
+                        <p className="text-sm text-gray-500">Exposure</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Detailed Results */}
+                <Card className="bg-white border-gray-200 shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="text-chemours-dark">PFAS Findings</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {results.pfas_findings.map((finding, i) => (
+                        <div key={i} className="p-4 bg-gray-50 rounded-lg border-l-4 border-chemours-red">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-medium text-chemours-dark text-lg">{finding.product}</span>
+                            <Badge variant="outline" className="border-chemours-red text-chemours-red">
+                              {(finding.overall_confidence * 100).toFixed(0)}% confidence
+                            </Badge>
+                          </div>
+
+                          {finding.pathway.length > 0 && (
+                            <div className="flex items-center gap-2 mb-2 text-sm">
+                              <span className="text-gray-500">Pathway:</span>
+                              <div className="flex items-center gap-1">
+                                {finding.pathway.map((step, j) => (
+                                  <span key={j} className="flex items-center">
+                                    <span className="text-gray-700">{step}</span>
+                                    {j < finding.pathway.length - 1 && (
+                                      <span className="text-gray-400 mx-1">→</span>
+                                    )}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {finding.regulatory_flags.map((flag, j) => (
+                              <Badge key={j} className="bg-red-100 text-red-700 border border-red-300">
+                                {flag}
+                              </Badge>
+                            ))}
+                            {finding.litigation_flag && (
+                              <Badge className="bg-orange-100 text-orange-700 border border-orange-300">
+                                Litigation Risk
+                              </Badge>
+                            )}
+                            {finding.is_short_chain_pfas && (
+                              <Badge className="bg-blue-100 text-blue-700 border border-blue-300">
+                                Short-chain PFAS
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Disclaimer */}
+                <Card className="bg-yellow-50 border-yellow-300">
+                  <CardContent className="py-4">
+                    <p className="text-yellow-700 text-sm">{results.disclaimer}</p>
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <Card className="bg-white border-gray-200 shadow-sm">
+                <CardContent className="py-16 text-center">
+                  <FlaskConical className="h-16 w-16 mx-auto mb-4 text-gray-400" />
+                  <h3 className="text-xl font-semibold text-gray-600 mb-2">PFAS Degradation Analysis</h3>
+                  <p className="text-gray-500 max-w-md mx-auto">
+                    Analyze fluoropolymers and refrigerants for PFAS degradation pathways under specified thermal conditions.
+                  </p>
+                  <div className="flex justify-center gap-6 mt-6">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-chemours-red">6,141</p>
+                      <p className="text-sm text-gray-500">Transformations</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-chemours-red">228</p>
+                      <p className="text-sm text-gray-500">Papers</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-chemours-red">216</p>
+                      <p className="text-sm text-gray-500">Compounds</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             )}
           </div>
-        </Card>
-
-        {results && (
-          <div className="space-y-8">
-            <RiskScoreHero data={results} />
-
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Degradation Pathways ({results.pathways?.length || 0})</h2>
-              <div className="space-y-6">
-                {results.pathways?.map((pathway, idx) => (
-                  <PathwayCard key={idx} pathway={pathway} />
-                ))}
-              </div>
-            </div>
-
-            <AlternativesTable alternatives={results.alternatives || []} />
-          </div>
-        )}
-      </div>
+        </div>
+      </main>
     </div>
   );
 };

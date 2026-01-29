@@ -63,6 +63,22 @@ export default {
           high: "hsl(var(--risk-high))",
           critical: "hsl(var(--risk-critical))",
         },
+        chemours: {
+          red: "#e53e30",
+          orange: "#f28b00",
+          magenta: "#c41d4a",
+          cream: "#fbc88e",
+          dark: "#303133",
+          white: "#FFFFFF",
+          // Brand-specific colors
+          opteon: "#005eb8",
+          krytox: "#005880",
+          nafion: "#ae2085",
+          viton: "#af141a",
+          freon: "#009b9e",
+          teflon: "#cf202e",
+          tipure: "#0092bc",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
