@@ -16,8 +16,7 @@ import {
   ResponsiveContainer, ReferenceLine, Cell, ComposedChart, Line,
   Area,
 } from "recharts";
-
-const API_BASE = "http://localhost:8002";
+import { API_BASE } from "@/config/api";
 
 // ---------------------------------------------------------------------------
 // Types

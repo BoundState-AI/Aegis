@@ -12,8 +12,7 @@ import { AnalyzeResponse } from "@/types/pfas";
 import AnalysisResults from "@/components/pfas/AnalysisResults";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import helpContent from "@/config/helpContent";
-
-const API_BASE = "http://localhost:8002";
+import { API_BASE } from "@/config/api";
 
 const COMMON_MATERIALS = [
   "FEP",

@@ -9,8 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, BookOpen, Link2, ExternalLink, Database, FileText } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import helpContent from "@/config/helpContent";
-
-const API_BASE = "http://localhost:8002";
+import { API_BASE } from "@/config/api";
 
 interface EvidenceItem {
   source: string;

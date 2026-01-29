@@ -10,8 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import helpContent from "@/config/helpContent";
-
-const API_BASE = "http://localhost:8002";
+import { API_BASE } from "@/config/api";
 
 interface PortfolioItem {
   material: string;
