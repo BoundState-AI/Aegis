@@ -36,7 +36,7 @@ const standaloneRoutes = ['/ensurance'];
 const Disclaimer = () => (
   <div className="container mx-auto px-4 py-2 text-left">
     <p className="text-xs text-gray-400 italic">
-      *Prototype demonstration themed for Chemours. For internal evaluation only.
+      *AEGIS Demo — BoundState PFAS Intelligence Platform. For evaluation purposes.
     </p>
   </div>
 );

@@ -1,0 +1,36 @@
+[project]
+name = "boundstate-aegis"
+version = "1.0.0"
+description = "AEGIS - PFAS Risk Assessment Engine"
+readme = "README.md"
+license = {text = "Proprietary"}
+requires-python = ">=3.10"
+authors = [
+    {name = "BoundState AI", email = "engineering@boundstate.ai"}
+]
+dependencies = [
+    "networkx>=3.0",
+    "pyyaml>=6.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.20.0",
+    "pydantic>=2.0",
+    "boundstate-core",
+    "rdkit>=2025.9.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "httpx>=0.24",
+]
+
+[project.scripts]
+aegis-api = "boundstate_aegis.api.aegis_api:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["boundstate_aegis"]
