@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+"""
+Module: pathway_route
+Purpose: Pathway query endpoints for knowledge graph exploration.
+    Provides endpoints for tracing degradation pathways, querying
+    downstream products, and exploring compound relationships.
+
+    Rev History:
+        1.0.0 - Initial pathway routes with trace_pathways endpoint
+
+BoundState AI 2025
+Version: 1.0.0
+Classification: BoundState Proprietary
+
+Authored-By: Dr. Joseph Wilde, BoundState AI
+Oracle 1: ClaudeOpus 4.5 <noreply@anthropic.com>
+Oracle 2: Fran OpenAI 5.2 <noreply@openai.com>
+Oracle 3: Grok 4.0 <noreply@x.ai>
+
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Any, Dict, List, Optional
+
+from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel, Field
+
+from boundstate_aegis.knowledge.graph_builder import build_graph
+from boundstate_aegis.knowledge.graph_queries import (
+    trace_pathways,
+    get_downstream_products,
+    get_upstream_sources,
+)
+
+logger = logging.getLogger(__name__)
+
+router = APIRouter()
+
+
+class PathwayResult(BaseModel):
+    """A single pathway from source to target."""
+
+    path: List[str]
+    confidence: float
+    conditions: List[Dict[str, Any]]
+    evidence_refs: List[Dict[str, Any]]
+
+
+class TraceResponse(BaseModel):
+    """Response for pathway tracing."""
+
+    source: str
+    pathways: List[PathwayResult]
+    total_found: int
+
+
+@router.get("/trace/{compound}")
+async def trace_compound_pathways(
+    compound: str,
+    max_depth: int = Query(default=3, ge=1, le=10),
+    max_results: int = Query(default=100, ge=1, le=1000),
+) -> TraceResponse:
+    """
+    Trace potential degradation pathways from a source compound to PFAS endpoints.
+    """
+    try:
+        graph = build_graph()
+        pathways = trace_pathways(
+            graph=graph,
+            start_compound=compound,
+            max_depth=max_depth,
+            max_results=max_results,
+        )
+
+        return TraceResponse(
+            source=compound,
+            pathways=[
+                PathwayResult(
+                    path=p["path"],
+                    confidence=p["confidence"],
+                    conditions=p["conditions"],
+                    evidence_refs=p["evidence_refs"],
+                )
+                for p in pathways
+            ],
+            total_found=len(pathways),
+        )
+
+    except Exception as e:
+        logger.exception("Error tracing pathways")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class CompoundListResponse(BaseModel):
+    """Response for compound list queries."""
+
+    source: str
+    compounds: List[str]
+    count: int
+
+
+@router.get("/downstream/{compound}")
+async def get_downstream(
+    compound: str,
+    max_depth: int = Query(default=3, ge=1, le=10),
+) -> CompoundListResponse:
+    """Get all compounds reachable from a source compound."""
+    try:
+        graph = build_graph()
+        products = get_downstream_products(graph, compound, max_depth)
+
+        return CompoundListResponse(
+            source=compound,
+            compounds=products,
+            count=len(products),
+        )
+
+    except Exception as e:
+        logger.exception("Error getting downstream products")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/upstream/{compound}")
+async def get_upstream(
+    compound: str,
+    max_depth: int = Query(default=3, ge=1, le=10),
+) -> CompoundListResponse:
+    """Get all compounds that can degrade to a target compound."""
+    try:
+        graph = build_graph()
+        sources = get_upstream_sources(graph, compound, max_depth)
+
+        return CompoundListResponse(
+            source=compound,
+            compounds=sources,
+            count=len(sources),
+        )
+
+    except Exception as e:
+        logger.exception("Error getting upstream sources")
+        raise HTTPException(status_code=500, detail=str(e))
