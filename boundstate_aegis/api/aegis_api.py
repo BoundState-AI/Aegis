@@ -95,12 +95,12 @@ def create_app(
             "https://boundstate.ai",
             "https://www.boundstate.ai",
             "https://aegis.boundstate.ai",
-            "https://*.vercel.app",
         ]
 
     app.add_middleware(
         CORSMiddleware,
         allow_origins=cors_origins,
+        allow_origin_regex=r"https://.*\.vercel\.app",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
