@@ -1,0 +1,110 @@
+{
+  "must_fix": [
+    {
+      "name": "C4F8",
+      "issue": "Name implies 8 F atoms, SMILES has 10"
+    }
+  ],
+  "should_verify": [
+    {
+      "name": "TFA",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "VDF",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "CTFE",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "CF4",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "COF2",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "HF",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "CO2",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "CO",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "R-32",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "HFO-1234ze",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "SF6",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "NF3",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "10:2 FTUCA",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "2:2 FTOH",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "2:2 FTS",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "2H-HEPTAFLUOROPROPANE",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "3:2 FTCA",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "4:2 FTS",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "4:3 ACID",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "5:3 FLUOROTELOMER ACID",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "ACETIC ACID",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "ACYL FLUORIDE",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "F",
+      "issue": "Manually entered SMILES (source: PubChem_manual_fuzzy) - verify"
+    },
+    {
+      "name": "FORMATE",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    },
+    {
+      "name": "FORMIC ACID",
+      "issue": "Manually entered SMILES (source: PubChem_manual) - verify"
+    }
+  ]
+}

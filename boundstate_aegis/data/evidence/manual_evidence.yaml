@@ -1,0 +1,132 @@
+# Manual Evidence Entries for Ellis Integration
+# Source: Ellis thesis (ELLIS2003) and Nature 2001 paper (THERMO_PTFE)
+# Only populate fields explicitly stated in source fragments
+
+evidence:
+  - id: ELLIS2003_PTFE_TFA_001
+    source_id: ELLIS2003
+    polymer: PTFE
+    stress_mode: thermal oxidative
+    pfas_product: TFA
+    yield_pct: 7.8
+    temperature_c: null  # Not stated in this fragment
+    oxygen_pct: null  # Not stated in this fragment
+    mechanism: "thermal decomposition → CF2 carbene → oxidation → trifluoroacetate"
+    confidence: high
+    page: "Chapter 8, conclusion section"
+    text_fragment: "The average production of TFA from fluoropolymers is 7.8 % based upon our results for PTFE."
+    notes: "Page number approximate - from line 5434 of thesis PDF text extraction"
+
+  - id: THERMO_PTFE_TFA_001
+    source_id: THERMO_PTFE
+    polymer: PTFE
+    stress_mode: thermal oxidative
+    pfas_product: TFA
+    yield_pct: 7.8
+    temperature_c: 500
+    oxygen_pct: 21  # Air = ~21% O2
+    mechanism: "thermal decomposition → CF2 carbene → oxidation → trifluoroacetate"
+    confidence: high
+    page: 1
+    text_fragment: "PTFE    TFA*²    7.8³§"
+    notes: "From Table 1. Methods section states: 'Air was continually passed over the sample (~2 l min⁻¹). The oven temperature was then increased to 500 °C at a rate of 11 °C min⁻¹.'"
+
+  - id: THERMO_PTFE_TFA_002
+    source_id: THERMO_PTFE
+    polymer: PTFE
+    stress_mode: thermal oxidative
+    pfas_product: TFA
+    yield_pct: null  # Not quantified at this temp
+    temperature_c: 360
+    oxygen_pct: 21
+    mechanism: "isothermal sintering conditions → thermal decomposition → TFA"
+    confidence: high
+    page: 2
+    text_fragment: "The experiment was also conducted isothermally at 360 °C for PTFE, a temperature that is used routinely in product sintering."
+    notes: "Product distribution confirmed at sintering temperature"
+
+  - id: THERMO_PTFE_OXIDATION_CONTEXT
+    source_id: THERMO_PTFE
+    polymer: PTFE
+    stress_mode: thermal oxidative
+    pfas_product: TFA
+    yield_pct: null
+    temperature_c: null
+    oxygen_pct: 21
+    mechanism: "thermolysis in air (not incineration) → perhalogenated acids"
+    confidence: high
+    page: 2
+    text_fragment: "The incineration, or combustion, of fluoropolymers has previously been proposed as a source of TFA and CDFA. These processes differ from thermolysis in that a source of fuel is used in order to purposefully evoke complete decomposition. Furthermore, it is unlikely to yield environmentally significant levels of TFA, or TFA precursors, due to the high temperatures and oxidizing conditions used, which would result in the cleavage of most carbon–fluorine bonds."
+    notes: "Clarifies that thermolysis (heating in air) differs from incineration and produces TFA"
+
+  - id: THERMO_PTFE_HFP_001
+    source_id: THERMO_PTFE
+    polymer: PTFE
+    stress_mode: thermal oxidative
+    pfas_product: HFP
+    yield_pct: 10.8
+    temperature_c: 500
+    oxygen_pct: 21
+    mechanism: "thermal decomposition → hexafluoropropene → atmospheric oxidation to TFA (100% conversion)"
+    confidence: high
+    page: 1
+    text_fragment: "PTFE    HFP*²    10.8§"
+    notes: "From Table 1. HFP is an atmospheric precursor that converts 100% to TFA via OH radicals"
+
+  - id: THERMO_PTFE_CPTFE_CDFA_001
+    source_id: THERMO_PTFE
+    polymer: CPTFE
+    stress_mode: thermal oxidative
+    pfas_product: CDFA
+    yield_pct: 9.5
+    temperature_c: 500
+    oxygen_pct: 21
+    mechanism: "thermal decomposition → CFCl carbene → oxidation → chlorodifluoroacetate"
+    confidence: high
+    page: 1
+    text_fragment: "CPTFE    CDFA*²    9.5³§"
+    notes: "From Table 1. CPTFE = chloropolytrifluoroethylene (Kel-F)"
+
+  - id: THERMO_PTFE_ECTFE_TFA_001
+    source_id: THERMO_PTFE
+    polymer: ECTFE
+    stress_mode: thermal oxidative
+    pfas_product: TFA
+    yield_pct: 6.3
+    temperature_c: 500
+    oxygen_pct: 21
+    mechanism: "thermal decomposition of ethylene-chlorotrifluoroethylene copolymer → TFA"
+    confidence: high
+    page: 1
+    text_fragment: "ECTFE    TFA*²    6.3³§"
+    notes: "From Table 1"
+
+  - id: THERMO_PTFE_ECTFE_CDFA_001
+    source_id: THERMO_PTFE
+    polymer: ECTFE
+    stress_mode: thermal oxidative
+    pfas_product: CDFA
+    yield_pct: 7.2
+    temperature_c: 500
+    oxygen_pct: 21
+    mechanism: "thermal decomposition → CDFA"
+    confidence: high
+    page: 1
+    text_fragment: "ECTFE    CDFA*²    7.2³§"
+    notes: "From Table 1"
+
+# FEP → PFHxA: NOT FOUND in Ellis thesis or Nature paper
+# PVDF → HF: NOT FOUND with quantitative data in Ellis thesis
+# These pathways may exist in other references but are not documented in ELLIS2003 or THERMO_PTFE
+
+notes_on_missing_pathways: |
+  FEP → PFHxA: No explicit evidence found in Ellis thesis or Nature 2001 paper.
+  PVDF → HF: Only tangential mentions of HF in unrelated contexts (hexafluorobenzene).
+  
+  If these pathways exist, they may be in:
+  - Ellis's other publications
+  - Chapter 5 of thesis (not fully extracted here)
+  - Supplementary materials
+  
+  Recommendation: Mark as "TO VERIFY" and search additional Ellis publications or
+  contact domain expert for specific page references.

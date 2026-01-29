@@ -1,0 +1,9 @@
+mitigations:
+  FEP:
+  - action: Avoid prolonged oxidative aging above ~350 C in air
+    impact: Lowers PFHxA formation probability
+    notes: Processing envelope change, not resin change
+  Opteon YF:
+  - action: Improve capture/destruction efficiency at end-of-life
+    impact: Reduces atmospheric release of TFA precursors
+    notes: Operational control, not chemistry substitution

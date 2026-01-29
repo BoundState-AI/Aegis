@@ -1,0 +1,1483 @@
+{
+  "compounds": {
+    "SNGREZUHAYWORS-UHFFFAOYSA-N": {
+      "compound_id": "SNGREZUHAYWORS-UHFFFAOYSA-N",
+      "primary_name": "Perfluorooctanoic acid",
+      "aliases": [
+        "PFOA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "SNGREZUHAYWORS-UHFFFAOYSA-N",
+      "cas": "335-67-1",
+      "formula": "C8HF15O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "UZUFPBIDKMEQEQ-UHFFFAOYSA-N": {
+      "compound_id": "UZUFPBIDKMEQEQ-UHFFFAOYSA-N",
+      "primary_name": "Perfluorononanoic acid",
+      "aliases": [
+        "PFNA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "UZUFPBIDKMEQEQ-UHFFFAOYSA-N",
+      "cas": "375-95-1",
+      "formula": "C9HF17O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "PCIUEQPBYFRTEM-UHFFFAOYSA-N": {
+      "compound_id": "PCIUEQPBYFRTEM-UHFFFAOYSA-N",
+      "primary_name": "Perfluorodecanoic acid",
+      "aliases": [
+        "PFDA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "PCIUEQPBYFRTEM-UHFFFAOYSA-N",
+      "cas": "335-76-2",
+      "formula": "C10HF19O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "SIDINRCMMRKXGQ-UHFFFAOYSA-N": {
+      "compound_id": "SIDINRCMMRKXGQ-UHFFFAOYSA-N",
+      "primary_name": "Perfluoroundecanoic acid",
+      "aliases": [
+        "PFUnDA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "SIDINRCMMRKXGQ-UHFFFAOYSA-N",
+      "cas": "2058-94-8",
+      "formula": "C11HF21O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "CXGONMQFMIYUJR-UHFFFAOYSA-N": {
+      "compound_id": "CXGONMQFMIYUJR-UHFFFAOYSA-N",
+      "primary_name": "Perfluorododecanoic acid",
+      "aliases": [
+        "PFDoDA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "CXGONMQFMIYUJR-UHFFFAOYSA-N",
+      "cas": "307-55-1",
+      "formula": "C12HF23O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "LVDGGZAZAYHXEY-UHFFFAOYSA-N": {
+      "compound_id": "LVDGGZAZAYHXEY-UHFFFAOYSA-N",
+      "primary_name": "Perfluorotridecanoic acid",
+      "aliases": [
+        "PFTrDA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "LVDGGZAZAYHXEY-UHFFFAOYSA-N",
+      "cas": "72629-94-8",
+      "formula": "C13HF25O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "RUDINRUXCKIXAJ-UHFFFAOYSA-N": {
+      "compound_id": "RUDINRUXCKIXAJ-UHFFFAOYSA-N",
+      "primary_name": "Perfluorotetradecanoic acid",
+      "aliases": [
+        "PFTeDA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "RUDINRUXCKIXAJ-UHFFFAOYSA-N",
+      "cas": "376-06-7",
+      "formula": "C14HF27O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "DTQVDTLACAAQTR-UHFFFAOYSA-N": {
+      "compound_id": "DTQVDTLACAAQTR-UHFFFAOYSA-N",
+      "primary_name": "TFA",
+      "aliases": [
+        "TFA"
+      ],
+      "smiles_raw": "C(=O)(C(F)(F)F)O",
+      "smiles_canonical": "O=C(O)C(F)(F)F",
+      "inchikey": "DTQVDTLACAAQTR-UHFFFAOYSA-N",
+      "cas": "76-05-1",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "YPJUNDFVDDCYIH-UHFFFAOYSA-N": {
+      "compound_id": "YPJUNDFVDDCYIH-UHFFFAOYSA-N",
+      "primary_name": "2:3 FTCA",
+      "aliases": [
+        "PFBA",
+        "2:3 FTCA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "YPJUNDFVDDCYIH-UHFFFAOYSA-N",
+      "cas": "375-22-4",
+      "formula": "C4HF7O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "CXZGQIAOTKWCDB-UHFFFAOYSA-N": {
+      "compound_id": "CXZGQIAOTKWCDB-UHFFFAOYSA-N",
+      "primary_name": "Perfluoropentanoic acid",
+      "aliases": [
+        "PFPeA",
+        "PERFLUOROPENTANOIC ACID (C4F9C(O)OH"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "CXZGQIAOTKWCDB-UHFFFAOYSA-N",
+      "cas": "2706-90-3",
+      "formula": "C5HF9O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "PXUULQAPEKKVAH-UHFFFAOYSA-N": {
+      "compound_id": "PXUULQAPEKKVAH-UHFFFAOYSA-N",
+      "primary_name": "Perfluorohexanoic acid",
+      "aliases": [
+        "PFHxA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "PXUULQAPEKKVAH-UHFFFAOYSA-N",
+      "cas": "307-24-4",
+      "formula": "C6HF11O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "ZWBAMYVPMDSJGQ-UHFFFAOYSA-N": {
+      "compound_id": "ZWBAMYVPMDSJGQ-UHFFFAOYSA-N",
+      "primary_name": "Perfluoroheptanoic acid",
+      "aliases": [
+        "PFHpA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "ZWBAMYVPMDSJGQ-UHFFFAOYSA-N",
+      "cas": "375-85-9",
+      "formula": "C7HF13O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "YFSUTJLHUFNCNZ-UHFFFAOYSA-N": {
+      "compound_id": "YFSUTJLHUFNCNZ-UHFFFAOYSA-N",
+      "primary_name": "Perfluorooctanesulfonic acid",
+      "aliases": [
+        "PFOS"
+      ],
+      "smiles_raw": "OS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "YFSUTJLHUFNCNZ-UHFFFAOYSA-N",
+      "cas": "1763-23-1",
+      "formula": "C8HF17O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "QZHDEAJFRJCDMF-UHFFFAOYSA-N": {
+      "compound_id": "QZHDEAJFRJCDMF-UHFFFAOYSA-N",
+      "primary_name": "Perfluorohexanesulfonic acid",
+      "aliases": [
+        "PFHxS"
+      ],
+      "smiles_raw": "OS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "QZHDEAJFRJCDMF-UHFFFAOYSA-N",
+      "cas": "355-46-4",
+      "formula": "C6HF13O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "JGTNAGYHADQMCM-UHFFFAOYSA-N": {
+      "compound_id": "JGTNAGYHADQMCM-UHFFFAOYSA-N",
+      "primary_name": "Perfluorobutanesulfonic acid",
+      "aliases": [
+        "PFBS"
+      ],
+      "smiles_raw": "OS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "JGTNAGYHADQMCM-UHFFFAOYSA-N",
+      "cas": "375-73-5",
+      "formula": "C4HF9O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "OYGQVDSRYXATEL-UHFFFAOYSA-N": {
+      "compound_id": "OYGQVDSRYXATEL-UHFFFAOYSA-N",
+      "primary_name": "Perfluoroheptanesulfonic acid",
+      "aliases": [
+        "PFHpS"
+      ],
+      "smiles_raw": "OS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "OYGQVDSRYXATEL-UHFFFAOYSA-N",
+      "cas": "375-92-8",
+      "formula": "C7HF15O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "CSEBNABAWMZWIF-UHFFFAOYSA-N": {
+      "compound_id": "CSEBNABAWMZWIF-UHFFFAOYSA-N",
+      "primary_name": "Perfluoro-2-methyl-3-oxahexanoic acid",
+      "aliases": [
+        "GenX"
+      ],
+      "smiles_raw": "OC(=O)C(F)(OC(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(OC(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F",
+      "inchikey": "CSEBNABAWMZWIF-UHFFFAOYSA-N",
+      "cas": "13252-13-6",
+      "formula": "C6HF11O3",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "AFDRCEOKCOUICI-UHFFFAOYSA-N": {
+      "compound_id": "AFDRCEOKCOUICI-UHFFFAOYSA-N",
+      "primary_name": "4,8-Dioxa-3H-perfluorononanoic acid",
+      "aliases": [
+        "ADONA"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)OC(F)(F)C(F)(F)C(F)(F)OC(F)(F)F",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)OC(F)(F)C(F)(F)C(F)(F)OC(F)(F)F",
+      "inchikey": "AFDRCEOKCOUICI-UHFFFAOYSA-N",
+      "cas": "919005-14-4",
+      "formula": "C7H2F12O4",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "BFKJFAAPBSQJPD-UHFFFAOYSA-N": {
+      "compound_id": "BFKJFAAPBSQJPD-UHFFFAOYSA-N",
+      "primary_name": "C2F4",
+      "aliases": [
+        "TFE",
+        "C2F4",
+        "POLYTETRAFLUOROETHYLENE PARTICLES"
+      ],
+      "smiles_raw": "FC(F)=C(F)F",
+      "smiles_canonical": "FC(F)=C(F)F",
+      "inchikey": "BFKJFAAPBSQJPD-UHFFFAOYSA-N",
+      "cas": "116-14-3",
+      "formula": "C2F4",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "HCDGVLDPFQMKDK-UHFFFAOYSA-N": {
+      "compound_id": "HCDGVLDPFQMKDK-UHFFFAOYSA-N",
+      "primary_name": "C3F6",
+      "aliases": [
+        "HFP",
+        "C3F6"
+      ],
+      "smiles_raw": "FC(F)=C(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)=C(F)C(F)(F)F",
+      "inchikey": "HCDGVLDPFQMKDK-UHFFFAOYSA-N",
+      "cas": "116-15-4",
+      "formula": "C3F6",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "BQCIDUSAKPWEOX-UHFFFAOYSA-N": {
+      "compound_id": "BQCIDUSAKPWEOX-UHFFFAOYSA-N",
+      "primary_name": "VDF",
+      "aliases": [
+        "VDF"
+      ],
+      "smiles_raw": "C=C(F)F",
+      "smiles_canonical": "C=C(F)F",
+      "inchikey": "BQCIDUSAKPWEOX-UHFFFAOYSA-N",
+      "cas": "75-38-7",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "UUAGAQFQZIEFAH-UHFFFAOYSA-N": {
+      "compound_id": "UUAGAQFQZIEFAH-UHFFFAOYSA-N",
+      "primary_name": "CTFE",
+      "aliases": [
+        "CTFE"
+      ],
+      "smiles_raw": "C(=C(Cl)F)(F)F",
+      "smiles_canonical": "FC(F)=C(F)Cl",
+      "inchikey": "UUAGAQFQZIEFAH-UHFFFAOYSA-N",
+      "cas": "79-38-9",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "TXEYQDLBPFQVAA-UHFFFAOYSA-N": {
+      "compound_id": "TXEYQDLBPFQVAA-UHFFFAOYSA-N",
+      "primary_name": "CF4",
+      "aliases": [
+        "CF4"
+      ],
+      "smiles_raw": "C(F)(F)(F)F",
+      "smiles_canonical": "FC(F)(F)F",
+      "inchikey": "TXEYQDLBPFQVAA-UHFFFAOYSA-N",
+      "cas": "75-73-0",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "WMIYKQLTONQJES-UHFFFAOYSA-N": {
+      "compound_id": "WMIYKQLTONQJES-UHFFFAOYSA-N",
+      "primary_name": "Perfluoroethane",
+      "aliases": [
+        "C2F6"
+      ],
+      "smiles_raw": "FC(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)(F)C(F)(F)F",
+      "inchikey": "WMIYKQLTONQJES-UHFFFAOYSA-N",
+      "cas": "76-16-4",
+      "formula": "C2F6",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "QYSGYZVSCZSLHT-UHFFFAOYSA-N": {
+      "compound_id": "QYSGYZVSCZSLHT-UHFFFAOYSA-N",
+      "primary_name": "Perfluoropropane",
+      "aliases": [
+        "C3F8"
+      ],
+      "smiles_raw": "FC(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "QYSGYZVSCZSLHT-UHFFFAOYSA-N",
+      "cas": "76-19-7",
+      "formula": "C3F8",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "IYRWEQXVUNLMAY-UHFFFAOYSA-N": {
+      "compound_id": "IYRWEQXVUNLMAY-UHFFFAOYSA-N",
+      "primary_name": "COF2",
+      "aliases": [
+        "COF2",
+        "CARBONYL FLUORIDE"
+      ],
+      "smiles_raw": "C(=O)(F)F",
+      "smiles_canonical": "O=C(F)F",
+      "inchikey": "IYRWEQXVUNLMAY-UHFFFAOYSA-N",
+      "cas": "353-50-4",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "KRHYYFGTRYWZRS-UHFFFAOYSA-N": {
+      "compound_id": "KRHYYFGTRYWZRS-UHFFFAOYSA-N",
+      "primary_name": "HF",
+      "aliases": [
+        "HF"
+      ],
+      "smiles_raw": "F",
+      "smiles_canonical": "F",
+      "inchikey": "KRHYYFGTRYWZRS-UHFFFAOYSA-N",
+      "cas": "7664-39-3",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "CURLTUGMZLYLDI-UHFFFAOYSA-N": {
+      "compound_id": "CURLTUGMZLYLDI-UHFFFAOYSA-N",
+      "primary_name": "CO2",
+      "aliases": [
+        "CO2"
+      ],
+      "smiles_raw": "C(=O)=O",
+      "smiles_canonical": "O=C=O",
+      "inchikey": "CURLTUGMZLYLDI-UHFFFAOYSA-N",
+      "cas": "124-38-9",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "UGFAIRIUMAVXCW-UHFFFAOYSA-N": {
+      "compound_id": "UGFAIRIUMAVXCW-UHFFFAOYSA-N",
+      "primary_name": "CO",
+      "aliases": [
+        "CO"
+      ],
+      "smiles_raw": "[C-]#[O+]",
+      "smiles_canonical": "[C-]#[O+]",
+      "inchikey": "UGFAIRIUMAVXCW-UHFFFAOYSA-N",
+      "cas": "630-08-0",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "LVGUZGTVOIAKKC-UHFFFAOYSA-N": {
+      "compound_id": "LVGUZGTVOIAKKC-UHFFFAOYSA-N",
+      "primary_name": "1,1,1,2-Tetrafluoroethane",
+      "aliases": [
+        "R-134a",
+        "HFC-134a"
+      ],
+      "smiles_raw": "FCC(F)(F)F",
+      "smiles_canonical": "FCC(F)(F)F",
+      "inchikey": "LVGUZGTVOIAKKC-UHFFFAOYSA-N",
+      "cas": "811-97-2",
+      "formula": "C2H2F4",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "RWRIWBAIICGTTQ-UHFFFAOYSA-N": {
+      "compound_id": "RWRIWBAIICGTTQ-UHFFFAOYSA-N",
+      "primary_name": "R-32",
+      "aliases": [
+        "R-32"
+      ],
+      "smiles_raw": "C(F)F",
+      "smiles_canonical": "FCF",
+      "inchikey": "RWRIWBAIICGTTQ-UHFFFAOYSA-N",
+      "cas": "75-10-5",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "FXRLMCRCYDHQFW-UHFFFAOYSA-N": {
+      "compound_id": "FXRLMCRCYDHQFW-UHFFFAOYSA-N",
+      "primary_name": "2,3,3,3-Tetrafluoropropene",
+      "aliases": [
+        "HFO-1234yf"
+      ],
+      "smiles_raw": "FC(=C)C(F)(F)F",
+      "smiles_canonical": "C=C(F)C(F)(F)F",
+      "inchikey": "FXRLMCRCYDHQFW-UHFFFAOYSA-N",
+      "cas": "754-12-1",
+      "formula": "C3H2F4",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "DMUPYMORYHFFCT-UHFFFAOYSA-N": {
+      "compound_id": "DMUPYMORYHFFCT-UHFFFAOYSA-N",
+      "primary_name": "HFO-1234ze",
+      "aliases": [
+        "HFO-1234ze"
+      ],
+      "smiles_raw": "C(=CF)(F)C(F)(F)F",
+      "smiles_canonical": "FC=C(F)C(F)(F)F",
+      "inchikey": "DMUPYMORYHFFCT-UHFFFAOYSA-N",
+      "cas": "29118-24-9",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "GRJRKPMIRMSBNK-UHFFFAOYSA-N": {
+      "compound_id": "GRJRKPMIRMSBNK-UHFFFAOYSA-N",
+      "primary_name": "Fluorotelomer alcohol 6:2",
+      "aliases": [
+        "6:2 FTOH"
+      ],
+      "smiles_raw": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "GRJRKPMIRMSBNK-UHFFFAOYSA-N",
+      "cas": "647-42-7",
+      "formula": "C8H5F13O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "JJUBFBTUBACDHW-UHFFFAOYSA-N": {
+      "compound_id": "JJUBFBTUBACDHW-UHFFFAOYSA-N",
+      "primary_name": "Fluorotelomer alcohol 8:2",
+      "aliases": [
+        "8:2 FTOH"
+      ],
+      "smiles_raw": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "JJUBFBTUBACDHW-UHFFFAOYSA-N",
+      "cas": "678-39-7",
+      "formula": "C10H5F17O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "JCMNMOBHVPONLD-UHFFFAOYSA-N": {
+      "compound_id": "JCMNMOBHVPONLD-UHFFFAOYSA-N",
+      "primary_name": "Fluorotelomer alcohol 4:2",
+      "aliases": [
+        "4:2 FTOH"
+      ],
+      "smiles_raw": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "JCMNMOBHVPONLD-UHFFFAOYSA-N",
+      "cas": "2043-47-2",
+      "formula": "C6H5F9O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "VIONGDJUYAYOPU-UHFFFAOYSA-N": {
+      "compound_id": "VIONGDJUYAYOPU-UHFFFAOYSA-N",
+      "primary_name": "6:2 FTSA",
+      "aliases": [
+        "6:2 FTSA",
+        "6:2 FTS"
+      ],
+      "smiles_raw": "OS(=O)(=O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "VIONGDJUYAYOPU-UHFFFAOYSA-N",
+      "cas": "27619-97-2",
+      "formula": "C8H5F13O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "ALVYVCQIFHTIRD-UHFFFAOYSA-N": {
+      "compound_id": "ALVYVCQIFHTIRD-UHFFFAOYSA-N",
+      "primary_name": "8:2 Fluorotelomer sulfonic acid",
+      "aliases": [
+        "8:2 FTS"
+      ],
+      "smiles_raw": "OS(=O)(=O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "ALVYVCQIFHTIRD-UHFFFAOYSA-N",
+      "cas": "39108-34-4",
+      "formula": "C10H5F17O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_CompTox",
+      "notes": null
+    },
+    "SFZCNBIFKDRMGX-UHFFFAOYSA-N": {
+      "compound_id": "SFZCNBIFKDRMGX-UHFFFAOYSA-N",
+      "primary_name": "SF6",
+      "aliases": [
+        "SF6"
+      ],
+      "smiles_raw": "F[S](F)(F)(F)(F)F",
+      "smiles_canonical": "FS(F)(F)(F)(F)F",
+      "inchikey": "SFZCNBIFKDRMGX-UHFFFAOYSA-N",
+      "cas": "2551-62-4",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "GVGCUCJTUSOZKP-UHFFFAOYSA-N": {
+      "compound_id": "GVGCUCJTUSOZKP-UHFFFAOYSA-N",
+      "primary_name": "NF3",
+      "aliases": [
+        "NF3"
+      ],
+      "smiles_raw": "FN(F)F",
+      "smiles_canonical": "FN(F)F",
+      "inchikey": "GVGCUCJTUSOZKP-UHFFFAOYSA-N",
+      "cas": "7783-54-2",
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "FLXYIZWPNQYPIT-UHFFFAOYSA-N": {
+      "compound_id": "FLXYIZWPNQYPIT-UHFFFAOYSA-N",
+      "primary_name": "Fluorotelomer alcohol 10:2",
+      "aliases": [
+        "FLUOROTELOMER ALCOHOL",
+        "10:2 FTOH"
+      ],
+      "smiles_raw": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "FLXYIZWPNQYPIT-UHFFFAOYSA-N",
+      "cas": "865-86-1",
+      "formula": "C12H5F21O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "KPIWBTHJFIZHLS-UHFFFAOYSA-N": {
+      "compound_id": "KPIWBTHJFIZHLS-UHFFFAOYSA-N",
+      "primary_name": "1H,2H,2H-Perfluorobutane",
+      "aliases": [
+        "2H-PERFLUOROBUTANE"
+      ],
+      "smiles_raw": "FC(CC(F)(F)F)C(F)(F)F",
+      "smiles_canonical": "FC(CC(F)(F)F)C(F)(F)F",
+      "inchikey": "KPIWBTHJFIZHLS-UHFFFAOYSA-N",
+      "cas": "86884-16-4",
+      "formula": "C4H3F7",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "QOYNEVFKTZVANM-UHFFFAOYSA-N": {
+      "compound_id": "QOYNEVFKTZVANM-UHFFFAOYSA-N",
+      "primary_name": "1H,1H,1H,2H-Perfluoro-2-heptanol",
+      "aliases": [
+        "5:3 ACID"
+      ],
+      "smiles_raw": "CC(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "CC(O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "QOYNEVFKTZVANM-UHFFFAOYSA-N",
+      "cas": "914637-05-1",
+      "formula": "C7H5F11O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "UYSGWTCETIRUHO-UHFFFAOYSA-N": {
+      "compound_id": "UYSGWTCETIRUHO-UHFFFAOYSA-N",
+      "primary_name": "16:2 Fluorotelomer alcohol",
+      "aliases": [
+        "6:2 FLUOROTELOMER ALCOHOL"
+      ],
+      "smiles_raw": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "UYSGWTCETIRUHO-UHFFFAOYSA-N",
+      "cas": "65104-67-8",
+      "formula": "C18H5F33O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "TWHCHVHSCCYMJT-UHFFFAOYSA-M": {
+      "compound_id": "TWHCHVHSCCYMJT-UHFFFAOYSA-M",
+      "primary_name": "1-Hydroxy-6:2 fluorotelomer sulfonate",
+      "aliases": [
+        "6:2 FLUOROTELOMER SULFONATE"
+      ],
+      "smiles_raw": "OC(CC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F)S([O-])(=O)=O",
+      "smiles_canonical": "O=S(=O)([O-])C(O)CC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "TWHCHVHSCCYMJT-UHFFFAOYSA-M",
+      "cas": "NOCAS_1034569",
+      "formula": "C8H4F13O4S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": "Invalid CAS format: NOCAS_1034569"
+    },
+    "LRWIIEJPCFNNCZ-UHFFFAOYSA-N": {
+      "compound_id": "LRWIIEJPCFNNCZ-UHFFFAOYSA-N",
+      "primary_name": "2-(Perfluorohexyl)ethanoic acid",
+      "aliases": [
+        "6:2 FTCA"
+      ],
+      "smiles_raw": "OC(=O)CC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "LRWIIEJPCFNNCZ-UHFFFAOYSA-N",
+      "cas": "53826-12-3",
+      "formula": "C8H3F13O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "WHZXTVOEGZRRJM-UHFFFAOYSA-N": {
+      "compound_id": "WHZXTVOEGZRRJM-UHFFFAOYSA-N",
+      "primary_name": "2H-Perfluoro-2-decenoic acid",
+      "aliases": [
+        "6:2 FTUCA"
+      ],
+      "smiles_raw": "OC(=O)C=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "WHZXTVOEGZRRJM-UHFFFAOYSA-N",
+      "cas": "70887-84-2",
+      "formula": "C10H2F16O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "HLBRGVKRZQSQHB-UHFFFAOYSA-N": {
+      "compound_id": "HLBRGVKRZQSQHB-UHFFFAOYSA-N",
+      "primary_name": "3-(Perfluoroheptyl)propanoic acid",
+      "aliases": [
+        "7:3 ACID"
+      ],
+      "smiles_raw": "OC(=O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "HLBRGVKRZQSQHB-UHFFFAOYSA-N",
+      "cas": "812-70-4",
+      "formula": "C10H5F15O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "XTBXSCIWOVSSGB-UHFFFAOYSA-N": {
+      "compound_id": "XTBXSCIWOVSSGB-UHFFFAOYSA-N",
+      "primary_name": "2-(Perfluorooctyl)ethanoic acid",
+      "aliases": [
+        "8:2 FTCA"
+      ],
+      "smiles_raw": "OC(=O)CC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "XTBXSCIWOVSSGB-UHFFFAOYSA-N",
+      "cas": "27854-31-5",
+      "formula": "C10H3F17O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "BKOBFLVYTXYFQZ-UHFFFAOYSA-N": {
+      "compound_id": "BKOBFLVYTXYFQZ-UHFFFAOYSA-N",
+      "primary_name": "3-(Perfluoropentyl)-3-fluoro-2-propenoic acid",
+      "aliases": [
+        "8:2 FTUCA"
+      ],
+      "smiles_raw": "OC(=O)C=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "BKOBFLVYTXYFQZ-UHFFFAOYSA-N",
+      "cas": "70887-88-6",
+      "formula": "C8H2F12O2",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "RRRXPPIDPYTNJG-UHFFFAOYSA-N": {
+      "compound_id": "RRRXPPIDPYTNJG-UHFFFAOYSA-N",
+      "primary_name": "Perfluorooctanesulfonamide",
+      "aliases": [
+        "PERFLUOROOCTANESULFONAMIDE",
+        "FOSA"
+      ],
+      "smiles_raw": "NS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "NS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "RRRXPPIDPYTNJG-UHFFFAOYSA-N",
+      "cas": "754-91-6",
+      "formula": "C8H2F17NO2S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "AYLOUUCBACYHAB-UHFFFAOYSA-N": {
+      "compound_id": "AYLOUUCBACYHAB-UHFFFAOYSA-N",
+      "primary_name": "N-[(Perfluorooctyl)sulfonyl]glycine",
+      "aliases": [
+        "FOSAA"
+      ],
+      "smiles_raw": "OC(=O)CNS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CNS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "AYLOUUCBACYHAB-UHFFFAOYSA-N",
+      "cas": "2806-24-8",
+      "formula": "C10H4F17NO4S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_via_CAS",
+      "notes": null
+    },
+    "KUMAUOLFDZOABP-UHFFFAOYSA-N": {
+      "compound_id": "KUMAUOLFDZOABP-UHFFFAOYSA-N",
+      "primary_name": "2,2,3,4,4,4-Hexafluorobutanal",
+      "aliases": [
+        "HEXAFLUOROBUTANAL"
+      ],
+      "smiles_raw": "FC(C(F)(F)F)C(F)(F)C=O",
+      "smiles_canonical": "O=CC(F)(F)C(F)C(F)(F)F",
+      "inchikey": "KUMAUOLFDZOABP-UHFFFAOYSA-N",
+      "cas": "1823087-30-4",
+      "formula": "C4H2F6O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "YVBBRRALBYAZBM-UHFFFAOYSA-N": {
+      "compound_id": "YVBBRRALBYAZBM-UHFFFAOYSA-N",
+      "primary_name": "Perfluorooctane",
+      "aliases": [
+        "N-ETHYL PERFLUOROOCTANE SULFONAMIDOETHANOL",
+        "PERFLUOROOCTANE"
+      ],
+      "smiles_raw": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "YVBBRRALBYAZBM-UHFFFAOYSA-N",
+      "cas": "307-34-6",
+      "formula": "C8F18",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "GTLACDSXYULKMZ-UHFFFAOYSA-N": {
+      "compound_id": "GTLACDSXYULKMZ-UHFFFAOYSA-N",
+      "primary_name": "Pentafluoroethane",
+      "aliases": [
+        "PENTAFLUOROETHANE"
+      ],
+      "smiles_raw": "FC(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)C(F)(F)F",
+      "inchikey": "GTLACDSXYULKMZ-UHFFFAOYSA-N",
+      "cas": "354-33-6",
+      "formula": "C2HF5",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "RYSDCNCCQRHRHH-OWOJBTEDSA-N": {
+      "compound_id": "RYSDCNCCQRHRHH-OWOJBTEDSA-N",
+      "primary_name": "1H-Perfluoro-1-heptene",
+      "aliases": [
+        "PERFLUORO-1-HEPTENE"
+      ],
+      "smiles_raw": "F\\C=C(\\F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "F/C=C(/F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "RYSDCNCCQRHRHH-OWOJBTEDSA-N",
+      "cas": "75180-14-2",
+      "formula": "C7HF13",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "ZBKIRWGFFLBFDX-UHFFFAOYSA-N": {
+      "compound_id": "ZBKIRWGFFLBFDX-UHFFFAOYSA-N",
+      "primary_name": "3H-Perfluoro-2-butene",
+      "aliases": [
+        "PERFLUORO-2-BUTENE"
+      ],
+      "smiles_raw": "FC(F)(F)C=C(C(F)(F)F)C(F)(F)F",
+      "smiles_canonical": "FC(F)(F)C=C(C(F)(F)F)C(F)(F)F",
+      "inchikey": "ZBKIRWGFFLBFDX-UHFFFAOYSA-N",
+      "cas": "22692-37-1",
+      "formula": "C5HF9",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "DCEPGADSNJKOJK-UHFFFAOYSA-N": {
+      "compound_id": "DCEPGADSNJKOJK-UHFFFAOYSA-N",
+      "primary_name": "Perfluoroacetyl fluoride",
+      "aliases": [
+        "PERFLUOROACETYL FLUORIDE"
+      ],
+      "smiles_raw": "FC(=O)C(F)(F)F",
+      "smiles_canonical": "O=C(F)C(F)(F)F",
+      "inchikey": "DCEPGADSNJKOJK-UHFFFAOYSA-N",
+      "cas": "354-34-7",
+      "formula": "C2F4O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "YUDUFRYTKFGQCL-UHFFFAOYSA-N": {
+      "compound_id": "YUDUFRYTKFGQCL-UHFFFAOYSA-N",
+      "primary_name": "Perfluorobutanedioic acid",
+      "aliases": [
+        "PERFLUOROBUTANEDIOIC ACID"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(O)=O",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(=O)O",
+      "inchikey": "YUDUFRYTKFGQCL-UHFFFAOYSA-N",
+      "cas": "377-38-8",
+      "formula": "C4H2F4O4",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "QXJCOPITNGTALI-UHFFFAOYSA-N": {
+      "compound_id": "QXJCOPITNGTALI-UHFFFAOYSA-N",
+      "primary_name": "Perfluorobutanol",
+      "aliases": [
+        "PERFLUOROBUTANOL"
+      ],
+      "smiles_raw": "OC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "OC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "QXJCOPITNGTALI-UHFFFAOYSA-N",
+      "cas": "1/7/3056",
+      "formula": "C4HF9O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": "Invalid CAS format: 1/7/3056"
+    },
+    "LGUZHRODIJCVOC-UHFFFAOYSA-N": {
+      "compound_id": "LGUZHRODIJCVOC-UHFFFAOYSA-N",
+      "primary_name": "Perfluoroheptane",
+      "aliases": [
+        "PERFLUOROHEPTANE"
+      ],
+      "smiles_raw": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "LGUZHRODIJCVOC-UHFFFAOYSA-N",
+      "cas": "335-57-9",
+      "formula": "C7F16",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "UAEWLONMSWUOCA-UHFFFAOYSA-N": {
+      "compound_id": "UAEWLONMSWUOCA-UHFFFAOYSA-N",
+      "primary_name": "3-Perfluoroheptene",
+      "aliases": [
+        "PERFLUOROHEPTENE"
+      ],
+      "smiles_raw": "FC(=C(F)C(F)(F)C(F)(F)C(F)(F)F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(=C(F)C(F)(F)C(F)(F)C(F)(F)F)C(F)(F)C(F)(F)F",
+      "inchikey": "UAEWLONMSWUOCA-UHFFFAOYSA-N",
+      "cas": "71039-88-8",
+      "formula": "C7F14",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "ZJIJAJXFLBMLCK-UHFFFAOYSA-N": {
+      "compound_id": "ZJIJAJXFLBMLCK-UHFFFAOYSA-N",
+      "primary_name": "Perfluorohexane",
+      "aliases": [
+        "PERFLUOROHEXANE"
+      ],
+      "smiles_raw": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "ZJIJAJXFLBMLCK-UHFFFAOYSA-N",
+      "cas": "355-42-0",
+      "formula": "C6F14",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "YCBPKOZNGFQMPB-UHFFFAOYSA-N": {
+      "compound_id": "YCBPKOZNGFQMPB-UHFFFAOYSA-N",
+      "primary_name": "Perfluorooct-1-ene",
+      "aliases": [
+        "PERFLUOROOCT-1-ENE"
+      ],
+      "smiles_raw": "FC(F)=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "YCBPKOZNGFQMPB-UHFFFAOYSA-N",
+      "cas": "559-14-8",
+      "formula": "C8F16",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "YFSUTJLHUFNCNZ-UHFFFAOYSA-M": {
+      "compound_id": "YFSUTJLHUFNCNZ-UHFFFAOYSA-M",
+      "primary_name": "Perfluorooctanesulfonate",
+      "aliases": [
+        "PERFLUOROOCTANESULFONATE"
+      ],
+      "smiles_raw": "[O-]S(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)([O-])C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "YFSUTJLHUFNCNZ-UHFFFAOYSA-M",
+      "cas": "45298-90-6",
+      "formula": "C8F17O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "ZILWJLIFAGWGLE-UHFFFAOYSA-N": {
+      "compound_id": "ZILWJLIFAGWGLE-UHFFFAOYSA-N",
+      "primary_name": "Perfluorooctanoyl fluoride",
+      "aliases": [
+        "PERFLUOROOCTANOYL FLUORIDE"
+      ],
+      "smiles_raw": "FC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "ZILWJLIFAGWGLE-UHFFFAOYSA-N",
+      "cas": "335-66-0",
+      "formula": "C8F16O",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "CCUWGJDGLACFQT-UHFFFAOYSA-N": {
+      "compound_id": "CCUWGJDGLACFQT-UHFFFAOYSA-N",
+      "primary_name": "Perfluoropentanedioic acid",
+      "aliases": [
+        "PERFLUOROPENTANEDIOIC ACID"
+      ],
+      "smiles_raw": "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(O)=O",
+      "smiles_canonical": "O=C(O)C(F)(F)C(F)(F)C(F)(F)C(=O)O",
+      "inchikey": "CCUWGJDGLACFQT-UHFFFAOYSA-N",
+      "cas": "376-73-8",
+      "formula": "C5H2F6O4",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_direct",
+      "notes": null
+    },
+    "ALRMZEKZWBLJIP-UHFFFAOYSA-N": {
+      "compound_id": "ALRMZEKZWBLJIP-UHFFFAOYSA-N",
+      "primary_name": "3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,10-Heptadecafluorodecyl trifluoromethanesulfonate",
+      "aliases": [
+        "TRIFLUOROMETHANE"
+      ],
+      "smiles_raw": "FC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)CCOS(=O)(=O)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F",
+      "inchikey": "ALRMZEKZWBLJIP-UHFFFAOYSA-N",
+      "cas": "171182-85-7",
+      "formula": "C11H4F20O3S",
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "EPA_partial",
+      "notes": null
+    },
+    "OGNPKTMXAFCAFU-UHFFFAOYSA-N": {
+      "compound_id": "OGNPKTMXAFCAFU-UHFFFAOYSA-N",
+      "primary_name": "10:2 FTUCA",
+      "aliases": [
+        "10:2 FTUCA"
+      ],
+      "smiles_raw": "OC(=O)C=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)C=C(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "OGNPKTMXAFCAFU-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "JPMHUDBOKDBBLG-UHFFFAOYSA-N": {
+      "compound_id": "JPMHUDBOKDBBLG-UHFFFAOYSA-N",
+      "primary_name": "2:2 FTOH",
+      "aliases": [
+        "2:2 FTOH",
+        "3:1 FTOH"
+      ],
+      "smiles_raw": "OCCC(F)(F)C(F)(F)F",
+      "smiles_canonical": "OCCC(F)(F)C(F)(F)F",
+      "inchikey": "JPMHUDBOKDBBLG-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "POGJNMOVQNQIGY-UHFFFAOYSA-N": {
+      "compound_id": "POGJNMOVQNQIGY-UHFFFAOYSA-N",
+      "primary_name": "2:2 FTS",
+      "aliases": [
+        "2:2 FTSA",
+        "2:2 FTS"
+      ],
+      "smiles_raw": "OS(=O)(=O)CCC(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)CCC(F)(F)C(F)(F)F",
+      "inchikey": "POGJNMOVQNQIGY-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "UKACHOXRXFQJFN-UHFFFAOYSA-N": {
+      "compound_id": "UKACHOXRXFQJFN-UHFFFAOYSA-N",
+      "primary_name": "2H-HEPTAFLUOROPROPANE",
+      "aliases": [
+        "2H-HEPTAFLUOROPROPANE"
+      ],
+      "smiles_raw": "FC(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "FC(F)C(F)(F)C(F)(F)F",
+      "inchikey": "UKACHOXRXFQJFN-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "NLAGAXIWWHZGCK-UHFFFAOYSA-N": {
+      "compound_id": "NLAGAXIWWHZGCK-UHFFFAOYSA-N",
+      "primary_name": "3:2 FTCA",
+      "aliases": [
+        "3:2 FTCA"
+      ],
+      "smiles_raw": "OC(=O)CC(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CC(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "NLAGAXIWWHZGCK-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "TXGIGTRUEITPSC-UHFFFAOYSA-N": {
+      "compound_id": "TXGIGTRUEITPSC-UHFFFAOYSA-N",
+      "primary_name": "4:2 FTS",
+      "aliases": [
+        "4:2 FTS"
+      ],
+      "smiles_raw": "OS(=O)(=O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=S(=O)(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "TXGIGTRUEITPSC-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "QWHCZVLZUPZGSI-UHFFFAOYSA-N": {
+      "compound_id": "QWHCZVLZUPZGSI-UHFFFAOYSA-N",
+      "primary_name": "4:3 ACID",
+      "aliases": [
+        "4:3 FTCA",
+        "4:3 ACID"
+      ],
+      "smiles_raw": "OC(=O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "QWHCZVLZUPZGSI-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "ABFCFCPCGMHSRX-UHFFFAOYSA-N": {
+      "compound_id": "ABFCFCPCGMHSRX-UHFFFAOYSA-N",
+      "primary_name": "5:3 FLUOROTELOMER ACID",
+      "aliases": [
+        "5:3 FLUOROTELOMER ACID"
+      ],
+      "smiles_raw": "OC(=O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "smiles_canonical": "O=C(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "inchikey": "ABFCFCPCGMHSRX-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "QTBSBXVTEAMEQO-UHFFFAOYSA-N": {
+      "compound_id": "QTBSBXVTEAMEQO-UHFFFAOYSA-N",
+      "primary_name": "ACETIC ACID",
+      "aliases": [
+        "ACETIC ACID"
+      ],
+      "smiles_raw": "CC(=O)O",
+      "smiles_canonical": "CC(=O)O",
+      "inchikey": "QTBSBXVTEAMEQO-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "NHGVZTMBVDFPHJ-UHFFFAOYSA-N": {
+      "compound_id": "NHGVZTMBVDFPHJ-UHFFFAOYSA-N",
+      "primary_name": "ACYL FLUORIDE",
+      "aliases": [
+        "ACYL FLUORIDE"
+      ],
+      "smiles_raw": "FC=O",
+      "smiles_canonical": "O=CF",
+      "inchikey": "NHGVZTMBVDFPHJ-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "KRHYYFGTRYWZRS-UHFFFAOYSA-M": {
+      "compound_id": "KRHYYFGTRYWZRS-UHFFFAOYSA-M",
+      "primary_name": "F",
+      "aliases": [
+        "FLUORIDE",
+        "F-",
+        "F"
+      ],
+      "smiles_raw": "[F-]",
+      "smiles_canonical": "[F-]",
+      "inchikey": "KRHYYFGTRYWZRS-UHFFFAOYSA-M",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual_fuzzy",
+      "notes": null
+    },
+    "BDAGIHXWWSANSR-UHFFFAOYSA-M": {
+      "compound_id": "BDAGIHXWWSANSR-UHFFFAOYSA-M",
+      "primary_name": "FORMATE",
+      "aliases": [
+        "FORMATE"
+      ],
+      "smiles_raw": "[O-]C=O",
+      "smiles_canonical": "O=C[O-]",
+      "inchikey": "BDAGIHXWWSANSR-UHFFFAOYSA-M",
+      "cas": null,
+      "formula": null,
+      "compound_type": "ion",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    },
+    "BDAGIHXWWSANSR-UHFFFAOYSA-N": {
+      "compound_id": "BDAGIHXWWSANSR-UHFFFAOYSA-N",
+      "primary_name": "FORMIC ACID",
+      "aliases": [
+        "FORMIC ACID"
+      ],
+      "smiles_raw": "OC=O",
+      "smiles_canonical": "O=CO",
+      "inchikey": "BDAGIHXWWSANSR-UHFFFAOYSA-N",
+      "cas": null,
+      "formula": null,
+      "compound_type": "molecule",
+      "validation_status": "valid",
+      "is_polymer": false,
+      "monomer_smiles": null,
+      "source": "PubChem_manual",
+      "notes": null
+    }
+  },
+  "stats": {
+    "total": 81,
+    "excluded_structural_errors": 1,
+    "included_needs_verify": 25
+  }
+}

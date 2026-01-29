@@ -1,0 +1,28 @@
+regulatory_framework:
+  PFHxA:
+  - jurisdiction: California
+    status: listed for drinking water monitoring
+    driver: groundwater / drinking water
+    effective: null
+  - jurisdiction: EU
+    status: short-chain PFAS persistence concern under discussion
+    driver: persistence / mobility
+    effective: null
+  PFOA:
+  - jurisdiction: US (EPA)
+    status: legacy PFAS with significant restrictions
+    driver: toxicity / persistence
+    effective: null
+  - jurisdiction: EU
+    status: restricted / phased out
+    driver: persistence / toxicity
+    effective: null
+  TFA:
+  - jurisdiction: EU
+    status: atmospheric breakdown product under assessment
+    driver: atmospheric persistence / mobility
+    effective: null
+  - jurisdiction: Canada
+    status: drinking water/watchlist discussions
+    driver: drinking water / environmental monitoring
+    effective: null

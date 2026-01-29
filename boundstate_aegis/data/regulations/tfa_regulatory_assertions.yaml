@@ -1,0 +1,260 @@
+# =============================================================================
+# TFA REGULATORY ASSERTIONS DATABASE
+# AEGIS EOL Tool - Regulatory status and compliance requirements
+# Created: 2026-01-11
+#
+# This database provides structured assertions about TFA regulatory status
+# for use in EOL Proof Certificate generation and compliance analysis.
+#
+# SOURCE: Web search verification on 2026-01-11
+# All assertions include citations and confidence levels
+# =============================================================================
+
+compound: TFA
+full_name: Trifluoroacetic Acid
+cas_number: "76-05-1"
+pfas_classification: ultra-short-chain PFAS (C2)
+oecd_classification: PFAS (per OECD definition)
+
+# =============================================================================
+# KEY ASSERTIONS - LITIGATION-GRADE FACTS
+# =============================================================================
+
+assertions:
+
+  # ===========================================================================
+  # ASSERTION 1: Environmental Prevalence
+  # ===========================================================================
+  - id: TFA_PREVALENCE_001
+    assertion: "TFA is the most abundant PFAS in the environment"
+    type: factual
+    confidence: 0.95
+    citations:
+      - source: "PMC11562725 - The Global Threat from the Irreversible Accumulation of TFA"
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11562725/"
+        doi: "10.1021/acs.est.4c06189"
+        year: 2024
+    supporting_facts:
+      - "TFA concentrations are orders of magnitude higher than other PFAS"
+      - "TFA accounted for >90% of total PFAS mass in German drinking water sources"
+      - "TFA is persistent and mobile - accumulates in rain, soils, serum, plants, drinking water"
+
+  # ===========================================================================
+  # ASSERTION 2: US EPA Regulatory Gap
+  # ===========================================================================
+  - id: TFA_EPA_GAP_001
+    assertion: "TFA is NOT currently regulated by US EPA under drinking water standards"
+    type: regulatory
+    confidence: 0.95
+    as_of_date: "2026-01-11"
+    citations:
+      - source: "EPA PFAS Drinking Water Regulations"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        year: 2025
+    context:
+      - "EPA April 2024 NPDWR covers PFOA, PFOS, PFHxS, PFNA, HFPO-DA, PFBS - NOT TFA"
+      - "EPA May 2025 announcement maintained PFOA/PFOS limits, reconsidering others"
+      - "TFA is excluded from current US drinking water regulation"
+
+  # ===========================================================================
+  # ASSERTION 3: EU Regulatory Gap (Drinking Water)
+  # ===========================================================================
+  - id: TFA_EU_DWD_GAP_001
+    assertion: "TFA is NOT included in EU Drinking Water Directive"
+    type: regulatory
+    confidence: 0.95
+    as_of_date: "2026-01-11"
+    citations:
+      - source: "Food Safety Magazine - EU Drinking Water Concerns"
+        url: "https://www.food-safety.com/articles/9621-one-overlooked-pfas-in-eu-drinking-water-causes-concern"
+        year: 2024
+    context:
+      - "TFA is not among the 20 PFAS regulated by EU Drinking Water Directive"
+      - "No legally binding limits for TFA exist at EU level"
+      - "Several countries have proposed precautionary guidance values"
+
+  # ===========================================================================
+  # ASSERTION 4: EU Water Framework Directive Update (2025)
+  # ===========================================================================
+  - id: TFA_EU_WFD_2025
+    assertion: "TFA will be added to EU priority pollutants in surface/groundwater"
+    type: regulatory_pending
+    confidence: 0.90
+    effective_date: "2025-09-23 (provisional deal)"
+    citations:
+      - source: "EU Council Press Release - Water Pollution Deal"
+        url: "https://www.consilium.europa.eu/en/press/press-releases/2025/09/23/water-pollution-council-and-parliament-reach-provisional-deal-to-update-priority-substances-in-surface-and-ground-waters/"
+        year: 2025
+    context:
+      - "Council and Parliament provisional deal reached September 2025"
+      - "TFA added to initially proposed sum of 24 PFAS for surface water"
+      - "Signals regulatory trajectory toward TFA restrictions"
+
+  # ===========================================================================
+  # ASSERTION 5: German CLP Classification Proposal
+  # ===========================================================================
+  - id: TFA_CLP_CLASSIFICATION_2025
+    assertion: "Germany proposes stricter TFA classification under CLP Regulation"
+    type: regulatory_pending
+    confidence: 0.85
+    consultation_period: "2025-05-26 to 2025-07-25"
+    citations:
+      - source: "Foresight - EU CLP Classification Proposal"
+        url: "https://www.useforesight.io/news/eu-proposes-stricter-classification-for-trifluoroacetic-acid-under-clp-regulation"
+        year: 2025
+    proposed_classifications:
+      - "Reproductive toxicity"
+      - "Environmental persistence"
+      - "PMT (Persistent, Mobile, Toxic)"
+      - "vPvM (very Persistent, very Mobile)"
+
+  # ===========================================================================
+  # ASSERTION 6: REACH Universal PFAS Restriction
+  # ===========================================================================
+  - id: TFA_REACH_RESTRICTION_001
+    assertion: "Universal PFAS restriction under REACH includes TFA"
+    type: regulatory_pending
+    confidence: 0.80
+    expected_revision: "December 2025"
+    citations:
+      - source: "Ricardo - European PFAS Restriction Proposal 2025"
+        url: "https://www.ricardo.com/en/news-and-insights/industry-insights/the-evolving-european-pfas-restriction-proposal-where-we-stand-in-2025"
+        year: 2025
+      - source: "EEB Universal PFAS Restriction Policy Brief"
+        url: "https://eeb.org/wp-content/uploads/2025/02/EEB_EURENI_F-gas_Policy-Brief.pdf"
+        year: 2025
+    context:
+      - "Joint proposal from Germany, Denmark, Netherlands, Norway, Sweden"
+      - "Annex XV restriction proposal submitted January 2023"
+      - "Calls for comprehensive restriction on PFAS including F-gases"
+
+  # ===========================================================================
+  # ASSERTION 7: EFSA ADI for TFA
+  # ===========================================================================
+  - id: TFA_EFSA_ADI_2024
+    assertion: "EFSA established Acceptable Daily Intake for TFA"
+    type: regulatory_guidance
+    confidence: 0.95
+    adi_value: "0.05 mg/kg body weight per day"
+    adi_basis: "expressed as sodium trifluoroacetate"
+    citations:
+      - source: "EFSA 2024 TFA Assessment"
+        year: 2024
+    context:
+      - "First formal toxicological threshold for TFA"
+      - "Based on reproductive toxicity and liver toxicity data"
+
+  # ===========================================================================
+  # ASSERTION 8: Dutch RIVM Guidance Value
+  # ===========================================================================
+  - id: TFA_RIVM_GUIDANCE_001
+    assertion: "Dutch RIVM proposed drinking water guideline for TFA"
+    type: regulatory_guidance
+    confidence: 0.90
+    guideline_value: "2,200 ng/L"
+    citations:
+      - source: "RIVM Drinking Water Guideline"
+        year: 2024
+    context:
+      - "Precautionary guidance value based on scientific literature"
+      - "Not legally binding but indicates regulatory direction"
+
+  # ===========================================================================
+  # ASSERTION 9: TFA Removal Difficulty
+  # ===========================================================================
+  - id: TFA_REMOVAL_DIFFICULTY_001
+    assertion: "TFA removal from water is extremely difficult and expensive"
+    type: technical
+    confidence: 0.95
+    citations:
+      - source: "EU Commission Technical Guidelines August 2024"
+        year: 2024
+    supporting_facts:
+      - "Technique is highly complex"
+      - "Immensely expensive (tens of billions per year in Europe)"
+      - "Highly energy intensive"
+      - "Not realistic to implement across EU any time soon"
+      - "High TFA levels in drinking water may not be considered non-compliant"
+
+  # ===========================================================================
+  # ASSERTION 10: Planetary Boundary Threat
+  # ===========================================================================
+  - id: TFA_PLANETARY_BOUNDARY_001
+    assertion: "TFA identified as planetary boundary threat"
+    type: scientific
+    confidence: 0.85
+    citations:
+      - source: "PMC11562725 - The Global Threat from TFA"
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11562725/"
+        doi: "10.1021/acs.est.4c06189"
+        year: 2024
+    context:
+      - "Scientific warnings about increasing global exposure"
+      - "Potential for irreversible impacts"
+      - "Extreme persistence in environment"
+
+
+# =============================================================================
+# REGULATORY TRAJECTORY SUMMARY
+# =============================================================================
+
+regulatory_trajectory:
+  current_status:
+    us_epa: "NOT REGULATED"
+    eu_dwi: "NOT INCLUDED"
+    eu_reach: "REGISTERED, restriction pending"
+    efsa: "ADI established (0.05 mg/kg bw/day)"
+
+  pending_actions:
+    - action: "EU Water Framework Directive update"
+      expected: "2026"
+      impact: "TFA added to priority pollutants"
+
+    - action: "German CLP classification proposal"
+      expected: "Late 2025"
+      impact: "Stricter hazard classification"
+
+    - action: "Universal PFAS restriction under REACH"
+      expected: "December 2025 revision decision"
+      impact: "Potential comprehensive TFA restrictions"
+
+  implications_for_chemours:
+    - "HFO refrigerants (Opteon) degrade to TFA in atmosphere"
+    - "TFA regulation trajectory indicates increasing liability exposure"
+    - "Proactive EOL management demonstrates corporate responsibility"
+    - "HALT destruction technology provides compliance pathway"
+
+
+# =============================================================================
+# LEGAL/LITIGATION RELEVANCE
+# =============================================================================
+
+litigation_relevance:
+  key_points:
+    - point: "TFA is demonstrably the most abundant PFAS in environment"
+      evidence_level: "high"
+      citation: "DOI:10.1021/acs.est.4c06189"
+
+    - point: "HFOs (Opteon) are documented TFA precursors"
+      evidence_level: "high"
+      citation: "DOI:10.5194/acp-24-4341-2024"
+
+    - point: "TFA destruction is technically feasible via HALT"
+      evidence_level: "high"
+      citation: "DOI:10.1021/acs.est.3c09404"
+
+    - point: "Chemours does not own TFA destruction technology"
+      evidence_level: "high"
+      source: "destruction_technologies.yaml"
+
+    - point: "Regulatory trajectory indicates future TFA restrictions"
+      evidence_level: "medium"
+      source: "EU Council provisional deal Sept 2025"
+
+  forced_buyer_analysis:
+    conclusion: "Chemours must acquire/license TFA destruction capability"
+    reasoning:
+      - "HFOs produce TFA as atmospheric degradation product"
+      - "TFA regulation trajectory indicates increasing scrutiny"
+      - "Only demonstrated TFA destruction: HALT (licensed from Aquagga)"
+      - "Chemours' thermal oxidizer cannot treat aqueous TFA"

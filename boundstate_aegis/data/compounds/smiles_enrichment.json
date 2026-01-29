@@ -1,0 +1,490 @@
+{
+  "metadata": {
+    "generated": "2026-01-28T16:46:13.111343",
+    "total_queried": 238,
+    "total_resolved": 68,
+    "resolution_rate": 0.2857,
+    "sources": {
+      "pubchem_name": 62,
+      "compound_registry": 6
+    }
+  },
+  "compounds": {
+    "HFPO-TA": {
+      "smiles": "C(=O)(C(C(F)(F)F)(OC(C(C(F)(F)F)(F)F)(F)F)F)[O-].[NH4+]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 12
+    },
+    "ciprofloxacin": {
+      "smiles": "C1CC1N2C=C(C(=O)C3=CC(=C(C=C32)N4CCNCC4)F)C(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 8
+    },
+    "5:3 FTCA": {
+      "smiles": "C(CC(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)C(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 7
+    },
+    "6:2 FTAB": {
+      "smiles": "C[N+](C)(CCCNS(=O)(=O)CCC(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)CC(=O)[O-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 6
+    },
+    "HFPO-TeA": {
+      "smiles": "C(=O)(C(C(F)(F)F)(OC(C(C(F)(F)F)(F)F)(F)F)F)[O-].[NH4+]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 6
+    },
+    "perfluoropropionic acid": {
+      "smiles": "C(=O)(C(C(F)(F)F)(F)F)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 6
+    },
+    "bisphenol A": {
+      "smiles": "CC(C)(C1=CC=C(C=C1)O)C2=CC=C(C=C2)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 5
+    },
+    "perfluorobutyric acid": {
+      "smiles": "C(=O)(C(C(C(F)(F)F)(F)F)(F)F)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 5
+    },
+    "sulfamethoxazole": {
+      "smiles": "CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 4
+    },
+    "tetracycline": {
+      "smiles": "CC1(C2CC3C(C(=O)C(=C(C3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 4
+    },
+    "CF3O2": {
+      "smiles": "C(O[O])(F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 4
+    },
+    "CHF3": {
+      "smiles": "C(F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 4
+    },
+    "carbamazepine": {
+      "smiles": "C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 3
+    },
+    "CaF2": {
+      "smiles": "[F-].[F-].[Ca+2]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 3
+    },
+    "hexachlorocyclohexane": {
+      "smiles": "C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 3
+    },
+    "boron": {
+      "smiles": "[B]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 3
+    },
+    "heptafluorobutanoyl fluoride": {
+      "smiles": "C(=O)(C(C(C(F)(F)F)(F)F)(F)F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "Bisphenol A (BPA)": {
+      "smiles": "CC(C)(C1=CC=C(C=C1)O)C2=CC=C(C=C2)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "PPVE": {
+      "smiles": "C(=C(F)F)(OC(C(C(F)(F)F)(F)F)(F)F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "B2O3": {
+      "smiles": "B12OB(O1)O2",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "rhodamine B": {
+      "smiles": "CCN(CC)C1=CC2=C(C=C1)C(=C3C=CC(=[N+](CC)CC)C=C3O2)C4=CC=CC=C4C(=O)O.[Cl-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "HCl": {
+      "smiles": "Cl",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "C2F6": {
+      "smiles": "FC(F)(F)C(F)(F)F",
+      "source": "compound_registry",
+      "cas": "76-16-4",
+      "validated": true,
+      "pathway_count": 2
+    },
+    "LiPF6": {
+      "smiles": "[Li+].F[P-](F)(F)(F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "OBS": {
+      "smiles": "C1=CC(=CC=C1OC(=C(C(C(F)(F)F)(C(F)(F)F)F)C(C(F)(F)F)(C(F)(F)F)F)C(F)(F)F)S(=O)(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "methylene blue": {
+      "smiles": "CN(C)C1=CC2=C(C=C1)N=C3C=CC(=[N+](C)C)C=C3S2.[Cl-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "C2F4": {
+      "smiles": "FC(F)=C(F)F",
+      "source": "compound_registry",
+      "cas": "116-14-3",
+      "validated": true,
+      "pathway_count": 2
+    },
+    "PFPrA": {
+      "smiles": "C(=O)(C(C(F)(F)F)(F)F)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "CF3CH2F": {
+      "smiles": "C(C(F)(F)F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 2
+    },
+    "FOSA": {
+      "smiles": "NS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "source": "compound_registry",
+      "cas": "754-91-6",
+      "validated": true,
+      "pathway_count": 2
+    },
+    "1,1,3-trifluorobutadiene": {
+      "smiles": "C=C(C=C(F)F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "CF2O": {
+      "smiles": "C(=O)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "2:2 FTS": {
+      "smiles": "O=S(=O)(O)CCC(F)(F)C(F)(F)F",
+      "source": "compound_registry",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "perfluoropropene": {
+      "smiles": "C(=C(F)F)(C(F)(F)F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "IM7": {
+      "smiles": "CC1(C2CC34CCCN3CC2(CC5=C1NC6=C5C=C(C=C6)Cl)NC4=O)C",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "IM8": {
+      "smiles": "CCC(CO)NC(=O)CC1=C(N(C2=C1C=C(C=C2)OC)C(=O)C3=CC=C(C=C3)Cl)C",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "Cr(VI)": {
+      "smiles": "[Cr+6]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "DMNP": {
+      "smiles": "CC1=CC(=CC(=C1)OC2=CC=C(C=C2)[N+](=O)[O-])C",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "2,4-dichlorophenoxyacetic acid": {
+      "smiles": "C1=CC(=C(C=C1Cl)Cl)OCC(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "TBBPA": {
+      "smiles": "CC(C)(C1=CC(=C(C(=C1)Br)O)Br)C2=CC(=C(C(=C2)Br)O)Br",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "S3": {
+      "smiles": "S=S=S",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "tetracycline hydrochloride": {
+      "smiles": "CC1(C2CC3C(C(=O)C(=C(C3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O.Cl",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "Bisphenol A": {
+      "smiles": "CC(C)(C1=CC=C(C=C1)O)C2=CC=C(C=C2)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "Congo red": {
+      "smiles": "C1=CC=C2C(=C1)C(=CC(=C2N)N=NC3=CC=C(C=C3)C4=CC=C(C=C4)N=NC5=C(C6=CC=CC=C6C(=C5)S(=O)(=O)[O-])N)S(=O)(=O)[O-].[Na+].[Na+]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "BO": {
+      "smiles": "[B]=O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "PDA": {
+      "smiles": "C1C(C(OC1N2C=NC3=C(N=CN=C32)N)COP(=O)(O)O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "pyrene": {
+      "smiles": "C1=CC2=C3C(=C1)C=CC4=CC=CC(=C43)C=C2",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "malic acid": {
+      "smiles": "C(C(C(=O)O)O)C(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "norfloxacin": {
+      "smiles": "CCN1C=C(C(=O)C2=CC(=C(C=C21)N3CCNCC3)F)C(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "NO": {
+      "smiles": "[No]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "C6F13COOH": {
+      "smiles": "C(=O)(C(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "methyl orange": {
+      "smiles": "CN(C)C1=CC=C(C=C1)N=NC2=CC=C(C=C2)S(=O)(=O)[O-].[Na+]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "RDX": {
+      "smiles": "C1N(CN(CN1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "S4": {
+      "smiles": "CC1=CC(=CC(=C1)NC(=O)NC2=CC=C(C=C2)OS(=O)(=O)N)C",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "IM24": {
+      "smiles": "CN1C2=C(C=C(C=C2)OC)C=C1CN(C)CC#C.Cl",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "peroxymonosulfate": {
+      "smiles": "[O-]OS(=O)(=O)[O-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "6:2 monoPAP": {
+      "smiles": "C(COP(=O)(O)O)C(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "HMX": {
+      "smiles": "C1N(CN(CN(CN1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "ibuprofen": {
+      "smiles": "CC(C)CC1=CC=C(C=C1)C(C)C(=O)O",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "benzothiazole": {
+      "smiles": "C1=CC=C2C(=C1)N=CS2",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "parathion": {
+      "smiles": "CCOP(=S)(OCC)OC1=CC=C(C=C1)[N+](=O)[O-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "2:2 FTOH": {
+      "smiles": "OCCC(F)(F)C(F)(F)F",
+      "source": "compound_registry",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "persulfate": {
+      "smiles": "[O-]S(=O)(=O)OOS(=O)(=O)[O-]",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "1H-perfluorobutane": {
+      "smiles": "C(C(C(C(F)(F)F)(F)F)(F)F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "8:2 FTS": {
+      "smiles": "O=S(=O)(O)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F",
+      "source": "compound_registry",
+      "cas": "39108-34-4",
+      "validated": true,
+      "pathway_count": 1
+    },
+    "perfluorooctane sulfonic acid": {
+      "smiles": "C(C(C(C(C(F)(F)S(=O)(=O)O)(F)F)(F)F)(F)F)(C(C(C(F)(F)F)(F)F)(F)F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "S5": {
+      "smiles": "S1SSSS1",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    },
+    "6:2 diPAP": {
+      "smiles": "C(COP(=O)(O)OCCC(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F)C(C(C(C(C(C(F)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F",
+      "source": "pubchem_name",
+      "cas": null,
+      "validated": true,
+      "pathway_count": 1
+    }
+  }
+}

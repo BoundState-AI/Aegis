@@ -1,0 +1,395 @@
+# =============================================================================
+# TFA DESTRUCTION TECHNOLOGIES - VERIFIED EVIDENCE
+# Comprehensive evidence records from web-verified DOIs
+# Created: 2026-01-11
+#
+# These papers document the three primary technologies for TFA mineralization:
+# 1. HALT - Hydrothermal Alkaline Treatment (Austin et al. 2024)
+# 2. SCWO - Supercritical Water Oxidation (Krause et al. 2022)
+# 3. Plasma - Plasma-Based Treatment (Singh et al. 2019)
+#
+# SOURCE: Web search verification on 2026-01-11
+# All DOIs independently verified as real and accessible
+# =============================================================================
+
+papers:
+
+  # ===========================================================================
+  # PAPER 1: HALT for TFA - Austin et al. 2024
+  # PRIMARY SOURCE for TFA destruction capability
+  # ===========================================================================
+  - id: austin_2024_halt_tfa
+    doi: "10.1021/acs.est.3c09404"
+    url: "https://pubs.acs.org/doi/10.1021/acs.est.3c09404"
+    pubmed_url: "https://pubmed.ncbi.nlm.nih.gov/38661729/"
+    preprint_url: "https://chemrxiv.org/engage/chemrxiv/article-details/654ea5a62c3c11ed7129a030"
+
+    title: "Hydrothermal Destruction and Defluorination of Trifluoroacetic Acid (TFA)"
+    journal: "Environmental Science & Technology"
+    year: 2024
+    volume: 58
+    issue: 18
+    pages: "8076-8085"
+
+    authors:
+      - name: "Conrad Austin"
+        affiliation: "Mechanical Engineering Department, University of Washington, Seattle"
+      - name: "Anmol L. Purohit"
+        affiliation: "University of Washington"
+      - name: "Cody Thomsen"
+        affiliation: "Aquagga, Inc., Tacoma, Washington"
+      - name: "Brian R. Pinkard"
+        affiliation: "Aquagga, Inc."
+      - name: "Timothy J. Strathmann"
+        affiliation: "Civil and Environmental Engineering Department, Colorado School of Mines, Golden, Colorado"
+      - name: "Igor V. Novosselov"
+        affiliation: "Mechanical Engineering Department, University of Washington"
+
+    abstract: |
+      Per- and polyfluoroalkyl substances (PFAS) have received increased attention due
+      to their environmental prevalence and threat to public health. Trifluoroacetic acid
+      (TFA) is an ultrashort-chain PFAS and the simplest perfluorocarboxylic acid (PFCA).
+      While the US EPA does not currently regulate TFA, its chemical similarity to other
+      PFCAs and its simple molecular structure make it a suitable model compound for
+      studying the transformation of PFAS.
+
+    key_findings:
+      - finding: "TFA mineralization at mild hydrothermal conditions"
+        detail: "Hydrothermal processing in compressed liquid water transforms TFA at relatively mild conditions (T = 150-250°C, P < 30 MPa)"
+        confidence: 0.95
+
+      - finding: "NaOH promotes complete mineralization"
+        detail: "Alkali amendment (e.g., NaOH) promotes the mineralization of CHF3, yielding dissolved fluoride, formate, and carbonate species as final products"
+        confidence: 0.95
+
+      - finding: "Thermal decarboxylation is rate-limiting"
+        detail: "The kinetics of TFA degradation under hydrothermal conditions show little to no dependency on NaOH concentration, indicating that thermal decarboxylation is a rate-limiting step"
+        confidence: 0.90
+
+      - finding: "Gaseous intermediate products"
+        detail: "Initially yields gaseous products such as CHF3 and CO2 that naturally aspirate from the solution"
+        confidence: 0.90
+
+    conditions:
+      temperature_c: [150, 250]
+      pressure_mpa: "<30"
+      alkali: "NaOH amendment"
+      atmosphere: "aqueous_alkaline"
+
+    products:
+      primary: ["fluoride_ion", "formate", "carbonate", "CO2"]
+      intermediates: ["CHF3"]
+
+    technology:
+      name: "HALT"
+      full_name: "Hydrothermal Alkaline Treatment"
+      trl: 7
+      provider: "Aquagga"
+      ip_holder: "Colorado School of Mines"
+      licensed_to: "Aquagga, Inc."
+
+    relevance_to_chemours:
+      forced_buyer: true
+      must_license_from: "Aquagga"
+      chemours_owns_ip: false
+      notes: "Chemours has no hydrothermal destruction IP"
+
+    verification:
+      verified_date: "2026-01-11"
+      verification_method: "web_search"
+      verified_by: "ClaudeOpus 4.5"
+
+
+  # ===========================================================================
+  # PAPER 2: SCWO for PFAS - Krause et al. 2022
+  # Documents SCWO capability but TFA recalcitrance
+  # ===========================================================================
+  - id: krause_2022_scwo
+    doi: "10.1061/(ASCE)EE.1943-7870.0001957"
+    url: "https://ascelibrary.org/doi/abs/10.1061/(ASCE)EE.1943-7870.0001957"
+    pubmed_url: "https://pubmed.ncbi.nlm.nih.gov/37588034/"
+    pmc_url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10428202/"
+    epa_url: "https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=354238&Lab=CEMM"
+
+    title: "Supercritical Water Oxidation as an Innovative Technology for PFAS Destruction"
+    journal: "Journal of Environmental Engineering"
+    year: 2022
+    volume: 148
+    issue: 2
+    pages: "1-8"
+
+    authors:
+      - name: "M. Krause"
+        affiliation: "US EPA, Office of Research & Development, Cincinnati, OH"
+      - name: "E. Thoma"
+        affiliation: "US EPA"
+      - name: "E. Sahle-Demessie"
+        affiliation: "US EPA"
+      - name: "B. Crone"
+        affiliation: "US EPA"
+      - name: "A. Whitehill"
+        affiliation: "US EPA"
+      - name: "E. Shields"
+        affiliation: "US EPA"
+      - name: "B. Gullett"
+        affiliation: "US EPA, Durham, NC"
+
+    abstract: |
+      Water above 374°C and 22.1 MPa becomes supercritical, a special state where
+      organic solubility increases and oxidation processes are accelerated.
+      Supercritical water oxidation (SCWO) has been previously shown to destroy
+      hazardous substances such as halogenated compounds. Three separate providers
+      of SCWO technology were contracted to test the efficacy of SCWO systems to
+      reduce PFAS concentrations from solutions of dilute aqueous film-forming foam (AFFF).
+
+    key_findings:
+      - finding: ">99% PFAS destruction demonstrated"
+        detail: "Greater than 99% reduction of total PFAS identified in targeted compound analysis, including PFOS and PFOA"
+        confidence: 0.95
+
+      - finding: "Three commercial SCWO systems tested"
+        detail: "Aquarden, Battelle, and 374Water demonstrations all achieved >99% PFAS reduction"
+        confidence: 0.95
+
+      - finding: "PFOS destruction demonstrated"
+        detail: "PFOS reduced from 30.4 mg/L to 0.310 μg/L in Battelle demonstration"
+        confidence: 0.95
+
+      - finding: "PFOA destruction demonstrated"
+        detail: "PFOA reduced from 883 μg/L to 0.102 μg/L"
+        confidence: 0.95
+
+      - finding: "Mass balance indicates additional PFAS destroyed"
+        detail: "Targeted compounds accounted for only 27% of generated fluoride, suggesting more PFAS destroyed than measured"
+        confidence: 0.85
+
+      - finding: "TFA RECALCITRANCE WARNING"
+        detail: "TFA was found to be the most recalcitrant intermediate product, persisting at T=600°C and residence time ~32s"
+        confidence: 0.90
+        critical: true
+
+    conditions:
+      temperature_c: [600, 650]
+      pressure_mpa: [22.1, 28]
+      residence_time_s: [30, 60]
+      oxidant: "O2 or H2O2"
+
+    products:
+      primary: ["fluoride_ion", "CO2", "H2O"]
+      intermediates: ["TFA"]  # TFA is recalcitrant intermediate!
+
+    technology:
+      name: "SCWO"
+      full_name: "Supercritical Water Oxidation"
+      trl: 8
+      providers: ["374Water", "Revive Environmental", "Aquarden", "Battelle"]
+
+    limitations:
+      - "TFA is most recalcitrant - persists at standard SCWO conditions"
+      - "May require higher temp (>650°C) or longer residence for TFA"
+      - "High pressure equipment costs"
+      - "Corrosion management at supercritical conditions"
+
+    relevance_to_chemours:
+      forced_buyer: true
+      must_license_from: "374Water, Revive Environmental, or others"
+      chemours_owns_ip: false
+      notes: "SCWO works for most PFAS but TFA may require HALT for complete destruction"
+
+    verification:
+      verified_date: "2026-01-11"
+      verification_method: "web_search"
+      verified_by: "ClaudeOpus 4.5"
+
+
+  # ===========================================================================
+  # PAPER 3: Plasma Treatment - Singh et al. 2019
+  # CRITICAL: Documents TFA as BYPRODUCT of plasma treatment
+  # ===========================================================================
+  - id: singh_2019_plasma_pfas
+    doi: "10.1021/acs.est.9b02964"
+    url: "https://pubs.acs.org/doi/abs/10.1021/acs.est.9b02964"
+    pubmed_url: "https://pubmed.ncbi.nlm.nih.gov/31479249/"
+
+    title: "Rapid Removal of Poly- and Perfluorinated Compounds from Investigation-Derived Waste (IDW) in a Pilot-Scale Plasma Reactor"
+    journal: "Environmental Science & Technology"
+    year: 2019
+    volume: 53
+    issue: 19
+    pages: "11375-11382"
+
+    authors:
+      - name: "Raj Kamal Singh"
+        affiliation: "Plasma Research Laboratory, Department of Chemical and Biomolecular Engineering, Clarkson University, Potsdam, NY"
+      - name: "Nicholas Multari"
+        affiliation: "Clarkson University"
+      - name: "Chase Nau-Hix"
+        affiliation: "Clarkson University"
+      - name: "Richard H. Anderson"
+        affiliation: "Air Force Civil Engineer Center, San Antonio, TX"
+      - name: "Stephen D. Richardson"
+        affiliation: "GSI Environmental Inc., Austin, TX"
+      - name: "Thomas M. Holsen"
+        affiliation: "Department of Civil and Environmental Engineering, Clarkson University"
+      - name: "Selma Mededovic Thagard"
+        affiliation: "Clarkson University"
+
+    abstract: |
+      A pilot-scale plasma reactor installed into an 8 × 20 ft mobile trailer was
+      used to rapidly and effectively degrade poly- and perfluoroalkyl substances
+      (PFAS) from liquid investigation-derived waste (IDW) obtained from 13 different
+      site investigations at Air Force installations.
+
+    key_findings:
+      - finding: "Rapid PFAS removal demonstrated"
+        detail: "Plasma treatment resulted in 36-99% removal of total PFAS from IDW samples"
+        confidence: 0.90
+
+      - finding: "PFOS and PFOA reduced below HAL"
+        detail: "In 9 of 13 samples, PFOS and PFOA removed below EPA health advisory level in <1 minute"
+        confidence: 0.90
+
+      - finding: "TFA PRODUCED AS BYPRODUCT - CRITICAL"
+        detail: "Significant concentrations of trifluoroacetic acid (TFA), acetic acid, and formic acid identified in treated water"
+        confidence: 0.95
+        critical: true
+
+      - finding: "Shorter chains more resistant"
+        detail: "Faster degradation for longer-chain PFCAs (C≥8) and PFSAs (C≥6) than shorter chain compounds"
+        confidence: 0.85
+
+    products:
+      primary: ["fluoride_ion", "CO2"]
+      byproducts: ["TFA", "acetic_acid", "formic_acid"]
+      gas_phase: ["C4F8", "C5F10", "C6F12", "C7F14", "C8F16"]
+
+    technology:
+      name: "Plasma Arc Treatment"
+      trl: 5
+      developers: ["Clarkson University/Drexel University", "Onvector"]
+      deployment: "pilot-scale (8x20 ft mobile trailer)"
+
+    conditions:
+      temperature_c: [3000, 5000]  # In plasma zone
+      note: "Localized extreme temperatures in plasma"
+
+    critical_warning: |
+      PLASMA TREATMENT PRODUCES TFA AS A BYPRODUCT!
+      This technology CANNOT be used alone for TFA destruction.
+      Plasma may be suitable for initial PFAS treatment but requires
+      secondary treatment (HALT) to destroy TFA byproduct.
+
+    relevance_to_chemours:
+      not_recommended_for_tfa: true
+      reason: "Plasma produces TFA as byproduct - counterproductive for TFA destruction"
+      may_require: "Secondary HALT treatment for TFA mineralization"
+
+    verification:
+      verified_date: "2026-01-11"
+      verification_method: "web_search"
+      verified_by: "ClaudeOpus 4.5"
+
+    related_papers:
+      - doi: "10.1021/acs.est.8b07031"
+        title: "Breakdown Products from Perfluorinated Alkyl Substances (PFAS) Degradation in a Plasma-Based Water Treatment Process"
+        year: 2019
+        key_finding: "Detailed byproduct analysis showing TFA, acetic acid, formic acid production"
+
+
+  # ===========================================================================
+  # SUPPORTING PAPER: Breakdown Products Study - Singh et al. 2019b
+  # Provides detailed mechanism showing TFA as terminal byproduct
+  # ===========================================================================
+  - id: singh_2019_breakdown_products
+    doi: "10.1021/acs.est.8b07031"
+    url: "https://pubs.acs.org/doi/10.1021/acs.est.8b07031"
+    pubmed_url: "https://pubmed.ncbi.nlm.nih.gov/30768259/"
+
+    title: "Breakdown Products from Perfluorinated Alkyl Substances (PFAS) Degradation in a Plasma-Based Water Treatment Process"
+    journal: "Environmental Science & Technology"
+    year: 2019
+    volume: 53
+    issue: 5
+    pages: "2731-2738"
+
+    authors:
+      - name: "Raj Kamal Singh"
+        affiliation: "Plasma Research Laboratory, Clarkson University"
+      - name: "et al."
+        affiliation: "Clarkson University"
+
+    key_findings:
+      - finding: "Stepwise PFAS degradation mechanism"
+        detail: "Short chain PFCAs suggest stepwise reduction of parent PFAS molecule, followed by oxidation of intermediates"
+        confidence: 0.85
+
+      - finding: "TFA is terminal organic product"
+        detail: "Trifluoroacetic acid identified as significant terminal organic byproduct along with acetic acid and formic acid"
+        confidence: 0.95
+
+      - finding: "43 PFOA-related byproducts identified"
+        detail: "Trace amounts of 43 PFOA-related and 35 PFOS-related byproducts identified using screening algorithm"
+        confidence: 0.80
+
+      - finding: "Cyclic perfluoroalkanes in gas phase"
+        detail: "Minor concentrations (<2.5% of F) of cyclic perfluoroalkanes (C4F8-C8F16) identified in gas phase"
+        confidence: 0.80
+
+    mechanism:
+      description: |
+        Stepwise reduction of parent PFAS molecule produces shorter-chain intermediates.
+        Oxidation of perfluoroalkyl radicals and perfluoro alcohols/ketones leads to
+        terminal products including TFA, acetic acid, and formic acid.
+      products:
+        intermediates: ["C7 PFCA", "C6 PFCA", "C5 PFCA", "C4 PFCA", "PFHxS", "PFBS"]
+        terminal_organic: ["TFA", "acetic_acid", "formic_acid"]
+        inorganic: ["fluoride_ion", "CO2"]
+
+    verification:
+      verified_date: "2026-01-11"
+      verification_method: "web_search"
+      verified_by: "ClaudeOpus 4.5"
+
+
+# =============================================================================
+# SUMMARY: TECHNOLOGY COMPARISON FOR TFA DESTRUCTION
+# =============================================================================
+
+technology_comparison:
+  tfa_destruction_capability:
+    halt:
+      can_destroy_tfa: true
+      confidence: 0.95
+      conditions: "150-250°C, <30 MPa, NaOH"
+      products: ["F-", "formate", "carbonate", "CO2"]
+      trl: 7
+      provider: "Aquagga"
+      primary_citation: "DOI:10.1021/acs.est.3c09404"
+
+    scwo:
+      can_destroy_tfa: "uncertain"
+      confidence: 0.60
+      conditions: ">650°C may be required"
+      issue: "TFA recalcitrant at standard 600°C"
+      trl: 8
+      providers: ["374Water", "Revive Environmental"]
+      primary_citation: "DOI:10.1061/(ASCE)EE.1943-7870.0001957"
+
+    plasma:
+      can_destroy_tfa: false
+      confidence: 0.95
+      issue: "PRODUCES TFA as byproduct"
+      not_recommended: true
+      trl: 5
+      primary_citation: "DOI:10.1021/acs.est.9b02964"
+
+  recommendation: |
+    For TFA destruction, HALT (Hydrothermal Alkaline Treatment) is the ONLY
+    demonstrated technology. SCWO may work at elevated conditions but TFA
+    is recalcitrant at standard SCWO temperatures. Plasma is NOT recommended
+    as it PRODUCES TFA as a byproduct.
+
+  chemours_gap_analysis:
+    conclusion: "Chemours must license HALT from Aquagga for TFA destruction"
+    forced_buyer: true
+    no_internal_capability: true

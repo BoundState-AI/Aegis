@@ -1,0 +1,280 @@
+degradation_pathways:
+  PFA:
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389415303150-main
+    - DOI:10.1016/j.jhazmat.2015.12.059
+    mechanisms: []
+    snippet: Compared with results of previous studies conducted in 2011 [29], concentrations
+      of PFAAs and PFOA observed in water at the same sites during this study increased
+      more than four-fold. Results including PFAAs levels and contribution of individual
+      PFAAs
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389415303150-main
+    - DOI:10.1016/j.jhazmat.2015.12.059
+    mechanisms: []
+    snippet: PFAAs and PFOA observed in water at the same sites during this study
+      increased more than four-fold. Results including PFAAs levels and contribution
+      of individual PFAAs are comparable between this study and other studies in the
+      Xiao- qing River.
+  - trigger: ''
+    products:
+    - PFNA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S030438942500130X-main
+    - DOI:10.1016/j.jhazmat.2025.137218
+    mechanisms: []
+    snippet: some potential transformational degradation of neutral PFAS during the
+      aging process, which resulted in the PFAA content far exceeding the limit value
+      of PFAS in textiles (25 ug/L). In the case of PA-based DWR fabrics, PFOS, PFNA,
+      and PFTeDA were identified in the fabrics after
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Electrochemical-advanced-oxidation-of-per--and-polyfluoroa_2024_Chemical-Eng
+    - DOI:10.1016/j.cej.2024.157222
+    mechanisms: []
+    snippet: carboxylate PFAS forms, such as perfluorooctanoic acid (PFOA) and
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Per--and-polyfluoroalkyl-substances--PFAS--in-the-Unit_2025_Science-of-The-T
+    - DOI:10.1016/j.scitotenv.2025.180711
+    mechanisms: []
+    snippet: 2001 ). Around the same time, a study on occupational exposure found
+      that workers near a PFAS manufacturing plant had high average serum perfluorooctanoic
+      acid (PFOA) levels of 1000 ng/mL ( Sakr et al., 2007 ). These results indicate
+      a global distribution, tendency to bioaccumulate,
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Thermal-treatment-of-hexafluoropropylene-oxide-dimer-ac_2025_Journal-of-Haza
+    - DOI:10.1016/j.jhazmat.2025.138905
+    mechanisms: []
+    snippet: Results indicate the 500 and 4000 mg/L target solutions produced actual
+      HFPO-DA concentrations of 441 and 4230 mg/L, respectively, and that contamination
+      from the other PFAS quantified was less than 2 % of the HFPO-DA mass. 2.1.
+  PVDF:
+  - trigger: o2
+    products:
+    - HF
+    confidence: 0.9
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms: []
+    snippet: The removal of PVDF-HFP from the membrane results in more TiO2
+  - trigger: o2
+    products:
+    - HF
+    confidence: 0.9
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms: []
+    snippet: concluded that PVDF(-HFP) combined with TiO2 resulted in polymer
+  - trigger: uv
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms:
+    - UV_photolysis
+    snippet: results in this research. Possible membrane degradation thus cannot be
+      attributed to the instability of PVDF-HFP upon UV exposure. Similar results
+      are found for PVDF-HFP membranes synthesized with TEP and
+  HFOs:
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - response-to-comment-on-scientific-basis-for-managing-pfas-as-a-chemical-class
+    - DOI:10.1021/acs.estlett.0c00765)
+    mechanisms: []
+    snippet: use of HCFCs, HFCs, and HFOs has resulted in significant
+  - trigger: atmospheric_oh
+    products:
+    - TFA
+    confidence: 0.9
+    citations:
+    - DOI:10.5194/acp-24-4341-2024
+    mechanisms:
+    - atmospheric_oxidation
+    snippet: HFO-1234yf atmospheric degradation produces TFA with near-quantitative yield via OH radical attack
+    evidence_refs:
+    - property: atmospheric_lifetime
+      value: "26 days"
+      source: "DOI:10.5194/acp-24-4341-2024"
+      test_method: atmospheric_modeling
+      date: "2024-04-15"
+      confidence: 0.9
+      notes: "Sulbaek Andersen et al. 2024 - HFO atmospheric fate"
+
+  # =============================================================================
+  # TFA MINERALIZATION PATHWAYS
+  # Critical for EOL Tool - demonstrates TFA is DESTRUCTIBLE
+  # Added 2026-01-11 for AEGIS EOL proof generation
+  # =============================================================================
+
+  TFA:
+  # =============================================================================
+  # VERIFIED DOIs - Web searched and confirmed 2026-01-11
+  # Original DOIs were hallucinated - these are the real papers
+  # =============================================================================
+
+  - trigger: hydrothermal_alkaline
+    products:
+    - fluoride_ion
+    - CO2
+    - H2O
+    confidence: 0.95
+    citations:
+    # VERIFIED: Austin et al. 2024 - specifically about TFA destruction
+    - DOI:10.1021/acs.est.3c09404
+    mechanisms:
+    - hydrothermal_alkaline
+    snippet: "Hydrothermal processing in compressed liquid water transforms TFA at relatively mild conditions (T = 150-250C, P < 30 MPa). Alkali amendment (NaOH) promotes mineralization of CHF3, yielding dissolved fluoride, formate, and carbonate species as final products."
+    conditions:
+      min_temp_c: 150
+      max_temp_c: 250
+      atmosphere: "aqueous_alkaline"
+      residence_time_s: 1800
+    evidence_refs:
+    - property: destruction_efficiency
+      value: "mineralization to F-, formate, carbonate"
+      source: "DOI:10.1021/acs.est.3c09404"
+      test_method: "hydrothermal reactor"
+      date: "2024-01-01"
+      confidence: 0.95
+      notes: "Austin et al. 2024 - Hydrothermal Destruction and Defluorination of Trifluoroacetic Acid (TFA) - Environ. Sci. Technol."
+    technology:
+      name: HALT
+      full_name: Hydrothermal Alkaline Treatment
+      provider: Aquagga
+      ip_holder: Colorado School of Mines
+      trl: 7
+    additional_refs:
+    # Supporting HALT papers from Colorado School of Mines
+    - doi: "10.1021/acs.est.2c00654"
+      citation: "Hao et al. 2022 - Application of HALT for Destruction of PFAS in Contaminated Groundwater and Soil"
+    - doi: "10.1021/acs.est.3c05140"
+      citation: "Hao et al. 2023 - HALT of Foam Fractionation Concentrate"
+    - doi: "10.1021/acsestengg.4c00378"
+      citation: "Pinkard et al. 2024 - Degradation and Defluorination of Ultra Short-, Short-, and Long-Chain PFASs"
+
+  - trigger: supercritical_water
+    products:
+    - fluoride_ion
+    - CO2
+    confidence: 0.90
+    citations:
+    # VERIFIED: Krause et al. 2022 - J. Environmental Engineering
+    - DOI:10.1061/(ASCE)EE.1943-7870.0001957
+    mechanisms:
+    - supercritical_water_oxidation
+    snippet: "SCWO achieved >99% reduction of total PFAS. PFOS reduced from 30.4 mg/L to 0.310 ug/L. TFA was found to be the most recalcitrant intermediate product, persisting at T=600C and residence time ~32s, emphasizing need for TFA monitoring."
+    conditions:
+      min_temp_c: 600
+      max_temp_c: 650
+      atmosphere: "supercritical_water_O2"
+      residence_time_s: 32
+    evidence_refs:
+    - property: destruction_efficiency
+      value: ">99% total PFAS, TFA recalcitrant at 600C"
+      source: "DOI:10.1061/(ASCE)EE.1943-7870.0001957"
+      test_method: "SCWO reactor - Aquarden, Battelle, 374Water"
+      date: "2022-02-01"
+      confidence: 0.90
+      notes: "Krause et al. 2022 - Supercritical Water Oxidation as an Innovative Technology for PFAS Destruction - J. Environ. Eng."
+    technology:
+      name: SCWO
+      full_name: Supercritical Water Oxidation
+      providers:
+      - 374Water
+      - Revive Environmental
+      - Aquarden
+      - Battelle
+      trl: 8
+    additional_refs:
+    - doi: "10.1016/j.jhazmat.2023.132264"
+      citation: "Chiang et al. 2023 - SCWO for Destruction of Spent Media Wastes"
+    - doi: "10.1016/j.cej.2022.139176"
+      citation: "Pinkard et al. 2022 - PFOS destruction in continuous SCWO reactor"
+
+  - trigger: plasma
+    products:
+    - fluoride_ion
+    - CO2
+    - TFA  # Important: plasma produces TFA as intermediate!
+    confidence: 0.75
+    citations:
+    # VERIFIED: Singh et al. 2019 - pilot-scale plasma
+    - DOI:10.1021/acs.est.9b02964
+    mechanisms:
+    - plasma_destruction
+    snippet: "Pilot-scale plasma reactor achieved rapid PFAS degradation from contaminated groundwater. Significant concentrations of fluoride ions, inorganic carbon, and smaller organic acids (trifluoroacetic acid, acetic acid, formic acid) were identified in treated water."
+    conditions:
+      min_temp_c: 3000
+      max_temp_c: 5000
+    evidence_refs:
+    - property: destruction_efficiency
+      value: ">99% PFAS removal, TFA as byproduct"
+      source: "DOI:10.1021/acs.est.9b02964"
+      test_method: "pilot-scale plasma reactor"
+      date: "2019-10-01"
+      confidence: 0.75
+      notes: "Singh et al. 2019 - Rapid Removal of Poly- and Perfluorinated Compounds from IDW in Pilot-Scale Plasma Reactor - Environ. Sci. Technol. WARNING: Plasma produces TFA as byproduct!"
+    technology:
+      name: Plasma Arc
+      developers:
+      - Drexel University
+      - Onvector
+      trl: 5
+    additional_refs:
+    - doi: "10.1021/acs.est.8b07031"
+      citation: "Singh et al. 2019 - Breakdown Products from PFAS Degradation in Plasma - shows TFA production"
+    caveats:
+    - "Plasma treatment produces TFA as a byproduct - may need secondary treatment"
+    - "Energy-intensive, scaling challenges remain"
+    - "TRL 5 = pilot demonstration only"
+
+  # =============================================================================
+  # TERMINAL MINERALIZATION PRODUCTS
+  # These are the safe endpoints of PFAS destruction
+  # =============================================================================
+
+  fluoride_ion:
+  - trigger: precipitation
+    products:
+    - CaF2
+    confidence: 0.95
+    citations:
+    - standard_water_treatment
+    mechanisms:
+    - precipitation
+    snippet: "Fluoride ion captured as calcium fluoride (fluorsite) precipitate for safe disposal or fluorine recovery"
+    evidence_refs:
+    - property: recovery_method
+      value: "Ca(OH)2 precipitation"
+      source: "standard water treatment"
+      test_method: "lime precipitation"
+      date: "1900-01-01"
+      confidence: 0.95
+      notes: "Standard fluoride removal from wastewater. CaF2 is stable mineral form."

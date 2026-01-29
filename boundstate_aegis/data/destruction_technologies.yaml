@@ -1,0 +1,391 @@
+# =============================================================================
+# DESTRUCTION TECHNOLOGIES DATABASE
+# AEGIS EOL Tool - Technology options for PFAS/TFA mineralization
+# Created: 2026-01-11
+#
+# This database provides structured lookup of destruction technologies
+# for the EOL Proof Certificate generator.
+# =============================================================================
+
+technologies:
+
+  # ===========================================================================
+  # HALT - Hydrothermal Alkaline Treatment
+  # ===========================================================================
+  - id: halt
+    name: "Hydrothermal Alkaline Treatment"
+    acronym: HALT
+    mechanism: hydrothermal_alkaline
+
+    developer: "Colorado School of Mines"
+    commercial_operator: "Aquagga"
+    ip_holder: "Colorado School of Mines (licensed to Aquagga)"
+
+    trl: 7  # Commercial pilot
+
+    effective_for:
+      - compound_class: "ultra-short-chain PFAS"
+        includes: ["TFA", "PFPrA"]
+        phase: aqueous
+        min_dre: 0.999
+        conditions:
+          temperature_c: [150, 250]
+          pressure_mpa: [5, 30]
+          residence_time_min: [15, 60]
+          ph: ">12 (NaOH amendment)"
+        notes: "Austin et al. 2024 demonstrated TFA mineralization at mild conditions"
+
+      - compound_class: "short-chain PFAS"
+        includes: ["PFBA", "PFPeA", "PFHxA", "PFBS"]
+        phase: aqueous
+        min_dre: 0.999
+        conditions:
+          temperature_c: [300, 400]
+          pressure_mpa: [15, 25]
+          residence_time_min: [15, 60]
+        notes: "Pinkard et al. 2024 - closes fluorine mass balance"
+
+      - compound_class: "long-chain PFAS"
+        includes: ["PFOA", "PFOS", "PFNA", "PFDA"]
+        phase: aqueous
+        min_dre: 0.999
+        conditions:
+          temperature_c: [350, 400]
+          pressure_mpa: [20, 25]
+          residence_time_min: [30, 60]
+        notes: "Hao et al. 2022 - groundwater and soil applications"
+
+      - compound_class: "spent GAC regeneration"
+        phase: solid
+        min_dre: 0.99
+        notes: "Soker et al. 2023 - destroys PFAS while regenerating adsorbent"
+
+    ineffective_for:
+      - compound_class: "dilute aqueous (<1 ppm)"
+        reason: "Economics favor concentration first (foam fractionation, IX, GAC)"
+      - compound_class: "gas phase PFAS"
+        reason: "Requires aqueous matrix"
+
+    products:
+      primary: ["fluoride_ion", "formate", "carbonate", "CO2"]
+      notes: "Complete mineralization - no organofluorine byproducts"
+
+    evidence:
+      primary:
+        - doi: "10.1021/acs.est.3c09404"
+          authors: "Austin et al."
+          year: 2024
+          title: "Hydrothermal Destruction and Defluorination of Trifluoroacetic Acid (TFA)"
+          journal: "Environ. Sci. Technol."
+          key_finding: "TFA mineralization at 150-250°C with NaOH"
+      supporting:
+        - doi: "10.1021/acs.est.2c00654"
+          citation: "Hao et al. 2022 - HALT for Groundwater and Soil"
+        - doi: "10.1021/acs.est.3c05140"
+          citation: "Hao et al. 2023 - HALT of Foam Fractionation Concentrate"
+        - doi: "10.1021/acsestengg.4c00378"
+          citation: "Pinkard et al. 2024 - Ultra Short-Chain PFAS"
+        - doi: "10.1021/acs.estlett.3c00161"
+          citation: "Soker et al. 2023 - Spent GAC Regeneration"
+      patents:
+        - number: "US20200155885A1"
+          title: "Methods for destruction of per- and polyfluoroalkyl substances"
+          assignee: "Colorado School of Mines"
+
+    costs:
+      capex_estimate: "$5-15M for pilot unit"
+      opex_estimate: "$50-200/1000 gal depending on concentration"
+      notes: "Economics improve with concentration; pair with foam fractionation"
+
+    chemours_position:
+      owns_technology: false
+      owns_ip: false
+      must_license_from: "Aquagga"
+      forced_buyer: true
+      notes: "Chemours has no hydrothermal destruction IP"
+
+  # ===========================================================================
+  # SCWO - Supercritical Water Oxidation
+  # ===========================================================================
+  - id: scwo
+    name: "Supercritical Water Oxidation"
+    acronym: SCWO
+    mechanism: supercritical_water_oxidation
+
+    developers:
+      - "374Water"
+      - "Revive Environmental"
+      - "Aquarden Technologies"
+      - "Battelle"
+    commercial_operators:
+      - "374Water (AirSCWO system)"
+      - "Revive Environmental"
+
+    trl: 8  # Commercial
+
+    effective_for:
+      - compound_class: "long-chain PFAS"
+        includes: ["PFOA", "PFOS", "PFNA", "PFDA"]
+        phase: aqueous
+        min_dre: 0.9999
+        conditions:
+          temperature_c: [600, 650]
+          pressure_mpa: [22, 28]
+          residence_time_s: [30, 60]
+          oxidant: "O2 or H2O2"
+        notes: "Krause et al. 2022 - >99% reduction demonstrated"
+
+      - compound_class: "short-chain PFAS"
+        includes: ["PFBA", "PFHxA", "PFBS"]
+        phase: aqueous
+        min_dre: 0.99
+        conditions:
+          temperature_c: [600, 650]
+          pressure_mpa: [22, 28]
+        notes: "Requires higher temp/time than long-chain"
+
+      - compound_class: "spent media (GAC, IX resin)"
+        phase: slurry
+        min_dre: 0.999
+        notes: "Chiang et al. 2023 - destroys PFAS on spent adsorbents"
+
+    ineffective_for:
+      - compound_class: "TFA at standard conditions"
+        reason: "TFA is most recalcitrant - persists at 600°C, ~32s residence time"
+        notes: "May require higher temp (>650°C) or longer residence for TFA"
+      - compound_class: "dilute streams"
+        reason: "Energy-intensive heating of water; preconcentration recommended"
+
+    products:
+      primary: ["fluoride_ion", "CO2", "H2O"]
+      intermediates: ["TFA (if incomplete)"]
+      notes: "TFA monitoring required in effluent"
+
+    challenges:
+      - "Corrosion management at supercritical conditions"
+      - "Salt precipitation and plugging"
+      - "High pressure equipment costs"
+      - "TFA recalcitrance - may need secondary treatment"
+
+    evidence:
+      primary:
+        - doi: "10.1061/(ASCE)EE.1943-7870.0001957"
+          authors: "Krause et al."
+          year: 2022
+          title: "Supercritical Water Oxidation as an Innovative Technology for PFAS Destruction"
+          journal: "J. Environmental Engineering"
+          key_finding: ">99% PFAS reduction; TFA recalcitrant at 600°C"
+      supporting:
+        - doi: "10.1016/j.jhazmat.2023.132264"
+          citation: "Chiang et al. 2023 - SCWO for Spent Media Wastes"
+        - doi: "10.1016/j.cej.2022.139176"
+          citation: "Pinkard et al. 2022 - PFOS in continuous SCWO reactor"
+
+    costs:
+      capex_estimate: "$10-50M depending on capacity"
+      opex_estimate: "High energy costs; varies with feed concentration"
+
+    chemours_position:
+      owns_technology: false
+      owns_ip: false
+      must_license_from: "374Water, Revive Environmental, or others"
+      forced_buyer: true
+
+  # ===========================================================================
+  # Plasma Arc Treatment
+  # ===========================================================================
+  - id: plasma
+    name: "Plasma Arc Treatment"
+    acronym: null
+    mechanism: plasma_destruction
+
+    developers:
+      - "Drexel University (academic)"
+      - "Onvector"
+      - "Aekyung Chemical (Korea)"
+
+    trl: 5  # Pilot demonstration
+
+    effective_for:
+      - compound_class: "mixed PFAS"
+        phase: aqueous
+        min_dre: 0.99
+        conditions:
+          temperature_c: [3000, 5000]  # In plasma zone
+          notes: "Localized extreme temperatures"
+        notes: "Singh et al. 2019 - pilot-scale demonstration"
+
+    ineffective_for:
+      - compound_class: "TFA-specific destruction"
+        reason: "Plasma PRODUCES TFA as a byproduct - does not destroy it"
+        notes: "Singh et al. 2019 identified TFA in treated water"
+
+    products:
+      primary: ["fluoride_ion", "CO2"]
+      byproducts: ["TFA", "acetic acid", "formic acid"]
+      warning: "PLASMA PRODUCES TFA - secondary treatment required"
+
+    challenges:
+      - "Energy-intensive"
+      - "Scaling from pilot to commercial"
+      - "TFA production as byproduct"
+      - "Electrode consumption"
+
+    evidence:
+      primary:
+        - doi: "10.1021/acs.est.9b02964"
+          authors: "Singh et al."
+          year: 2019
+          title: "Rapid Removal of Poly- and Perfluorinated Compounds from IDW in Pilot-Scale Plasma Reactor"
+          journal: "Environ. Sci. Technol."
+          key_finding: "Rapid PFAS removal but TFA produced as byproduct"
+      supporting:
+        - doi: "10.1021/acs.est.8b07031"
+          citation: "Singh et al. 2019 - Breakdown Products from PFAS Degradation in Plasma"
+
+    costs:
+      capex_estimate: "Unknown - pilot stage"
+      opex_estimate: "High energy consumption"
+
+    chemours_position:
+      owns_technology: false
+      owns_ip: false
+      notes: "Not recommended for TFA destruction due to TFA byproduct"
+
+  # ===========================================================================
+  # High-Temperature Incineration (Thermal Oxidizer)
+  # ===========================================================================
+  - id: thermal_oxidizer
+    name: "High-Temperature Incineration"
+    acronym: "TO"
+    mechanism: thermal_oxidation
+
+    commercial_operators:
+      - "Chemours (Fayetteville Works)"
+      - "Various hazardous waste incinerators"
+
+    trl: 9  # Mature commercial
+
+    effective_for:
+      - compound_class: "gas-phase PFAS"
+        phase: gas
+        min_dre: 0.9999
+        conditions:
+          temperature_c: [1100, 1400]
+          residence_time_s: [2, 5]
+        notes: "Chemours Fayetteville TO achieves >99.99% DRE for gas-phase"
+
+      - compound_class: "fluoropolymer solids"
+        includes: ["PTFE", "PVDF", "FEP", "PFA"]
+        phase: solid
+        min_dre: 0.99
+        conditions:
+          temperature_c: [1100, 1400]
+        notes: "Solid fluoropolymers can be incinerated but produce emissions"
+
+    ineffective_for:
+      - compound_class: "TFA in aqueous solution"
+        reason: "TFA is non-volatile; azeotrope with water prevents evaporation"
+        notes: "Cannot get aqueous TFA into gas phase for thermal treatment"
+      - compound_class: "dilute aqueous PFAS"
+        reason: "Water quenches combustion; incomplete destruction"
+      - compound_class: "PFAS in wastewater"
+        reason: "Energy required to evaporate water makes economics prohibitive"
+
+    products:
+      primary: ["HF", "CO2", "H2O"]
+      concerns: ["HF emissions require scrubbing", "Incomplete combustion products"]
+
+    evidence:
+      primary:
+        - source: "Chemours Fayetteville TO Test Report 2020"
+          url: "https://www.chemours.com/en/-/media/files/corporate/fayetteville-works/2020-03-thermal-oxidizer-test-report.pdf"
+          key_finding: "Gas-phase DRE demonstrated; aqueous not addressed"
+
+    chemours_position:
+      owns_technology: true
+      owns_ip: false  # Standard incineration technology
+      location: "Fayetteville Works, NC"
+      limitation: "Gas-phase only - cannot treat aqueous TFA"
+      notes: "Chemours has TO capability but it doesn't solve the TFA wastewater problem"
+
+  # ===========================================================================
+  # Electrochemical Oxidation
+  # ===========================================================================
+  - id: electrochemical
+    name: "Electrochemical Oxidation"
+    acronym: "EO"
+    mechanism: electrochemical
+
+    developers:
+      - "Various academic groups"
+      - "Aclarity (commercial)"
+
+    trl: 5  # Lab to pilot scale
+
+    effective_for:
+      - compound_class: "long-chain PFAS"
+        includes: ["PFOA", "PFOS"]
+        phase: aqueous
+        min_dre: 0.95
+        notes: "Works better for longer chains"
+
+    ineffective_for:
+      - compound_class: "TFA and ultra-short-chain"
+        reason: "Ultra-short chain PFAS resist electrochemical attack"
+        notes: "TFA is the hardest case for electrochemical methods"
+      - compound_class: "short-chain PFAS"
+        reason: "Reduced efficiency compared to long-chain"
+
+    products:
+      primary: ["fluoride_ion", "CO2"]
+      intermediates: ["shorter-chain PFAS", "TFA"]
+
+    evidence:
+      primary:
+        - doi: "10.1016/j.cej.2024.157222"
+          citation: "Electrochemical advanced oxidation of PFAS - 2024"
+
+    chemours_position:
+      owns_technology: false
+      owns_ip: false
+      notes: "Not viable for TFA destruction"
+
+# =============================================================================
+# TECHNOLOGY COMPARISON MATRIX
+# =============================================================================
+comparison_matrix:
+  tfa_destruction:
+    recommended: "halt"
+    reason: "Only technology with demonstrated TFA mineralization at mild conditions"
+    alternatives:
+      - id: "scwo"
+        viability: "possible"
+        notes: "May work at higher temps (>650°C) but TFA is recalcitrant"
+      - id: "plasma"
+        viability: "not_recommended"
+        notes: "Produces TFA as byproduct - counterproductive"
+      - id: "thermal_oxidizer"
+        viability: "not_viable"
+        notes: "Cannot treat aqueous TFA"
+      - id: "electrochemical"
+        viability: "not_viable"
+        notes: "TFA resists electrochemical attack"
+
+  chemours_capability_gap:
+    has:
+      - "thermal_oxidizer (gas-phase only)"
+      - "Separation technologies (IX, GAC, membranes)"
+    lacks:
+      - "Aqueous TFA destruction capability"
+      - "HALT technology"
+      - "SCWO technology"
+    must_license:
+      - technology: "halt"
+        from: "Aquagga"
+        reason: "Only demonstrated TFA mineralization"
+      - technology: "scwo"
+        from: "374Water or Revive Environmental"
+        reason: "Alternative if HALT unavailable"
+    forced_buyer_status: true
+    notes: "Chemours must acquire/license destruction technology for TFA in wastewater"

@@ -1,0 +1,719 @@
+degradation_pathways:
+  PFA:
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389415303150-main
+    - DOI:10.1016/j.jhazmat.2015.12.059
+    mechanisms: []
+    snippet: Compared with results of previous studies conducted in 2011 [29], concentrations
+      of PFAAs and PFOA observed in water at the same sites during this study increased
+      more than four-fold. Results including PFAAs levels and contribution of individual
+      PFAAs
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389415303150-main
+    - DOI:10.1016/j.jhazmat.2015.12.059
+    mechanisms: []
+    snippet: PFAAs and PFOA observed in water at the same sites during this study
+      increased more than four-fold. Results including PFAAs levels and contribution
+      of individual PFAAs are comparable between this study and other studies in the
+      Xiao- qing River.
+  - trigger: ''
+    products:
+    - PFBS
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389424030887-main
+    - DOI:10.1016/j.jhazmat.2024.136509
+    mechanisms: []
+    snippet: Pot experiments confirmed that only PFCAs with a chain length ≤ 8 and
+      PFBS were detectable in maize kernels [27] . PFAS contamination of edible parts
+      of the plants inevitably leads to consumers exposed to PFAS through grain-based
+      products.
+  - trigger: ''
+    products:
+    - PFBS
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389424030887-main
+    - DOI:10.1016/j.jhazmat.2024.136509
+    mechanisms: []
+    snippet: PFBS were detectable in maize kernels [27] . PFAS contamination of edible
+      parts of the plants inevitably leads to consumers exposed to PFAS through grain-based
+      products. The present study conducted a comprehensive investigation of PFAS
+  - trigger: ''
+    products:
+    - PFNA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S030438942500130X-main
+    - DOI:10.1016/j.jhazmat.2025.137218
+    mechanisms: []
+    snippet: some potential transformational degradation of neutral PFAS during the
+      aging process, which resulted in the PFAA content far exceeding the limit value
+      of PFAS in textiles (25 μ g/L). In the case of PA-based DWR fabrics, PFOS, PFNA,
+      and PFTeDA were identified in the fabrics after
+  - trigger: ''
+    products:
+    - PFHPA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S030438942500130X-main
+    - DOI:10.1016/j.jhazmat.2025.137218
+    mechanisms: []
+    snippet: the weathered fabrics increased dramatically, with the main products
+      being PFHxA and PFHpA. However, neutral PFAS were not recognized, which may
+      be because outdoor exposure was too long, which resulted in a complete transformation
+      of the neutral PFAS.
+  - trigger: ''
+    products:
+    - PFHXA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S030438942500130X-main
+    - DOI:10.1016/j.jhazmat.2025.137218
+    mechanisms: []
+    snippet: the weathered fabrics increased dramatically, with the main products
+      being PFHxA and PFHpA. However, neutral PFAS were not recognized, which may
+      be because outdoor exposure was too long, which resulted in a complete transformation
+      of the neutral PFAS.
+  - trigger: oxidative; nm
+    products:
+    - TFA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389425022381-main
+    - DOI:10.1016/j.jhazmat.2025.139322
+    - Thermal-decomposition-of-fluoropolymers--Stability--de_2025_Journal-of-Hazar
+    mechanisms:
+    - UV_photolysis
+    snippet: yields increasing under oxidative conditions, while another study linked
+      PTFE thermolysis to TFA accumulation in environmental media, underscoring its
+      contribution to broader PFAS contamination [34] . Similarly, Schlummer et al.
+      demonstrated that PTFE-coated consumer
+  - trigger: nm
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0956053X25004611-main
+    - DOI:10.1016/j.wasman.2025.115050
+    mechanisms:
+    - UV_photolysis
+    snippet: Despite China ’ s regulatory progression from PFOA controls (2019) to
+      complete prohibition (2023), the environmental persistence of PFAS results in
+      continuous release into leachate over extended land - filling periods ( Yu et
+      al., 2025 ), ultimately causing pronounced PFOA enrichment in leachate matrices.
+  - trigger: ph
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0956053X25004611-main
+    - DOI:10.1016/j.wasman.2025.115050
+    mechanisms:
+    - hydrolysis
+    snippet: concentration increments of PFOA in the solid phase of the denitrifica
+      - tion samples were pronounced, contributing more than 92 % of the total increment
+      in unknown PFAA precursors. These results indicate sub - stantial transformation
+      of precursors and generation of terminal PFAS
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S1383586625017368-main
+    - DOI:10.1016/j.seppur.2025.133139
+    mechanisms: []
+    snippet: Here, the difference in the removal efficiencies of the three PFAS molecules
+      can be attributed more towards the chain length of PFAS. Longer chained PFOA
+      exhibits stronger interactions and forms comparatively bigger micelles, which
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - A-study-on-the-removal-of-long-chain-perflourodecanoic-acid_2022_Journal-of-
+    - DOI:10.1016/j.jwpe.2022.103045
+    mechanisms: []
+    snippet: So far a few researchers by [28 – 30] have investigated the electrocoagulation
+      process for the removal of PFAS, particularly perfluorooctanoic acid (PFOA)
+      removal in water. These results indicated that electrocoagulation process is
+      effec -
+  - trigger: ''
+    products:
+    - PFDA
+    confidence: 0.6
+    citations:
+    - A-study-on-the-removal-of-long-chain-perflourodecanoic-acid_2022_Journal-of-
+    - DOI:10.1016/j.jwpe.2022.103045
+    mechanisms: []
+    snippet: water. These results indicated that electrocoagulation process is effec
+      - tive for PFAS removal. However, long chain PFAS such as PFNA (per - fluoro-nonanoic
+      acid), PFDA (perflourodecanoic acid) are more
+  - trigger: ''
+    products:
+    - PFNA
+    confidence: 0.6
+    citations:
+    - A-study-on-the-removal-of-long-chain-perflourodecanoic-acid_2022_Journal-of-
+    - DOI:10.1016/j.jwpe.2022.103045
+    mechanisms: []
+    snippet: water. These results indicated that electrocoagulation process is effec
+      - tive for PFAS removal. However, long chain PFAS such as PFNA (per - fluoro-nonanoic
+      acid), PFDA (perflourodecanoic acid) are more
+  - trigger: nm
+    products:
+    - PFDA
+    confidence: 0.6
+    citations:
+    - A-study-on-the-removal-of-long-chain-perflourodecanoic-acid_2022_Journal-of-
+    - DOI:10.1016/j.jwpe.2022.103045
+    mechanisms:
+    - UV_photolysis
+    snippet: These results indicated that electrocoagulation process is effec - tive
+      for PFAS removal. However, long chain PFAS such as PFNA (per - fluoro-nonanoic
+      acid), PFDA (perflourodecanoic acid) are more prevalent in the environment due
+      to their higher bioaccumulation
+  - trigger: nm
+    products:
+    - PFNA
+    confidence: 0.6
+    citations:
+    - A-study-on-the-removal-of-long-chain-perflourodecanoic-acid_2022_Journal-of-
+    - DOI:10.1016/j.jwpe.2022.103045
+    mechanisms:
+    - UV_photolysis
+    snippet: These results indicated that electrocoagulation process is effec - tive
+      for PFAS removal. However, long chain PFAS such as PFNA (per - fluoro-nonanoic
+      acid), PFDA (perflourodecanoic acid) are more prevalent in the environment due
+      to their higher bioaccumulation
+  - trigger: ph
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - A-systematic-review-on-photo-based-advanced-oxidation-_2025_Journal-of-Envir
+    - DOI:10.1016/j.jenvman.2025.127241
+    mechanisms:
+    - hydrolysis
+    snippet: However, incomplete defluorination leads to the formation of short-chain
+      perfluorocarboxyl compounds, limiting PFAS decomposition via electrocatalysis.
+      Researchers have combined PFOA removal with photocatalysis to enhance its removal
+      via
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Destruction-of-perfluorooctanesulfonate--PFOS--in-a-batch-super_2021_Chemosp
+    - DOI:10.1016/j.chemosphere.2021.130834
+    mechanisms: []
+    snippet: Conclusions In general, SCWO is an emerging wet waste destruction technology
+      which shows promise for application towards the destruction of PFAS. The presented
+      data demonstrate that PFOS can be oxidized to final products of HF and CO
+  - trigger: ph
+    products:
+    - PFHXS
+    confidence: 0.6
+    citations:
+    - Effective-PFAS-degradation-by-electrochemical-oxidation-methods_2023_Chemosp
+    - DOI:10.1016/j.chemosphere.2023.138109
+    mechanisms:
+    - hydrolysis
+    snippet: "a Si/BDD anode having electrical connectors with physical resistance\
+      \ of 7 Ω . It resulted in the removal of about 89 – 94% PFASs such as PFOS,\
+      \ PFHxS, and PFOA at a current density of just 1.8 mA cm \0 2"
+  - trigger: ph
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Effective-PFAS-degradation-by-electrochemical-oxidation-methods_2023_Chemosp
+    - DOI:10.1016/j.chemosphere.2023.138109
+    mechanisms:
+    - hydrolysis
+    snippet: "a Si/BDD anode having electrical connectors with physical resistance\
+      \ of 7 Ω . It resulted in the removal of about 89 – 94% PFASs such as PFOS,\
+      \ PFHxS, and PFOA at a current density of just 1.8 mA cm \0 2"
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.9
+    citations:
+    - Electrochemical-advanced-oxidation-of-per--and-polyfluoroa_2024_Chemical-Eng
+    - DOI:10.1016/j.cej.2024.157222
+    mechanisms: []
+    snippet: carboxylate PFAS forms, such as perfluorooctanoic acid (PFOA) and
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Hot-topic--thermal-treatment-of-per--and-poly_2023_Current-Opinion-in-Chemic
+    - DOI:10.1016/j.coche.2023.100976
+    mechanisms: []
+    snippet: These by-products are highly persistent and potentially toxic. SCWO of
+      PFAS also leads to the formation of HF and sulfuric acid, which are highly toxic
+      and corrode the treatment systems.
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Occurrence--distribution--and-risk-assessment-of-perfluoroalkyl-a_2022_Chemo
+    - DOI:10.1016/j.chemosphere.2021.132064
+    mechanisms: []
+    snippet: S10 and N05 were obviously higher, when compared with those in the other
+      sampling locations, indicating that more attention must be paid to PFAAs risks
+      to infants in these locations (S07, S10, S11, N02, and N05). In conclusion,
+      the risk assessment results indicated that the human water intake exposure risks
+      of PFOA and PFOS in the drinking water
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Occurrence--spatial-distribution--and-risk-assessment-of-per--_2025_Environm
+    - DOI:10.1016/j.envpol.2025.127064
+    mechanisms: []
+    snippet: This finding was consistent with a study con - ducted in an oil and gas
+      Producing Region of Northern West Virginia, USA ( Siegel et al., 2023 ), which
+      also reported higher PFAS concentra - tions in groundwater near drilling platforms
+      compared to residential-area wells, including PFOA levels up to 16 times background
+  - trigger: nm
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Occurrence--spatial-distribution--and-risk-assessment-of-per--_2025_Environm
+    - DOI:10.1016/j.envpol.2025.127064
+    mechanisms:
+    - UV_photolysis
+    snippet: collected from a petrochemical industrial park. The results indicated
+      that PFAS were prevalent in the park environment, with PFOA and OBS dominating
+      in both matrices. Spatially, Σ PFAS levels within the park
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - PFAS-biodegradation-by-Labrys-portucalensis-F11--Evidence-_2025_Science-of-T
+    - DOI:10.1016/j.scitotenv.2024.178348
+    mechanisms: []
+    snippet: Various Pseudomonas spp. have been shown to degrade some PFAS under aerobic
+      conditions. For instance, Pseudomonas parafulva YAB1 resulted in 48 % reduction
+      in PFOA over a
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Per--and-polyfluoroalkyl-substances--PFAS--in-the-Unit_2025_Science-of-The-T
+    - DOI:10.1016/j.scitotenv.2025.180711
+    mechanisms: []
+    snippet: 2001 ). Around the same time, a study on occupational exposure found
+      that workers near a PFAS manufacturing plant had high average serum perfluorooctanoic
+      acid (PFOA) levels of 1000 ng/mL ( Sakr et al., 2007 ). These results indicate
+      a global distribution, tendency to bioaccumulate,
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Prospects-of-complete-mineralization-of-per--and-pol_2023_Current-Opinion-in
+    - DOI:10.1016/j.coche.2023.100954
+    mechanisms: []
+    snippet: First, it is essential to develop cost- efficient methods for the complete
+      destruction and mi - neralization of PFAS, that is, complete conversion of organic
+      fluorine-containing molecules into inorganic mineral forms, such as HF, CaF
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Removal-of-per--and-polyfluoroalkyl-substances--PFAS--fro_2024_Chemical-Engi
+    - DOI:10.1016/j.cej.2024.153573
+    mechanisms: []
+    snippet: regulatory bodies to implement regulations that restrict the production
+      of perfluorooctane sulfonic acid (PFOS) and perfluorooctanoic acid (PFOA), the
+      primary PFAS compounds that have been widely produced [30] , the prohibition
+      of PFOA and PFOS have resulted in a rise in the utilization of substitute PFAS
+      chemicals [31] .
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Removal-of-per--and-polyfluoroalkyl-substances--PFAS--fro_2024_Chemical-Engi
+    - DOI:10.1016/j.cej.2024.153573
+    mechanisms: []
+    snippet: (PFOA), the primary PFAS compounds that have been widely produced [30]
+      , the prohibition of PFOA and PFOS have resulted in a rise in the utilization
+      of substitute PFAS chemicals [31] . Therefore, there is a need to increase public
+      awareness regarding the potential health risks posed
+  - trigger: air; nm
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Spatiotemporal-distribution-of-legacy-and-alternative-per_2025_Journal-of-En
+    - DOI:10.1016/j.jes.2025.05.040
+    mechanisms:
+    - UV_photolysis
+    snippet: at site PR6 (1.47 ng/L), which is located near an international airport
+      in Shenzhen. Previous studies have demonstrated that the use of AFFF at airports
+      leads to significant environmental releases of PFASs (Ahrens et al., 2015; Liu
+      et al., 2022; Yan et al., 2024). HFPO-DA, comm ercially marketed as GenX, is
+      a replacement for PFOA and is primarily used as a processing aid for fluoropolymers
+      (Pan et al., 2018).
+  - trigger: air; nm
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Spatiotemporal-distribution-of-legacy-and-alternative-per_2025_Journal-of-En
+    - DOI:10.1016/j.jes.2025.05.040
+    mechanisms:
+    - UV_photolysis
+    snippet: at site PR6 (1.47 ng/L), which is located near an international airport
+      in Shenzhen. Previous studies have demonstrated that the use of AFFF at airports
+      leads to significant environmental releases of PFASs (Ahrens et al., 2015; Liu
+      et al., 2022; Yan et al., 2024). HFPO-DA, comm ercially marketed as GenX, is
+      a replacement for PFOA and is primarily used as a processing aid for fluoropolymers
+      (Pan et al., 2018).
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Thermal-treatment-of-hexafluoropropylene-oxide-dimer-ac_2025_Journal-of-Haza
+    - DOI:10.1016/j.jhazmat.2025.138905
+    mechanisms: []
+    snippet: procedures described in the SM. Actual HFPO-DA concentrations as well
+      as trace concentrations of 24 other PFAS are presented in Table S1 . Results
+      indicate the 500 and 4000 mg/L target solutions produced actual HFPO-DA concentrations
+      of 441 and 4230 mg/L, respectively,
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Thermal-treatment-of-hexafluoropropylene-oxide-dimer-ac_2025_Journal-of-Haza
+    - DOI:10.1016/j.jhazmat.2025.138905
+    mechanisms: []
+    snippet: Results indicate the 500 and 4000 mg/L target solutions produced actual
+      HFPO-DA concentrations of 441 and 4230 mg/L, respectively, and that contamination
+      from the other PFAS quantified was less than 2 % of the HFPO-DA mass. 2.1.
+  - trigger: ''
+    products:
+    - PFBA
+    confidence: 0.6
+    citations:
+    - distribution-partitioning-source-apportionment-and-ecological-risk-assessment-of-legacy-and-emerging-pfas-in-water-and
+    - DOI:10.1021/acsestwater.4c00828
+    mechanisms: []
+    snippet: and related compounds, were prohibited in China since 2023, with several
+      specific exemptions. The regulations on conventional PFAS have resulted in a
+      production shift from long-chain to short-chain PFAS globally, like perfluorobutyric
+      acid (PFBA) and perfluorohexanesulfonic
+  - trigger: ''
+    products:
+    - PFHXS
+    confidence: 0.6
+    citations:
+    - distribution-partitioning-source-apportionment-and-ecological-risk-assessment-of-legacy-and-emerging-pfas-in-water-and
+    - DOI:10.1021/acsestwater.4c00828
+    mechanisms: []
+    snippet: with several specific exemptions. The regulations on conventional PFAS
+      have resulted in a production shift from long-chain to short-chain PFAS globally,
+      like perfluorobutyric acid (PFBA) and perfluorohexanesulfonic acid (PFHxS).
+  - trigger: ''
+    products:
+    - PFBA
+    confidence: 0.6
+    citations:
+    - distribution-partitioning-source-apportionment-and-ecological-risk-assessment-of-legacy-and-emerging-pfas-in-water-and
+    - DOI:10.1021/acsestwater.4c00828
+    mechanisms: []
+    snippet: with several specific exemptions. The regulations on conventional PFAS
+      have resulted in a production shift from long-chain to short-chain PFAS globally,
+      like perfluorobutyric acid (PFBA) and perfluorohexanesulfonic acid (PFHxS).
+  - trigger: ''
+    products:
+    - PFBA
+    confidence: 0.6
+    citations:
+    - electrooxidation-of-perfluorocarboxylic-acids-by-an-interfacially-engineered-magnéli-phase-titanium-oxide-(ti4o7)
+    - DOI:10.1021/acsestengg.3c00571
+    mechanisms: []
+    snippet: 15 Moreover, the electrochemical anodic oxidation of PFAS typically produces
+      shorter-chain perfluoropentanoic acid (PFPeA) and perfluorobutanoic acid (PFBA)
+      through decarboxylation and CF
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - practical-guidance-on-selecting-analytical-methods-for-pfas-in-semiconductor-manufacturing-wastewater
+    - DOI:10.1021/acsmeasuresciau.5c00021
+    mechanisms: []
+    snippet: forms. 40 Data on the aqueous solubility of PFAS are available but are
+      for specific salts of PFAS such as PFOS and perfluorooctanoic acid (PFOA).
+  PTFE:
+  - trigger: nm
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389424030887-main
+    - DOI:10.1016/j.jhazmat.2024.136509
+    mechanisms:
+    - UV_photolysis
+    snippet: accounted for over 40 % of China ’ s polytetrafluoroethylene (PTFE) production
+      capacity [52] . The production of PTFE results in the release of PFOA, which
+      adversely impacts the surrounding environment [58] and may further contaminate
+      foods, ultimately posing a threat to human
+  - trigger: ''
+    products:
+    - TFA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389425022381-main
+    - DOI:10.1016/j.jhazmat.2025.139322
+    - Thermal-decomposition-of-fluoropolymers--Stability--de_2025_Journal-of-Hazar
+    mechanisms: []
+    snippet: fluoroalkyl carboxylic acids (PFCAs). One study [33] demonstrated that
+      thermolysis of PTFE at temperatures exceeding 500 C produces measurable quantities
+      of PFOA and trifluoroacetic acid (TFA), with
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389425022381-main
+    - DOI:10.1016/j.jhazmat.2025.139322
+    - Thermal-decomposition-of-fluoropolymers--Stability--de_2025_Journal-of-Hazar
+    mechanisms: []
+    snippet: fluoroalkyl carboxylic acids (PFCAs). One study [33] demonstrated that
+      thermolysis of PTFE at temperatures exceeding 500 C produces measurable quantities
+      of PFOA and trifluoroacetic acid (TFA), with
+  - trigger: oxidative; nm
+    products:
+    - TFA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389425022381-main
+    - DOI:10.1016/j.jhazmat.2025.139322
+    - Thermal-decomposition-of-fluoropolymers--Stability--de_2025_Journal-of-Hazar
+    mechanisms:
+    - UV_photolysis
+    snippet: measurable quantities of PFOA and trifluoroacetic acid (TFA), with yields
+      increasing under oxidative conditions, while another study linked PTFE thermolysis
+      to TFA accumulation in environmental media, underscoring its contribution to
+      broader PFAS contamination [34] . Similarly, Schlummer et al.
+  - trigger: oxidative; nm
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - 1-s2.0-S0304389425022381-main
+    - DOI:10.1016/j.jhazmat.2025.139322
+    - Thermal-decomposition-of-fluoropolymers--Stability--de_2025_Journal-of-Hazar
+    mechanisms:
+    - UV_photolysis
+    snippet: measurable quantities of PFOA and trifluoroacetic acid (TFA), with yields
+      increasing under oxidative conditions, while another study linked PTFE thermolysis
+      to TFA accumulation in environmental media, underscoring its contribution to
+      broader PFAS contamination [34] . Similarly, Schlummer et al.
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Current-state-of-knowledge-of-environmental-occurrence-_2024_Science-of-The-
+    - DOI:10.1016/j.scitotenv.2023.169332
+    mechanisms: []
+    snippet: Liu et al., 2019a ). The highest concentration of PFOA (967,611 ng/L)
+      has been reported near a facility that produces polytetrafluoroethylene M. Antonopoulou
+      et al.
+  - trigger: thermal
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Estimating-industrial-process-emission-and-assessing-carb_2023_Science-of-Th
+    - DOI:10.1016/j.scitotenv.2023.161507
+    mechanisms:
+    - thermal_oxidative
+    snippet: powder and AFDs, and their proportions are 33.8, 33.8, 18.3 and 14.1
+      %, respectively (Dongyue, 2017). Since theﬁrst three forms of PTFE are usu-
+      ally used to produce plastic products after direct high-temperature melting
+      or sintering treatment, and a large amount of PFOA/PFO is thermally
+  - trigger: ''
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - Influence-of-heating-temperature-and-time-on-mechanical-degradation-_2024_He
+    - DOI:10.1016/j.heliyon.2024.e34676
+    mechanisms: []
+    snippet: Studies indicate widespread PFOA presence in people, with health implications
+      [ 23 , 24 ]. PFOA forms harmful gases during PTFE-coated pan use, unavoidable
+      under normal conditions [ 25 ]. Attempts to replace PFOA with GenX still yield
+      toxic gases [ 26 ]. Limited scientific data on the effects of GenX on PTFE-coated
+      cookware exist.
+  - trigger: thermal
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Sustainable-recycling-and-upgrading-of-waste-polyte_2025_Resources--Conserva
+    - DOI:10.1016/j.resconrec.2025.108143
+    mechanisms:
+    - thermal_oxidative
+    snippet: different polymers exhibit distinct pyrolysis reaction pathways, thereby
+      yielding varied pyrolysis products ( Dewi et al., 2024 ; Gao et al., 2024 ).
+      The thermal decomposition reaction of PTFE mainly generates three products of
+      TFE, hexafluoropropene (HFP), and octafluorocyclobutane (OFCB) ( Izak et al.,
+      2008 ).
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Sustainable-recycling-and-upgrading-of-waste-polyte_2025_Resources--Conserva
+    - DOI:10.1016/j.resconrec.2025.108143
+    mechanisms: []
+    snippet: fluoropropylene (HFP), and octafluorocyclobutane (OFCB). Treating PTFE
+      with molten metal hydroxides leads to the formation of CaF effectively recycling
+      fluorine atoms. Thermochemical methods utilizing
+  - trigger: 400°C; °c
+    products:
+    - PFOA
+    confidence: 0.6
+    citations:
+    - effectiveness-and-mechanisms-of-defluorination-of-perfluorinated-alkyl-substances-by-calcium-compounds-during-waste
+    - DOI:10.1021/es506234b
+    mechanisms:
+    - thermal_oxidative
+    snippet: PTFE by Ca(OH)2 was further investigated. The results in Figure 6 show
+      that PTFE particles can react with Ca(OH)2 at 400 °C with aﬂuorine TR as high
+      as 80%, which is higher than the ratios achieved for PFOS, PFOA, and FOSA.
+  PVDF:
+  - trigger: o2
+    products:
+    - HF
+    confidence: 0.9
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms: []
+    snippet: The removal of PVDF-HFP from the membrane results in more TiO2
+  - trigger: o2
+    products:
+    - HF
+    confidence: 0.9
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms: []
+    snippet: concluded that PVDF(-HFP) combined with TiO2 resulted in polymer
+  - trigger: uv
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms:
+    - UV_photolysis
+    snippet: results in this research. Possible membrane degradation thus cannot be
+      attributed to the instability of PVDF-HFP upon UV exposure. Similar results
+      are found for PVDF-HFP membranes synthesized with TEP and
+  - trigger: o2; uv
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - Degradation-of-PVDF-in-photocatalytic-membranes-in_2025_Journal-of-Hazardous
+    - DOI:10.1016/j.jhazmat.2025.139576
+    mechanisms:
+    - UV_photolysis
+    snippet: of PVDF-HFP and TiO2, relative changes in absorbance are caused by changes
+      in the relative concentration of the polymer and the catalyst. This means that
+      most of the PVDF-HFP from the membrane degraded. The removal of PVDF-HFP from
+      the membrane results in more TiO2 being exposed to the UV light on the membrane
+      surface and thus in
+  - trigger: o2
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - chain-end-functionality-the-key-factor-toward-fluoropolymer-thermal-stability
+    - DOI:10.1021/acs.macromol.1c00453
+    mechanisms: []
+    snippet: respect to CF 3SO2K. PVDF, poly(VDF-co-HFP), poly(VDF-co-PMVE), or poly(VDF-ter-PMVE-ter-HFP)
+      copolymers were obtained in high yields (varying between 89 and 100%) and with
+      molar masses up to 113,000 g/mol.
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - fluorinated-methacrylate-grafted-p(vdf-ctfe)-and-albumin-layers-for-reducing-fibrinogen-adsorption
+    - DOI:10.1021/acsapm.9b00735
+    mechanisms: []
+    snippet: cm −2. This outstanding eﬀect of P(VDF-CTFE)-g-HFBMA could be explained
+      by the rigid coupling between albumin and the polymer surface, which resulted
+      in the albumin layer
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - thermal-decomposition-of-organic-components-in-spent-lithium-ion-batteries-stagewise-evaluation-and-kinetic-analysis
+    - DOI:10.1021/acs.iecr.5c01471
+    mechanisms:
+    - thermal_oxidative
+    snippet: 17 Similarly, pyrolysis in Ar at high temperatures effectively removes
+      some PVDF from NCM622 cathodes but generates hazardous byproducts, such as hydrofluoric
+      acid (HF), which pose significant safety risks.
+  HFOs:
+  - trigger: ''
+    products:
+    - TFA
+    confidence: 0.6
+    citations:
+    - high-time-resolution-ambient-observations-of-gas-phase-perfluoroalkyl-carboxylic-acids-implications-for-atmospheric
+    - DOI:10.1021/acs.estlett.4c00897
+    mechanisms: []
+    snippet: than our observations, indicating the importance of other sources. Recently
+      introduced hydrofluoroolefins (HFOs) that produce TFA in high yields represent
+      an additional potential source.
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.6
+    citations:
+    - high-time-resolution-ambient-observations-of-gas-phase-perfluoroalkyl-carboxylic-acids-implications-for-atmospheric
+    - DOI:10.1021/acs.estlett.4c00897
+    mechanisms: []
+    snippet: than our observations, indicating the importance of other sources. Recently
+      introduced hydrofluoroolefins (HFOs) that produce TFA in high yields represent
+      an additional potential source.
+  - trigger: ''
+    products:
+    - HF
+    confidence: 0.9
+    citations:
+    - response-to-comment-on-scientific-basis-for-managing-pfas-as-a-chemical-class
+    - DOI:10.1021/acs.estlett.0c00765)
+    mechanisms: []
+    snippet: use of HCFCs, HFCs, and HFOs has resulted in signiﬁcant
