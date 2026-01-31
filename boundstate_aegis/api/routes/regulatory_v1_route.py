@@ -310,7 +310,8 @@ class CascadeItem(BaseModel):
 class CascadePrediction(BaseModel):
     """A cascade prediction for frontend display."""
     status: str
-    probability: float
+    regulatory_stage: str  # "enacted", "final_pending", "proposed", "under_consideration", "monitoring"
+    source: Optional[str] = None  # Citation like "ECHA Proposal 2023-02" or "EPA Final Rule 89 FR 22888"
     affected_products: List[str]
 
 
@@ -336,21 +337,24 @@ async def get_regulatory_cascade(
     # EU universal PFAS restriction
     predictions["EU_Universal_PFAS_Ban"] = CascadePrediction(
         status="Comprehensive ban on all PFAS substances under consideration",
-        probability=0.65,
+        regulatory_stage="proposed",
+        source="ECHA PFAS Restriction Proposal, Feb 2023",
         affected_products=["PTFE", "FEP", "PFA", "PVDF", "ETFE"],
     )
 
     # US EPA CERCLA
     predictions["US_CERCLA_Designation"] = CascadePrediction(
         status="PFOA/PFOS designated as hazardous substances; cleanup liability",
-        probability=0.85,
+        regulatory_stage="enacted",
+        source="EPA Final Rule 89 FR 22888, April 2024",
         affected_products=["PFOA", "PFOS", "GenX"],
     )
 
     # State-level actions
     predictions["US_State_Product_Bans"] = CascadePrediction(
         status="Multiple states banning PFAS in consumer products",
-        probability=0.90,
+        regulatory_stage="enacted",
+        source="12+ state laws as of 2024",
         affected_products=["All PFAS-containing products"],
     )
 
@@ -358,19 +362,22 @@ async def get_regulatory_cascade(
     if mat_upper in ["PFOA", "PFOS"]:
         predictions["Stockholm_Convention_POPs"] = CascadePrediction(
             status="Complete global phase-out already in effect",
-            probability=1.0,
+            regulatory_stage="enacted",
+            source="Stockholm Convention Annex A/B",
             affected_products=[mat_upper],
         )
     elif mat_upper in ["PTFE", "PVDF", "FEP", "PFA", "ETFE"]:
         predictions["EU_REACH_Restriction"] = CascadePrediction(
             status="Potential use restrictions for fluoropolymers with derogations for critical uses",
-            probability=0.55,
+            regulatory_stage="proposed",
+            source="Part of ECHA universal PFAS proposal",
             affected_products=[mat_upper, "TFA", "HF"],
         )
     elif mat_upper == "GENX":
         predictions["EPA_MCL_Expansion"] = CascadePrediction(
-            status="Maximum Contaminant Level likely to be set at 10 ppt",
-            probability=0.80,
+            status="Maximum Contaminant Level set at 10 ppt",
+            regulatory_stage="enacted",
+            source="EPA NPDWR for PFAS, April 2024",
             affected_products=["GenX", "HFPO-DA"],
         )
 
