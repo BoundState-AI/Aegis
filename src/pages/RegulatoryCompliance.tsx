@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,8 @@ interface RegulatoryCheck {
 
 interface CascadePrediction {
   status: string;
-  probability: number;
+  regulatory_stage: string;  // "enacted", "final_pending", "proposed", "under_consideration", "monitoring"
+  source?: string;
   affected_products: string[];
 }
 
@@ -99,6 +100,28 @@ const RegulatoryCompliance = () => {
     if (["banned", "POP"].includes(status)) return <XCircle className="h-4 w-4 text-red-500" />;
     if (["regulated", "restricted"].includes(status)) return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
     return <CheckCircle className="h-4 w-4 text-green-500" />;
+  };
+
+  const getRegulatoryStageStyle = (stage: string) => {
+    switch (stage) {
+      case "enacted": return "bg-red-600 text-white";
+      case "final_pending": return "bg-orange-500 text-white";
+      case "proposed": return "bg-yellow-500 text-black";
+      case "under_consideration": return "bg-blue-500 text-white";
+      case "monitoring": return "bg-gray-500 text-white";
+      default: return "bg-gray-400 text-white";
+    }
+  };
+
+  const getRegulatoryStageLabel = (stage: string) => {
+    switch (stage) {
+      case "enacted": return "ENACTED";
+      case "final_pending": return "FINAL PENDING";
+      case "proposed": return "PROPOSED";
+      case "under_consideration": return "UNDER CONSIDERATION";
+      case "monitoring": return "MONITORING";
+      default: return stage.toUpperCase();
+    }
   };
 
   return (
@@ -268,11 +291,14 @@ const RegulatoryCompliance = () => {
                           <div key={key} className="p-3 bg-gray-50 rounded-lg">
                             <div className="flex items-center justify-between mb-2">
                               <span className="font-medium text-chemours-dark">{key.replace(/_/g, " ")}</span>
-                              <Badge variant="outline" className="border-chemours-red text-chemours-red">
-                                {(pred.probability * 100).toFixed(0)}% likely
+                              <Badge className={getRegulatoryStageStyle(pred.regulatory_stage)}>
+                                {getRegulatoryStageLabel(pred.regulatory_stage)}
                               </Badge>
                             </div>
                             <p className="text-sm text-gray-500">{pred.status}</p>
+                            {pred.source && (
+                              <p className="text-xs text-gray-400 mt-1 italic">Source: {pred.source}</p>
+                            )}
                             {pred.affected_products.length > 0 && (
                               <div className="flex gap-1 mt-2">
                                 {pred.affected_products.map((p) => (
