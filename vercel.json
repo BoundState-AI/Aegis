@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://web-production-7ed8e.up.railway.app/api/:path*"
+      "destination": "https://aegis-production-8019.up.railway.app/api/:path*"
     },
     { "source": "/((?!api/).*)", "destination": "/" }
   ],
