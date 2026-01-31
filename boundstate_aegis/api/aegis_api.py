@@ -91,16 +91,20 @@ def create_app(
             "http://127.0.0.1:8081",
             "http://127.0.0.1:5173",
             "http://127.0.0.1:8080",
-            # Production
+            # Production - boundstate.ai (HTTP and HTTPS)
+            "http://boundstate.ai",
             "https://boundstate.ai",
+            "http://www.boundstate.ai",
             "https://www.boundstate.ai",
+            "http://aegis.boundstate.ai",
             "https://aegis.boundstate.ai",
         ]
 
     app.add_middleware(
         CORSMiddleware,
         allow_origins=cors_origins,
-        allow_origin_regex=r"https://.*\.vercel\.app",
+        # Allow Vercel previews and any boundstate.ai subdomain
+        allow_origin_regex=r"https?://.*\.(vercel\.app|boundstate\.ai)",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
