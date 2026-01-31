@@ -40,6 +40,7 @@ from boundstate_aegis.api.routes import (
     evidence_route,
     tier1_route,
     tier2_route,
+    sentinel_route,
 )
 from boundstate_aegis import __version__
 
@@ -167,6 +168,11 @@ def create_app(
         tier2_route.router,
         prefix="/api/v1/tier2",
         tags=["Tier 2 Substructure Rules"],
+    )
+    app.include_router(
+        sentinel_route.router,
+        prefix="/api/sentinel",
+        tags=["SENTINEL Early Warning"],
     )
 
     @app.get("/health")
