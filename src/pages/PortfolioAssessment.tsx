@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,7 @@ interface PortfolioResponse {
 const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
 
 const PortfolioAssessment = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<PortfolioItem[]>([
@@ -64,8 +66,8 @@ const PortfolioAssessment = () => {
   const handleAssess = async () => {
     if (items.length === 0) {
       toast({
-        title: "No Materials",
-        description: "Add at least one material to assess",
+        title: t('portfolio.noMaterials'),
+        description: t('portfolio.addMaterialsToAssess'),
         variant: "destructive",
       });
       return;
@@ -85,12 +87,12 @@ const PortfolioAssessment = () => {
       setAssessment(data);
 
       toast({
-        title: "Assessment Complete",
+        title: t('common.assessmentComplete'),
         description: `Analyzed ${data.total_materials} materials - ${data.high_risk_count} high risk`,
       });
     } catch (error) {
       toast({
-        title: "Assessment Failed",
+        title: t('common.assessmentFailed'),
         description: "Could not connect to AEGIS API",
         variant: "destructive",
       });
@@ -116,15 +118,15 @@ const PortfolioAssessment = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title="Portfolio Risk Assessment" subtitle="Batch analysis of multiple materials" helpContent={helpContent.portfolio} />
+      <ChemoursHeader title={t('portfolio.title')} subtitle={t('portfolio.subtitle')} helpContent={helpContent.portfolio} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">Product Portfolio</CardTitle>
-              <CardDescription>Add materials to assess</CardDescription>
+              <CardTitle className="text-chemours-dark">{t('portfolio.productPortfolio')}</CardTitle>
+              <CardDescription>{t('portfolio.addMaterialsToAssess')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Current Items */}
@@ -144,7 +146,7 @@ const PortfolioAssessment = () => {
 
               {/* Add New */}
               <div className="border-t border-gray-200 pt-4">
-                <Label className="text-gray-700">Add Material</Label>
+                <Label className="text-gray-700">{t('portfolio.addMaterial')}</Label>
                 <div className="flex gap-2 mt-2">
                   <Input
                     value={newMaterial}
@@ -167,7 +169,7 @@ const PortfolioAssessment = () => {
 
               {/* Quick Add */}
               <div>
-                <Label className="text-gray-600 text-sm">Quick Add:</Label>
+                <Label className="text-gray-600 text-sm">{t('portfolio.quickAdd')}</Label>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {SUGGESTED_MATERIALS.filter(m => !items.find(i => i.material === m)).map((m) => (
                     <Badge
@@ -188,9 +190,9 @@ const PortfolioAssessment = () => {
                 className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
               >
                 {isLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Assessing...</>
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.assessing')}</>
                 ) : (
-                  <><PieChart className="mr-2 h-4 w-4" /> Assess Portfolio</>
+                  <><PieChart className="mr-2 h-4 w-4" /> {t('portfolio.assessPortfolio')}</>
                 )}
               </Button>
             </CardContent>
@@ -216,21 +218,21 @@ const PortfolioAssessment = () => {
                     <CardContent className="pt-6 text-center">
                       <Package className="h-8 w-8 text-chemours-red mx-auto mb-2" />
                       <p className="text-3xl font-bold text-chemours-dark">{assessment.total_materials}</p>
-                      <p className="text-sm text-gray-500">Materials</p>
+                      <p className="text-sm text-gray-500">{t('portfolio.materials')}</p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="pt-6 text-center">
                       <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-2" />
                       <p className="text-3xl font-bold text-red-500">{assessment.high_risk_count}</p>
-                      <p className="text-sm text-gray-500">High Risk</p>
+                      <p className="text-sm text-gray-500">{t('portfolio.highRisk')}</p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="pt-6 text-center">
                       <DollarSign className="h-8 w-8 text-green-500 mx-auto mb-2" />
                       <p className="text-3xl font-bold text-green-600">{formatCurrency(assessment.total_exposure_usd)}</p>
-                      <p className="text-sm text-gray-500">Total Exposure</p>
+                      <p className="text-sm text-gray-500">{t('portfolio.totalExposure')}</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -238,18 +240,18 @@ const PortfolioAssessment = () => {
                 {/* Results Table */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">Assessment Results</CardTitle>
+                    <CardTitle className="text-chemours-dark">{t('portfolio.assessmentResults')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Table>
                       <TableHeader>
                         <TableRow className="border-gray-200">
-                          <TableHead className="text-gray-600">Material</TableHead>
-                          <TableHead className="text-gray-600">Risk Score</TableHead>
-                          <TableHead className="text-gray-600">Category</TableHead>
-                          <TableHead className="text-gray-600">PFAS Products</TableHead>
-                          <TableHead className="text-gray-600">Reg. Flags</TableHead>
-                          <TableHead className="text-gray-600">Litigation %</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableMaterial')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableRiskScore')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableCategory')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tablePfasProducts')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableRegFlags')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableLitigation')}</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -278,7 +280,7 @@ const PortfolioAssessment = () => {
                 {/* Executive Summary */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">Executive Summary</CardTitle>
+                    <CardTitle className="text-chemours-dark">{t('portfolio.executiveSummary')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <pre className="text-gray-600 whitespace-pre-wrap font-mono text-sm bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -291,9 +293,9 @@ const PortfolioAssessment = () => {
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
                   <Package className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-xl font-semibold text-gray-600 mb-2">Portfolio Assessment</h3>
+                  <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('portfolio.portfolioAssessment')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    Add materials to your portfolio and get a comprehensive risk assessment with PFAS counts, regulatory flags, and litigation probability.
+                    {t('portfolio.emptyStateDescription')}
                   </p>
                 </CardContent>
               </Card>

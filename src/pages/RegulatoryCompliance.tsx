@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -48,6 +49,7 @@ interface CascadeResponse {
 }
 
 const RegulatoryCompliance = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
@@ -76,12 +78,12 @@ const RegulatoryCompliance = () => {
       }
 
       toast({
-        title: "Compliance Check Complete",
+        title: t('common.complianceCheckComplete'),
         description: `${data.material}: ${data.overall_risk} risk across ${data.frameworks_checked} frameworks`,
       });
     } catch (error) {
       toast({
-        title: "Check Failed",
+        title: t('common.checkFailed'),
         description: "Could not connect to AEGIS API",
         variant: "destructive",
       });
@@ -130,19 +132,19 @@ const RegulatoryCompliance = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title="Regulatory Compliance Checker" subtitle="EPA, EU REACH, CA Prop 65, Stockholm Convention" helpContent={helpContent.regulatory} />
+      <ChemoursHeader title={t('regulatory.title')} subtitle={t('regulatory.subtitle')} helpContent={helpContent.regulatory} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">Check Compliance</CardTitle>
-              <CardDescription>Enter material to check regulatory status</CardDescription>
+              <CardTitle className="text-chemours-dark">{t('regulatory.checkCompliance')}</CardTitle>
+              <CardDescription>{t('regulatory.enterMaterial')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label className="text-gray-700">Material</Label>
+                <Label className="text-gray-700">{t('common.material')}</Label>
                 <Input
                   value={material}
                   onChange={(e) => setMaterial(e.target.value.toUpperCase())}
@@ -152,12 +154,12 @@ const RegulatoryCompliance = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <Label className="text-gray-700">Include Degradation Products</Label>
+                <Label className="text-gray-700">{t('regulatory.includeDegradationProducts')}</Label>
                 <Switch checked={includeDegradation} onCheckedChange={setIncludeDegradation} />
               </div>
 
               <div>
-                <Label className="text-gray-700">Forecast Year</Label>
+                <Label className="text-gray-700">{t('regulatory.forecastYear')}</Label>
                 <Input
                   type="number"
                   value={forecastYear}
@@ -174,9 +176,9 @@ const RegulatoryCompliance = () => {
                 className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
               >
                 {isLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Checking...</>
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.checking')}</>
                 ) : (
-                  <><Shield className="mr-2 h-4 w-4" /> Check Compliance</>
+                  <><Shield className="mr-2 h-4 w-4" /> {t('regulatory.checkCompliance')}</>
                 )}
               </Button>
             </CardContent>
@@ -190,7 +192,7 @@ const RegulatoryCompliance = () => {
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-chemours-dark">{checkResult.material} Compliance Status</CardTitle>
+                      <CardTitle className="text-chemours-dark">{checkResult.material} {t('regulatory.complianceStatus')}</CardTitle>
                       <Badge className={getRiskColor(checkResult.overall_risk)}>{checkResult.overall_risk}</Badge>
                     </div>
                     <CardDescription>
@@ -228,17 +230,17 @@ const RegulatoryCompliance = () => {
                       <div className="p-4 bg-red-50 rounded-lg border border-red-200">
                         <XCircle className="h-8 w-8 text-red-500 mx-auto mb-2" />
                         <p className="text-2xl font-bold text-red-600">{checkResult.non_compliant.length}</p>
-                        <p className="text-sm text-gray-500">Non-Compliant</p>
+                        <p className="text-sm text-gray-500">{t('regulatory.nonCompliant')}</p>
                       </div>
                       <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
                         <AlertTriangle className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
                         <p className="text-2xl font-bold text-yellow-600">{checkResult.warnings.length}</p>
-                        <p className="text-sm text-gray-500">Warnings</p>
+                        <p className="text-sm text-gray-500">{t('regulatory.warnings')}</p>
                       </div>
                       <div className="p-4 bg-green-50 rounded-lg border border-green-200">
                         <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
                         <p className="text-2xl font-bold text-green-600">{checkResult.compliant.length}</p>
-                        <p className="text-sm text-gray-500">Compliant</p>
+                        <p className="text-sm text-gray-500">{t('regulatory.compliant')}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -339,7 +341,7 @@ const RegulatoryCompliance = () => {
                   <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
                     <Globe className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-chemours-dark mb-2">Regulatory Compliance Checker</h3>
+                  <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('regulatory.title')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
                     Check materials and their degradation products against EPA MCL, EU REACH, CA Prop 65, and Stockholm Convention.
                   </p>

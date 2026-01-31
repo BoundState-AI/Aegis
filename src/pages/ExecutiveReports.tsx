@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ interface ExecutiveReport {
 }
 
 const ExecutiveReports = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
@@ -51,12 +53,12 @@ const ExecutiveReports = () => {
       setReport(data);
 
       toast({
-        title: "Report Generated",
+        title: t('common.reportGenerated'),
         description: `Executive report for ${data.material} ready`,
       });
     } catch (error) {
       toast({
-        title: "Generation Failed",
+        title: t('common.reportFailed'),
         description: "Could not generate report",
         variant: "destructive",
       });
@@ -100,26 +102,26 @@ const ExecutiveReports = () => {
     URL.revokeObjectURL(url);
 
     toast({
-      title: "Report Downloaded",
+      title: t('common.reportDownloaded'),
       description: "Executive report saved to downloads",
     });
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title="Executive Reports" subtitle="Generate comprehensive risk reports" helpContent={helpContent.reports} />
+      <ChemoursHeader title={t('reports.title')} subtitle={t('reports.subtitle')} helpContent={helpContent.reports} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">Report Configuration</CardTitle>
-              <CardDescription>Configure report parameters</CardDescription>
+              <CardTitle className="text-chemours-dark">{t('reports.reportConfiguration')}</CardTitle>
+              <CardDescription>{t('reports.configureParameters')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label className="text-gray-700">Material</Label>
+                <Label className="text-gray-700">{t('common.material')}</Label>
                 <Input
                   value={material}
                   onChange={(e) => setMaterial(e.target.value.toUpperCase())}
@@ -129,12 +131,12 @@ const ExecutiveReports = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <Label className="text-gray-700">Include Litigation Analysis</Label>
+                <Label className="text-gray-700">{t('reports.includeLitigationAnalysis')}</Label>
                 <Switch checked={includeLitigation} onCheckedChange={setIncludeLitigation} />
               </div>
 
               <div className="flex items-center justify-between">
-                <Label className="text-gray-700">Include Regulatory Status</Label>
+                <Label className="text-gray-700">{t('reports.includeRegulatoryStatus')}</Label>
                 <Switch checked={includeRegulatory} onCheckedChange={setIncludeRegulatory} />
               </div>
 
@@ -144,9 +146,9 @@ const ExecutiveReports = () => {
                 className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
               >
                 {isLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...</>
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.generating')}</>
                 ) : (
-                  <><FileText className="mr-2 h-4 w-4" /> Generate Report</>
+                  <><FileText className="mr-2 h-4 w-4" /> {t('reports.generateReport')}</>
                 )}
               </Button>
             </CardContent>
@@ -163,11 +165,11 @@ const ExecutiveReports = () => {
                       <div>
                         <CardTitle className="text-chemours-dark">{report.title}</CardTitle>
                         <CardDescription>
-                          Generated: {new Date(report.generated).toLocaleString()}
+                          {t('reports.generated')} {new Date(report.generated).toLocaleString()}
                         </CardDescription>
                       </div>
                       <Button variant="outline" onClick={handleDownload} className="border-gray-300 text-gray-600 hover:bg-gray-100">
-                        <Download className="mr-2 h-4 w-4" /> Download
+                        <Download className="mr-2 h-4 w-4" /> {t('common.download')}
                       </Button>
                     </div>
                   </CardHeader>
@@ -204,7 +206,7 @@ const ExecutiveReports = () => {
 
                       {section.flags && section.flags.length > 0 && (
                         <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                          <p className="text-sm text-yellow-700 mb-2 font-medium">Regulatory Flags:</p>
+                          <p className="text-sm text-yellow-700 mb-2 font-medium">{t('reports.regulatoryFlags')}</p>
                           <ul className="space-y-1">
                             {section.flags.map((f, j) => (
                               <li key={j} className="text-gray-600 text-sm flex items-start gap-2">
@@ -218,7 +220,7 @@ const ExecutiveReports = () => {
 
                       {section.similar_cases && section.similar_cases.length > 0 && (
                         <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                          <p className="text-sm text-blue-700 mb-2 font-medium">Similar Cases:</p>
+                          <p className="text-sm text-blue-700 mb-2 font-medium">{t('reports.similarCases')}</p>
                           <div className="flex flex-wrap gap-2">
                             {section.similar_cases.map((c) => (
                               <Badge key={c} className="bg-blue-600 text-white">{c}</Badge>
@@ -234,9 +236,9 @@ const ExecutiveReports = () => {
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
                   <FileText className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-xl font-semibold text-gray-600 mb-2">Executive Reports</h3>
+                  <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('reports.title')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    Generate comprehensive PFAS risk reports with degradation analysis, regulatory status, litigation risk, and recommendations.
+                    {t('reports.subtitle')}
                   </p>
                 </CardContent>
               </Card>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { HelpCircle, CheckCircle2, Lightbulb, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,8 @@ interface PageHelpProps {
 }
 
 const PageHelp = ({ content }: PageHelpProps) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -24,7 +27,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
           variant="ghost"
           size="icon"
           className="h-7 w-7 text-gray-400 hover:text-chemours-red"
-          title="Page help"
+          title={t('pageHelp.title', 'Page help')}
         >
           <HelpCircle className="h-4 w-4" />
         </Button>
@@ -41,7 +44,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
           {/* What It Does */}
           <section>
             <h3 className="text-sm font-semibold text-gray-700 mb-2">
-              What This Page Does
+              {t('pageHelp.whatItDoes', 'What This Page Does')}
             </h3>
             <ul className="space-y-1.5">
               {content.whatItDoes.map((item, i) => (
@@ -56,7 +59,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
           {/* How To Use */}
           <section>
             <h3 className="text-sm font-semibold text-gray-700 mb-2">
-              How To Use
+              {t('pageHelp.howToUse', 'How To Use')}
             </h3>
             <ol className="space-y-1.5">
               {content.howToUse.map((step, i) => (
@@ -73,7 +76,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
           {/* Use Cases */}
           <section>
             <h3 className="text-sm font-semibold text-gray-700 mb-2">
-              Example Use Cases
+              {t('pageHelp.useCases', 'Example Use Cases')}
             </h3>
             <div className="space-y-1.5">
               {content.useCases.map((uc, i) => (
@@ -91,7 +94,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
           {content.tips && content.tips.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                Pro Tips
+                {t('pageHelp.tips', 'Pro Tips')}
               </h3>
               <ul className="space-y-1.5">
                 {content.tips.map((tip, i) => (
@@ -108,7 +111,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
           {content.relatedPages && content.relatedPages.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                Related Pages
+                {t('pageHelp.relatedPages', 'Related Pages')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {content.relatedPages.map((page) => (
