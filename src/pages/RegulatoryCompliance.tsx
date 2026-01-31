@@ -22,6 +22,10 @@ interface RegulatoryStatus {
 interface RegulatoryCheck {
   material: string;
   degradation_products: string[];
+  degradation_pathway_count: number;
+  degradation_paper_count: number;
+  degradation_sample_dois: string[];
+  degradation_source: string;
   frameworks_checked: number;
   compliant: RegulatoryStatus[];
   non_compliant: RegulatoryStatus[];
@@ -190,18 +194,33 @@ const RegulatoryCompliance = () => {
                       <Badge className={getRiskColor(checkResult.overall_risk)}>{checkResult.overall_risk}</Badge>
                     </div>
                     <CardDescription>
-                      Checked {checkResult.frameworks_checked} regulatory frameworks
+                      Screened against {checkResult.frameworks_checked} reference frameworks
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     {checkResult.degradation_products.length > 0 && (
                       <div className="mb-4">
-                        <p className="text-sm text-gray-500 mb-2">Degradation Products Checked:</p>
+                        <div className="flex items-center gap-2 mb-2">
+                          <p className="text-sm text-gray-500">Degradation Products:</p>
+                          {checkResult.degradation_pathway_count > 0 && (
+                            <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
+                              {checkResult.degradation_pathway_count} pathways from {checkResult.degradation_paper_count} papers
+                            </span>
+                          )}
+                        </div>
                         <div className="flex flex-wrap gap-2">
                           {checkResult.degradation_products.map((p) => (
                             <Badge key={p} variant="outline" className="border-gray-400 text-gray-600">{p}</Badge>
                           ))}
                         </div>
+                        {checkResult.degradation_source && (
+                          <p className="text-xs text-gray-400 mt-2 italic">Source: {checkResult.degradation_source}</p>
+                        )}
+                        {checkResult.degradation_sample_dois.length > 0 && (
+                          <p className="text-xs text-blue-500 mt-1">
+                            Sample DOIs: {checkResult.degradation_sample_dois.slice(0, 2).join(", ")}
+                          </p>
+                        )}
                       </div>
                     )}
 
