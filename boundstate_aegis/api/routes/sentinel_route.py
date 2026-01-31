@@ -53,6 +53,7 @@ class TimelineEntry(BaseModel):
     phase: str
     velocity: float = 0.0
     acceleration: float = 0.0
+    jerk: float = 0.0
     alert_level: str = "DARK"
 
 
@@ -104,21 +105,23 @@ class BacktestResponse(BaseModel):
 
 def _compute_sentinel_signals(timeline: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
-    Compute publication dynamics (velocity, acceleration, alert level)
+    Compute publication dynamics (velocity, acceleration, jerk, alert level)
     for each year in the timeline.
 
     Velocity: 3-year trailing average (papers/year)
     Acceleration: year-over-year change in velocity
+    Jerk: year-over-year change in acceleration (inflection detection)
     Alert levels:
         DARK        - No publications ever recorded
         NOVEL       - First publications appear (velocity from zero)
         WATCH       - Sustained low-level publications
         ELEVATED    - Velocity accelerating or doubled
         HIGH        - Velocity > 10 papers/year
-        CRITICAL    - Velocity > 20 papers/year or acceleration > 10
+        CRITICAL    - Velocity > 20 papers/year or acceleration > 10 or jerk > 5
     """
     enriched = []
     prev_velocity = 0.0
+    prev_acceleration = 0.0
     has_any_pubs = False
 
     for i, entry in enumerate(timeline):
@@ -134,16 +137,19 @@ def _compute_sentinel_signals(timeline: List[Dict[str, Any]]) -> List[Dict[str, 
         # Acceleration (change in velocity from prior year)
         acceleration = round(velocity - prev_velocity, 2) if i > 0 else 0.0
 
+        # Jerk (change in acceleration - detects inflection points)
+        jerk = round(acceleration - prev_acceleration, 2) if i > 1 else 0.0
+
         # Determine alert level
         if cumulative == 0:
             alert_level = "DARK"
         elif not has_any_pubs and pubs > 0:
             alert_level = "NOVEL"
-        elif velocity > 20 or acceleration > 10:
+        elif velocity > 20 or acceleration > 10 or jerk > 5:
             alert_level = "CRITICAL"
         elif velocity > 10:
             alert_level = "HIGH"
-        elif acceleration > 2 or (prev_velocity > 0 and velocity > prev_velocity * 1.8):
+        elif acceleration > 2 or jerk > 2 or (prev_velocity > 0 and velocity > prev_velocity * 1.8):
             alert_level = "ELEVATED"
         elif cumulative > 0:
             alert_level = "WATCH"
@@ -157,10 +163,12 @@ def _compute_sentinel_signals(timeline: List[Dict[str, Any]]) -> List[Dict[str, 
             **entry,
             "velocity": velocity,
             "acceleration": acceleration,
+            "jerk": jerk,
             "alert_level": alert_level,
         })
 
         prev_velocity = velocity
+        prev_acceleration = acceleration
 
     return enriched
 
