@@ -21,6 +21,7 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 
 from __future__ import annotations
 
+import json
 import logging
 from typing import Any, Dict, List, Optional
 
@@ -28,7 +29,7 @@ import yaml
 from fastapi import APIRouter, Query
 from pydantic import BaseModel
 
-from boundstate_aegis.config import REGULATORY_FRAMEWORK_YAML
+from boundstate_aegis.config import REGULATORY_FRAMEWORK_YAML, PFAS_FATE_V2_JSON
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +37,77 @@ router = APIRouter()
 
 # Cache for loaded regulatory data
 _regulatory_cache: Optional[Dict[str, Any]] = None
+
+# Cache for fate literature data
+_fate_cache: Optional[Dict[str, Any]] = None
+
+
+def get_fate_data() -> Dict[str, Any]:
+    """Load and cache the real pfas_fate_v2.json literature corpus."""
+    global _fate_cache
+    if _fate_cache is None:
+        if PFAS_FATE_V2_JSON.exists():
+            try:
+                with open(PFAS_FATE_V2_JSON, encoding="utf-8") as f:
+                    _fate_cache = json.load(f)
+                logger.info(
+                    f"Loaded fate corpus: {len(_fate_cache.get('pathways', []))} pathways "
+                    f"from {_fate_cache.get('metadata', {}).get('papers_processed', 0)} papers"
+                )
+            except Exception as e:
+                logger.error(f"Failed to load fate data: {e}")
+                _fate_cache = {"pathways": [], "metadata": {}}
+        else:
+            logger.warning(f"Fate data not found: {PFAS_FATE_V2_JSON}")
+            _fate_cache = {"pathways": [], "metadata": {}}
+    return _fate_cache
+
+
+def get_degradation_products_from_literature(material: str) -> Dict[str, Any]:
+    """
+    Pull degradation products from real pfas_fate_v2.json literature data.
+    Returns dict with products list and metadata about sources.
+    """
+    fate_data = get_fate_data()
+    mat_upper = material.upper()
+
+    # Find all pathways where this material is the precursor
+    matching_pathways = [
+        p for p in fate_data.get("pathways", [])
+        if mat_upper in p.get("precursor", "").upper()
+    ]
+
+    if not matching_pathways:
+        return {
+            "products": [],
+            "pathway_count": 0,
+            "paper_count": 0,
+            "sample_dois": [],
+            "source": "No literature data available for this material",
+        }
+
+    # Extract unique products
+    products = list(set(
+        p.get("product", "") for p in matching_pathways if p.get("product")
+    ))
+
+    # Collect unique DOIs
+    all_dois: set[str] = set()
+    for pathway in matching_pathways:
+        for doi in pathway.get("source_dois", []):
+            if doi:
+                all_dois.add(doi)
+
+    # Get sample DOIs for display (top 3)
+    sample_dois = sorted(all_dois)[:3]
+
+    return {
+        "products": sorted(products)[:15],  # Limit to 15 for UI
+        "pathway_count": len(matching_pathways),
+        "paper_count": len(all_dois),
+        "sample_dois": sample_dois,
+        "source": "BoundState Literature Corpus (peer-reviewed)",
+    }
 
 
 def _load_regulatory_framework() -> Dict[str, List[Dict[str, Any]]]:
@@ -163,6 +235,10 @@ class RegulatoryCheckResponse(BaseModel):
     """Response for regulatory check - matches frontend RegulatoryCheck interface."""
     material: str
     degradation_products: List[str]
+    degradation_pathway_count: int = 0
+    degradation_paper_count: int = 0
+    degradation_sample_dois: List[str] = []
+    degradation_source: str = ""
     frameworks_checked: int
     compliant: List[RegulatoryStatus]
     non_compliant: List[RegulatoryStatus]
@@ -483,22 +559,30 @@ async def check_regulatory(
                     notes=f"No restrictions under {framework_desc}",
                 ))
 
-    # Get degradation products
+    # Get degradation products from real literature corpus
+    degradation_data: Dict[str, Any] = {"products": [], "pathway_count": 0, "paper_count": 0, "sample_dois": [], "source": ""}
     degradation_products: List[str] = []
+
     if include_degradation:
-        # Extract product names from degradation concerns
-        concerns = data.get("degradation_concerns", [])
-        # Common products associated with materials
-        product_map = {
-            "PTFE": ["TFA", "HF", "CF4", "COF2"],
-            "PVDF": ["HF", "VDF"],
-            "FEP": ["TFA", "HF", "CF4"],
-            "PFA": ["TFA", "HF", "PFOA traces"],
-            "PFOA": ["Persistent - no degradation"],
-            "PFOS": ["Persistent - no degradation"],
-            "GENX": ["HFPO-DA"],
-        }
-        degradation_products = product_map.get(mat_upper, [])
+        # Pull from real pfas_fate_v2.json literature data
+        degradation_data = get_degradation_products_from_literature(mat_upper)
+        degradation_products = degradation_data["products"]
+
+        # Fallback for materials not in literature corpus
+        if not degradation_products:
+            fallback_map = {
+                "PTFE": ["TFA", "HF", "CF4", "COF2"],
+                "PVDF": ["HF", "VDF"],
+                "FEP": ["TFA", "HF", "CF4"],
+                "PFA": ["TFA", "HF"],
+                "ETFE": ["TFA", "HF", "HCl"],
+                "ECTFE": ["TFA", "HF", "HCl"],
+                "PFOA": ["Persistent - no degradation"],
+                "PFOS": ["Persistent - no degradation"],
+                "GENX": ["HFPO-DA"],
+            }
+            degradation_products = fallback_map.get(mat_upper, [])
+            degradation_data["source"] = "Fallback data (limited literature coverage)"
 
     # Determine overall risk
     if non_compliant:
@@ -514,6 +598,10 @@ async def check_regulatory(
     return RegulatoryCheckResponse(
         material=mat_upper,
         degradation_products=degradation_products,
+        degradation_pathway_count=degradation_data.get("pathway_count", 0),
+        degradation_paper_count=degradation_data.get("paper_count", 0),
+        degradation_sample_dois=degradation_data.get("sample_dois", []),
+        degradation_source=degradation_data.get("source", ""),
         frameworks_checked=len(frameworks),
         compliant=compliant,
         non_compliant=non_compliant,
