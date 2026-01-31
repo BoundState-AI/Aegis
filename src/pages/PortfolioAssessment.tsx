@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart } from "lucide-react";
+import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart, Info } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import helpContent from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
@@ -32,6 +33,8 @@ interface PortfolioResponse {
   total_exposure_usd: number;
   results: PortfolioResult[];
   executive_summary: string;
+  is_demo?: boolean;
+  demo_disclaimer?: string;
 }
 
 const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
@@ -197,6 +200,16 @@ const PortfolioAssessment = () => {
           <div className="lg:col-span-2 space-y-6">
             {assessment ? (
               <>
+                {/* Demo Disclaimer Banner */}
+                {assessment.is_demo && (
+                  <Alert className="border-amber-200 bg-amber-50">
+                    <Info className="h-4 w-4 text-amber-600" />
+                    <AlertDescription className="text-amber-800 text-sm">
+                      <strong>Preview Mode:</strong> {assessment.demo_disclaimer || "Risk scores use simplified models. Production deployment requires site-specific risk factors and comprehensive material characterization."}
+                    </AlertDescription>
+                  </Alert>
+                )}
+
                 {/* Summary Cards */}
                 <div className="grid grid-cols-3 gap-4">
                   <Card className="bg-white border-gray-200 shadow-sm">

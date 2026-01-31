@@ -60,8 +60,8 @@ const helpContent: Record<string, HelpContent> = {
     title: "SENTINEL — Litigation Risk",
     description:
       "Publication dynamics analysis and litigation risk forecasting. " +
-      "Uses the GPTL (Generalized Position-Time Litigation) model to track " +
-      "scientific attention trajectories for PFAS compounds.",
+      "Tracks scientific attention trajectories using physics-inspired metrics " +
+      "(velocity, acceleration, jerk) derived from PubMed publication data.",
     whatItDoes: [
       "Tracks publication volume, velocity, acceleration, and jerk for PFAS compounds",
       "Provides a GenX case study backtest against 412 PubMed publications and 14 key events",
@@ -80,9 +80,9 @@ const helpContent: Record<string, HelpContent> = {
       "Support early-warning monitoring for compounds in your portfolio",
     ],
     tips: [
-      "The GPTL model treats publication count as 'position' — velocity is the rate of new papers",
+      "Publication count is 'position' — velocity is papers/year, acceleration is how fast velocity changes",
       "Jerk (third derivative) spikes often precede regulatory action by 12–18 months",
-      "The GenX backtest is validated against real Chemours litigation timeline",
+      "The GenX backtest is validated against real Chemours litigation timeline with 412 PubMed papers",
     ],
     relatedPages: [
       { name: "Portfolio", path: "/portfolio" },

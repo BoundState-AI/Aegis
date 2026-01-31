@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight } from "lucide-react";
+import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight, Info } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import helpContent from "@/config/helpContent";
 import {
@@ -869,6 +870,14 @@ const LitigationRisk = () => {
               <div className="lg:col-span-2 space-y-6">
                 {forecast ? (
                   <>
+                    {/* Model Disclaimer Banner */}
+                    <Alert className="border-amber-200 bg-amber-50">
+                      <Info className="h-4 w-4 text-amber-600" />
+                      <AlertDescription className="text-amber-800 text-sm">
+                        <strong>Preview Model:</strong> Litigation probabilities are calculated using a simplified model based on publication velocity, compound type, and historical case data. Production deployment requires actuarial review and jurisdiction-specific factors.
+                      </AlertDescription>
+                    </Alert>
+
                     {/* Risk Summary */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
