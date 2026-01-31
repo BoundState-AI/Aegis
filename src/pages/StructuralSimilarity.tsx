@@ -13,7 +13,7 @@ import {
   Atom, FileText, Beaker, Shapes, TrendingUp, Database, Info,
 } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 // ---------------------------------------------------------------------------
@@ -168,6 +168,7 @@ const getRiskBorderColor = (signal: string) => {
 const StructuralSimilarity = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [smiles, setSmiles] = useState("");
   const [compoundName, setCompoundName] = useState("");

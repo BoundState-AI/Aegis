@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 interface RegulatoryStatus {
@@ -51,6 +51,7 @@ interface CascadeResponse {
 const RegulatoryCompliance = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [includeDegradation, setIncludeDegradation] = useState(true);

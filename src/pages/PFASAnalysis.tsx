@@ -12,7 +12,7 @@ import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangl
 import { AnalyzeResponse } from "@/types/pfas";
 import AnalysisResults from "@/components/pfas/AnalysisResults";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 const COMMON_MATERIALS = [
@@ -28,6 +28,7 @@ const COMMON_MATERIALS = [
 const PFASAnalysis = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<AnalyzeResponse | null>(null);
 

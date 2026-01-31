@@ -13,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Search, AlertTriangle, FileText, ChevronsUpDown, Check } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 interface Transformation {
@@ -52,6 +52,7 @@ const PARENT_COMPOUNDS = [
 const FateExplorer = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<FateQueryResponse | null>(null);
   const [summary, setSummary] = useState<GraphSummary | null>(null);

@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, BookOpen, Link2, ExternalLink, Database, FileText } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 interface EvidenceItem {
@@ -42,6 +42,7 @@ interface SourceStats {
 const EvidenceChain = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [maxCitations, setMaxCitations] = useState(20);
