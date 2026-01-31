@@ -2,7 +2,10 @@
  * Central help content configuration for all AEGIS pages.
  *
  * Each entry provides structured help that renders in the PageHelp modal.
+ * Now supports i18n translations via the useHelpContent hook.
  */
+
+import { useTranslation } from "react-i18next";
 
 export interface RelatedPage {
   name: string;
@@ -20,6 +23,272 @@ export interface HelpContent {
   apiEndpoint?: string;
 }
 
+// Hook to get translated help content
+export const useHelpContent = () => {
+  const { t } = useTranslation();
+
+  const helpContent: Record<string, HelpContent> = {
+    fateExplorer: {
+      title: t('help.fateExplorer.title', 'Fate Explorer'),
+      description: t('help.fateExplorer.description',
+        'Explore PFAS degradation pathways from the peer-reviewed literature. Built on 732 pathways extracted from 353 papers with DOI-traceable evidence.'),
+      whatItDoes: t('help.fateExplorer.whatItDoes', { returnObjects: true, defaultValue: [
+        "Maps parent-to-product degradation pathways for PFAS compounds",
+        "Shows observation counts, evidence scores, and temperature ranges from the literature",
+        "Identifies hazard levels and regulatory status of degradation products",
+        "Links every pathway to its source DOI for independent verification",
+      ]}) as string[],
+      howToUse: t('help.fateExplorer.howToUse', { returnObjects: true, defaultValue: [
+        "Select or search for a parent compound from the dropdown",
+        "Review the degradation products table — sorted by evidence score",
+        "Click any row to see the full evidence chain with verbatim quotes",
+        "Use the temperature and atmosphere filters to narrow results",
+      ]}) as string[],
+      useCases: t('help.fateExplorer.useCases', { returnObjects: true, defaultValue: [
+        "Screen a fluoropolymer for known thermal degradation products",
+        "Identify whether a compound degrades to regulated PFAS (e.g. PFOA, PFOS)",
+        "Gather DOI citations for a regulatory submission or expert report",
+      ]}) as string[],
+      tips: t('help.fateExplorer.tips', { returnObjects: true, defaultValue: [
+        "Higher evidence scores indicate more independent observations across papers",
+        "Temperature ranges show the experimental conditions where degradation was observed",
+        "Products flagged as 'regulated' appear in EPA, EU, or Stockholm Convention lists",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.evidence', 'Evidence Chain'), path: "/evidence" },
+        { name: t('nav.regulatory', 'Regulatory'), path: "/regulatory" },
+        { name: t('nav.tier1', 'Tier 1'), path: "/tier1" },
+      ],
+      apiEndpoint: "/api/v1/pathways",
+    },
+
+    litigation: {
+      title: t('help.litigation.title', 'SENTINEL — Litigation Risk'),
+      description: t('help.litigation.description',
+        'Publication dynamics analysis and litigation risk forecasting. Tracks scientific attention trajectories using physics-inspired metrics (velocity, acceleration, jerk) derived from PubMed publication data.'),
+      whatItDoes: t('help.litigation.whatItDoes', { returnObjects: true, defaultValue: [
+        "Tracks publication volume, velocity, acceleration, and jerk for PFAS compounds",
+        "Provides a GenX case study backtest against 412 PubMed publications and 14 key events",
+        "Forecasts litigation risk windows based on publication dynamics patterns",
+        "Maps the relationship between scientific attention and regulatory/legal action",
+      ]}) as string[],
+      howToUse: t('help.litigation.howToUse', { returnObjects: true, defaultValue: [
+        "Use the GenX Case Study tab to see the validated backtest against real events",
+        "Switch to the Risk Forecast tab to view forward-looking projections",
+        "Review the publication dynamics chart — rising acceleration signals emerging risk",
+        "Check the timeline of key events to see how science preceded litigation",
+      ]}) as string[],
+      useCases: t('help.litigation.useCases', { returnObjects: true, defaultValue: [
+        "Assess whether a compound is on a litigation trajectory similar to GenX or PFOA",
+        "Identify the publication velocity inflection points that preceded past lawsuits",
+        "Support early-warning monitoring for compounds in your portfolio",
+      ]}) as string[],
+      tips: t('help.litigation.tips', { returnObjects: true, defaultValue: [
+        "Publication count is 'position' — velocity is papers/year, acceleration is how fast velocity changes",
+        "Jerk (third derivative) spikes often precede regulatory action by 12–18 months",
+        "The GenX backtest is validated against real Chemours litigation timeline with 412 PubMed papers",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.portfolio', 'Portfolio'), path: "/portfolio" },
+        { name: t('nav.evidence', 'Evidence Chain'), path: "/evidence" },
+      ],
+      apiEndpoint: "/api/v1/litigation",
+    },
+
+    regulatory: {
+      title: t('help.regulatory.title', 'Regulatory Compliance'),
+      description: t('help.regulatory.description',
+        'Check compounds against EPA, EU REACH, Stockholm Convention, and state-level regulatory frameworks. Covers MCLs, health advisories, and emerging standards.'),
+      whatItDoes: t('help.regulatory.whatItDoes', { returnObjects: true, defaultValue: [
+        "Screens compounds against multi-jurisdictional regulatory databases",
+        "Shows MCL (Maximum Contaminant Level) values where established",
+        "Identifies health advisories, action levels, and notification thresholds",
+        "Flags compounds on the EPA PFAS Action Plan or Stockholm Convention annexes",
+      ]}) as string[],
+      howToUse: t('help.regulatory.howToUse', { returnObjects: true, defaultValue: [
+        "Enter a compound name or CAS number in the search field",
+        "Review the regulatory status cards for each jurisdiction",
+        "Check whether the compound has established limits or is under review",
+        "Export results for inclusion in compliance reports",
+      ]}) as string[],
+      useCases: t('help.regulatory.useCases', { returnObjects: true, defaultValue: [
+        "Verify whether a degradation product triggers regulatory obligations",
+        "Compare regulatory status across EPA, EU, and state frameworks",
+        "Build the regulatory section of an environmental impact assessment",
+      ]}) as string[],
+      tips: t('help.regulatory.tips', { returnObjects: true, defaultValue: [
+        "Compounds 'under review' may have limits proposed — check the EPA PFAS Roadmap",
+        "State-level limits (e.g., Michigan, New Jersey) are often stricter than federal MCLs",
+        "Use alongside Fate Explorer to check if degradation products are regulated",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.fateExplorer', 'Fate Explorer'), path: "/" },
+        { name: t('nav.portfolio', 'Portfolio'), path: "/portfolio" },
+      ],
+      apiEndpoint: "/api/v1/regulatory",
+    },
+
+    portfolio: {
+      title: t('help.portfolio.title', 'Portfolio Assessment'),
+      description: t('help.portfolio.description',
+        'Batch screening of compound portfolios for aggregate PFAS risk. Evaluates materials against degradation, regulatory, and litigation risk dimensions.'),
+      whatItDoes: t('help.portfolio.whatItDoes', { returnObjects: true, defaultValue: [
+        "Screens multiple compounds simultaneously against all AEGIS risk dimensions",
+        "Generates a composite risk score combining degradation, regulatory, and litigation factors",
+        "Ranks compounds by overall risk for prioritization",
+        "Identifies the highest-risk degradation products across a portfolio",
+      ]}) as string[],
+      howToUse: t('help.portfolio.howToUse', { returnObjects: true, defaultValue: [
+        "Select compounds to include in the portfolio assessment",
+        "Review the risk matrix showing each compound's scores across dimensions",
+        "Sort by overall risk score to identify priority compounds",
+        "Drill into individual compounds for detailed pathway and regulatory data",
+      ]}) as string[],
+      useCases: t('help.portfolio.useCases', { returnObjects: true, defaultValue: [
+        "Prioritize which fluoropolymers in a product line need deeper evaluation",
+        "Compare risk profiles across alternative chemistries",
+        "Generate a portfolio-level risk summary for executive review",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.reports', 'Reports'), path: "/reports" },
+        { name: t('nav.fateExplorer', 'Fate Explorer'), path: "/" },
+        { name: t('nav.regulatory', 'Regulatory'), path: "/regulatory" },
+      ],
+      apiEndpoint: "/api/v1/portfolio",
+    },
+
+    reports: {
+      title: t('help.reports.title', 'Executive Reports'),
+      description: t('help.reports.description',
+        'Generate structured risk assessment reports for stakeholders. Combines data from all AEGIS modules into formatted deliverables.'),
+      whatItDoes: t('help.reports.whatItDoes', { returnObjects: true, defaultValue: [
+        "Compiles pathway, regulatory, and risk data into structured report formats",
+        "Generates executive summaries with key findings and recommendations",
+        "Includes DOI-traceable evidence citations for every claim",
+        "Produces output suitable for regulatory submissions or board presentations",
+      ]}) as string[],
+      howToUse: t('help.reports.howToUse', { returnObjects: true, defaultValue: [
+        "Select the report type and target compounds",
+        "Choose which modules to include (pathways, regulatory, litigation)",
+        "Review the generated report and edit as needed",
+        "Export to PDF or share with stakeholders",
+      ]}) as string[],
+      useCases: t('help.reports.useCases', { returnObjects: true, defaultValue: [
+        "Prepare a risk assessment deliverable for a client engagement",
+        "Generate a regulatory submission appendix with literature evidence",
+        "Create an executive briefing on PFAS exposure for leadership",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.portfolio', 'Portfolio'), path: "/portfolio" },
+        { name: t('nav.evidence', 'Evidence Chain'), path: "/evidence" },
+      ],
+      apiEndpoint: "/api/v1/reports",
+    },
+
+    evidence: {
+      title: t('help.evidence.title', 'Evidence Chain'),
+      description: t('help.evidence.description',
+        'Trace every AEGIS claim back to its source DOI. Browse the full corpus of 353 peer-reviewed papers and 732 extracted degradation pathways.'),
+      whatItDoes: t('help.evidence.whatItDoes', { returnObjects: true, defaultValue: [
+        "Provides full traceability from any risk assessment claim to source literature",
+        "Shows verbatim quotes from papers with page/section locations",
+        "Links to DOIs for direct access to source publications",
+        "Displays extraction confidence scores for each evidence item",
+      ]}) as string[],
+      howToUse: t('help.evidence.howToUse', { returnObjects: true, defaultValue: [
+        "Search by compound name, DOI, or keyword",
+        "Browse pathways grouped by their source publication",
+        "Click any DOI link to open the source paper directly",
+        "Review verbatim quotes to verify the extraction accuracy",
+      ]}) as string[],
+      useCases: t('help.evidence.useCases', { returnObjects: true, defaultValue: [
+        "Verify a specific degradation pathway claim before citing it in testimony",
+        "Find all papers that discuss a particular compound's thermal behavior",
+        "Audit the evidence quality behind a high-risk signal",
+      ]}) as string[],
+      tips: t('help.evidence.tips', { returnObjects: true, defaultValue: [
+        "Evidence with multiple independent DOIs is more defensible than single-source claims",
+        "Verbatim quotes are extracted directly — always verify against the source paper",
+        "Confidence scores reflect extraction certainty, not scientific certainty",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.fateExplorer', 'Fate Explorer'), path: "/" },
+        { name: t('nav.reports', 'Reports'), path: "/reports" },
+      ],
+    },
+
+    analysis: {
+      title: t('help.analysis.title', 'PFAS Analysis'),
+      description: t('help.analysis.description',
+        'Thermal degradation analysis for fluoropolymer compounds. Focused analysis of degradation behavior under specific temperature and atmosphere conditions.'),
+      whatItDoes: t('help.analysis.whatItDoes', { returnObjects: true, defaultValue: [
+        "Analyzes thermal degradation behavior for specific PFAS compounds",
+        "Shows degradation products at different temperature ranges",
+        "Maps degradation under different atmospheric conditions (air, nitrogen, vacuum)",
+        "Provides yield estimates where reported in the literature",
+      ]}) as string[],
+      howToUse: t('help.analysis.howToUse', { returnObjects: true, defaultValue: [
+        "Select a compound and specify the conditions of interest",
+        "Review the degradation product distribution across temperature ranges",
+        "Compare behavior under different atmospheric conditions",
+        "Use the evidence links to trace findings to source papers",
+      ]}) as string[],
+      useCases: t('help.analysis.useCases', { returnObjects: true, defaultValue: [
+        "Evaluate what a fluoropolymer produces during incineration (>800°C)",
+        "Compare degradation under manufacturing conditions vs. end-of-life scenarios",
+        "Assess whether low-temperature processing stays below degradation thresholds",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.fateExplorer', 'Fate Explorer'), path: "/" },
+        { name: t('nav.evidence', 'Evidence Chain'), path: "/evidence" },
+      ],
+      apiEndpoint: "/api/v1/analysis",
+    },
+
+    tier1: {
+      title: t('help.tier1.title', 'Structural Intelligence (Tier 1 + Tier 2)'),
+      description: t('help.tier1.description',
+        'Structure-aware compound screening combining Tier 1 (Morgan fingerprint similarity against 10,974 EPA PFAS compounds) with Tier 2 (substructure pattern mining with Wilson score confidence intervals from 732 literature pathways). Not a prediction engine — reports what the published literature shows.'),
+      whatItDoes: t('help.tier1.whatItDoes', { returnObjects: true, defaultValue: [
+        "Tier 1: Computes Tanimoto similarity against the full EPA PFAS database and aggregates degradation endpoints",
+        "Tier 2: Detects substructure patterns (SMARTS + algorithmic chain analysis) and correlates them with endpoint buckets",
+        "Reports Wilson score confidence intervals — honest uncertainty, not fake precision",
+        "Tracks precursor resolution coverage so you know how grounded the correlations are",
+        "Returns DOI-cited evidence for every pathway found",
+      ]}) as string[],
+      howToUse: t('help.tier1.howToUse', { returnObjects: true, defaultValue: [
+        "Enter a SMILES string directly, or use a quick-select badge (GenX, PFOA, PFOS, 6:2 FTOH)",
+        "Review the risk signal banner — HIGH (red), MEDIUM (amber), LOW (green)",
+        "Check the Substructure Fingerprint card for detected patterns and fluorine metrics",
+        "Expand Pattern-Based Endpoint Correlations to see confidence intervals from the corpus",
+        "Use the Corpus Rules Explorer to browse all mined rules and coverage statistics",
+      ]}) as string[],
+      useCases: t('help.tier1.useCases', { returnObjects: true, defaultValue: [
+        "Screen a novel compound by finding what happens to structurally similar PFAS",
+        "Identify substructure patterns (e.g., long perfluoro chain + carboxylic acid) that correlate with specific endpoints",
+        "Assess how well-grounded the correlations are via the coverage report",
+        "Gather literature evidence for compounds without direct study data",
+      ]}) as string[],
+      tips: t('help.tier1.tips', { returnObjects: true, defaultValue: [
+        "The risk signal reflects endpoint classes: long-chain acids and sulfonates = HIGH",
+        "Tier 2 pattern badges are color-coded: blue = SMARTS, green = algorithmic, purple = classification",
+        "Confidence intervals show the plausible range — wide intervals mean few supporting precursors",
+        "The coverage report shows resolution rate — low coverage means rules are based on fewer compounds",
+        "All evidence is DOI-linked — click any citation to verify the source paper",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.fateExplorer', 'Fate Explorer'), path: "/" },
+        { name: t('nav.evidence', 'Evidence Chain'), path: "/evidence" },
+        { name: t('nav.regulatory', 'Regulatory'), path: "/regulatory" },
+      ],
+      apiEndpoint: "/api/v1/tier1",
+    },
+  };
+
+  return helpContent;
+};
+
+// Default export for backwards compatibility (English fallback)
 const helpContent: Record<string, HelpContent> = {
   fateExplorer: {
     title: "Fate Explorer",
@@ -235,7 +504,7 @@ const helpContent: Record<string, HelpContent> = {
       "Use the evidence links to trace findings to source papers",
     ],
     useCases: [
-      "Evaluate what a fluoropolymer produces during incineration (>800\u00B0C)",
+      "Evaluate what a fluoropolymer produces during incineration (>800°C)",
       "Compare degradation under manufacturing conditions vs. end-of-life scenarios",
       "Assess whether low-temperature processing stays below degradation thresholds",
     ],

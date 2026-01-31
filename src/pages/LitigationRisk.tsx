@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -289,6 +290,7 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
 // ---------------------------------------------------------------------------
 
 const LitigationRisk = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [forecast, setForecast] = useState<LitigationForecast | null>(null);
@@ -379,13 +381,13 @@ const LitigationRisk = () => {
       setForecast(data);
 
       toast({
-        title: "Forecast Complete",
+        title: t('common.forecastComplete'),
         description: `${data.compound}: ${data.risk_level} risk (${(data.probability_24_months * 100).toFixed(1)}% in 24mo)`,
       });
     } catch (error) {
       toast({
-        title: "Forecast Failed",
-        description: "Could not connect to AEGIS API. Make sure the backend is running on port 8002.",
+        title: t('common.forecastFailed'),
+        description: t('common.couldNotConnect'),
         variant: "destructive",
       });
     } finally {
@@ -416,14 +418,14 @@ const LitigationRisk = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title="AEGIS SENTINEL" subtitle="Litigation Early Warning System" helpContent={helpContent.litigation}>
+      <ChemoursHeader title={t('litigation.title')} subtitle={t('litigation.subtitle')} helpContent={helpContent.litigation}>
         {backtest && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{backtest.lead_time_years}</span>-year lead time
+              <span className="text-chemours-red font-bold">{backtest.lead_time_years}</span>{t('litigation.yearLeadTime')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{formatCurrency(backtest.settlement_total_usd)}</span> in settlements
+              <span className="text-chemours-red font-bold">{formatCurrency(backtest.settlement_total_usd)}</span> {t('litigation.inSettlements')}
             </div>
           </>
         )}
@@ -434,11 +436,11 @@ const LitigationRisk = () => {
           <TabsList className="bg-white border border-gray-200 shadow-sm">
             <TabsTrigger value="casestudy" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
               <Eye className="mr-2 h-4 w-4" />
-              Validation Case Studies
+              {t('litigation.validationCaseStudies')}
             </TabsTrigger>
             <TabsTrigger value="forecast" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
               <ShieldAlert className="mr-2 h-4 w-4" />
-              Risk Forecast
+              {t('litigation.riskForecast')}
             </TabsTrigger>
           </TabsList>
 
@@ -449,7 +451,7 @@ const LitigationRisk = () => {
             {/* Compound Selector */}
             {availableBacktests.length > 0 && (
               <div className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                <span className="text-sm font-medium text-gray-600">Select Compound:</span>
+                <span className="text-sm font-medium text-gray-600">{t('litigation.selectCompound')}</span>
                 <div className="flex gap-2">
                   {availableBacktests.map((bt) => (
                     <Button
@@ -470,7 +472,7 @@ const LitigationRisk = () => {
                 </div>
                 {backtest?.compound_id === "pfoa" && (
                   <Badge className="bg-green-100 text-green-800 ml-auto">
-                    Strongest Validation - 15yr Lead Time
+                    {t('litigation.strongestValidation')}
                   </Badge>
                 )}
               </div>
@@ -482,44 +484,44 @@ const LitigationRisk = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">Publications</p>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">{t('litigation.publications')}</p>
                       <p className="text-3xl font-bold text-chemours-dark">{backtest.total_publications}</p>
-                      <p className="text-xs text-gray-400">PubMed papers</p>
+                      <p className="text-xs text-gray-400">{t('litigation.pubmedPapers')}</p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
                       <p className="text-xs text-gray-500 uppercase tracking-wide">
-                        {backtest.first_elevated_year ? "First ELEVATED" : "First Signal"}
+                        {backtest.first_elevated_year ? t('litigation.firstElevated') : t('litigation.firstSignal')}
                       </p>
                       <p className="text-3xl font-bold text-yellow-600">
                         {backtest.first_elevated_year || backtest.first_publication_year}
                       </p>
                       <p className="text-xs text-gray-400">
-                        {backtest.first_elevated_year ? "acceleration detected" : "velocity from zero"}
+                        {backtest.first_elevated_year ? t('litigation.accelerationDetected') : t('litigation.velocityFromZero')}
                       </p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
                       <p className="text-xs text-gray-500 uppercase tracking-wide">
-                        {backtest.first_critical_year ? "First CRITICAL" : "First Lawsuit"}
+                        {backtest.first_critical_year ? t('litigation.firstCritical') : t('litigation.firstLawsuit')}
                       </p>
                       <p className="text-3xl font-bold text-red-600">
                         {backtest.first_critical_year || backtest.first_lawsuit_year}
                       </p>
                       <p className="text-xs text-gray-400">
                         {backtest.first_critical_year
-                          ? `${backtest.major_settlement_year ? backtest.major_settlement_year - backtest.first_critical_year : backtest.lead_time_years}-yr before settlement`
-                          : `${backtest.lead_time_years}-yr after signal`}
+                          ? `${backtest.major_settlement_year ? backtest.major_settlement_year - backtest.first_critical_year : backtest.lead_time_years}${t('litigation.yrBeforeSettlement')}`
+                          : `${backtest.lead_time_years}${t('litigation.yrAfterSignal')}`}
                       </p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">Total Settlements</p>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">{t('litigation.totalSettlements')}</p>
                       <p className="text-3xl font-bold text-chemours-red">{formatCurrency(backtest.settlement_total_usd)}</p>
-                      <p className="text-xs text-gray-400">{backtest.affected_population.toLocaleString()} affected</p>
+                      <p className="text-xs text-gray-400">{backtest.affected_population.toLocaleString()} {t('litigation.affected')}</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -530,14 +532,14 @@ const LitigationRisk = () => {
                     <div className="flex items-center justify-between flex-wrap gap-3">
                       <div>
                         <CardTitle className="text-chemours-dark">
-                          {backtest.compound} {chartView === "signal" ? "SENTINEL Signal" : chartView === "sentiment" ? "Sentiment Lifecycle" : "Publication Timeline"}
+                          {backtest.compound} {chartView === "signal" ? t('litigation.sentinelSignal') : chartView === "sentiment" ? t('litigation.sentimentLifecycle') : t('litigation.publicationTimeline')}
                         </CardTitle>
                         <CardDescription>
                           {chartView === "signal"
-                            ? "3-year trailing velocity (papers/yr) colored by alert level. Orange line = acceleration. Jerk (inflection) shown in tooltip."
+                            ? t('litigation.chartDescriptions.signal')
                             : chartView === "sentiment"
-                            ? "Research sentiment classified by AI from PubMed titles + abstracts. Stacked areas show the mood of the literature over time."
-                            : "Peer-reviewed publications per year from PubMed. Bars colored by phase. Vertical lines mark key events."}
+                            ? t('litigation.chartDescriptions.sentiment')
+                            : t('litigation.chartDescriptions.publications')}
                         </CardDescription>
                       </div>
                       <div className="flex gap-1">
@@ -547,7 +549,7 @@ const LitigationRisk = () => {
                           className={chartView === "publications" ? "bg-chemours-dark text-white hover:bg-chemours-dark/90" : ""}
                           onClick={() => setChartView("publications")}
                         >
-                          Publications
+                          {t('litigation.publications')}
                         </Button>
                         <Button
                           variant={chartView === "signal" ? "default" : "outline"}
@@ -555,7 +557,7 @@ const LitigationRisk = () => {
                           className={chartView === "signal" ? "bg-chemours-dark text-white hover:bg-chemours-dark/90" : ""}
                           onClick={() => setChartView("signal")}
                         >
-                          SENTINEL Signal
+                          {t('litigation.sentinelSignal')}
                         </Button>
                         <Button
                           variant={chartView === "sentiment" ? "default" : "outline"}
@@ -747,7 +749,7 @@ const LitigationRisk = () => {
                           ))}
                           <div className="flex items-center gap-1.5">
                             <div className="w-6 h-0.5 bg-orange-500 rounded" />
-                            <span className="text-xs text-gray-600">Acceleration</span>
+                            <span className="text-xs text-gray-600">{t('litigation.acceleration')}</span>
                           </div>
                         </>
                       ) : chartView === "sentiment" ? (
@@ -760,7 +762,7 @@ const LitigationRisk = () => {
                           ))}
                           <div className="flex items-center gap-1.5">
                             <div className="w-6 h-0.5 rounded" style={{ borderTop: "2px dashed #dc2626" }} />
-                            <span className="text-xs text-gray-600">Cumulative Sentiment</span>
+                            <span className="text-xs text-gray-600">{t('litigation.cumulativeSentiment')}</span>
                           </div>
                         </>
                       ) : (
@@ -777,10 +779,7 @@ const LitigationRisk = () => {
                     {chartView === "sentiment" && (
                       <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                         <p className="text-xs text-amber-900 leading-relaxed">
-                          <span className="font-semibold">Key finding:</span> No independent celebration papers exist for GenX.
-                          The first peer-reviewed publications were detection and alarm studies.
-                          The only positive narrative was manufacturer-controlled (DuPont brochure, 2008-2010).
-                          Cumulative research sentiment went negative immediately and never recovered.
+                          <span className="font-semibold">{t('litigation.sentimentKeyFinding')}</span> {t('litigation.sentimentAnnotation')}
                         </p>
                       </div>
                     )}
@@ -793,10 +792,10 @@ const LitigationRisk = () => {
                     <CardHeader>
                       <CardTitle className="text-chemours-dark flex items-center gap-2">
                         <Quote className="h-5 w-5 text-green-600" />
-                        The Claims vs. The Reality
+                        {t('litigation.claimsVsReality')}
                       </CardTitle>
                       <CardDescription>
-                        DuPont's own marketing language (2008-2010) juxtaposed with documented outcomes
+                        {t('litigation.claimsDescription')}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -807,7 +806,7 @@ const LitigationRisk = () => {
                             <div>
                               <div className="flex items-center gap-2 mb-2">
                                 <Badge className="bg-green-100 text-green-800 text-xs font-medium">{claim.year}</Badge>
-                                <span className="text-xs text-gray-400 uppercase tracking-wide">Claim</span>
+                                <span className="text-xs text-gray-400 uppercase tracking-wide">{t('litigation.claim')}</span>
                               </div>
                               <p className="text-sm text-gray-800 italic">"{claim.claim}"</p>
                               <p className="text-xs text-gray-400 mt-1">{claim.source}</p>
@@ -820,7 +819,7 @@ const LitigationRisk = () => {
                             <div>
                               <div className="flex items-center gap-2 mb-2">
                                 <Badge className="bg-red-100 text-red-800 text-xs font-medium">{claim.reality_year}</Badge>
-                                <span className="text-xs text-gray-400 uppercase tracking-wide">Reality</span>
+                                <span className="text-xs text-gray-400 uppercase tracking-wide">{t('litigation.reality')}</span>
                               </div>
                               <p className="text-sm text-red-900">{claim.reality}</p>
                             </div>
@@ -836,10 +835,10 @@ const LitigationRisk = () => {
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <ShieldAlert className="h-5 w-5 text-yellow-400" />
-                      SENTINEL Reconstruction
+                      {t('litigation.sentinelReconstruction')}
                     </CardTitle>
                     <CardDescription className="text-gray-400">
-                      What SENTINEL would have shown before the lawsuits
+                      {t('litigation.whatSentinelWouldShow')}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -847,13 +846,13 @@ const LitigationRisk = () => {
                       {backtest.sentinel_reconstruction.narrative}
                     </p>
                     <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                      <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-1">Key Insight</p>
+                      <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-1">{t('litigation.keyInsight')}</p>
                       <p className="text-white text-sm">
                         {backtest.sentinel_reconstruction.key_insight}
                       </p>
                     </div>
                     <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                      <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">Counterfactual</p>
+                      <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">{t('litigation.counterfactual')}</p>
                       <p className="text-gray-300 text-sm">
                         {backtest.sentinel_reconstruction.counterfactual}
                       </p>
@@ -864,8 +863,8 @@ const LitigationRisk = () => {
                 {/* Event Timeline */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">Event Timeline</CardTitle>
-                    <CardDescription>Key events from EPA filings, court records, and public sources</CardDescription>
+                    <CardTitle className="text-chemours-dark">{t('litigation.eventTimeline')}</CardTitle>
+                    <CardDescription>{t('litigation.eventTimelineDescription')}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -887,7 +886,7 @@ const LitigationRisk = () => {
                     </div>
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <p className="text-xs text-gray-400">
-                        Sources: {backtest.source_citations.slice(0, 3).join("; ")}; and {backtest.source_citations.length - 3} more.
+                        Sources: {backtest.source_citations.slice(0, 3).join("; ")}; {t('litigation.andMore', { count: backtest.source_citations.length - 3 })}
                       </p>
                     </div>
                   </CardContent>
@@ -897,7 +896,7 @@ const LitigationRisk = () => {
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
                   <Loader2 className="h-8 w-8 mx-auto mb-4 animate-spin text-chemours-red" />
-                  <p className="text-gray-500">Loading {selectedCompound.toUpperCase()} case study...</p>
+                  <p className="text-gray-500">{t('litigation.loadingCaseStudy', { compound: selectedCompound.toUpperCase() })}</p>
                 </CardContent>
               </Card>
             )}
@@ -911,12 +910,12 @@ const LitigationRisk = () => {
               {/* Input Panel */}
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-chemours-dark">Forecast Parameters</CardTitle>
-                  <CardDescription>Configure litigation risk assessment</CardDescription>
+                  <CardTitle className="text-chemours-dark">{t('litigation.forecastParameters')}</CardTitle>
+                  <CardDescription>{t('litigation.configureRiskAssessment')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label className="text-gray-700">Compound</Label>
+                    <Label className="text-gray-700">{t('litigation.compound')}</Label>
                     <Select value={formData.compound} onValueChange={(v) => setFormData({ ...formData, compound: v })}>
                       <SelectTrigger className="bg-white border-gray-300">
                         <SelectValue />
@@ -930,7 +929,7 @@ const LitigationRisk = () => {
                   </div>
 
                   <div>
-                    <Label className="text-gray-700">Production Volume (lbs/year)</Label>
+                    <Label className="text-gray-700">{t('litigation.productionVolume')}</Label>
                     <Input
                       type="number"
                       value={formData.volume}
@@ -940,7 +939,7 @@ const LitigationRisk = () => {
                   </div>
 
                   <div>
-                    <Label className="text-gray-700">Exposure Pathways</Label>
+                    <Label className="text-gray-700">{t('litigation.exposurePathways')}</Label>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {PATHWAYS.map((p) => (
                         <Badge
@@ -961,9 +960,9 @@ const LitigationRisk = () => {
                     className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
                   >
                     {isLoading ? (
-                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Calculating...</>
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.calculating')}</>
                     ) : (
-                      <><TrendingUp className="mr-2 h-4 w-4" /> Calculate Risk</>
+                      <><TrendingUp className="mr-2 h-4 w-4" /> {t('litigation.calculateRisk')}</>
                     )}
                   </Button>
                 </CardContent>
@@ -977,7 +976,7 @@ const LitigationRisk = () => {
                     <Alert className="border-amber-200 bg-amber-50">
                       <Info className="h-4 w-4 text-amber-600" />
                       <AlertDescription className="text-amber-800 text-sm">
-                        <strong>Preview Model:</strong> Litigation probabilities are calculated using a simplified model based on publication velocity, compound type, and historical case data. Production deployment requires actuarial review and jurisdiction-specific factors.
+                        <strong>{t('common.previewModel')}:</strong> {t('litigation.modelDisclaimer')}
                       </AlertDescription>
                     </Alert>
 
@@ -985,24 +984,24 @@ const LitigationRisk = () => {
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-chemours-dark">{forecast.compound} Litigation Forecast</CardTitle>
-                          <Badge className={getRiskColor(forecast.risk_level)}>{forecast.risk_level} RISK</Badge>
+                          <CardTitle className="text-chemours-dark">{forecast.compound} {t('litigation.litigationForecast')}</CardTitle>
+                          <Badge className={getRiskColor(forecast.risk_level)}>{forecast.risk_level} {t('litigation.risk')}</Badge>
                         </div>
                       </CardHeader>
                       <CardContent>
                         <div className="grid grid-cols-3 gap-4 mb-6">
                           <div className="text-center">
-                            <p className="text-sm text-gray-500">12 Months</p>
+                            <p className="text-sm text-gray-500">{t('litigation.months12')}</p>
                             <p className="text-2xl font-bold text-chemours-dark">{(forecast.probability_12_months * 100).toFixed(1)}%</p>
                             <Progress value={forecast.probability_12_months * 100} className="mt-2" />
                           </div>
                           <div className="text-center">
-                            <p className="text-sm text-gray-500">24 Months</p>
+                            <p className="text-sm text-gray-500">{t('litigation.months24')}</p>
                             <p className="text-2xl font-bold text-chemours-red">{(forecast.probability_24_months * 100).toFixed(1)}%</p>
                             <Progress value={forecast.probability_24_months * 100} className="mt-2" />
                           </div>
                           <div className="text-center">
-                            <p className="text-sm text-gray-500">36 Months</p>
+                            <p className="text-sm text-gray-500">{t('litigation.months36')}</p>
                             <p className="text-2xl font-bold text-chemours-dark">{(forecast.probability_36_months * 100).toFixed(1)}%</p>
                             <Progress value={forecast.probability_36_months * 100} className="mt-2" />
                           </div>
@@ -1011,13 +1010,13 @@ const LitigationRisk = () => {
                         <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
                           <div className="flex items-center gap-2">
                             <DollarSign className="h-6 w-6 text-green-600" />
-                            <span className="text-gray-600">Estimated Exposure</span>
+                            <span className="text-gray-600">{t('litigation.estimatedExposure')}</span>
                           </div>
                           <span className="text-2xl font-bold text-green-600">{formatCurrency(forecast.estimated_exposure_usd)}</span>
                         </div>
 
                         <div className="mt-4 text-sm text-gray-500">
-                          Confidence Interval: {(forecast.confidence_low * 100).toFixed(1)}% - {(forecast.confidence_high * 100).toFixed(1)}%
+                          {t('litigation.confidenceInterval')}: {(forecast.confidence_low * 100).toFixed(1)}% - {(forecast.confidence_high * 100).toFixed(1)}%
                         </div>
                       </CardContent>
                     </Card>
@@ -1027,7 +1026,7 @@ const LitigationRisk = () => {
                       <CardHeader>
                         <CardTitle className="text-chemours-dark flex items-center gap-2">
                           <AlertTriangle className="h-5 w-5 text-chemours-orange" />
-                          Key Risk Drivers
+                          {t('litigation.keyRiskDrivers')}
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
@@ -1045,7 +1044,7 @@ const LitigationRisk = () => {
                     {/* Similar Cases */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
-                        <CardTitle className="text-chemours-dark">Similar Cases</CardTitle>
+                        <CardTitle className="text-chemours-dark">{t('litigation.similarCases')}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-3">
@@ -1053,7 +1052,7 @@ const LitigationRisk = () => {
                             <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                               <div>
                                 <p className="font-medium text-chemours-dark">{c.case}</p>
-                                <p className="text-sm text-gray-500">Year: {c.year} | Relevance: {(c.relevance * 100).toFixed(0)}%</p>
+                                <p className="text-sm text-gray-500">{t('common.year')}: {c.year} | {t('litigation.relevance')}: {(c.relevance * 100).toFixed(0)}%</p>
                               </div>
                               <span className="text-lg font-bold text-green-600">{formatCurrency(c.settlement)}</span>
                             </div>
@@ -1068,9 +1067,9 @@ const LitigationRisk = () => {
                       <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
                         <Scale className="h-8 w-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-semibold text-chemours-dark mb-2">Compound Risk Forecast</h3>
+                      <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('litigation.compoundRiskForecast')}</h3>
                       <p className="text-gray-500 max-w-md mx-auto">
-                        Calculate litigation probability based on publication velocity, historical settlements, and exposure pathways.
+                        {t('litigation.forecastDescription')}
                       </p>
                     </CardContent>
                   </Card>

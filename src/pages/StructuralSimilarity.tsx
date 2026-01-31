@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -165,6 +166,7 @@ const getRiskBorderColor = (signal: string) => {
 // ---------------------------------------------------------------------------
 
 const StructuralSimilarity = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [smiles, setSmiles] = useState("");
@@ -230,8 +232,8 @@ const StructuralSimilarity = () => {
   const handleQuery = async () => {
     if (!smiles.trim()) {
       toast({
-        title: "SMILES required",
-        description: "Enter a SMILES string or select a demo compound.",
+        title: t('common.smilesRequired'),
+        description: t('tier1.enterSmilesOrSelect'),
         variant: "destructive",
       });
       return;
@@ -280,13 +282,13 @@ const StructuralSimilarity = () => {
       if (!tier2Coverage) loadTier2Coverage();
 
       toast({
-        title: "Analysis Complete",
+        title: t('common.analysisComplete'),
         description: `${data.query_name}: ${data.risk_signal} risk signal (${data.n_neighbors_with_pathways} neighbors with pathway data)`,
       });
     } catch (error: any) {
       toast({
-        title: "Query Failed",
-        description: error.message || "Could not connect to AEGIS engine.",
+        title: t('common.queryFailed'),
+        description: error.message || t('tier1.couldNotConnect'),
         variant: "destructive",
       });
     } finally {
@@ -302,27 +304,27 @@ const StructuralSimilarity = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <ChemoursHeader
-        title="AEGIS TIER 1"
-        subtitle="Structural Similarity + Pathway Intelligence"
+        title={t('tier1.title')}
+        subtitle={t('tier1.subtitle')}
         helpContent={helpContent.tier1}
       >
         {summary && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.epa_compounds.toLocaleString()}</span> EPA Compounds
+              <span className="text-chemours-red font-bold">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompounds')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.pathways.toLocaleString()}</span> Pathways
+              <span className="text-chemours-red font-bold">{summary.pathways.toLocaleString()}</span> {t('common.pathways')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.compounds_with_fingerprints}</span> Fingerprinted
+              <span className="text-chemours-red font-bold">{summary.compounds_with_fingerprints}</span> {t('tier1.fingerprinted')}
             </div>
             {tier2Coverage && (
               <div className="text-gray-600">
                 <span className="text-chemours-red font-bold">
                   {tier2Coverage.resolved_precursors}/{tier2Coverage.resolvable_precursors}
                 </span>{" "}
-                Resolved ({(tier2Coverage.resolution_rate * 100).toFixed(0)}%)
+                {t('tier1.resolved')} ({(tier2Coverage.resolution_rate * 100).toFixed(0)}%)
               </div>
             )}
           </>
@@ -335,15 +337,15 @@ const StructuralSimilarity = () => {
           <CardHeader>
             <CardTitle className="text-chemours-dark flex items-center gap-2">
               <Fingerprint className="h-5 w-5 text-chemours-red" />
-              Compound Query
+              {t('tier1.compoundQuery')}
             </CardTitle>
             <CardDescription>
-              Enter a SMILES string or select a demo compound. Returns what the published literature shows for structurally similar compounds.
+              {t('tier1.queryDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label className="text-gray-700">SMILES</Label>
+              <Label className="text-gray-700">{t('tier1.smiles')}</Label>
               <Input
                 value={smiles}
                 onChange={(e) => setSmiles(e.target.value)}
@@ -353,7 +355,7 @@ const StructuralSimilarity = () => {
             </div>
 
             <div>
-              <Label className="text-gray-700">Compound Name (optional)</Label>
+              <Label className="text-gray-700">{t('tier1.compoundName')}</Label>
               <Input
                 value={compoundName}
                 onChange={(e) => setCompoundName(e.target.value)}
@@ -363,7 +365,7 @@ const StructuralSimilarity = () => {
             </div>
 
             <div>
-              <Label className="text-gray-700 text-xs">Quick Select</Label>
+              <Label className="text-gray-700 text-xs">{t('tier1.quickSelect')}</Label>
               <div className="flex flex-wrap gap-2 mt-1">
                 {DEMO_COMPOUNDS.map((c) => (
                   <Badge
@@ -388,9 +390,9 @@ const StructuralSimilarity = () => {
               className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
             >
               {isLoading ? (
-                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing structure...</>
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('tier1.analyzingStructure')}</>
               ) : (
-                <><Search className="mr-2 h-4 w-4" /> Analyze Compound</>
+                <><Search className="mr-2 h-4 w-4" /> {t('tier1.analyzeCompound')}</>
               )}
             </Button>
           </CardContent>
@@ -433,10 +435,10 @@ const StructuralSimilarity = () => {
                 <CardHeader>
                   <CardTitle className="text-chemours-dark flex items-center gap-2">
                     <FlaskConical className="h-5 w-5 text-chemours-orange" />
-                    Degradation Endpoints
+                    {t('tier1.degradationEndpoints')}
                   </CardTitle>
                   <CardDescription>
-                    Products observed in literature for structurally similar compounds
+                    {t('tier1.degradationEndpointsDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -466,10 +468,10 @@ const StructuralSimilarity = () => {
                 <CardHeader>
                   <CardTitle className="text-chemours-dark flex items-center gap-2">
                     <Beaker className="h-5 w-5 text-chemours-orange" />
-                    Degradation Mechanisms
+                    {t('tier1.degradationMechanisms')}
                   </CardTitle>
                   <CardDescription>
-                    How structurally similar compounds break down
+                    {t('tier1.degradationMechanismsDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -500,10 +502,10 @@ const StructuralSimilarity = () => {
                 <CardHeader>
                   <CardTitle className="text-chemours-dark flex items-center gap-2">
                     <Shapes className="h-5 w-5 text-chemours-orange" />
-                    Substructure Fingerprint
+                    {t('tier1.substructureFingerprint')}
                   </CardTitle>
                   <CardDescription>
-                    Structural patterns detected in the query compound
+                    {t('tier1.substructureFingerprintDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -576,7 +578,7 @@ const StructuralSimilarity = () => {
                     <div className="flex items-center gap-2">
                       <TrendingUp className="h-5 w-5 text-chemours-orange" />
                       <CardTitle className="text-chemours-dark">
-                        Pattern-Based Endpoint Correlations ({tier2Result.endpoint_correlations.length})
+                        {t('tier1.patternBasedCorrelations')} ({tier2Result.endpoint_correlations.length})
                       </CardTitle>
                     </div>
                     {showCorrelations
@@ -585,7 +587,7 @@ const StructuralSimilarity = () => {
                     }
                   </div>
                   <CardDescription>
-                    What the literature corpus shows for compounds with these substructure patterns.
+                    {t('tier1.patternBasedCorrelationsDescription')}
                     {tier2Result.coverage_info.resolved_precursors != null && (
                       <span className="ml-1">
                         Based on {tier2Result.coverage_info.resolved_precursors as number} resolved precursors.
@@ -663,7 +665,7 @@ const StructuralSimilarity = () => {
                   <div className="flex items-center gap-2">
                     <Atom className="h-5 w-5 text-chemours-orange" />
                     <CardTitle className="text-chemours-dark">
-                      Structurally Similar Compounds ({result.similar_in_epa.length} EPA + {result.similar_with_pathways.length} with pathways)
+                      {t('tier1.structurallySimilarCompounds')} ({result.similar_in_epa.length} EPA + {result.similar_with_pathways.length} {t('tier1.withPathways')})
                     </CardTitle>
                   </div>
                   {showSimilar ? <ChevronUp className="h-5 w-5 text-gray-400" /> : <ChevronDown className="h-5 w-5 text-gray-400" />}
@@ -746,7 +748,7 @@ const StructuralSimilarity = () => {
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-chemours-orange" />
                     <CardTitle className="text-chemours-dark">
-                      Evidence Citations ({result.evidence_citations.length} DOIs)
+                      {t('tier1.evidenceCitations')} ({result.evidence_citations.length} DOIs)
                     </CardTitle>
                   </div>
                   {showEvidence ? <ChevronUp className="h-5 w-5 text-gray-400" /> : <ChevronDown className="h-5 w-5 text-gray-400" />}
@@ -808,10 +810,10 @@ const StructuralSimilarity = () => {
                   <div className="flex items-center gap-2">
                     <Database className="h-5 w-5 text-chemours-orange" />
                     <CardTitle className="text-chemours-dark">
-                      Corpus Rules Explorer
+                      {t('tier1.corpusRulesExplorer')}
                       {tier2Coverage && (
                         <span className="text-sm font-normal text-gray-500 ml-2">
-                          {tier2RulesTotal || "..."} rules | {tier2Coverage.resolved_precursors}/{tier2Coverage.resolvable_precursors} precursors resolved
+                          {tier2RulesTotal || "..."} {t('tier1.rules')} | {tier2Coverage.resolved_precursors}/{tier2Coverage.resolvable_precursors} {t('tier1.precursorsResolved')}
                         </span>
                       )}
                     </CardTitle>
@@ -822,7 +824,7 @@ const StructuralSimilarity = () => {
                   }
                 </div>
                 <CardDescription>
-                  Browse all mined substructure-to-endpoint correlation rules from the literature corpus
+                  {t('tier1.corpusRulesExplorerDescription')}
                 </CardDescription>
               </CardHeader>
               {showRulesExplorer && (
@@ -953,28 +955,26 @@ const StructuralSimilarity = () => {
               <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
                 <Fingerprint className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-chemours-dark mb-2">Structural Similarity Search</h3>
+              <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('tier1.structuralSimilaritySearch')}</h3>
               <p className="text-gray-500 max-w-lg mx-auto">
-                Enter a SMILES string to find structurally similar compounds in the EPA PFAS database
-                and see what the published literature documents about their degradation pathways.
-                Not prediction &mdash; evidence.
+                {t('tier1.structuralSimilaritySearchDescription')}
               </p>
               {summary && (
                 <div className="flex justify-center gap-8 mt-6 text-sm text-gray-500 flex-wrap">
                   <div>
-                    <span className="font-bold text-chemours-dark">{summary.epa_compounds.toLocaleString()}</span> EPA compounds
+                    <span className="font-bold text-chemours-dark">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompoundsLower')}
                   </div>
                   <div>
-                    <span className="font-bold text-chemours-dark">{summary.pathways.toLocaleString()}</span> pathways
+                    <span className="font-bold text-chemours-dark">{summary.pathways.toLocaleString()}</span> {t('common.pathwaysLower')}
                   </div>
                   <div>
-                    <span className="font-bold text-chemours-dark">{summary.fate_compounds.toLocaleString()}</span> fate compounds
+                    <span className="font-bold text-chemours-dark">{summary.fate_compounds.toLocaleString()}</span> {t('tier1.fateCompounds')}
                   </div>
                   {tier2Coverage && (
                     <div>
                       <span className="font-bold text-chemours-dark">
                         {tier2Coverage.resolved_precursors}/{tier2Coverage.resolvable_precursors}
-                      </span> resolved precursors
+                      </span> {t('tier1.resolvedPrecursors')}
                     </div>
                   )}
                 </div>

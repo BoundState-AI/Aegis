@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -49,6 +50,7 @@ const PARENT_COMPOUNDS = [
 ];
 
 const FateExplorer = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<FateQueryResponse | null>(null);
@@ -114,13 +116,13 @@ const FateExplorer = () => {
       setResults(data);
 
       toast({
-        title: "Query Complete",
-        description: `Found ${data.total_transformations} degradation pathways for ${formData.parent}`,
+        title: t('common.queryComplete'),
+        description: t('fateExplorer.foundPathways', { count: data.total_transformations, compound: formData.parent }),
       });
     } catch (error) {
       toast({
-        title: "Query Failed",
-        description: "Could not connect to AEGIS API. Make sure the backend is running on port 8002.",
+        title: t('common.queryFailed'),
+        description: t('common.couldNotConnect'),
         variant: "destructive",
       });
     } finally {
@@ -141,17 +143,17 @@ const FateExplorer = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <ChemoursHeader title="AEGIS Fate Explorer" subtitle="PFAS Degradation Intelligence" helpContent={helpContent.fateExplorer}>
+      <ChemoursHeader title={t('fateExplorer.title')} subtitle={t('fateExplorer.subtitle')} helpContent={helpContent.fateExplorer}>
         {summary && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.total_nodes}</span> compounds
+              <span className="text-chemours-red font-bold">{summary.total_nodes}</span> {t('common.compounds')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.total_edges.toLocaleString()}</span> transformations
+              <span className="text-chemours-red font-bold">{summary.total_edges.toLocaleString()}</span> {t('common.transformations')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.haiku_records}</span> papers extracted
+              <span className="text-chemours-red font-bold">{summary.haiku_records}</span> {t('common.papersExtracted')}
             </div>
           </>
         )}
@@ -162,12 +164,12 @@ const FateExplorer = () => {
           {/* Query Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">Query Parameters</CardTitle>
-              <CardDescription>Search degradation pathways</CardDescription>
+              <CardTitle className="text-chemours-dark">{t('fateExplorer.queryParameters')}</CardTitle>
+              <CardDescription>{t('fateExplorer.searchDegradationPathways')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label className="text-gray-700">Parent Compound</Label>
+                <Label className="text-gray-700">{t('fateExplorer.parentCompound')}</Label>
                 <Popover open={parentOpen} onOpenChange={setParentOpen}>
                   <PopoverTrigger asChild>
                     <Button
@@ -176,15 +178,15 @@ const FateExplorer = () => {
                       aria-expanded={parentOpen}
                       className="w-full justify-between bg-white border-gray-300 text-left font-normal"
                     >
-                      {formData.parent || "Select compound..."}
+                      {formData.parent || t('fateExplorer.selectCompound')}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
                     <Command>
-                      <CommandInput placeholder="Search compounds..." />
+                      <CommandInput placeholder={t('fateExplorer.searchCompounds')} />
                       <CommandList>
-                        <CommandEmpty>No compound found.</CommandEmpty>
+                        <CommandEmpty>{t('fateExplorer.noCompoundFound')}</CommandEmpty>
                         <CommandGroup>
                           {(parents.length > 0 ? parents : PARENT_COMPOUNDS).map((p) => (
                             <CommandItem
@@ -208,7 +210,7 @@ const FateExplorer = () => {
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <Label className="text-gray-700">Min Temp (°C)</Label>
+                  <Label className="text-gray-700">{t('fateExplorer.minTemp')}</Label>
                   <Input
                     type="number"
                     value={formData.tempMin}
@@ -217,7 +219,7 @@ const FateExplorer = () => {
                   />
                 </div>
                 <div>
-                  <Label className="text-gray-700">Max Temp (°C)</Label>
+                  <Label className="text-gray-700">{t('fateExplorer.maxTemp')}</Label>
                   <Input
                     type="number"
                     value={formData.tempMax}
@@ -228,16 +230,16 @@ const FateExplorer = () => {
               </div>
 
               <div>
-                <Label className="text-gray-700">Atmosphere</Label>
+                <Label className="text-gray-700">{t('common.atmosphere')}</Label>
                 <Select
                   value={formData.atmosphere}
                   onValueChange={(v) => setFormData({ ...formData, atmosphere: v })}
                 >
                   <SelectTrigger className="bg-white border-gray-300">
-                    <SelectValue placeholder="Any atmosphere" />
+                    <SelectValue placeholder={t('common.any')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="any">Any</SelectItem>
+                    <SelectItem value="any">{t('common.any')}</SelectItem>
                     <SelectItem value="oxidative">Oxidative</SelectItem>
                     <SelectItem value="inert">Inert</SelectItem>
                     <SelectItem value="aqueous">Aqueous</SelectItem>
@@ -246,7 +248,7 @@ const FateExplorer = () => {
               </div>
 
               <div>
-                <Label className="text-gray-700">Min Observations</Label>
+                <Label className="text-gray-700">{t('fateExplorer.minObservations')}</Label>
                 <Input
                   type="number"
                   value={formData.minObservations}
@@ -261,9 +263,9 @@ const FateExplorer = () => {
                 className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
               >
                 {isLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Searching...</>
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.searching')}</>
                 ) : (
-                  <><Search className="mr-2 h-4 w-4" /> Search Pathways</>
+                  <><Search className="mr-2 h-4 w-4" /> {t('fateExplorer.searchPathways')}</>
                 )}
               </Button>
             </CardContent>
@@ -278,10 +280,10 @@ const FateExplorer = () => {
                   <CardHeader>
                     <CardTitle className="text-chemours-dark flex items-center gap-2">
                       <AlertTriangle className="h-5 w-5 text-chemours-orange" />
-                      {results.total_transformations} Degradation Pathways Found
+                      {results.total_transformations} {t('fateExplorer.degradationPathwaysFound')}
                     </CardTitle>
                     <CardDescription>
-                      Query: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
+                      {t('fateExplorer.query')}: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
                     </CardDescription>
                   </CardHeader>
                 </Card>
@@ -292,44 +294,44 @@ const FateExplorer = () => {
                     <Table>
                       <TableHeader>
                         <TableRow className="border-gray-200 hover:bg-gray-50">
-                          <TableHead className="text-gray-700">Product</TableHead>
-                          <TableHead className="text-gray-700">Confidence</TableHead>
-                          <TableHead className="text-gray-700">Temperature</TableHead>
-                          <TableHead className="text-gray-700">Mechanism</TableHead>
-                          <TableHead className="text-gray-700">Hazard</TableHead>
-                          <TableHead className="text-gray-700">Regulated</TableHead>
-                          <TableHead className="text-gray-700">Sources</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.product')}</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.confidence')}</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.temperature')}</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.mechanism')}</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.hazard')}</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.regulated')}</TableHead>
+                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.sources')}</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {results.transformations.map((t, i) => (
+                        {results.transformations.map((tr, i) => (
                           <TableRow key={i} className="border-gray-200 hover:bg-gray-50">
-                            <TableCell className="font-medium text-chemours-dark">{t.child}</TableCell>
+                            <TableCell className="font-medium text-chemours-dark">{tr.child}</TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2 min-w-[100px]">
                                 <Progress
-                                  value={t.score * 100}
+                                  value={tr.score * 100}
                                   className="h-2 w-16"
                                 />
                                 <span className="text-xs text-gray-500 tabular-nums">
-                                  {(t.score * 100).toFixed(0)}%
+                                  {(tr.score * 100).toFixed(0)}%
                                 </span>
                               </div>
                             </TableCell>
-                            <TableCell className="text-gray-600">{t.temp_range || "N/A"}</TableCell>
+                            <TableCell className="text-gray-600">{tr.temp_range || t('common.notAvailable')}</TableCell>
                             <TableCell>
                               <span className="text-gray-600 text-xs capitalize">
-                                {(t.degradation_types?.[0] || "unknown").replace(/_/g, " ")}
+                                {(tr.degradation_types?.[0] || t('common.unknown')).replace(/_/g, " ")}
                               </span>
                             </TableCell>
                             <TableCell>
-                              <Badge className={getHazardColor(t.hazard_level)}>
-                                {t.hazard_level || "Unknown"}
+                              <Badge className={getHazardColor(tr.hazard_level)}>
+                                {tr.hazard_level || t('common.unknown')}
                               </Badge>
                             </TableCell>
                             <TableCell>
-                              {t.is_regulated ? (
-                                <Badge className="bg-chemours-red">Regulated</Badge>
+                              {tr.is_regulated ? (
+                                <Badge className="bg-chemours-red">{t('common.regulated')}</Badge>
                               ) : (
                                 <span className="text-gray-400">—</span>
                               )}
@@ -337,7 +339,7 @@ const FateExplorer = () => {
                             <TableCell>
                               <div className="flex items-center gap-1 text-gray-500">
                                 <FileText className="h-4 w-4" />
-                                {t.source_count}
+                                {tr.source_count}
                               </div>
                             </TableCell>
                           </TableRow>
@@ -350,11 +352,11 @@ const FateExplorer = () => {
                 {/* Degradation Types Legend */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark text-sm">Degradation Types in Results</CardTitle>
+                    <CardTitle className="text-chemours-dark text-sm">{t('fateExplorer.degradationTypesInResults')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
-                      {Array.from(new Set(results.transformations.flatMap(t => t.degradation_types))).map((type) => (
+                      {Array.from(new Set(results.transformations.flatMap(tr => tr.degradation_types))).map((type) => (
                         <Badge key={type} variant="outline" className="border-gray-400 text-gray-600 capitalize">
                           {type.replace(/_/g, " ")}
                         </Badge>
@@ -371,13 +373,13 @@ const FateExplorer = () => {
                   <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
                     <Search className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-chemours-dark mb-2">PFAS Fate Knowledge Graph</h3>
+                  <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('fateExplorer.pfasFateKnowledgeGraph')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
                     {summary
-                      ? `Query ${summary.total_edges.toLocaleString()} degradation transformations across ${summary.parent_compounds} compounds from ${summary.haiku_records} peer-reviewed papers.`
-                      : "Loading knowledge graph..."
+                      ? t('fateExplorer.queryDescription', { edges: summary.total_edges.toLocaleString(), parents: summary.parent_compounds, papers: summary.haiku_records })
+                      : t('fateExplorer.loadingKnowledgeGraph')
                     }
-                    {" "}Select a parent compound and temperature range to explore degradation pathways.
+                    {" "}{t('fateExplorer.selectParentAndTemp')}
                   </p>
                 </CardContent>
               </Card>

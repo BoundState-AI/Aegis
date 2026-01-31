@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ const COMMON_MATERIALS = [
 ];
 
 const PFASAnalysis = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<AnalyzeResponse | null>(null);
@@ -39,8 +41,8 @@ const PFASAnalysis = () => {
   const handleAnalyze = async () => {
     if (!formData.material) {
       toast({
-        title: "Missing Material",
-        description: "Please select a material to analyze",
+        title: t('common.missingMaterial'),
+        description: t('common.pleaseSelectMaterial'),
         variant: "destructive"
       });
       return;
@@ -67,13 +69,13 @@ const PFASAnalysis = () => {
       setResults(data);
 
       toast({
-        title: "Analysis Complete",
-        description: `Evaluated ${data.compound_evaluated} - Found ${data.pfas_findings.length} potential PFAS pathways`
+        title: t('common.analysisComplete'),
+        description: t('analysis.evaluatedPathways', { compound: data.compound_evaluated, count: data.pfas_findings.length })
       });
     } catch (error) {
       toast({
-        title: "Analysis Failed",
-        description: "Could not connect to PFAS Engine backend on port 8001.",
+        title: t('common.analysisFailed'),
+        description: t('analysis.connectionFailed'),
         variant: "destructive"
       });
     } finally {
@@ -107,13 +109,13 @@ const PFASAnalysis = () => {
       window.URL.revokeObjectURL(url);
 
       toast({
-        title: "Report Downloaded",
-        description: "PDF report generated successfully"
+        title: t('common.reportDownloaded'),
+        description: t('common.pdfGeneratedSuccessfully')
       });
     } catch (error) {
       toast({
-        title: "Download Failed",
-        description: "Could not generate PDF report",
+        title: t('common.downloadFailed'),
+        description: t('common.couldNotGeneratePdf'),
         variant: "destructive"
       });
     }
@@ -128,20 +130,20 @@ const PFASAnalysis = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title="PFAS Degradation Analysis" subtitle="Evaluate thermal degradation pathways and PFAS formation" helpContent={helpContent.analysis} />
+      <ChemoursHeader title={t('analysis.title')} subtitle={t('analysis.subtitle')} helpContent={helpContent.analysis} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">Analysis Parameters</CardTitle>
-              <CardDescription>Configure degradation conditions</CardDescription>
+              <CardTitle className="text-chemours-dark">{t('analysis.analysisParameters')}</CardTitle>
+              <CardDescription>{t('analysis.configureDegradationConditions')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Material Selection */}
               <div>
-                <Label className="text-gray-700">Material</Label>
+                <Label className="text-gray-700">{t('common.material')}</Label>
                 <Select value={formData.material} onValueChange={(val) => setFormData({ ...formData, material: val })}>
                   <SelectTrigger className="mt-2 bg-white border-gray-300">
                     <SelectValue placeholder="Select material" />
@@ -159,7 +161,7 @@ const PFASAnalysis = () => {
                 <div className="flex items-center justify-between mb-2">
                   <Label className="text-gray-700 flex items-center gap-2">
                     <Thermometer className="h-4 w-4" />
-                    Temperature
+                    {t('common.temperature')}
                   </Label>
                   <span className={`text-lg font-bold ${getTempColor(formData.temperature)}`}>
                     {formData.temperature}°C
@@ -181,7 +183,7 @@ const PFASAnalysis = () => {
                 {formData.temperature >= 400 && (
                   <div className="flex items-center gap-2 mt-2 text-red-500 text-sm">
                     <AlertTriangle className="h-4 w-4" />
-                    High degradation risk
+                    {t('analysis.highDegradationRisk')}
                   </div>
                 )}
               </div>
@@ -190,7 +192,7 @@ const PFASAnalysis = () => {
               <div>
                 <Label className="text-gray-700 flex items-center gap-2">
                   <Wind className="h-4 w-4" />
-                  Atmosphere
+                  {t('common.atmosphere')}
                 </Label>
                 <Select value={formData.atmosphere} onValueChange={(val) => setFormData({ ...formData, atmosphere: val })}>
                   <SelectTrigger className="mt-2 bg-white border-gray-300">
@@ -209,7 +211,7 @@ const PFASAnalysis = () => {
               <div>
                 <Label className="text-gray-700 flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  Exposure Time (hours)
+                  {t('analysis.exposureTime')}
                 </Label>
                 <Input
                   type="number"
@@ -230,12 +232,12 @@ const PFASAnalysis = () => {
                 {isAnalyzing ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Analyzing...
+                    {t('common.analyzing')}
                   </>
                 ) : (
                   <>
                     <FlaskConical className="mr-2 h-4 w-4" />
-                    Run Analysis
+                    {t('analysis.runAnalysis')}
                   </>
                 )}
               </Button>
@@ -247,7 +249,7 @@ const PFASAnalysis = () => {
                   className="w-full border-gray-300 text-gray-600 hover:bg-gray-100"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  Download PDF Report
+                  {t('common.downloadPdfReport')}
                 </Button>
               )}
             </CardContent>
@@ -261,7 +263,7 @@ const PFASAnalysis = () => {
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-chemours-dark">{results.compound_evaluated} Analysis Results</CardTitle>
+                      <CardTitle className="text-chemours-dark">{results.compound_evaluated} {t('analysis.analysisResults')}</CardTitle>
                       <Badge className="bg-gradient-to-r from-chemours-red to-chemours-orange text-white">{results.pfas_findings.length} Pathways</Badge>
                     </div>
                     <CardDescription>{results.summary}</CardDescription>
@@ -270,15 +272,15 @@ const PFASAnalysis = () => {
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                         <p className="text-2xl font-bold text-chemours-dark">{formData.temperature}°C</p>
-                        <p className="text-sm text-gray-500">Temperature</p>
+                        <p className="text-sm text-gray-500">{t('common.temperature')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                         <p className="text-2xl font-bold text-chemours-dark capitalize">{formData.atmosphere}</p>
-                        <p className="text-sm text-gray-500">Atmosphere</p>
+                        <p className="text-sm text-gray-500">{t('common.atmosphere')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                         <p className="text-2xl font-bold text-chemours-dark">{formData.time}h</p>
-                        <p className="text-sm text-gray-500">Exposure</p>
+                        <p className="text-sm text-gray-500">{t('common.exposure')}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -287,7 +289,7 @@ const PFASAnalysis = () => {
                 {/* Detailed Results */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">PFAS Findings</CardTitle>
+                    <CardTitle className="text-chemours-dark">{t('analysis.pfasFindings')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -324,12 +326,12 @@ const PFASAnalysis = () => {
                             ))}
                             {finding.litigation_flag && (
                               <Badge className="bg-orange-100 text-orange-700 border border-orange-300">
-                                Litigation Risk
+                                {t('analysis.litigationRisk')}
                               </Badge>
                             )}
                             {finding.is_short_chain_pfas && (
                               <Badge className="bg-blue-100 text-blue-700 border border-blue-300">
-                                Short-chain PFAS
+                                {t('analysis.shortChainPfas')}
                               </Badge>
                             )}
                           </div>
@@ -350,22 +352,22 @@ const PFASAnalysis = () => {
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
                   <FlaskConical className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-xl font-semibold text-gray-600 mb-2">PFAS Degradation Analysis</h3>
+                  <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('analysis.title')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    Analyze fluoropolymers and refrigerants for PFAS degradation pathways under specified thermal conditions.
+                    {t('analysis.emptyStateDescription')}
                   </p>
                   <div className="flex justify-center gap-6 mt-6">
                     <div className="text-center">
                       <p className="text-2xl font-bold text-chemours-red">6,141</p>
-                      <p className="text-sm text-gray-500">Transformations</p>
+                      <p className="text-sm text-gray-500">{t('analysis.transformations')}</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-chemours-red">228</p>
-                      <p className="text-sm text-gray-500">Papers</p>
+                      <p className="text-sm text-gray-500">{t('analysis.papers')}</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-chemours-red">216</p>
-                      <p className="text-sm text-gray-500">Compounds</p>
+                      <p className="text-sm text-gray-500">{t('analysis.compounds')}</p>
                     </div>
                   </div>
                 </CardContent>

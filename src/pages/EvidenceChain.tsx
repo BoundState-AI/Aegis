@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -39,6 +40,7 @@ interface SourceStats {
 }
 
 const EvidenceChain = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
@@ -73,12 +75,12 @@ const EvidenceChain = () => {
       setEvidence(data);
 
       toast({
-        title: "Evidence Retrieved",
+        title: t('common.evidenceRetrieved'),
         description: `Found ${data.total_citations} citations for ${data.material}`,
       });
     } catch (error) {
       toast({
-        title: "Search Failed",
+        title: t('common.searchFailed'),
         description: "Could not retrieve evidence",
         variant: "destructive",
       });
@@ -95,14 +97,14 @@ const EvidenceChain = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title="Evidence Chain" subtitle="Citation traceability for PFAS claims" helpContent={helpContent.evidence}>
+      <ChemoursHeader title={t('evidence.title')} subtitle={t('evidence.subtitle')} helpContent={helpContent.evidence}>
         {sourceStats && (
           <>
             <div className="text-gray-600">
               <span className="text-chemours-red font-bold">{sourceStats.total_papers}</span> papers
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</span> transformations
+              <span className="text-chemours-red font-bold">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</span> {t('common.transformations').toLowerCase()}
             </div>
           </>
         )}
@@ -113,12 +115,12 @@ const EvidenceChain = () => {
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">Search Evidence</CardTitle>
-              <CardDescription>Find citations supporting PFAS pathways</CardDescription>
+              <CardTitle className="text-chemours-dark">{t('evidence.searchEvidence')}</CardTitle>
+              <CardDescription>{t('evidence.findCitations')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label className="text-gray-700">Material</Label>
+                <Label className="text-gray-700">{t('common.material')}</Label>
                 <Input
                   value={material}
                   onChange={(e) => setMaterial(e.target.value.toUpperCase())}
@@ -128,7 +130,7 @@ const EvidenceChain = () => {
               </div>
 
               <div>
-                <Label className="text-gray-700">Max Citations</Label>
+                <Label className="text-gray-700">{t('evidence.maxCitations')}</Label>
                 <Input
                   type="number"
                   value={maxCitations}
@@ -145,16 +147,16 @@ const EvidenceChain = () => {
                 className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
               >
                 {isLoading ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Searching...</>
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.searching')}</>
                 ) : (
-                  <><BookOpen className="mr-2 h-4 w-4" /> Find Evidence</>
+                  <><BookOpen className="mr-2 h-4 w-4" /> {t('evidence.findEvidence')}</>
                 )}
               </Button>
 
               {/* Source Stats */}
               {sourceStats && (
                 <div className="border-t border-gray-200 pt-4">
-                  <p className="text-sm text-gray-500 mb-2">Database Coverage:</p>
+                  <p className="text-sm text-gray-500 mb-2">{t('evidence.databaseCoverage')}</p>
                   <div className="space-y-2">
                     {sourceStats.sources.map((s) => (
                       <div key={s.type} className="flex items-center justify-between">
@@ -164,7 +166,7 @@ const EvidenceChain = () => {
                     ))}
                   </div>
                   <p className="text-xs text-gray-400 mt-2">
-                    Extracted via: {sourceStats.extraction_method}
+                    {t('evidence.extractedVia')} {sourceStats.extraction_method}
                   </p>
                 </div>
               )}
@@ -179,14 +181,14 @@ const EvidenceChain = () => {
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-chemours-dark">{evidence.material} Evidence Chain</CardTitle>
+                      <CardTitle className="text-chemours-dark">{evidence.material} {t('evidence.evidenceChain')}</CardTitle>
                       <Badge className="bg-gradient-to-r from-chemours-red to-chemours-orange text-white">{evidence.total_citations} Citations</Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-4">
                       <div className="flex-1">
-                        <p className="text-sm text-gray-500 mb-1">Overall Confidence</p>
+                        <p className="text-sm text-gray-500 mb-1">{t('evidence.overallConfidence')}</p>
                         <Progress value={evidence.confidence_score * 100} className="h-3" />
                       </div>
                       <span className={`text-2xl font-bold ${getConfidenceColor(evidence.confidence_score)}`}>
@@ -201,7 +203,7 @@ const EvidenceChain = () => {
                   <CardHeader>
                     <CardTitle className="text-chemours-dark flex items-center gap-2">
                       <Link2 className="h-5 w-5 text-chemours-red" />
-                      Citation Chain
+                      {t('evidence.citationChain')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -246,7 +248,7 @@ const EvidenceChain = () => {
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
                   <Database className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-xl font-semibold text-gray-600 mb-2">Evidence Chain</h3>
+                  <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('evidence.evidenceChain')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
                     Search for peer-reviewed citations supporting PFAS degradation pathways. All evidence is traceable to source publications.
                   </p>
@@ -254,15 +256,15 @@ const EvidenceChain = () => {
                     <div className="mt-6 flex justify-center gap-6">
                       <div className="text-center">
                         <p className="text-2xl font-bold text-chemours-red">{sourceStats.coverage.fluoropolymers}</p>
-                        <p className="text-sm text-gray-500">Fluoropolymers</p>
+                        <p className="text-sm text-gray-500">{t('evidence.fluoropolymers')}</p>
                       </div>
                       <div className="text-center">
                         <p className="text-2xl font-bold text-chemours-red">{sourceStats.coverage.pfas_endpoints}</p>
-                        <p className="text-sm text-gray-500">PFAS Endpoints</p>
+                        <p className="text-sm text-gray-500">{t('evidence.pfasEndpoints')}</p>
                       </div>
                       <div className="text-center">
                         <p className="text-2xl font-bold text-chemours-red">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</p>
-                        <p className="text-sm text-gray-500">Transformations</p>
+                        <p className="text-sm text-gray-500">{t('common.transformations')}</p>
                       </div>
                     </div>
                   )}
