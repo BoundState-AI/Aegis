@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, FileText, Download, Lock, ChevronRight } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 interface ReportSection {
@@ -31,6 +31,7 @@ interface ExecutiveReport {
 const ExecutiveReports = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [includeLitigation, setIncludeLitigation] = useState(true);

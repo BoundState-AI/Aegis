@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, ReferenceLine, Cell, ComposedChart, Line,
@@ -292,6 +292,7 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
 const LitigationRisk = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [forecast, setForecast] = useState<LitigationForecast | null>(null);
   const [backtest, setBacktest] = useState<BacktestData | null>(null);

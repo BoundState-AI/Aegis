@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
-import helpContent from "@/config/helpContent";
+import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 
 interface PortfolioItem {
@@ -43,6 +43,7 @@ const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
 const PortfolioAssessment = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<PortfolioItem[]>([
     { material: "PTFE", volume_lbs: 100000 },
