@@ -2,14 +2,15 @@
 """
 Module: publication_dynamics
 Purpose: Publication dynamics analysis for litigation risk modeling.
-    Implements GPTL Layer 4 Signal Extraction with temporal derivatives:
+    Tracks scientific attention using physics-inspired temporal derivatives:
     - Position: Total papers mentioning a compound
     - Velocity: Rate of new publications (papers/year)
     - Acceleration: Change in velocity (is research accelerating?)
     - Jerk: Change in acceleration (inflection points)
 
     Rev History:
-        1.0.0 - Initial publication dynamics with GPTL signal extraction
+        1.0.0 - Initial publication dynamics analysis
+        1.0.1 - Terminology cleanup
 
 BoundState AI 2025
 Version: 1.0.0

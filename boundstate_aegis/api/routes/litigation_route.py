@@ -4,14 +4,15 @@ Module: litigation_route
 Purpose: Litigation risk forecasting API endpoints using publication dynamics.
     Provides /api/v1/litigation/* endpoints for the LitigationRisk UI.
 
-    Risk model based on GPTL Layer 4 Signal Extraction:
+    Risk model based on publication dynamics (physics-inspired metrics):
     - Position: Total papers (accumulated research attention)
     - Velocity: Papers per year (current activity)
     - Acceleration: Change in velocity (momentum)
     - Jerk: Change in acceleration (inflection detection)
 
     Rev History:
-        1.0.0 - Initial litigation risk routes with GPTL signal extraction
+        1.0.0 - Initial litigation risk routes with publication dynamics
+        1.0.1 - Terminology cleanup
 
 BoundState AI 2025
 Version: 1.0.0
@@ -88,10 +89,11 @@ class LitigationForecast(BaseModel):
     similar_cases: List[SimilarCase]
     publication_metrics: PublicationMetrics
     methodology: str = (
-        "Risk calculated using GPTL Layer 4 publication dynamics: "
+        "Risk calculated using publication dynamics from PubMed data: "
         "position (total papers), velocity (papers/year), acceleration "
-        "(momentum), jerk (inflection), and content signals from 229 papers."
+        "(momentum), jerk (inflection), and content signals. Preview model."
     )
+    is_preview: bool = True
 
 
 class ForecastRequest(BaseModel):

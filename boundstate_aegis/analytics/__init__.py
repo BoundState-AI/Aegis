@@ -2,7 +2,7 @@
 """
 Module: analytics
 Purpose: AEGIS Analytics Module for publication dynamics and risk modeling.
-    Provides PublicationDynamics class for GPTL Layer 4 signal extraction
+    Provides PublicationDynamics class for physics-inspired signal extraction
     and litigation risk forecasting based on research publication trends.
 
     Rev History:
