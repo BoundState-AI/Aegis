@@ -47,6 +47,7 @@ interface TimelineEntry {
   phase: string;
   velocity: number;
   acceleration: number;
+  jerk: number;
   alert_level: string;
   sentiment?: SentimentBreakdown;
   cumulative_sentiment?: number;
@@ -200,6 +201,11 @@ const BacktestTooltip = ({ active, payload, label, events }: any) => {
           <div>Acceleration: <span className={`font-medium ${entry.acceleration > 0 ? "text-red-600" : "text-green-600"}`}>
             {entry.acceleration > 0 ? "+" : ""}{entry.acceleration}
           </span></div>
+        )}
+        {entry.jerk !== 0 && (
+          <div>Jerk: <span className={`font-medium ${entry.jerk > 0 ? "text-orange-600" : "text-blue-600"}`}>
+            {entry.jerk > 0 ? "+" : ""}{entry.jerk}
+          </span> <span className="text-gray-400 text-xs">(inflection)</span></div>
         )}
       </div>
       {yearEvents.length > 0 && (
@@ -431,7 +437,7 @@ const LitigationRisk = () => {
                         </CardTitle>
                         <CardDescription>
                           {chartView === "signal"
-                            ? "3-year trailing velocity (papers/yr) colored by alert level. Orange line = acceleration (rate of change)."
+                            ? "3-year trailing velocity (papers/yr) colored by alert level. Orange line = acceleration. Jerk (inflection) shown in tooltip."
                             : chartView === "sentiment"
                             ? "Research sentiment classified by AI from PubMed titles + abstracts. Stacked areas show the mood of the literature over time."
                             : "Peer-reviewed publications per year from PubMed. Bars colored by phase. Vertical lines mark key events."}
