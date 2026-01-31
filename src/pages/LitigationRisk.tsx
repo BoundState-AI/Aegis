@@ -78,14 +78,18 @@ interface IndustryClaim {
 
 interface BacktestData {
   compound: string;
+  compound_id: string;
   total_publications: number;
   first_publication_year: number;
   first_lawsuit_year: number;
+  first_elevated_year?: number;  // PFOA-specific
+  first_critical_year?: number;  // PFOA-specific
+  major_settlement_year?: number; // PFOA-specific
   lead_time_years: number;
   phases: PhaseInfo[];
   timeline: TimelineEntry[];
   key_events: KeyEvent[];
-  industry_claims: IndustryClaim[];
+  industry_claims?: IndustryClaim[];
   sentiment_categories?: SentimentCategory[];
   sentinel_reconstruction: {
     narrative: string;
@@ -95,6 +99,21 @@ interface BacktestData {
   settlement_total_usd: number;
   affected_population: number;
   source_citations: string[];
+  validation_metrics?: {
+    first_elevated_to_settlement_years?: number;
+    first_critical_to_settlement_years?: number;
+    velocity_at_first_lawsuit?: number;
+    velocity_at_first_critical?: number;
+  };
+}
+
+interface BacktestSummary {
+  compound_id: string;
+  compound: string;
+  total_publications: number;
+  first_lawsuit_year: number;
+  lead_time_years: number;
+  settlement_total_usd: number;
 }
 
 interface LitigationForecast {
@@ -274,6 +293,8 @@ const LitigationRisk = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [forecast, setForecast] = useState<LitigationForecast | null>(null);
   const [backtest, setBacktest] = useState<BacktestData | null>(null);
+  const [availableBacktests, setAvailableBacktests] = useState<BacktestSummary[]>([]);
+  const [selectedCompound, setSelectedCompound] = useState<string>("pfoa");
 
   const [chartView, setChartView] = useState<"publications" | "signal" | "sentiment">("publications");
   const [formData, setFormData] = useState({
@@ -282,14 +303,46 @@ const LitigationRisk = () => {
     pathways: ["water"] as string[],
   });
 
-  // Load GenX backtest on mount
+  // Load available backtests on mount
   useEffect(() => {
-    loadBacktest();
+    loadAvailableBacktests();
   }, []);
 
-  const loadBacktest = async () => {
+  // Load selected compound backtest when selection changes
+  useEffect(() => {
+    if (selectedCompound) {
+      loadBacktest(selectedCompound);
+    }
+  }, [selectedCompound]);
+
+  const loadAvailableBacktests = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/v1/litigation/backtest/genx`);
+      const res = await fetch(`${API_BASE}/api/sentinel/backtests`);
+      if (res.ok) {
+        const data = await res.json();
+        setAvailableBacktests(data.available_backtests || []);
+        // Default to PFOA if available (stronger validation case)
+        if (data.available_backtests?.some((b: BacktestSummary) => b.compound_id === "pfoa")) {
+          setSelectedCompound("pfoa");
+        } else if (data.available_backtests?.length > 0) {
+          setSelectedCompound(data.available_backtests[0].compound_id);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load available backtests:", e);
+      // Fallback to legacy endpoint
+      setSelectedCompound("genx");
+    }
+  };
+
+  const loadBacktest = async (compoundId: string) => {
+    try {
+      // Try new sentinel endpoint first
+      let res = await fetch(`${API_BASE}/api/sentinel/backtest/${compoundId}`);
+      if (!res.ok) {
+        // Fallback to legacy litigation endpoint for genx
+        res = await fetch(`${API_BASE}/api/v1/litigation/backtest/${compoundId}`);
+      }
       if (res.ok) {
         setBacktest(await res.json());
       }
@@ -381,7 +434,7 @@ const LitigationRisk = () => {
           <TabsList className="bg-white border border-gray-200 shadow-sm">
             <TabsTrigger value="casestudy" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
               <Eye className="mr-2 h-4 w-4" />
-              GenX Case Study
+              Validation Case Studies
             </TabsTrigger>
             <TabsTrigger value="forecast" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
               <ShieldAlert className="mr-2 h-4 w-4" />
@@ -393,6 +446,36 @@ const LitigationRisk = () => {
           {/* TAB 1: GenX Case Study                                       */}
           {/* ============================================================ */}
           <TabsContent value="casestudy" className="space-y-6 mt-6">
+            {/* Compound Selector */}
+            {availableBacktests.length > 0 && (
+              <div className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                <span className="text-sm font-medium text-gray-600">Select Compound:</span>
+                <div className="flex gap-2">
+                  {availableBacktests.map((bt) => (
+                    <Button
+                      key={bt.compound_id}
+                      variant={selectedCompound === bt.compound_id ? "default" : "outline"}
+                      size="sm"
+                      className={selectedCompound === bt.compound_id
+                        ? "bg-chemours-red hover:bg-chemours-red/90 text-white"
+                        : "border-gray-300"}
+                      onClick={() => setSelectedCompound(bt.compound_id)}
+                    >
+                      {bt.compound_id.toUpperCase()}
+                      <Badge className="ml-2 bg-white/20 text-xs">
+                        {bt.lead_time_years}yr
+                      </Badge>
+                    </Button>
+                  ))}
+                </div>
+                {backtest?.compound_id === "pfoa" && (
+                  <Badge className="bg-green-100 text-green-800 ml-auto">
+                    Strongest Validation - 15yr Lead Time
+                  </Badge>
+                )}
+              </div>
+            )}
+
             {backtest ? (
               <>
                 {/* Headline stats */}
@@ -406,16 +489,30 @@ const LitigationRisk = () => {
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">First Signal</p>
-                      <p className="text-3xl font-bold text-yellow-600">{backtest.first_publication_year}</p>
-                      <p className="text-xs text-gray-400">velocity from zero</p>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">
+                        {backtest.first_elevated_year ? "First ELEVATED" : "First Signal"}
+                      </p>
+                      <p className="text-3xl font-bold text-yellow-600">
+                        {backtest.first_elevated_year || backtest.first_publication_year}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {backtest.first_elevated_year ? "acceleration detected" : "velocity from zero"}
+                      </p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide">First Lawsuit</p>
-                      <p className="text-3xl font-bold text-red-600">{backtest.first_lawsuit_year}</p>
-                      <p className="text-xs text-gray-400">{backtest.lead_time_years}-yr after signal</p>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">
+                        {backtest.first_critical_year ? "First CRITICAL" : "First Lawsuit"}
+                      </p>
+                      <p className="text-3xl font-bold text-red-600">
+                        {backtest.first_critical_year || backtest.first_lawsuit_year}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {backtest.first_critical_year
+                          ? `${backtest.major_settlement_year ? backtest.major_settlement_year - backtest.first_critical_year : backtest.lead_time_years}-yr before settlement`
+                          : `${backtest.lead_time_years}-yr after signal`}
+                      </p>
                     </CardContent>
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
@@ -433,7 +530,7 @@ const LitigationRisk = () => {
                     <div className="flex items-center justify-between flex-wrap gap-3">
                       <div>
                         <CardTitle className="text-chemours-dark">
-                          GenX (HFPO-DA) {chartView === "signal" ? "SENTINEL Signal" : chartView === "sentiment" ? "Sentiment Lifecycle" : "Publication Timeline"}
+                          {backtest.compound} {chartView === "signal" ? "SENTINEL Signal" : chartView === "sentiment" ? "Sentiment Lifecycle" : "Publication Timeline"}
                         </CardTitle>
                         <CardDescription>
                           {chartView === "signal"
@@ -691,7 +788,7 @@ const LitigationRisk = () => {
                 </Card>
 
                 {/* Industry Claims vs. Reality */}
-                {backtest.industry_claims?.length > 0 && (
+                {backtest.industry_claims && backtest.industry_claims.length > 0 && (
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardHeader>
                       <CardTitle className="text-chemours-dark flex items-center gap-2">
@@ -800,7 +897,7 @@ const LitigationRisk = () => {
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
                   <Loader2 className="h-8 w-8 mx-auto mb-4 animate-spin text-chemours-red" />
-                  <p className="text-gray-500">Loading GenX case study...</p>
+                  <p className="text-gray-500">Loading {selectedCompound.toUpperCase()} case study...</p>
                 </CardContent>
               </Card>
             )}
