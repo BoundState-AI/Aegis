@@ -40,6 +40,13 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 GENX_BACKTEST_PATH = EVIDENCE_DIR / "genx_backtest.json"
+PFOA_BACKTEST_PATH = EVIDENCE_DIR / "pfoa_backtest.json"
+
+# Available backtests for validation
+AVAILABLE_BACKTESTS = {
+    "genx": GENX_BACKTEST_PATH,
+    "pfoa": PFOA_BACKTEST_PATH,
+}
 
 
 # ---------------------------------------------------------------------------
@@ -78,6 +85,15 @@ class SentinelReconstruction(BaseModel):
     key_insight: str
 
 
+class ValidationMetrics(BaseModel):
+    """Metrics for validating SENTINEL signal timing."""
+    first_elevated_to_settlement_years: Optional[int] = None
+    first_critical_to_settlement_years: Optional[int] = None
+    velocity_at_first_lawsuit: Optional[float] = None
+    velocity_at_first_critical: Optional[float] = None
+    acceleration_at_first_critical: Optional[float] = None
+
+
 class BacktestResponse(BaseModel):
     compound: str
     compound_id: str
@@ -87,7 +103,10 @@ class BacktestResponse(BaseModel):
     retrieved_date: str
     total_publications: int
     first_publication_year: int
-    first_detection_year: int
+    first_detection_year: Optional[int] = None  # GenX-specific
+    first_elevated_year: Optional[int] = None   # PFOA-specific
+    first_critical_year: Optional[int] = None   # PFOA-specific
+    major_settlement_year: Optional[int] = None # PFOA-specific
     first_lawsuit_year: int
     lead_time_years: int
     phases: List[Phase]
@@ -97,6 +116,7 @@ class BacktestResponse(BaseModel):
     settlement_total_usd: int
     affected_population: int
     source_citations: List[str]
+    validation_metrics: Optional[ValidationMetrics] = None
 
 
 # ---------------------------------------------------------------------------
@@ -177,27 +197,29 @@ def _compute_sentinel_signals(timeline: List[Dict[str, Any]]) -> List[Dict[str, 
 # Data loader
 # ---------------------------------------------------------------------------
 
-_backtest_cache: Optional[Dict[str, Any]] = None
+_backtest_cache: Dict[str, Dict[str, Any]] = {}
 
 
-def _load_backtest() -> Dict[str, Any]:
-    """Load and cache the GenX backtest data with computed signals."""
+def _load_backtest(compound_id: str = "genx") -> Dict[str, Any]:
+    """Load and cache backtest data with computed signals."""
     global _backtest_cache
-    if _backtest_cache is not None:
-        return _backtest_cache
 
-    if not GENX_BACKTEST_PATH.exists():
-        logger.error(f"GenX backtest data not found: {GENX_BACKTEST_PATH}")
+    if compound_id in _backtest_cache:
+        return _backtest_cache[compound_id]
+
+    backtest_path = AVAILABLE_BACKTESTS.get(compound_id)
+    if not backtest_path or not backtest_path.exists():
+        logger.error(f"Backtest data not found for {compound_id}: {backtest_path}")
         return {}
 
-    with open(GENX_BACKTEST_PATH, encoding="utf-8") as f:
+    with open(backtest_path, encoding="utf-8") as f:
         data = json.load(f)
 
     # Compute SENTINEL signals
     data["timeline"] = _compute_sentinel_signals(data["timeline"])
 
-    _backtest_cache = data
-    logger.info(f"Loaded GenX backtest: {len(data['timeline'])} years, "
+    _backtest_cache[compound_id] = data
+    logger.info(f"Loaded {compound_id} backtest: {len(data['timeline'])} years, "
                 f"{len(data['key_events'])} events")
     return data
 
@@ -206,33 +228,83 @@ def _load_backtest() -> Dict[str, Any]:
 # Endpoints
 # ---------------------------------------------------------------------------
 
-@router.get("/backtest/genx", response_model=BacktestResponse)
-async def get_genx_backtest() -> BacktestResponse:
-    """
-    Get the GenX (HFPO-DA) historical backtest.
+@router.get("/backtests")
+async def list_backtests() -> Dict[str, Any]:
+    """List all available SENTINEL backtests for validation."""
+    backtests = []
+    for compound_id, path in AVAILABLE_BACKTESTS.items():
+        if path.exists():
+            data = _load_backtest(compound_id)
+            backtests.append({
+                "compound_id": compound_id,
+                "compound": data.get("compound", ""),
+                "total_publications": data.get("total_publications", 0),
+                "first_lawsuit_year": data.get("first_lawsuit_year", 0),
+                "lead_time_years": data.get("lead_time_years", 0),
+                "settlement_total_usd": data.get("settlement_total_usd", 0),
+            })
+    return {
+        "available_backtests": backtests,
+        "methodology": "Publication dynamics (velocity, acceleration, jerk) as leading indicators of litigation exposure",
+        "validated_prediction": "SENTINEL detects major settlement risk 10-15 years ahead, not first lawsuit timing",
+    }
 
-    Returns the complete reconstruction of the GenX litigation timeline
-    with publication dynamics, SENTINEL alert levels, key events, and
-    the five-phase narrative from celebration to reckoning.
 
-    Data source: PubMed (NCBI E-utilities), public court records, EPA filings.
+@router.get("/backtest/{compound_id}", response_model=BacktestResponse)
+async def get_backtest(compound_id: str) -> BacktestResponse:
     """
-    data = _load_backtest()
+    Get a historical backtest by compound ID.
+
+    Available compounds: genx, pfoa
+
+    Returns the complete reconstruction of the litigation timeline
+    with publication dynamics, SENTINEL alert levels, and key events.
+    """
+    if compound_id not in AVAILABLE_BACKTESTS:
+        from fastapi import HTTPException
+        raise HTTPException(
+            status_code=404,
+            detail=f"Backtest not found for {compound_id}. Available: {list(AVAILABLE_BACKTESTS.keys())}"
+        )
+    data = _load_backtest(compound_id)
     return BacktestResponse(**data)
 
 
-@router.get("/backtest/genx/summary")
-async def get_genx_summary() -> Dict[str, Any]:
-    """Get a lightweight summary of the GenX backtest for cards/headers."""
-    data = _load_backtest()
+@router.get("/backtest/{compound_id}/summary")
+async def get_backtest_summary(compound_id: str) -> Dict[str, Any]:
+    """Get a lightweight summary of a backtest for cards/headers."""
+    if compound_id not in AVAILABLE_BACKTESTS:
+        from fastapi import HTTPException
+        raise HTTPException(
+            status_code=404,
+            detail=f"Backtest not found for {compound_id}. Available: {list(AVAILABLE_BACKTESTS.keys())}"
+        )
+    data = _load_backtest(compound_id)
     return {
         "compound": data.get("compound", ""),
+        "compound_id": compound_id,
         "total_publications": data.get("total_publications", 0),
         "first_publication_year": data.get("first_publication_year", 0),
         "first_lawsuit_year": data.get("first_lawsuit_year", 0),
+        "first_elevated_year": data.get("first_elevated_year"),
+        "first_critical_year": data.get("first_critical_year"),
         "lead_time_years": data.get("lead_time_years", 0),
         "settlement_total_usd": data.get("settlement_total_usd", 0),
         "affected_population": data.get("affected_population", 0),
         "phase_count": len(data.get("phases", [])),
         "event_count": len(data.get("key_events", [])),
+        "validation_metrics": data.get("validation_metrics"),
     }
+
+
+# Legacy endpoints for backwards compatibility
+@router.get("/backtest/genx", response_model=BacktestResponse, include_in_schema=False)
+async def get_genx_backtest_legacy() -> BacktestResponse:
+    """Legacy endpoint - redirects to /backtest/genx."""
+    return await get_backtest("genx")
+
+
+@router.get("/backtest/genx/summary", include_in_schema=False)
+async def get_genx_summary_legacy() -> Dict[str, Any]:
+    """Legacy endpoint - redirects to /backtest/genx/summary."""
+    return await get_backtest_summary("genx")
