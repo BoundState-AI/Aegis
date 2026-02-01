@@ -506,47 +506,47 @@ class ClusterSynthesizer:
     def print_report(self, report: CartographyReport):
         """Print a formatted report to console."""
         print("\n" + "="*60)
-        print("📊 DOCUMENT CARTOGRAPHY SYNTHESIS REPORT")
+        print("DOCUMENT CARTOGRAPHY SYNTHESIS REPORT")
         print("="*60)
-        
-        print(f"\n📈 Overview:")
+
+        print(f"\nOverview:")
         print(f"   {report.total_documents} documents analyzed")
         print(f"   {report.total_connections} connections mapped")
         print(f"   {len(report.unique_intents)} unique intents")
         print(f"   {len(report.clusters)} dominant clusters:")
-        
+
         for cluster in sorted(report.clusters[:4], key=lambda c: c.confidence, reverse=True):
-            print(f"\n   [+] {cluster.intent.title()} ({len(cluster.documents)} documents)")
+            print(f"\n   * {cluster.intent.title()} ({len(cluster.documents)} documents)")
             print(f"      Tags: {', '.join(cluster.dominant_tags[:3])}")
             if cluster.key_standards:
                 print(f"      Standards: {', '.join(cluster.key_standards[:3])}")
             print(f"      Hub: {cluster.hub_documents[0] if cluster.hub_documents else 'None'}")
-            
+
         if report.conflicts:
-            print(f"\n[!] Conflicts Detected: {len(report.conflicts)}")
+            print(f"\n! Conflicts Detected: {len(report.conflicts)}")
             print(f"   High-risk orphans: {len(report.high_risk_orphans)}")
             for conflict in report.conflicts[:3]:
                 print(f"   - {conflict.description}")
-                
+
         if report.orphan_documents:
-            print(f"\n📄 Orphan Documents: {len(report.orphan_documents)}")
+            print(f"\nOrphan Documents: {len(report.orphan_documents)}")
             print(f"   Examples: {', '.join(report.orphan_documents[:5])}")
-            
+
         if report.missing_references:
-            print(f"\n[?] Missing References:")
+            print(f"\nMissing References:")
             if report.clusters:
                 print(f"   Reference density in largest cluster: {report.clusters[0].metadata.get('reference_density', 0):.2f}")
             for ref, count in list(report.missing_references.items())[:3]:
                 print(f"   - '{ref}' referenced {count} times")
-                
-        print(f"\n[+] Key Insights:")
+
+        print(f"\nKey Insights:")
         for insight in report.key_insights:
             print(f"   - {insight}")
-            
-        print(f"\n🎯 Recommended Actions:")
+
+        print(f"\nRecommended Actions:")
         for action in report.next_actions:
             print(f"   1. {action}")
-            
+
         print("\n" + "="*60 + "\n")
 
 
