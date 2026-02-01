@@ -334,6 +334,10 @@ async def query_fate(
             prod_min, prod_max = _parse_temp_range(product_temp_range)
 
             # Apply temperature filter
+            # If user specified a real temp range (not default 0-1000), exclude unknown-temp pathways
+            user_filtered_temp = (temp_min > 0 or temp_max < 1000)
+            if prod_min is None and prod_max is None and user_filtered_temp:
+                continue
             if prod_min is not None and prod_min > temp_max:
                 continue
             if prod_max is not None and prod_max < temp_min:
@@ -405,6 +409,9 @@ async def query_fate(
                     continue
                 t_range = f"≤{max_t:.0f}°C"
             else:
+                # No temp data - skip if user applied a temp filter
+                if temp_min > 0 or temp_max < 1000:
+                    continue
                 t_range = "N/A"
 
             edge_atmosphere = data.get("atmosphere") or "unknown"
