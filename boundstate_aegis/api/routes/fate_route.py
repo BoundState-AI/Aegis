@@ -911,14 +911,14 @@ async def query_fate(
             transformations.append(Transformation(
                 parent=parent_upper,
                 child=child,
-                observations=1,
+                observations=product.get("observation_count", 1),
                 score=product.get("confidence", 0.8),
                 temp_range=product_temp_range,
                 atmosphere=product_atmosphere,
                 degradation_types=[mechanism],
                 hazard_level=hazard_level,
                 is_regulated=is_regulated,
-                source_count=1,
+                source_count=len(product.get("citations", [])) or product.get("observation_count", 1),
             ))
 
     # Also check graph for any additional pathways not in database
