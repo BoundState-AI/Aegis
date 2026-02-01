@@ -27,6 +27,7 @@ interface Transformation {
   hazard_level: string | null;
   is_regulated: boolean;
   source_count: number;
+  citations: string[];
 }
 
 interface FateQueryResponse {
@@ -338,10 +339,39 @@ const FateExplorer = () => {
                               )}
                             </TableCell>
                             <TableCell>
-                              <div className="flex items-center gap-1 text-gray-500">
-                                <FileText className="h-4 w-4" />
-                                {tr.source_count}
-                              </div>
+                              {tr.citations && tr.citations.length > 0 ? (
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <Button variant="ghost" size="sm" className="h-auto p-1 text-gray-500 hover:text-chemours-red">
+                                      <FileText className="h-4 w-4 mr-1" />
+                                      {tr.source_count}
+                                    </Button>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-80" align="end">
+                                    <div className="space-y-2">
+                                      <h4 className="font-medium text-sm text-chemours-dark">{t('fateExplorer.sourceReferences')}</h4>
+                                      <div className="space-y-1 max-h-48 overflow-y-auto">
+                                        {tr.citations.map((doi, idx) => (
+                                          <a
+                                            key={idx}
+                                            href={doi.startsWith('http') ? doi : `https://doi.org/${doi}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="block text-xs text-blue-600 hover:text-blue-800 hover:underline truncate"
+                                          >
+                                            {doi}
+                                          </a>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  </PopoverContent>
+                                </Popover>
+                              ) : (
+                                <div className="flex items-center gap-1 text-gray-400">
+                                  <FileText className="h-4 w-4" />
+                                  {tr.source_count}
+                                </div>
+                              )}
                             </TableCell>
                           </TableRow>
                         ))}
