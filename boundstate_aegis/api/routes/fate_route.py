@@ -218,6 +218,7 @@ class Transformation(BaseModel):
     hazard_level: Optional[str]
     is_regulated: bool
     source_count: int
+    citations: List[str] = []
 
 
 class FateQueryResponse(BaseModel):
@@ -374,6 +375,7 @@ async def query_fate(
                 hazard_level=hazard_level,
                 is_regulated=is_regulated,
                 source_count=len(product.get("citations", [])) or product.get("observation_count", 1),
+                citations=product.get("citations", []),
             ))
 
     # Also check graph for any additional pathways not in database
@@ -422,6 +424,8 @@ async def query_fate(
             elif any(x in child_lower for x in ["cf4", "c2f6", "co2", "h2o"]):
                 hazard_level = "LOW"
 
+            evidence_refs = data.get("evidence_refs", [])
+            dois = [ref.get("doi", "") for ref in evidence_refs if ref.get("doi")]
             transformations.append(Transformation(
                 parent=graph_parent,
                 child=child,
@@ -432,7 +436,8 @@ async def query_fate(
                 degradation_types=[mechanism],
                 hazard_level=hazard_level,
                 is_regulated=is_regulated,
-                source_count=len(data.get("evidence_refs", [])) or 1,
+                source_count=len(evidence_refs) or 1,
+                citations=dois,
             ))
 
     # Sort by score descending

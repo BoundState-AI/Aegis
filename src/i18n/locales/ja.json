@@ -99,7 +99,8 @@
     "queryDescription": "{{papers}}本の査読付き論文から{{parents}}種の化合物にわたる{{edges}}件の分解変換をクエリ。",
     "selectParentAndTemp": "親化合物と温度範囲を選択して分解経路を探索してください。",
     "loadingKnowledgeGraph": "ナレッジグラフを読み込み中...",
-    "foundPathways": "{{compound}}について{{count}}件の分解経路が見つかりました"
+    "foundPathways": "{{compound}}について{{count}}件の分解経路が見つかりました",
+    "sourceReferences": "引用文献 (DOI)"
   },
   "litigation": {
     "title": "AEGIS SENTINEL",

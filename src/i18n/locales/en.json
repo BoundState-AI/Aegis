@@ -99,7 +99,8 @@
     "queryDescription": "Query {{edges}} degradation transformations across {{parents}} compounds from {{papers}} peer-reviewed papers.",
     "selectParentAndTemp": "Select a parent compound and temperature range to explore degradation pathways.",
     "loadingKnowledgeGraph": "Loading knowledge graph...",
-    "foundPathways": "Found {{count}} degradation pathways for {{compound}}"
+    "foundPathways": "Found {{count}} degradation pathways for {{compound}}",
+    "sourceReferences": "Source References (DOI)"
   },
   "litigation": {
     "title": "AEGIS SENTINEL",
