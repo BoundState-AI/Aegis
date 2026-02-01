@@ -719,12 +719,6 @@ class SmartIndexer:
                     'ocr_fallback': True
                 }
                 
-                # Save OCR debug output
-                debug_file = f"ocr_debug_{file_path.stem}.txt"
-                with open(debug_file, "w", encoding="utf-8") as f:
-                    f.write(text)
-                logger.info(f"Saved OCR debug output to {debug_file}")
-                
                 # Use RTX2070 optimized chunker (420 tokens vs 80 chars)
                 sections = self.rtx2070_chunker.chunk_with_tokens(text, metadata, doc_type)
         

@@ -503,9 +503,7 @@ class SemanticIndex:
             return len(new_sections)
 
         except Exception as e:
-            logger.error(f"Error adding sections to index: {e}")
-            import traceback
-            traceback.print_exc()
+            logger.exception(f"Error adding sections to index: {e}")
             return 0
     
     @measure_time
@@ -749,9 +747,7 @@ class SemanticIndex:
             
             return results
         except Exception as e:
-            logger.error(f"Error in search_text for query '{query}': {e}")
-            import traceback
-            traceback.print_exc()
+            logger.exception(f"Error in search_text for query '{query}': {e}")
             return []
     
     def score_text(self, query: str, document_text: str) -> float:
