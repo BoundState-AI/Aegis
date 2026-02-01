@@ -461,9 +461,7 @@ class SemanticIndex:
             
             return results
         except Exception as e:
-            logger.error(f"Error in search_text for query '{query}': {e}")
-            import traceback
-            traceback.print_exc()  # Add full traceback for debugging
+            logger.exception(f"Error in search_text for query '{query}': {e}")
             return []
     
     def score_text(self, query: str, document_text: str) -> float:

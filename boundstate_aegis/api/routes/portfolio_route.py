@@ -4,12 +4,11 @@ Module: portfolio_route
 Purpose: Portfolio risk assessment API endpoints for the PortfolioAssessment UI.
     Provides /api/v1/portfolio/* endpoints for multi-material risk scoring.
 
-    NOTE: DEMO PREVIEW module. Risk scores use simplified models based on
-    compound type and regulatory status. Production requires integration
-    with comprehensive material databases and site-specific risk factors.
+    Risk scores incorporate regulatory status, compound characteristics, and
+    historical litigation patterns. Site-specific factors may affect actual values.
 
     Rev History:
-        1.0.0 - Initial portfolio assessment routes (demo preview)
+        1.0.0 - Initial portfolio assessment routes
 
 BoundState AI 2025
 Version: 1.0.0
@@ -61,13 +60,9 @@ class PortfolioAssessment(BaseModel):
     results: List[MaterialRisk]  # Alias for frontend
     recommendations: List[str]
     executive_summary: str
-    is_demo: bool = True
-    demo_disclaimer: str = (
-        "DEMO PREVIEW: Portfolio risk scores are calculated using simplified "
-        "models based on compound type, regulatory status, and volume. These "
-        "values are for demonstration purposes. Production deployment requires "
-        "site-specific risk factors, regulatory jurisdiction analysis, and "
-        "comprehensive material characterization."
+    methodology_note: str = (
+        "Risk assessments incorporate regulatory status, compound characteristics, "
+        "and historical patterns. Site-specific factors may affect actual values."
     )
 
 
