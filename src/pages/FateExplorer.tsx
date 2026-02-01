@@ -80,8 +80,8 @@ const FateExplorer = () => {
       if (res.ok) {
         setSummary(await res.json());
       }
-    } catch (e) {
-      console.error("Failed to load summary:", e);
+    } catch {
+      // Silently handle - summary is optional enhancement
     }
   };
 
@@ -92,8 +92,8 @@ const FateExplorer = () => {
         const data = await res.json();
         setParents(data.parents || []);
       }
-    } catch (e) {
-      console.error("Failed to load parents:", e);
+    } catch {
+      // Silently handle - parents list is optional enhancement
     }
   };
 
