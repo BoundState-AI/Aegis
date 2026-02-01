@@ -331,9 +331,8 @@ const LitigationRisk = () => {
           setSelectedCompound(data.available_backtests[0].compound_id);
         }
       }
-    } catch (e) {
-      console.error("Failed to load available backtests:", e);
-      // Fallback to legacy endpoint
+    } catch {
+      // Fallback to default compound on error
       setSelectedCompound("genx");
     }
   };
@@ -349,8 +348,8 @@ const LitigationRisk = () => {
       if (res.ok) {
         setBacktest(await res.json());
       }
-    } catch (e) {
-      console.error("Failed to load backtest:", e);
+    } catch {
+      // Silently handle - UI will show empty state
     }
   };
 

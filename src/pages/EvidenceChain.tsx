@@ -59,8 +59,8 @@ const EvidenceChain = () => {
       if (res.ok) {
         setSourceStats(await res.json());
       }
-    } catch (e) {
-      console.error("Failed to load source stats:", e);
+    } catch {
+      // Silently handle - stats are optional enhancement
     }
   };
 
