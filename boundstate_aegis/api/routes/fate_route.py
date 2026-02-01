@@ -304,7 +304,12 @@ def _parse_temp_range(temp_str: str) -> tuple:
     elif temp_str.lower() == "ambient":
         return (20, 40)
 
-    return (None, None)
+    # Handle single temperature value (e.g., "500" from "500°C")
+    try:
+        temp = float(temp_str)
+        return (temp, temp)
+    except ValueError:
+        return (None, None)
 
 
 @router.get("/fate", response_model=FateQueryResponse)
