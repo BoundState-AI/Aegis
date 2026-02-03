@@ -350,9 +350,17 @@ def update_backtest(yearly_sentiment: dict[int, dict[str, Any]]) -> None:
     # Update timeline entries
     for entry in backtest["timeline"]:
         year = entry["year"]
+        cumulative_papers = entry.get("cumulative", 0)
         if year in yearly_sentiment:
             entry["sentiment"] = yearly_sentiment[year]["sentiment"]
             entry["cumulative_sentiment"] = yearly_sentiment[year]["cumulative_sentiment"]
+            # Normalized sentiment: average sentiment per paper (-1 to +1 scale)
+            if cumulative_papers > 0:
+                entry["normalized_sentiment"] = round(
+                    yearly_sentiment[year]["cumulative_sentiment"] / cumulative_papers, 3
+                )
+            else:
+                entry["normalized_sentiment"] = 0.0
         else:
             # Pre-publication years: no sentiment data
             entry["sentiment"] = {
@@ -364,6 +372,7 @@ def update_backtest(yearly_sentiment: dict[int, dict[str, Any]]) -> None:
                 "reckoning": 0,
             }
             entry["cumulative_sentiment"] = 0.0
+            entry["normalized_sentiment"] = 0.0
 
     # Add sentiment category metadata
     backtest["sentiment_categories"] = [

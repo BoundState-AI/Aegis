@@ -52,6 +52,7 @@ interface TimelineEntry {
   alert_level: string;
   sentiment?: SentimentBreakdown;
   cumulative_sentiment?: number;
+  normalized_sentiment?: number;
 }
 
 interface KeyEvent {
@@ -273,11 +274,11 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
           );
         })}
       </div>
-      {entry.cumulative_sentiment != null && (
+      {entry.normalized_sentiment != null && (
         <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
-          <span className="text-gray-500">Cumulative sentiment</span>
-          <span className={`font-bold ${entry.cumulative_sentiment < 0 ? "text-red-600" : "text-green-600"}`}>
-            {entry.cumulative_sentiment > 0 ? "+" : ""}{entry.cumulative_sentiment.toFixed(1)}
+          <span className="text-gray-500">Avg sentiment</span>
+          <span className={`font-bold ${entry.normalized_sentiment < 0 ? "text-red-600" : "text-green-600"}`}>
+            {entry.normalized_sentiment > 0 ? "+" : ""}{entry.normalized_sentiment.toFixed(2)}
           </span>
         </div>
       )}
@@ -644,9 +645,11 @@ const LitigationRisk = () => {
                             <YAxis
                               yAxisId="cumulative"
                               orientation="right"
+                              domain={[-1, 1]}
                               tick={{ fontSize: 11, fill: "#ef4444" }}
                               tickLine={false}
-                              label={{ value: "Cumulative Sentiment", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
+                              tickFormatter={(v) => v.toFixed(1)}
+                              label={{ value: "Avg Sentiment", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
                             />
                             <Tooltip content={<SentimentTooltip />} />
                             {industryEvents.map((e) => (
@@ -680,7 +683,7 @@ const LitigationRisk = () => {
                             <Line
                               yAxisId="cumulative"
                               type="monotone"
-                              dataKey="cumulative_sentiment"
+                              dataKey="normalized_sentiment"
                               stroke="#dc2626"
                               strokeWidth={2.5}
                               dot={false}
