@@ -330,16 +330,6 @@
     "reasoning": "Comparative study of sex-related biochemical liver responses to PFOA between species, suggesting toxicological focus."
   },
   {
-    "pmid": "2302884",
-    "year": 1990,
-    "title": "Roentgenographic and clinical findings of patellofemoral osteoarthrosis. With special reference to its relationship to femorotibial osteoarthrosis and etiologic factors.",
-    "journal": "Clinical orthopaedics and related research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about knee osteoarthritis and likely doesn't involve PFOA despite the PMID assignment."
-  },
-  {
     "pmid": "2308906",
     "year": 1990,
     "title": "Tissue distribution and elimination of perfluorodecanoic acid in the rat after single intraperitoneal administration.",
@@ -380,16 +370,6 @@
     "reasoning": "Studies PFOA-induced biochemical changes in rat kidney with sex-related differences, focusing on biological effects."
   },
   {
-    "pmid": "2016307",
-    "year": 1991,
-    "title": "Kinetic aspects of the aggregation of Clostridium perfringens theta-toxin on erythrocyte membranes. A fluorescence energy transfer study.",
-    "journal": "The Journal of biological chemistry",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "Studies Clostridium perfringens toxin aggregation kinetics, likely unrelated to PFOA despite PMID assignment."
-  },
-  {
     "pmid": "2025879",
     "year": 1991,
     "title": "Short-term exposure to the peroxisome proliferators, perfluorooctanoic acid and perfluorodecanoic acid, causes significant increase of 8-hydroxydeoxyguanosine in liver DNA of rats.",
@@ -418,16 +398,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Investigates the mechanism of hepatocarcinogenicity of peroxisome proliferators including PFOA."
-  },
-  {
-    "pmid": "1987025",
-    "year": 1991,
-    "title": "An upstream regulatory sequence stimulates expression of the perfringolysin O gene of Clostridium perfringens.",
-    "journal": "Infection and immunity",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "Studies Clostridium perfringens gene expression, likely unrelated to PFOA despite PMID assignment."
   },
   {
     "pmid": "1941903",
@@ -690,16 +660,6 @@
     "reasoning": "Examines biological effects and protein induction patterns following exposure to perfluorocarboxylic acids."
   },
   {
-    "pmid": "8132455",
-    "year": 1994,
-    "title": "The virR gene, a member of a class of two-component response regulators, regulates the production of perfringolysin O, collagenase, and hemagglutinin in Clostridium perfringens.",
-    "journal": "Journal of bacteriology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies gene regulation in Clostridium perfringens, unrelated to PFAS compounds despite similar name."
-  },
-  {
     "pmid": "8122261",
     "year": 1994,
     "title": "Effects of perfluoro-n-octanoic acid, perfluoro-n-decanoic acid, and clofibrate on hepatic phosphorus metabolism in rats and guinea pigs in vivo.",
@@ -760,16 +720,6 @@
     "reasoning": "Study demonstrates PFOA causing Leydig cell adenomas and disrupting testosterone levels in rats, clearly showing adverse health effects."
   },
   {
-    "pmid": "7563125",
-    "year": 1995,
-    "title": "Primary structure and eubacterial relationships of the pyruvate:ferredoxin oxidoreductase of the amitochondriate eukaryote Trichomonas vaginalis.",
-    "journal": "Journal of molecular evolution",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.9,
-    "reasoning": "This paper is about pyruvate:ferredoxin oxidoreductase in Trichomonas vaginalis and has no connection to PFAS compounds - appears to be misclassified for this task."
-  },
-  {
     "pmid": "7610463",
     "year": 1995,
     "title": "Characterization of hepatic responses of rat to administration of perfluorooctanoic and perfluorodecanoic acids at low levels.",
@@ -798,26 +748,6 @@
     "score": -1.0,
     "confidence": 0.85,
     "reasoning": "Studies hepatic oxidative stress and lipid peroxidation caused by PFOA and other peroxisome proliferators, documenting harmful cellular effects."
-  },
-  {
-    "pmid": "8577281",
-    "year": 1995,
-    "title": "Sequence analysis of flanking regions of the pfoA gene of Clostridium perfringens: beta-galactosidase gene (pbg) is located in the 3'-flanking region.",
-    "journal": "Microbiology and immunology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.9,
-    "reasoning": "This paper analyzes gene sequences in Clostridium perfringens and has no connection to PFAS compounds - appears to be misclassified for this task."
-  },
-  {
-    "pmid": "7746141",
-    "year": 1995,
-    "title": "Virulence studies on chromosomal alpha-toxin and theta-toxin mutants constructed by allelic exchange provide genetic evidence for the essential role of alpha-toxin in Clostridium perfringens-mediated gas gangrene.",
-    "journal": "Molecular microbiology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.9,
-    "reasoning": "Studies virulence of Clostridium perfringens toxins and has no connection to PFAS compounds - appears to be misclassified for this task."
   },
   {
     "pmid": "7710073",
@@ -890,16 +820,6 @@
     "reasoning": "Occupational exposure study examining hepatic effects and lipid metabolism changes in workers exposed to PFOA, documenting human health impacts."
   },
   {
-    "pmid": "8626316",
-    "year": 1996,
-    "title": "The virR/virS locus regulates the transcription of genes encoding extracellular toxin production in Clostridium perfringens.",
-    "journal": "Journal of bacteriology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.9,
-    "reasoning": "Studies gene regulation in Clostridium perfringens and has no connection to PFAS compounds - appears to be misclassified for this task."
-  },
-  {
     "pmid": "8812269",
     "year": 1996,
     "title": "Effect of the peroxisome proliferator, ammonium perfluorooctanoate (C8), on hepatic aromatase activity in adult male Crl:CD BR (CD) rats.",
@@ -960,16 +880,6 @@
     "reasoning": "This paper examines toxicant-induced alterations in stress proteins caused by PFOA exposure, focusing on toxic mechanisms and biomarkers of toxicity."
   },
   {
-    "pmid": "8867610",
-    "year": 1996,
-    "title": "Characterization of a toxin-deficient Clostridium perfringens strain, KZ1340.",
-    "journal": "Microbiology and immunology",
-    "category": "QUESTIONING",
-    "score": -0.5,
-    "confidence": 0.7,
-    "reasoning": "This paper characterizes a toxin-deficient Clostridium perfringens strain, investigating the organism's properties and gene expression mechanisms."
-  },
-  {
     "pmid": "8825526",
     "year": 1996,
     "title": "Effects of chlorotrifluoroethylene oligomer fatty acids on recombinant GABA receptors expressed in Xenopus oocytes.",
@@ -988,16 +898,6 @@
     "score": -0.5,
     "confidence": 0.8,
     "reasoning": "This paper investigates how PFOA and other peroxisome proliferators affect mRNA levels for mitochondrial proteins, examining biological mechanisms."
-  },
-  {
-    "pmid": "9361355",
-    "year": 1997,
-    "title": "Malposition of the tibial tubercle during flexion in knees with patellofemoral arthritis.",
-    "journal": "Skeletal radiology",
-    "category": "QUESTIONING",
-    "score": -0.5,
-    "confidence": 0.6,
-    "reasoning": "This paper investigates mechanisms contributing to patellofemoral arthritis through CT scan analysis, examining disease mechanisms (not PFAS-related)."
   },
   {
     "pmid": "9355728",
@@ -1060,16 +960,6 @@
     "reasoning": "Studies effects of peroxisome proliferators on xenobiotic-metabolizing enzymes, investigating biological fate and metabolic pathways."
   },
   {
-    "pmid": "9160297",
-    "year": 1997,
-    "title": "Isolation of alpha-toxin, theta-toxin and kappa-toxin mutants of Clostridium perfringens by Tn916 mutagenesis.",
-    "journal": "Microbial pathogenesis",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Describes mutagenesis methodology to isolate bacterial toxin mutants, focusing on technique development."
-  },
-  {
     "pmid": "9089641",
     "year": 1997,
     "title": "Activated Kupffer cells attenuate the liver response to the peroxisome proliferator perfluorooctanoic acid.",
@@ -1080,16 +970,6 @@
     "reasoning": "Investigates mechanism of action of PFOA through Kupffer cell interactions, studying biological fate and cellular responses."
   },
   {
-    "pmid": "9310944",
-    "year": 1997,
-    "title": "Genomic diversity in the pfoA region of the theta-toxin-deficient strains of Clostridium perfringens.",
-    "journal": "Microbiology and immunology",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.8,
-    "reasoning": "Examines genomic structure and diversity in bacterial strains, essentially mapping occurrence of genetic elements."
-  },
-  {
     "pmid": "9056352",
     "year": 1997,
     "title": "Effect of the Form of the Quaternary Ammonium Ion on the Ion-Pair Phase Separation Phenomenon with Perfluorooctanoic Acid.",
@@ -1098,16 +978,6 @@
     "score": 1.0,
     "confidence": 0.9,
     "reasoning": "Studies novel ion-pair phase separation phenomenon with PFOA, characterizing material properties and interactions."
-  },
-  {
-    "pmid": "9053381",
-    "year": 1997,
-    "title": "Collagenase gene (colA) is located in the 3'-flanking region of the perfringolysin O (pfoA) locus in Clostridium perfringens.",
-    "journal": "FEMS microbiology letters",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.9,
-    "reasoning": "Maps chromosomal location of genes, essentially finding and characterizing genetic elements in bacterial genome."
   },
   {
     "pmid": "9892060",
@@ -1280,16 +1150,6 @@
     "reasoning": "Paper studies the mechanism by which PFOA affects lipoprotein metabolism and secretion in hepatocytes, investigating biological fate."
   },
   {
-    "pmid": "10068072",
-    "year": 1999,
-    "title": "Radiological assessment of the position of the tibial tuberosity by means of a marking wire in knees with patellofemoral arthritis.",
-    "journal": "Skeletal radiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "Paper develops a radiographic technique for assessing tibial tuberosity position in knee arthritis (appears to be misclassified or unrelated to PFOA)."
-  },
-  {
     "pmid": "21394239",
     "year": 1999,
     "title": "Selective extraction of strontium with supercritical fluid carbon dioxide.",
@@ -1330,16 +1190,6 @@
     "reasoning": "Paper studies health effects in workers exposed to PFOA, investigating plasma cholecystokinin and hepatic effects in occupational exposure."
   },
   {
-    "pmid": "10941936",
-    "year": 2000,
-    "title": "Genetic analysis of the ycgJ-metB-cysK-ygaG operon negatively regulated by the VirR/VirS system in Clostridium perfringens.",
-    "journal": "Microbiology and immunology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.6,
-    "reasoning": "Paper analyzes genetic regulation in Clostridium perfringens (appears unrelated to PFOA based on abstract content)."
-  },
-  {
     "pmid": "10764624",
     "year": 2000,
     "title": "NMR spectroscopic analyses of liver phosphatidylcholine and phosphatidylethanolamine biosynthesis in rats exposed to peroxisome proliferators-A class of nongenotoxic hepatocarcinogens.",
@@ -1348,16 +1198,6 @@
     "score": -0.5,
     "confidence": 0.85,
     "reasoning": "Paper investigates how PFOA and other peroxisome proliferators affect phospholipid biosynthesis pathways in liver, studying biological mechanisms."
-  },
-  {
-    "pmid": "10692162",
-    "year": 2000,
-    "title": "Identification of novel VirR/VirS-regulated genes in Clostridium perfringens.",
-    "journal": "Molecular microbiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper is about gene regulation in Clostridium perfringens and does not involve PFOA/perfluorooctanoic acid compounds."
   },
   {
     "pmid": "10670823",
@@ -1370,16 +1210,6 @@
     "reasoning": "This study investigates the biological fate and effects of PFOA by examining how it induces peroxisomal beta-oxidation in rat liver, exploring what happens when the compound enters biological systems."
   },
   {
-    "pmid": "10613863",
-    "year": 2000,
-    "title": "The VirR response regulator from Clostridium perfringens binds independently to two imperfect direct repeats located upstream of the pfoA promoter.",
-    "journal": "Journal of bacteriology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper studies gene regulation mechanisms in Clostridium perfringens and does not involve PFOA/perfluorooctanoic acid compounds."
-  },
-  {
     "pmid": "18360453",
     "year": 2001,
     "title": "Dynamic light-scattering study of self-assembly of diblock copolymers in supercritical carbon dioxide.",
@@ -1388,16 +1218,6 @@
     "score": 1.0,
     "confidence": 0.8,
     "reasoning": "This paper characterizes the novel properties and behavior of PFOA-containing block copolymers in supercritical CO2, demonstrating what can be achieved with these materials."
-  },
-  {
-    "pmid": "11705975",
-    "year": 2001,
-    "title": "Synergistic effects of alpha-toxin and perfringolysin O in Clostridium perfringens-mediated gas gangrene.",
-    "journal": "Infection and immunity",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper studies bacterial toxins in Clostridium perfringens and does not involve PFOA/perfluorooctanoic acid compounds."
   },
   {
     "pmid": "11597582",
@@ -1540,16 +1360,6 @@
     "reasoning": "This paper characterizes protein structure and complex formation of XPA protein, focusing on novel molecular properties and mechanisms."
   },
   {
-    "pmid": "12367524",
-    "year": 2002,
-    "title": "The FxRxHrS motif: a conserved region essential for DNA binding of the VirR response regulator from Clostridium perfringens.",
-    "journal": "Journal of molecular biology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.8,
-    "reasoning": "This paper characterizes DNA binding properties and functional domains of VirR response regulator, focusing on molecular mechanisms and properties."
-  },
-  {
     "pmid": "12363300",
     "year": 2002,
     "title": "Concentrations of perfluorinated acids in livers of birds from Japan and Korea.",
@@ -1630,16 +1440,6 @@
     "reasoning": "This paper studies immunosuppressive effects and adverse immunomodulation caused by peroxisome proliferators in mice, focusing on harmful outcomes."
   },
   {
-    "pmid": "12007663",
-    "year": 2002,
-    "title": "Identification of a novel locus that regulates expression of toxin genes in Clostridium perfringens.",
-    "journal": "FEMS microbiology letters",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.8,
-    "reasoning": "This paper identifies and characterizes a novel gene regulatory mechanism for toxin expression in Clostridium perfringens, focusing on discovery of new properties."
-  },
-  {
     "pmid": "11993863",
     "year": 2002,
     "title": "Quantitative characterization of trace levels of PFOS and PFOA in the Tennessee River.",
@@ -1648,16 +1448,6 @@
     "score": 0.5,
     "confidence": 0.9,
     "reasoning": "This paper develops a solid-phase extraction method coupled with mass spectrometry for quantitative measurement of PFOS and PFOA in water."
-  },
-  {
-    "pmid": "11967077",
-    "year": 2002,
-    "title": "The luxS gene is involved in cell-cell signalling for toxin production in Clostridium perfringens.",
-    "journal": "Molecular microbiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper is about Clostridium perfringens and luxS gene signaling, not about PFOA/perfluorooctanoic acid at all."
   },
   {
     "pmid": "11921242",
@@ -1688,16 +1478,6 @@
     "score": -0.5,
     "confidence": 0.8,
     "reasoning": "Investigates structural determinants and mechanisms of how PFOA and related fluorochemicals interfere with mitochondrial function."
-  },
-  {
-    "pmid": "11889112",
-    "year": 2002,
-    "title": "Perfringolysin O expression in Clostridium perfringens is independent of the upstream pfoR gene.",
-    "journal": "Journal of bacteriology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper is about Clostridium perfringens perfringolysin O expression, not about PFOA/perfluorooctanoic acid."
   },
   {
     "pmid": "11879971",
@@ -2268,16 +2048,6 @@
     "score": 0.0,
     "confidence": 0.95,
     "reasoning": "Reports concentrations of PFOS, PFOA, and PFOSA found in Canadian blood samples, focusing on occurrence data."
-  },
-  {
-    "pmid": "15150217",
-    "year": 2004,
-    "title": "The spatial organization of the VirR boxes is critical for VirR-mediated expression of the perfringolysin O gene, pfoA, from Clostridium perfringens.",
-    "journal": "Journal of bacteriology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.8,
-    "reasoning": "Studies transcriptional regulation of perfringolysin O gene in Clostridium perfringens, which appears unrelated to PFOA despite title similarity."
   },
   {
     "pmid": "15144209",
@@ -3000,16 +2770,6 @@
     "reasoning": "Temporal trend study measuring PFOS and PFOA concentrations in guillemot eggs from the Baltic Sea over 35 years."
   },
   {
-    "pmid": "15659068",
-    "year": 2005,
-    "title": "A Trichomonas vaginalis 120 kDa protein with identity to hydrogenosome pyruvate:ferredoxin oxidoreductase is a surface adhesin induced by iron.",
-    "journal": "Cellular microbiology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.0,
-    "reasoning": "This paper is about Trichomonas vaginalis proteins and has no connection to PFAS/PFOA compounds."
-  },
-  {
     "pmid": "21783770",
     "year": 2007,
     "title": "Evaluation of the acute toxicity of perfluorinated carboxylic acids using eukaryotic cell lines, bacteria and enzymatic assays.",
@@ -3310,16 +3070,6 @@
     "reasoning": "This paper studies hepatomegaly and liver enzyme induction by PFOA and other perfluorinated acids in mice, focusing on adverse biological effects."
   },
   {
-    "pmid": "16926413",
-    "year": 2006,
-    "title": "Dissecting the contributions of Clostridium perfringens type C toxins to lethality in the mouse intravenous injection model.",
-    "journal": "Infection and immunity",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about Clostridium perfringens toxins and has no relation to PFOA compounds - appears to be misclassified in the input."
-  },
-  {
     "pmid": "16915561",
     "year": 2006,
     "title": "Determination of perfluorooctanoic acid and perfluorooctanesulfonate in human tissues by liquid chromatography/single quadrupole mass spectrometry.",
@@ -3368,16 +3118,6 @@
     "score": 0.5,
     "confidence": 0.9,
     "reasoning": "This paper compares different blood matrices for measurement of PFOA and other fluorochemicals, developing analytical methodology."
-  },
-  {
-    "pmid": "16874357",
-    "year": 2006,
-    "title": "Patent foramen ovale and cerebrovascular diseases.",
-    "journal": "Nature clinical practice. Cardiovascular medicine",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patent foramen ovale and stroke, completely unrelated to PFOA - appears to be misclassified in the input."
   },
   {
     "pmid": "16872899",
@@ -3528,16 +3268,6 @@
     "score": -0.5,
     "confidence": 0.9,
     "reasoning": "Pharmacokinetic study examining absorption, distribution and excretion patterns across species - investigating environmental fate in organisms."
-  },
-  {
-    "pmid": "16698025",
-    "year": 2006,
-    "title": "Genotyping Trichomonas vaginalis.",
-    "journal": "International journal for parasitology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "Development of genotyping method for Trichomonas vaginalis - unrelated to PFOA, appears to be misclassified in this dataset."
   },
   {
     "pmid": "16674102",
@@ -4490,16 +4220,6 @@
     "reasoning": "Analyzes per- and polyfluorinated alkyl substances in air samples from multiple European locations - focus is on environmental occurrence monitoring."
   },
   {
-    "pmid": "17553563",
-    "year": 2007,
-    "title": "Disruption of a toxin gene by introduction of a foreign gene into the chromosome of Clostridium perfringens using targetron-induced mutagenesis.",
-    "journal": "Plasmid",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.6,
-    "reasoning": "Describes genetic engineering technique for Clostridium perfringens - appears unrelated to PFAS/PFOA compounds despite title similarity."
-  },
-  {
     "pmid": "17547163",
     "year": 2007,
     "title": "Perfluorinated acids in Arctic snow: new evidence for atmospheric formation.",
@@ -5310,16 +5030,6 @@
     "reasoning": "First report of PFOA and PFOS levels in Lake Victoria ecosystem, presenting environmental occurrence data."
   },
   {
-    "pmid": "18790863",
-    "year": 2008,
-    "title": "Characterization of genes regulated directly by the VirR/VirS system in Clostridium perfringens.",
-    "journal": "Journal of bacteriology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.9,
-    "reasoning": "Study of gene regulation in Clostridium perfringens, unrelated to PFAS compounds despite similar name."
-  },
-  {
     "pmid": "18789477",
     "year": 2008,
     "title": "Accumulation of perfluorinated compounds in captive Bengal tigers (Panthera tigris tigris) and African lions (Panthera leo Linnaeus) in China.",
@@ -5790,16 +5500,6 @@
     "reasoning": "Aquatic toxicity study examining acute and chronic effects of APFO on freshwater organisms."
   },
   {
-    "pmid": "18528651",
-    "year": 2008,
-    "title": "Impact of patellofemoral osteoarthritis on long-term outcome of high tibial osteotomy and effects of ventralization of tibial tubercle.",
-    "journal": "Journal of orthopaedic science : official journal of the Japanese Orthopaedic Association",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about knee surgery and osteoarthritis, not PFAS compounds - likely misclassified in the input."
-  },
-  {
     "pmid": "18522136",
     "year": 2008,
     "title": "Biomonitoring of perfluorochemicals in plasma of New York State personnel responding to the World Trade Center disaster.",
@@ -6238,16 +5938,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Demonstrates that PFOA exposure causes developmental defects in chicks, establishing teratogenic effects and biological harm."
-  },
-  {
-    "pmid": "18078439",
-    "year": 2008,
-    "title": "Beta toxin is essential for the intestinal virulence of Clostridium perfringens type C disease isolate CN3685 in a rabbit ileal loop model.",
-    "journal": "Molecular microbiology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies Clostridium perfringens toxin virulence, appears to be about bacterial toxins rather than PFOA despite title similarity."
   },
   {
     "pmid": "20183509",
@@ -7000,16 +6690,6 @@
     "reasoning": "Reports occurrence and detection of PFOA in New Jersey public drinking water systems with concentration measurements."
   },
   {
-    "pmid": "19597556",
-    "year": 2009,
-    "title": "Use of an EZ-Tn5-based random mutagenesis system to identify a novel toxin regulatory locus in Clostridium perfringens strain 13.",
-    "journal": "PloS one",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about Clostridium perfringens bacteria and toxin regulation, not PFOA - may be misclassified in the input."
-  },
-  {
     "pmid": "19595750",
     "year": 2009,
     "title": "Pipping success and liver mRNA expression in chicken embryos exposed in ovo to C8 and C11 perfluorinated carboxylic acids and C10 perfluorinated sulfonate.",
@@ -7150,16 +6830,6 @@
     "reasoning": "Study quantifies and reports PFOA concentrations in wastewater treatment plant effluents and River Elbe surface waters."
   },
   {
-    "pmid": "19500523",
-    "year": 2009,
-    "title": "Novel recombinant BCG expressing perfringolysin O and the over-expression of key immunodominant antigens; pre-clinical characterization, safety and protection against challenge with Mycobacterium tuberculosis.",
-    "journal": "Vaccine",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "Study describes development of novel recombinant BCG vaccine against tuberculosis, unrelated to PFAS compounds."
-  },
-  {
     "pmid": "19497427",
     "year": 2009,
     "title": "Kinetics of 8-2 fluorotelomer alcohol and its metabolites, and liver glutathione status following daily oral dosing for 45 days in male and female rats.",
@@ -7168,16 +6838,6 @@
     "score": -0.5,
     "confidence": 0.8,
     "reasoning": "Study investigates kinetics and metabolic fate of fluorotelomer alcohol and its metabolites in rats over time."
-  },
-  {
-    "pmid": "19479065",
-    "year": 2009,
-    "title": "Genetic characterization of type A enterotoxigenic Clostridium perfringens strains.",
-    "journal": "PloS one",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Study characterizes Clostridium perfringens bacterial strains, completely unrelated to PFAS compounds."
   },
   {
     "pmid": "19468714",
@@ -7278,16 +6938,6 @@
     "score": -0.5,
     "confidence": 0.8,
     "reasoning": "This study investigates how PFOA interacts with human serum albumin, examining binding mechanisms and fate in biological systems."
-  },
-  {
-    "pmid": "19438515",
-    "year": 2009,
-    "title": "Contact with enterocyte-like Caco-2 cells induces rapid upregulation of toxin production by Clostridium perfringens type C isolates.",
-    "journal": "Cellular microbiology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "This study examines toxin production by Clostridium perfringens (not PFOA-related, but focuses on harmful biological effects)."
   },
   {
     "pmid": "19433254",
@@ -8080,16 +7730,6 @@
     "reasoning": "Paper measures and reports distribution of perfluorochemicals between maternal sera, cord sera, and breast milk."
   },
   {
-    "pmid": "20931665",
-    "year": 2011,
-    "title": "Figulla PFO occluder versus Amplatzer PFO occluder for percutaneous closure of patent foramen ovale.",
-    "journal": "Catheterization and cardiovascular interventions : official journal of the Society for Cardiac Angiography & Interventions",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Medical paper about patent foramen ovale closure devices, not related to perfluorinated compounds despite PFO abbreviation."
-  },
-  {
     "pmid": "20927624",
     "year": 2010,
     "title": "Seasonal changes of PFOS and PFOA concentrations in Lake Biwa water.",
@@ -8240,16 +7880,6 @@
     "reasoning": "Review prioritizing research for trace pollutants and emerging contaminants with focus on adverse human health effects."
   },
   {
-    "pmid": "20828401",
-    "year": 2010,
-    "title": "Anterior knee pain in younger adults as a precursor to subsequent patellofemoral osteoarthritis: a systematic review.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid - medical study on knee pain."
-  },
-  {
     "pmid": "20828202",
     "year": 2010,
     "title": "Inhalation exposure to fluorotelomer alcohols yield perfluorocarboxylates in human blood?",
@@ -8258,16 +7888,6 @@
     "score": -0.5,
     "confidence": 0.8,
     "reasoning": "Studies exposure routes and fate of fluorotelomer alcohols converting to PFCAs in human blood, focusing on environmental fate and transport pathways."
-  },
-  {
-    "pmid": "20822510",
-    "year": 2010,
-    "title": "Global regulation of gene expression in response to cysteine availability in Clostridium perfringens.",
-    "journal": "BMC microbiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Studies gene regulation in Clostridium perfringens (different compound than PFOA), focusing on analytical/methodological understanding of cellular mechanisms."
   },
   {
     "pmid": "20821671",
@@ -8428,16 +8048,6 @@
     "score": -0.5,
     "confidence": 0.85,
     "reasoning": "Investigates sorption behavior and uptake mechanisms of PFOS/PFOA on activated sludge, studying environmental fate processes."
-  },
-  {
-    "pmid": "20796165",
-    "year": 2010,
-    "title": "Transcranial Doppler quantification of residual shunt after percutaneous patent foramen ovale closure. Comparison of two devices.",
-    "journal": "Journal of interventional cardiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Develops transcranial Doppler method for quantifying residual shunt after medical device closure, unrelated to PFAS."
   },
   {
     "pmid": "20795671",
@@ -9180,16 +8790,6 @@
     "reasoning": "Study examines environmental behavior and fate of PFCs in water, sediment, and particulate matter to understand their distribution patterns."
   },
   {
-    "pmid": "20171107",
-    "year": 2011,
-    "title": "Combined lateral retinacular release with drilling chondroplasty for treatment of patellofemoral osteoarthritis associated with patellar malalignment in elderly patients.",
-    "journal": "The Knee",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about knee surgery and osteoarthritis treatment, not PFOA research - likely misclassified in the dataset."
-  },
-  {
     "pmid": "20160413",
     "year": 2010,
     "title": "Role of peroxisome proliferator-activated receptor-alpha in hepatobiliary injury induced by ammonium perfluorooctanoate in mouse liver.",
@@ -9688,16 +9288,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "Study determines and reports PFC contamination levels in solid and liquid phases of river water samples in Thailand."
-  },
-  {
-    "pmid": "22079896",
-    "year": 2012,
-    "title": "Sugar inhibits the production of the toxins that trigger clostridial gas gangrene.",
-    "journal": "Microbial pathogenesis",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "Study appears to be about Clostridium perfringens toxin production and sugar inhibition, not related to PFOA/perfluorinated compounds - likely misclassified in the dataset."
   },
   {
     "pmid": "22071607",
@@ -10830,16 +10420,6 @@
     "reasoning": "This paper determines the occurrence of PFCs including PFOA in water, sediment and mussels from the Cantabrian Sea."
   },
   {
-    "pmid": "21420802",
-    "year": 2011,
-    "title": "Recent progress in understanding the pathogenesis of Clostridium perfringens type C infections.",
-    "journal": "Veterinary microbiology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about Clostridium perfringens pathogenesis and toxins, not PFOA - appears to be incorrectly included in PFOA dataset."
-  },
-  {
     "pmid": "21417377",
     "year": 2011,
     "title": "Investigation on per- and polyfluorinated compounds in paired samples of house dust and indoor air from Norwegian homes.",
@@ -11310,16 +10890,6 @@
     "reasoning": "Study measuring concentrations and spatial distribution of PFOS and PFOA in surface water of East Lake."
   },
   {
-    "pmid": "23212186",
-    "year": 2013,
-    "title": "Cadaveric assessment of osteoarthritic changes in the patello-femoral joint: evaluation of 203 knees.",
-    "journal": "Knee surgery, sports traumatology, arthroscopy : official journal of the ESSKA",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about knee osteoarthritis assessment, not PFAS compounds - likely misclassified in the input."
-  },
-  {
     "pmid": "23205559",
     "year": 2013,
     "title": "Polyfluorinated amides as a historical PFCA source by electrochemical fluorination of alkyl sulfonyl fluorides.",
@@ -11338,16 +10908,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Toxicology study examining PFOA toxic effects on freshwater green algae, focusing on cellular response to toxicity."
-  },
-  {
-    "pmid": "23180522",
-    "year": 2012,
-    "title": "Medium-term results of transcatheter closure of patent foramen ovale (PFO) with Amplatzer PFO and Cribriform occluders.",
-    "journal": "Kardiologia polska",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about patent foramen ovale medical device closure, not PFAS compounds - likely misclassified in the input."
   },
   {
     "pmid": "23177245",
@@ -11528,16 +11088,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Cohort mortality study of workers exposed to PFOA examining cancer and death outcomes - focus is on health harm assessment."
-  },
-  {
-    "pmid": "23047017",
-    "year": 2013,
-    "title": "Gait biomechanics and hip muscular strength in patients with patellofemoral osteoarthritis.",
-    "journal": "Gait & posture",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies gait biomechanics in patellofemoral osteoarthritis patients - appears to be medical research unrelated to PFOA chemical compound."
   },
   {
     "pmid": "23044208",
@@ -13780,16 +13330,6 @@
     "reasoning": "Studies formation of PFOA from precursor compounds in brackish water, investigating environmental transformation and fate."
   },
   {
-    "pmid": "23878206",
-    "year": 2014,
-    "title": "Frontal plane knee and hip kinematics during sit-to-stand and proximal lower extremity strength in persons with patellofemoral osteoarthritis: a pilot study.",
-    "journal": "Journal of applied biomechanics",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid - likely misclassified in search."
-  },
-  {
     "pmid": "23870403",
     "year": 2013,
     "title": "Analytical chemistry of the persistent organic pollutants identified in the Stockholm Convention: A review.",
@@ -15030,16 +14570,6 @@
     "reasoning": "Development of physiologically-based pharmacokinetic (PBPK) models as analytical tools for understanding PFOA and PFOS during pregnancy and lactation."
   },
   {
-    "pmid": "23045243",
-    "year": 2013,
-    "title": "Association of severity of coexisting patellofemoral disease with increased impairments and functional limitations in patients with knee osteoarthritis.",
-    "journal": "Arthritis care & research",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about knee osteoarthritis and patellofemoral disease, not PFAS compounds - likely misclassified in the input."
-  },
-  {
     "pmid": "23043333",
     "year": 2013,
     "title": "Perfluoroalkyl and polyfluoroalkyl substances (PFASs) in mineral water and tap water.",
@@ -15580,16 +15110,6 @@
     "reasoning": "Study investigating chromosomal damage and DNA fragmentation in human sperm from patients exposed to perfluorinated compounds."
   },
   {
-    "pmid": "25379598",
-    "year": 2014,
-    "title": "Are knee biomechanics different in those with and without patellofemoral osteoarthritis after anterior cruciate ligament reconstruction?",
-    "journal": "Arthritis care & research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Clinical study examining knee biomechanics differences in patients with patellofemoral osteoarthritis after ACL reconstruction (appears to be medical research unrelated to PFOA chemicals)."
-  },
-  {
     "pmid": "25377447",
     "year": 2015,
     "title": "Evaluation of the chronic toxicity and carcinogenicity of perfluorohexanoic acid (PFHxA) in Sprague-Dawley rats.",
@@ -15858,16 +15378,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Study investigates photocatalytic degradation of PFOA using TiO2, focusing on removal/treatment technology for this persistent pollutant."
-  },
-  {
-    "pmid": "25242293",
-    "year": 2015,
-    "title": "Altered gait biomechanics and increased knee-specific impairments in patients with coexisting tibiofemoral and patellofemoral osteoarthritis.",
-    "journal": "Gait & posture",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.9,
-    "reasoning": "Medical study examining gait biomechanics and knee impairments in patients with patellofemoral osteoarthritis (PFOA refers to medical condition, not the chemical)."
   },
   {
     "pmid": "25225686",
@@ -17100,16 +16610,6 @@
     "reasoning": "Study investigating occurrence and fate of micropollutants including PFOA and PFOS in wastewater treatment processes."
   },
   {
-    "pmid": "24631214",
-    "year": 2014,
-    "title": "Membrane vesicles of Clostridium perfringens type A strains induce innate and adaptive immunity.",
-    "journal": "International journal of medical microbiology : IJMM",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This paper is about bacterial membrane vesicles from Clostridium perfringens and has no relation to PFOA/PFAS compounds."
-  },
-  {
     "pmid": "24630253",
     "year": 2014,
     "title": "Effects of age, gender and region on serum concentrations of perfluorinated compounds in general population of Henan, China.",
@@ -17228,16 +16728,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "Reports PFAS concentrations found in water, sediment, plankton and fish from Korean rivers and lakes."
-  },
-  {
-    "pmid": "24520520",
-    "year": 2014,
-    "title": "Dermatoscopic features of cutaneous non-facial non-acral lentiginous growth pattern melanomas.",
-    "journal": "Dermatology practical & conceptual",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This paper is about dermatoscopic features of melanomas and has no relation to PFOA/PFAS compounds."
   },
   {
     "pmid": "24520202",
@@ -17680,16 +17170,6 @@
     "reasoning": "Prospective cohort study examining associations between prenatal endocrine disrupting chemical exposure and birth weight, focusing on developmental health effects."
   },
   {
-    "pmid": "26605309",
-    "year": 2015,
-    "title": "Radiographic grading of the patellofemoral joint is more accurate in skyline compared to lateral views.",
-    "journal": "Annals of translational medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "Study comparing radiographic grading methods for patellofemoral osteoarthritis (PFOA refers to patellofemoral osteoarthritis, not perfluorooctanoic acid), focusing on diagnostic methodology."
-  },
-  {
     "pmid": "26592048",
     "year": 2015,
     "title": "[Status Quo, Uncertainties and Trends Analysis of Environmental Risk Assessment for PFASs].",
@@ -17958,16 +17438,6 @@
     "score": -1.0,
     "confidence": 0.85,
     "reasoning": "Paper analyzes endocrine disruptor levels including PFOS/PFOA in relation to male fertility issues and gene expression changes."
-  },
-  {
-    "pmid": "26443835",
-    "year": 2015,
-    "title": "Rationale design of quorum-quenching peptides that target the VirSR system of Clostridium perfringens.",
-    "journal": "FEMS microbiology letters",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.7,
-    "reasoning": "Paper is about Clostridium perfringens (different compound) developing quorum-quenching peptides, not about PFOA - appears to be misclassified in the dataset."
   },
   {
     "pmid": "26432473",
@@ -18258,16 +17728,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "Exposure assessment study investigating maternal-fetal transfer of PFAS with implications for child health effects."
-  },
-  {
-    "pmid": "26255482",
-    "year": 2015,
-    "title": "[Arthroscopic patelloplasty and circumpatellar denervation for the treatment of patellofemoral osteoarthritis].",
-    "journal": "Zhongguo gu shang = China journal of orthopaedics and traumatology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "Medical paper about patellofemoral osteoarthritis treatment; PFOA appears to be medical abbreviation, not the chemical compound."
   },
   {
     "pmid": "26250865",
@@ -19140,16 +18600,6 @@
     "reasoning": "This study examines isomer-specific binding affinity of PFOS and PFOA to serum proteins to understand molecular mechanisms of disposition and fate."
   },
   {
-    "pmid": "25824838",
-    "year": 2015,
-    "title": "The CpAL quorum sensing system regulates production of hemolysins CPA and PFO to build Clostridium perfringens biofilms.",
-    "journal": "Infection and immunity",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "This study focuses on Clostridium perfringens biofilm regulation and toxin production mechanisms, which appears to be about bacterial PFO (not PFOA), but involves analytical characterization methods."
-  },
-  {
     "pmid": "25819541",
     "year": 2015,
     "title": "Longitudinal measures of perfluoroalkyl substances (PFAS) in serum of Gullah African Americans in South Carolina: 2003-2013.",
@@ -19510,16 +18960,6 @@
     "reasoning": "Study examines relationship between PFAA exposure and prostate-specific antigen levels in humans, investigating potential health effects."
   },
   {
-    "pmid": "25563318",
-    "year": 2015,
-    "title": "Arthroscopic patelloplasty and circumpatellar denervation for the treatment of patellofemoral osteoarthritis.",
-    "journal": "Chinese medical journal",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (knee condition), not PFOA - the PFOA abbreviation refers to a medical condition, not the chemical compound."
-  },
-  {
     "pmid": "27752431",
     "year": 2015,
     "title": "Can perfluoroalkyl acids biodegrade in the rumen simulation technique (RUSITEC)?",
@@ -19570,16 +19010,6 @@
     "reasoning": "Systematic review about glomerular filtration rate and fetal growth, discussing methodological considerations for biomarker studies including environmental contaminants."
   },
   {
-    "pmid": "25096320",
-    "year": 2015,
-    "title": "Physical performance measurement in persons with patellofemoral osteoarthritis: A pilot study.",
-    "journal": "Journal of back and musculoskeletal rehabilitation",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 1.0,
-    "reasoning": "Studies physical performance in patellofemoral osteoarthritis (medical condition), not PFOA chemical compound."
-  },
-  {
     "pmid": "25015730",
     "year": 2015,
     "title": "Assessment of urinary metabolite excretion after rat acute exposure to perfluorooctanoic acid and other peroxisomal proliferators.",
@@ -19588,16 +19018,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Investigates metabolic effects and potential toxicity mechanisms of PFOA exposure in rats, studying adverse biological responses."
-  },
-  {
-    "pmid": "24830681",
-    "year": 2015,
-    "title": "A propensity score-matched comparison between Cardia and Amplatzer PFO closure devices - insights from the SOLUTION registry (Swiss percutaneOus patent foramen ovale cLosUre in recurrent clinical events prevenTION).",
-    "journal": "EuroIntervention : journal of EuroPCR in collaboration with the Working Group on Interventional Cardiology of the European Society of Cardiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 1.0,
-    "reasoning": "Compares medical devices for patent foramen ovale closure - PFO refers to heart condition, not PFOA chemical."
   },
   {
     "pmid": "28571864",
@@ -19790,16 +19210,6 @@
     "reasoning": "Studies nanofiltration membrane technology for removing PFOA contamination from groundwater, focusing on remediation."
   },
   {
-    "pmid": "27940216",
-    "year": 2017,
-    "title": "Incidence, prevalence, natural course and prognosis of patellofemoral osteoarthritis: the Cohort Hip and Cohort Knee study.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about patellofemoral osteoarthritis (medical condition), not perfluorooctanoic acid - likely misclassified input."
-  },
-  {
     "pmid": "27940134",
     "year": 2017,
     "title": "Interaction effects on uptake and toxicity of perfluoroalkyl substances and cadmium in wheat (Triticum aestivum L.) and rapeseed (Brassica campestris L.) from co-contaminated soil.",
@@ -19828,16 +19238,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Develops electrode technology for PFOA removal and defluorination, focusing on remediation and cleanup methods."
-  },
-  {
-    "pmid": "27927675",
-    "year": 2017,
-    "title": "Is body mass index associated with patellofemoral pain and patellofemoral osteoarthritis? A systematic review and meta-regression and analysis.",
-    "journal": "British journal of sports medicine",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about patellofemoral pain and osteoarthritis (medical conditions), not PFOA compounds - likely misclassified input."
   },
   {
     "pmid": "27927583",
@@ -20300,16 +19700,6 @@
     "reasoning": "Studies ecological effects and risks of PFAS towards aquatic plants, investigating environmental harm and toxicity."
   },
   {
-    "pmid": "27693503",
-    "year": 2017,
-    "title": "Anterior knee pain following anterior cruciate ligament reconstruction does not increase the risk of patellofemoral osteoarthritis at 15- and 20-year follow-ups.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Medical study on patellofemoral osteoarthritis following knee reconstruction - PFOA here refers to a medical condition, not the chemical compound."
-  },
-  {
     "pmid": "27692925",
     "year": 2016,
     "title": "Behavioral difficulties in 7-year old children in relation to developmental exposure to perfluorinated alkyl substances.",
@@ -20358,26 +19748,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Investigates PFOA's association with mast cell degranulation and allergic inflammation, studying immunotoxic health effects."
-  },
-  {
-    "pmid": "27678276",
-    "year": 2016,
-    "title": "[Not Available].",
-    "journal": "Bundesgesundheitsblatt, Gesundheitsforschung, Gesundheitsschutz",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "No abstract available, cannot determine research focus or intent from title alone."
-  },
-  {
-    "pmid": "27678275",
-    "year": 2016,
-    "title": "[Not Available].",
-    "journal": "Bundesgesundheitsblatt, Gesundheitsforschung, Gesundheitsschutz",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "No abstract available, cannot determine research focus or intent from title alone."
   },
   {
     "pmid": "27666670",
@@ -21210,26 +20580,6 @@
     "reasoning": "Examines how genetic polymorphisms affect the relationship between prenatal PFC exposure and birth weight, studying health outcomes."
   },
   {
-    "pmid": "27188685",
-    "year": 2016,
-    "title": "Knee kinematics and kinetics are associated with early patellofemoral osteoarthritis following anterior cruciate ligament reconstruction.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Studies patellofemoral osteoarthritis (PFOA here refers to the medical condition, not the chemical) following ACL reconstruction - medical research on joint health."
-  },
-  {
-    "pmid": "27180253",
-    "year": 2016,
-    "title": "Adolescent knee pain and patellar dislocations are associated with patellofemoral osteoarthritis in adulthood: A case control study.",
-    "journal": "The Knee",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Case-control study on patellofemoral osteoarthritis (medical condition PFOA, not the chemical) and its association with adolescent knee problems."
-  },
-  {
     "pmid": "27179585",
     "year": 2016,
     "title": "Maternal serum perfluoroalkyl substances during pregnancy and duration of breastfeeding.",
@@ -21850,16 +21200,6 @@
     "reasoning": "Develops a new analytical method for PFOA detection using resonance light scattering technique, focusing on measurement tool development."
   },
   {
-    "pmid": "26814979",
-    "year": 2016,
-    "title": "Is Tibiofemoral or Patellofemoral Alignment or Trochlear Morphology Associated With Patellofemoral Osteoarthritis? A Systematic Review.",
-    "journal": "Arthritis care & research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.6,
-    "reasoning": "Systematic review on patellofemoral osteoarthritis (PFOA here refers to medical condition, not the chemical), studying disease associations."
-  },
-  {
     "pmid": "26805861",
     "year": 2016,
     "title": "Maternal and Neonatal Levels of Perfluoroalkyl Substances in Relation to Gestational Weight Gain.",
@@ -22010,16 +21350,6 @@
     "reasoning": "Toxicokinetic study examining PFOS clearance and distribution in rainbow trout, investigating fate and transport in organisms."
   },
   {
-    "pmid": "26315986",
-    "year": 2016,
-    "title": "Clinical Impact of Coexisting Patellofemoral Osteoarthritis in Japanese Patients With Medial Knee Osteoarthritis.",
-    "journal": "Arthritis care & research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Clinical study on patellofemoral osteoarthritis impact in knee OA patients (PFOA here refers to patellofemoral OA, not perfluorooctanoic acid)."
-  },
-  {
     "pmid": "29964925",
     "year": 2017,
     "title": "[Perfluorinated Compounds in Snow from Downtown Hangzhou, China].",
@@ -22080,16 +21410,6 @@
     "reasoning": "Study investigates occurrence of PFAS in garden produce at homes with contaminated drinking water history."
   },
   {
-    "pmid": "29312194",
-    "year": 2017,
-    "title": "Probing Genomic Aspects of the Multi-Host Pathogen ",
-    "journal": "Frontiers in microbiology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.8,
-    "reasoning": "This paper is about Clostridium perfringens genomics, not PFOA - appears to be misclassified in the dataset."
-  },
-  {
     "pmid": "29291571",
     "year": 2018,
     "title": "PFOA is associated with diabetes and metabolic alteration in US men: National Health and Nutrition Examination Survey 2003-2012.",
@@ -22138,16 +21458,6 @@
     "score": 0.5,
     "confidence": 0.85,
     "reasoning": "Study evaluates feasibility of using tissue bank samples for PFAA analysis, focusing on analytical methodology and sample utility."
-  },
-  {
-    "pmid": "29270562",
-    "year": 2017,
-    "title": "Patellofemoral Arthroplasty: Current Concepts and Review of the Literature.",
-    "journal": "Joints",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.7,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA), not perfluorooctanoic acid - appears to be misclassified in the dataset."
   },
   {
     "pmid": "29270018",
@@ -22388,16 +21698,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "First evidence of PFCs occurrence in Songhua River, reporting concentrations and detection frequencies in water and sediment."
-  },
-  {
-    "pmid": "29139573",
-    "year": 2018,
-    "title": "Gait patterns, symptoms, and function in patients with isolated tibiofemoral osteoarthritis and combined tibiofemoral and patellofemoral osteoarthritis.",
-    "journal": "Journal of orthopaedic research : official publication of the Orthopaedic Research Society",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about osteoarthritis (PFOA = patellofemoral osteoarthritis), not perfluorooctanoic acid - medical study on joint disease."
   },
   {
     "pmid": "29136923",
@@ -22818,16 +22118,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Study examines relationship between PFAS serum levels and cardiometabolic consequences in children exposed to WTC disaster, focusing on health effects."
-  },
-  {
-    "pmid": "28888909",
-    "year": 2017,
-    "title": "Association of varus thrust with prevalent patellofemoral osteoarthritis: A cross-sectional study.",
-    "journal": "Gait & posture",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid, so classification is uncertain."
   },
   {
     "pmid": "28888862",
@@ -23350,16 +22640,6 @@
     "reasoning": "This study examines associations between prenatal PFAS exposure and offspring birth weight and adiposity, investigating potential adverse health effects."
   },
   {
-    "pmid": "28666037",
-    "year": 2017,
-    "title": "Joint-Preserving Osteotomies for Isolated Patellofemoral Osteoarthritis: Alternatives to Arthroplasty.",
-    "journal": "American journal of orthopedics (Belle Mead, N.J.)",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "This paper discusses joint-preserving osteotomies for patellofemoral osteoarthritis (PFOA refers to medical condition, not the chemical compound)."
-  },
-  {
     "pmid": "28662452",
     "year": 2017,
     "title": "Estimating human exposure to perfluoroalkyl acids via solid food and drinks: Implementation and comparison of different dietary assessment methods.",
@@ -23388,16 +22668,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "This systematic review summarizes epidemiologic evidence for relationships between PFAS exposure and health outcomes in children."
-  },
-  {
-    "pmid": "28652829",
-    "year": 2017,
-    "title": "Patellofemoral pain in athletes.",
-    "journal": "Open access journal of sports medicine",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "This paper discusses patellofemoral pain in athletes (PFOA refers to medical condition patellofemoral osteoarthritis, not the chemical)."
   },
   {
     "pmid": "28651210",
@@ -23700,16 +22970,6 @@
     "reasoning": "Examines tissue distribution kinetics and fate of perfluoro compounds at low doses in rats."
   },
   {
-    "pmid": "28488001",
-    "year": 2018,
-    "title": "Lateral displacement, sulcus angle and trochlear angle are associated with early patellofemoral osteoarthritis following anterior cruciate ligament reconstruction.",
-    "journal": "Knee surgery, sports traumatology, arthroscopy : official journal of the ESSKA",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.9,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) in knee joints, not perfluorooctanoic acid - it's a medical study unrelated to PFAS compounds."
-  },
-  {
     "pmid": "28486183",
     "year": 2017,
     "title": "Characterization of occurrence, sources and sinks of perfluoroalkyl and polyfluoroalkyl substances (PFASs) in a tropical urban catchment.",
@@ -23928,16 +23188,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Birth cohort study examining associations between prenatal PFAS exposure and adverse birth outcomes including adipokines and birth size."
-  },
-  {
-    "pmid": "28340623",
-    "year": 2017,
-    "title": "Changes in clinical symptoms and functional disability in patients with coexisting patellofemoral and tibiofemoral osteoarthritis: a 1-year prospective cohort study.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about knee osteoarthritis and is likely misclassified in PFAS literature - not related to PFOA/PFAS."
   },
   {
     "pmid": "28340460",
@@ -24680,16 +23930,6 @@
     "reasoning": "This study investigates PFOA cytotoxicity and mechanisms of harm through autophagy and oxidative stress in fish lymphocytes."
   },
   {
-    "pmid": "30559838",
-    "year": 2018,
-    "title": "Foot and ankle characteristics and dynamic knee valgus in individuals with patellofemoral osteoarthritis.",
-    "journal": "Journal of foot and ankle research",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about knee biomechanics and patellofemoral osteoarthritis, not related to PFOA - likely misclassified in the input."
-  },
-  {
     "pmid": "30557797",
     "year": 2019,
     "title": "Variation in PFAA concentrations and egg parameters throughout the egg-laying sequence in a free-living songbird (the great tit, Parus major): Implications for biomonitoring studies.",
@@ -24980,16 +24220,6 @@
     "reasoning": "Studies prenatal exposure determinants to endocrine-disrupting PFAS associated with adverse childhood health outcomes."
   },
   {
-    "pmid": "30415972",
-    "year": 2019,
-    "title": "Histopathological changes in the infrapatellar fat pad in an experimental rabbit model of early patellofemoral osteoarthritis.",
-    "journal": "The Knee",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.6,
-    "reasoning": "Studies histopathological changes in rabbit model of patellofemoral osteoarthritis (PFOA here means patellofemoral osteoarthritis, not perfluorooctanoic acid)."
-  },
-  {
     "pmid": "30414542",
     "year": 2019,
     "title": "Persistent endocrine-disrupting chemicals found in human follicular fluid stimulate the proliferation of granulosa tumor spheroids via GPR30 and IGF1R but not via the classic estrogen receptors.",
@@ -25098,16 +24328,6 @@
     "score": 0.0,
     "confidence": 0.7,
     "reasoning": "Survey design paper for measuring PFAA concentrations in aquatic species, focused on occurrence monitoring."
-  },
-  {
-    "pmid": "30344060",
-    "year": 2019,
-    "title": "Patent foramen ovale with complex anatomy: Comparison of two different devices (Amplatzer Septal Occluder device and Amplatzer PFO Occluder device 30/35).",
-    "journal": "International journal of cardiology",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "Medical device study comparing different occluder devices for patent foramen ovale closure - unrelated to PFAS compounds."
   },
   {
     "pmid": "30343197",
@@ -25258,16 +24478,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Investigates prenatal PFAS exposure effects on birth weight and early growth, focusing on developmental health impacts."
-  },
-  {
-    "pmid": "30264243",
-    "year": 2019,
-    "title": "Similar postoperative patient-reported outcome in both second generation patellofemoral arthroplasty and total knee arthroplasty for treatment of isolated patellofemoral osteoarthritis: a systematic review.",
-    "journal": "Knee surgery, sports traumatology, arthroscopy : official journal of the ESSKA",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis surgery, not PFOA compounds - likely misclassified in the dataset."
   },
   {
     "pmid": "30262038",
@@ -26250,16 +25460,6 @@
     "reasoning": "This paper investigates oxidative stress effects of perfluoroalkyl acids on erythrocytes in vitro, focusing on cellular toxicity mechanisms."
   },
   {
-    "pmid": "29854341",
-    "year": 2018,
-    "title": "Prevalence and Predictors of Patellofemoral Osteoarthritis after Anterior Cruciate Ligament Reconstruction with Hamstring Tendon Autograft.",
-    "journal": "Clinics in orthopedic surgery",
-    "category": "NOT_PFAS",
-    "score": null,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis after knee surgery, not about PFOA/perfluorooctanoic acid compounds."
-  },
-  {
     "pmid": "29851409",
     "year": 2018,
     "title": "Study of hybrid membrane filtration and photocatalysis for removal of perfluorooctanoic acid (PFOA) in groundwater.",
@@ -26408,16 +25608,6 @@
     "score": 0.5,
     "confidence": 0.95,
     "reasoning": "This paper focuses on developing and validating an analytical method (UPLC-QTOF-MS) for determining nine perfluorinated compounds including PFOA."
-  },
-  {
-    "pmid": "29760787",
-    "year": 2018,
-    "title": "Inverted Rearfoot posture in subjects with coexisting patellofemoral osteoarthritis in medial knee osteoarthritis: an exploratory study.",
-    "journal": "Journal of foot and ankle research",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This paper appears to be about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid, so it's outside the scope but classified as utility for medical methodology."
   },
   {
     "pmid": "29759229",
@@ -26680,16 +25870,6 @@
     "reasoning": "This paper investigates associations between PFAS exposure and glucose homeostasis disruption in pregnant women."
   },
   {
-    "pmid": "29654901",
-    "year": 2018,
-    "title": "Ethanolamine utilization supports Clostridium perfringens growth in infected tissues.",
-    "journal": "Microbial pathogenesis",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This paper studies Clostridium perfringens metabolism and is not about PFOA/PFAS compounds despite the similar name."
-  },
-  {
     "pmid": "29649661",
     "year": 2018,
     "title": "Risk ranking of environmental contaminants in Xiaoqing River, a heavily polluted river along urbanizing Bohai Rim.",
@@ -26878,16 +26058,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "This epigenome-wide study investigates DNA methylation changes in cord blood associated with prenatal PFAS exposure, examining potential biological harm mechanisms."
-  },
-  {
-    "pmid": "29540410",
-    "year": 2018,
-    "title": "Clinical effectiveness of patella mobilisation therapy versus a waiting list control for knee osteoarthritis: a protocol for a pragmatic randomised clinical trial.",
-    "journal": "BMJ open",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about knee osteoarthritis treatment (PFOA = patellofemoral osteoarthritis), not perfluorooctanoic acid, but following the classification system for the medical context."
   },
   {
     "pmid": "29539594",
@@ -27190,16 +26360,6 @@
     "reasoning": "Analyzes PFAS profiles in human serum to identify exposure sources, focusing on occurrence and detection in biological samples."
   },
   {
-    "pmid": "29373309",
-    "year": 2018,
-    "title": "Metabolic dependent and independent pH-drop shuts down VirSR quorum sensing in Clostridium perfringens.",
-    "journal": "Journal of bioscience and bioengineering",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies Clostridium perfringens quorum sensing regulation and virulence gene expression, appears to be basic microbiology research unrelated to PFAS compounds."
-  },
-  {
     "pmid": "29347948",
     "year": 2018,
     "title": "Prenatal exposure to persistent organic pollutants and child overweight/obesity at 5-year follow-up: a prospective cohort study.",
@@ -27388,16 +26548,6 @@
     "score": -0.5,
     "confidence": 0.9,
     "reasoning": "Uses model-based analysis to study uptake and partitioning behavior of PFAAs from soil into plants, focusing on environmental fate."
-  },
-  {
-    "pmid": "32021965",
-    "year": 2019,
-    "title": "Genomic analysis on broiler-associated ",
-    "journal": "Animal microbiome",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.7,
-    "reasoning": "Genomic analysis of Clostridium perfringens in poultry, not related to PFOA/PFAS compounds despite similar name."
   },
   {
     "pmid": "32021704",
@@ -28030,16 +27180,6 @@
     "reasoning": "This paper reports severe acute toxicity and blindness cases from perfluorocarbon liquids used in eye surgery, focusing on adverse health effects."
   },
   {
-    "pmid": "31731134",
-    "year": 2020,
-    "title": "Immediate effects of foot orthoses on lower limb biomechanics, pain, and confidence in individuals with patellofemoral osteoarthritis.",
-    "journal": "Gait & posture",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA in medical context) and foot orthoses biomechanics, not the chemical PFOA - likely misclassified in search results."
-  },
-  {
     "pmid": "31730470",
     "year": 2019,
     "title": "Association between prenatal exposure to perfluoroalkyl substances and asthma in 5-year-old children in the Odense Child Cohort.",
@@ -28130,16 +27270,6 @@
     "reasoning": "Investigates PFOA removal by aerobic granular sludge systems, focusing on treatment technology for environmental remediation."
   },
   {
-    "pmid": "31704257",
-    "year": 2020,
-    "title": "Letter.",
-    "journal": "Regulatory toxicology and pharmacology : RTP",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "No abstract available, cannot determine research focus or intent from title alone."
-  },
-  {
     "pmid": "31702898",
     "year": 2019,
     "title": "Perfluoroalkyl Substances in Drinking Water, Indoor Air and Dust from Ireland: Implications for Human Exposure.",
@@ -28148,16 +27278,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "Measures PFAS concentrations in drinking water, indoor air, and dust from various locations in Ireland for exposure assessment."
-  },
-  {
-    "pmid": "31699493",
-    "year": 2019,
-    "title": "Replacement for patellofemoral arthritis.",
-    "journal": "The Knee",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.2,
-    "reasoning": "Medical paper about patellofemoral osteoarthritis (PFOA acronym coincidence), not related to perfluorooctanoic acid compound."
   },
   {
     "pmid": "31692687",
@@ -29120,16 +28240,6 @@
     "reasoning": "Evaluates point-of-use/point-of-entry systems to remove PFAS from drinking water, focusing on remediation technology effectiveness."
   },
   {
-    "pmid": "31338205",
-    "year": 2019,
-    "title": "The efficacy of foot orthoses in individuals with patellofemoral osteoarthritis: a randomised feasibility trial.",
-    "journal": "Pilot and feasibility studies",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis and foot orthoses, not PFOA compounds - likely misclassified in the dataset."
-  },
-  {
     "pmid": "31330388",
     "year": 2019,
     "title": "Prenatal exposure to chlorinated polyfluoroalkyl ether sulfonic acids and perfluoroalkyl acids: Potential role of maternal determinants and associations with birth outcomes.",
@@ -29980,16 +29090,6 @@
     "reasoning": "Studies how PFOA and PFOS promote diabetic kidney injury through metabolic impairment mechanisms."
   },
   {
-    "pmid": "31026805",
-    "year": 2019,
-    "title": "Neuromotor control during stair ambulation in individuals with patellofemoral osteoarthritis compared to asymptomatic controls.",
-    "journal": "Gait & posture",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.6,
-    "reasoning": "Studies neuromotor control in patellofemoral osteoarthritis (PFOA abbreviation refers to medical condition, not chemical)."
-  },
-  {
     "pmid": "31026146",
     "year": 2019,
     "title": "Bubble-Nucleation-Based Method for the Selective and Sensitive Electrochemical Detection of Surfactants.",
@@ -30028,16 +29128,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Investigates associations between PFAS serum concentrations and breast cancer risk in a large epidemiological cohort study."
-  },
-  {
-    "pmid": "31005917",
-    "year": 2019,
-    "title": "The FOOTPATH study: protocol for a multicentre, participant- and assessor-blind, parallel group randomised clinical trial of foot orthoses for patellofemoral osteoarthritis.",
-    "journal": "BMJ open",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis treatment protocol, not PFOA compounds - likely misclassified in the input."
   },
   {
     "pmid": "31003132",
@@ -30790,16 +29880,6 @@
     "reasoning": "Develops and validates an analytical method using hand wipes to assess human exposure to PFAS through dermal and hand-to-mouth contact."
   },
   {
-    "pmid": "30663004",
-    "year": 2019,
-    "title": "Hybrid closed wedge high tibial osteotomy improves patellofemoral joint congruity compared with open wedge high tibial osteotomy.",
-    "journal": "Knee surgery, sports traumatology, arthroscopy : official journal of the ESSKA",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about knee surgery (tibial osteotomy) and is likely misclassified in a PFAS database."
-  },
-  {
     "pmid": "30660347",
     "year": 2019,
     "title": "Corrigendum to \"Renal function and isomers of perfluorooctanoate (PFOA) and perfluorooctanesulfonate (PFOS): Isomers of C8 health project in China\" [Chemosphere 218 (2019) 1042-1049].",
@@ -30920,16 +30000,6 @@
     "reasoning": "Develops chronic human health toxicity values for PFHxA for risk assessment purposes, focusing on health effects evaluation."
   },
   {
-    "pmid": "30635231",
-    "year": 2019,
-    "title": "Surgical technique in patellofemoral arthroplasty.",
-    "journal": "Orthopaedics & traumatology, surgery & research : OTSR",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 1.0,
-    "reasoning": "Medical paper about patellofemoral arthroplasty surgical techniques, unrelated to PFAS compounds despite acronym overlap."
-  },
-  {
     "pmid": "30632927",
     "year": 2019,
     "title": "Risk characterisation from the presence of environmental contaminants and antibiotic residues in wild and farmed salmon from different FAO zones.",
@@ -31020,16 +30090,6 @@
     "reasoning": "Evaluates toxic effects of perfluorocarboxylic acids and copper on microorganisms, studying toxicity mechanisms."
   },
   {
-    "pmid": "30617612",
-    "year": 2019,
-    "title": "Return to the operating room after patellofemoral arthroplasty versus total knee arthroplasty for isolated patellofemoral arthritis-a systematic review.",
-    "journal": "International orthopaedics",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 1.0,
-    "reasoning": "Medical paper comparing surgical procedures for patellofemoral arthritis, unrelated to PFAS compounds despite acronym overlap."
-  },
-  {
     "pmid": "30589657",
     "year": 2019,
     "title": "Selective Associations of Recent Low Concentrations of Perfluoroalkyl Substances With Liver Function Biomarkers: NHANES 2011 to 2014 Data on US Adults Aged ≥20 Years.",
@@ -31098,16 +30158,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Review examining endocrine disruption and reproductive health effects of perfluoroalkyl compounds including testicular toxicity and male infertility."
-  },
-  {
-    "pmid": "34422286",
-    "year": 2020,
-    "title": "Clinical findings in patellofemoral osteoarthritis compared to individually-matched controls: a pilot study.",
-    "journal": "BMJ open sport & exercise medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "Clinical study of patellofemoral osteoarthritis (PFOA here refers to the medical condition, not the chemical compound)."
   },
   {
     "pmid": "33601665",
@@ -31480,16 +30530,6 @@
     "reasoning": "This study analyzes the impact of PFAS exposure on thyroid function in the general population, investigating endocrine disruption and health effects."
   },
   {
-    "pmid": "33316633",
-    "year": 2021,
-    "title": "Prevalence and antimicrobial susceptibility of Clostridium perfringens in chickens and pigs from Beijing and Shanxi, China.",
-    "journal": "Veterinary microbiology",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.95,
-    "reasoning": "This paper is about Clostridium perfringens bacterial prevalence and antimicrobial susceptibility, not related to PFAS/PFOA compounds."
-  },
-  {
     "pmid": "33315184",
     "year": 2021,
     "title": "The new generation PFAS C6O4 does not produce adverse effects on thyroid cells in vitro.",
@@ -31568,16 +30608,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Investigates PFOA-induced liver injury and its association with gut microbiota dysbiosis, focusing on adverse health effects."
-  },
-  {
-    "pmid": "33276784",
-    "year": 2020,
-    "title": "Does patellofemoral osteoarthritis affect functional outcomes and survivorship after medial unicompartmental knee arthroplasty? A meta-analysis.",
-    "journal": "Journal of orthopaedic surgery and research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA) in knee surgery context, not perfluorooctanoic acid - medical study on adverse outcomes."
   },
   {
     "pmid": "33276313",
@@ -32080,16 +31110,6 @@
     "reasoning": "Epidemiological study examining association between PFAS exposure and inflammation/oxidative stress markers."
   },
   {
-    "pmid": "33130105",
-    "year": 2020,
-    "title": "Gas gangrene-associated gliding motility is regulated by the Clostridium perfringens CpAL/VirSR system.",
-    "journal": "Anaerobe",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "Study of bacterial motility regulation in Clostridium perfringens, not directly PFAS-related."
-  },
-  {
     "pmid": "33126064",
     "year": 2021,
     "title": "Hexafluoropropylene oxide-dimer acid (HFPO-DA or GenX) alters maternal and fetal glucose and lipid metabolism and produces neonatal mortality, low birthweight, and hepatomegaly in the Sprague-Dawley rat.",
@@ -32158,16 +31178,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This study investigates tissue distribution and bioaccumulation in edible fish and assesses human health risks, which is exposure assessment and potential harm."
-  },
-  {
-    "pmid": "33114034",
-    "year": 2020,
-    "title": "Medical Interventions for Patellofemoral Pain and Patellofemoral Osteoarthritis: A Systematic Review.",
-    "journal": "Journal of clinical medicine",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA) medical treatments, not perfluorooctanoic acid - likely a misclassified paper."
   },
   {
     "pmid": "33113642",
@@ -32620,16 +31630,6 @@
     "reasoning": "Research on PFOA inhibiting cellular communication and inducing apoptosis in human ovarian cells, investigating reproductive toxicity."
   },
   {
-    "pmid": "32967701",
-    "year": 2020,
-    "title": "Associations of foot and ankle characteristics with knee symptoms and function in individuals with patellofemoral osteoarthritis.",
-    "journal": "Journal of foot and ankle research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Study on patellofemoral osteoarthritis (PFOA in this context refers to the medical condition, not the chemical), examining health symptoms and function."
-  },
-  {
     "pmid": "32965107",
     "year": 2020,
     "title": "Aqueous Film-Forming Foams Exhibit Greater Interfacial Activity than PFOA, PFOS, or FOSA.",
@@ -32880,16 +31880,6 @@
     "reasoning": "This paper investigates methods to reduce PFC content in food through washing, soaking, and cooking treatments, focusing on removal/mitigation strategies."
   },
   {
-    "pmid": "36474883",
-    "year": 2020,
-    "title": "Cartilage collagen neoepitope C2C in urine as an integrative diagnostic marker for early knee osteoarthritis.",
-    "journal": "Osteoarthritis and cartilage open",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper develops and validates a diagnostic marker (uC2C) for early knee osteoarthritis detection - this appears to be unrelated to PFAS research."
-  },
-  {
     "pmid": "32877702",
     "year": 2020,
     "title": "Exposure to perfluoroalkyl substances and allergic outcomes in children: A systematic review and meta-analysis.",
@@ -32928,16 +31918,6 @@
     "score": -1.0,
     "confidence": 0.85,
     "reasoning": "This study investigates how PFAS exposure alters human metabolism and affects fitness, physical activity, and adipokine levels in children, focusing on health impacts."
-  },
-  {
-    "pmid": "32869235",
-    "year": 2022,
-    "title": "Patellofemoral Arthroplasty Improves Patellofemoral Alignment in Patients with Patellofemoral Osteoarthritis with Trochlear Dysplasia.",
-    "journal": "The journal of knee surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper studies patellofemoral arthroplasty for osteoarthritis treatment - this appears to be unrelated to PFAS research and focuses on medical procedure effectiveness."
   },
   {
     "pmid": "32867820",
@@ -33250,16 +32230,6 @@
     "reasoning": "Review summarizes pre- and neo-natal PFAS exposures during sensitive early life stages, focusing on exposure assessment and health concerns."
   },
   {
-    "pmid": "32766389",
-    "year": 2020,
-    "title": "The Present Situation of Patellofemoral Arthroplasty in the Management of Solitary Patellofemoral Osteoarthritis.",
-    "journal": "The archives of bone and joint surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "Paper appears to be about patellofemoral arthroplasty for knee osteoarthritis, not related to PFAS research - likely misclassified in the dataset."
-  },
-  {
     "pmid": "32758985",
     "year": 2020,
     "title": "Enhanced photocatalytic degradation of perfluorooctanoic acid by Ti",
@@ -33500,16 +32470,6 @@
     "reasoning": "Develops optimized regeneration strategies for ion exchange resins used in PFAS removal from water treatment systems."
   },
   {
-    "pmid": "32659822",
-    "year": 2021,
-    "title": "Modified Partial Lateral Facetectomy of the Patella for Stage III Patellofemoral Osteoarthritis with 5-Year Follow-Up.",
-    "journal": "The journal of knee surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "Medical paper about patellofemoral osteoarthritis surgery - PFOA here refers to a knee condition, not the chemical compound."
-  },
-  {
     "pmid": "32659468",
     "year": 2020,
     "title": "Background contamination of perfluoralkyl substances in a Belgian general population.",
@@ -33708,16 +32668,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "This study reports spatial characteristics and concentrations of PFAS in coastal waters and sediments of China and South Korea."
-  },
-  {
-    "pmid": "32608055",
-    "year": 2020,
-    "title": "Can radiographic patellofemoral osteoarthritis be diagnosed using clinical assessments?",
-    "journal": "Musculoskeletal care",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "This paper appears to be about patellofemoral osteoarthritis diagnosis methods, not PFOA compounds - likely misclassified in the input."
   },
   {
     "pmid": "32599399",
@@ -34138,16 +33088,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Studies endocrine disruption effects of PFAS on glucocorticoids and progestogens in newborns."
-  },
-  {
-    "pmid": "32472462",
-    "year": 2020,
-    "title": "High prevalence of patellofemoral osteoarthritis in China: a multi-center population-based osteoarthritis study.",
-    "journal": "Clinical rheumatology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies patellofemoral osteoarthritis prevalence (PFOA appears to be medical abbreviation, not the chemical)."
   },
   {
     "pmid": "32464392",
@@ -34860,16 +33800,6 @@
     "reasoning": "Study examines adverse effects of PFOA exposure on lizard reproduction and self-maintenance, indicating biological harm."
   },
   {
-    "pmid": "32179198",
-    "year": 2020,
-    "title": "Associations of trochlea morphology and patellofemoral alignment with prevalent radiographic patellofemoral osteoarthritis.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Medical study investigating patellofemoral osteoarthritis (PFOA in this context refers to the joint condition, not the chemical compound)."
-  },
-  {
     "pmid": "32176721",
     "year": 2020,
     "title": "Intrauterine exposure to perfluorinated compounds and overweight at age 4: A case-control study.",
@@ -35030,16 +33960,6 @@
     "reasoning": "Paper evaluates zero-valent iron and biochar for removal of perfluoroalkyl substances from water, focusing on remediation technology."
   },
   {
-    "pmid": "32123940",
-    "year": 2020,
-    "title": "[Not Available].",
-    "journal": "Bundesgesundheitsblatt, Gesundheitsforschung, Gesundheitsschutz",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "No abstract available, cannot determine research focus or intent."
-  },
-  {
     "pmid": "32120220",
     "year": 2020,
     "title": "Persulfate-based degradation of perfluorooctanoic acid (PFOA) and perfluorooctane sulfonate (PFOS) in aqueous solution: Review on influences, mechanisms and prospective.",
@@ -35068,16 +33988,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Study demonstrates that gestational PFOA exposure inhibits placental development and causes developmental toxicity in mice."
-  },
-  {
-    "pmid": "32115429",
-    "year": 2020,
-    "title": "Psychological and Pain Sensitization Characteristics Are Associated With Patellofemoral Osteoarthritis Symptoms: The Multicenter Osteoarthritis Study.",
-    "journal": "The Journal of rheumatology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Paper examines patellofemoral osteoarthritis symptoms and pain characteristics, though PFOA here refers to patellofemoral OA, not perfluorooctanoic acid."
   },
   {
     "pmid": "32114125",
@@ -35138,16 +34048,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Research demonstrating that PFAS can strongly inhibit human carbonic anhydrase enzymes, investigating toxic mechanisms and adverse biological effects."
-  },
-  {
-    "pmid": "32096249",
-    "year": 2020,
-    "title": "Patellofemoral alignment and geometry and early signs of osteoarthritis are associated in patellofemoral pain population.",
-    "journal": "Scandinavian journal of medicine & science in sports",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about patellofemoral pain and osteoarthritis in joints, not PFOA the chemical compound - likely misclassified in the dataset."
   },
   {
     "pmid": "32095035",
@@ -35680,16 +34580,6 @@
     "reasoning": "Study evaluates association between cord blood PFAS and lipid alterations in population prenatally exposed to WTC disaster."
   },
   {
-    "pmid": "31199605",
-    "year": 2020,
-    "title": "Relation of Patellofemoral Joint Alignment, Morphology, and Radiographic Osteoarthritis to Frequent Anterior Knee Pain: Data from the Multicenter Osteoarthritis Study.",
-    "journal": "Arthritis care & research",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.6,
-    "reasoning": "Study examines relation of patellofemoral joint osteoarthritis (PFOA in this context means patellofemoral osteoarthritis, not perfluorooctanoic acid) to knee pain."
-  },
-  {
     "pmid": "35946279",
     "year": 2021,
     "title": "Determination of Serum Perfluorooctanoic Acid and Perfluorooctanesulfonic Acid Levels with Different Stages of Chronic Kidney Disease.",
@@ -35788,16 +34678,6 @@
     "score": -1.0,
     "confidence": 0.85,
     "reasoning": "Paper focuses on PFOA-induced hepatotoxicity and liver problems, though also examines vitamin C as protective agent."
-  },
-  {
-    "pmid": "35004156",
-    "year": 2021,
-    "title": "Arthroscopic Debridement, Facetectomy, and Synovectomy for Isolated Patellofemoral Osteoarthritis.",
-    "journal": "Arthroscopy techniques",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis surgical technique, not PFOA compound - likely misclassified in search."
   },
   {
     "pmid": "34991260",
@@ -36480,16 +35360,6 @@
     "reasoning": "Examines PFOA-induced endocrine disruption in Leydig cells using proteomics/metabolomics, focusing on reproductive toxicity."
   },
   {
-    "pmid": "34773800",
-    "year": 2022,
-    "title": "Machine learning based texture analysis of patella from X-rays for detecting patellofemoral osteoarthritis.",
-    "journal": "International journal of medical informatics",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "Develops machine learning texture analysis method for detecting patellofemoral osteoarthritis from X-rays (PFOA here means patellofemoral osteoarthritis, not the chemical)."
-  },
-  {
     "pmid": "34769660",
     "year": 2021,
     "title": "Per- and Polyfluoroalkyl Substances (PFAS): Significance and Considerations within the Regulatory Framework of the USA.",
@@ -36608,16 +35478,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "Study reports bioaccumulation levels of PFAS in freshwater fish collected from a contaminated area, focusing on occurrence and concentration measurements."
-  },
-  {
-    "pmid": "34750692",
-    "year": 2021,
-    "title": "Does arthroscopic patellar denervation with high tibial osteotomy improve anterior knee pain?",
-    "journal": "Journal of experimental orthopaedics",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.8,
-    "reasoning": "Medical paper about patellofemoral osteoarthritis (PFOA in this context means patellofemoral osteoarthritis, not perfluorooctanoic acid) and surgical techniques."
   },
   {
     "pmid": "34738093",
@@ -37070,16 +35930,6 @@
     "reasoning": "Investigates associations between maternal PFAS exposure and impaired bone development in children, focusing on adverse health outcomes."
   },
   {
-    "pmid": "34583395",
-    "year": 2023,
-    "title": "Patient-Reported Outcomes and Risk Factors for Decreased Improvement after Patellofemoral Arthroplasty.",
-    "journal": "The journal of knee surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.85,
-    "reasoning": "This paper is about patellofemoral arthroplasty (PFA) for osteoarthritis treatment, not PFOA - appears to be a classification error based on acronym confusion."
-  },
-  {
     "pmid": "34582580",
     "year": 2021,
     "title": "Perfluoroalkyl Substance Contamination Levels of Pike (Esox lucius L.) and Roach (Rutilus rutilus L.) from Selected Masurian Lakes in Eastern Europe.",
@@ -37370,16 +36220,6 @@
     "reasoning": "This paper compares degradation methods between PFOA and its replacement GenX via electrooxidation, focusing on treatment/remediation technologies."
   },
   {
-    "pmid": "34481492",
-    "year": 2021,
-    "title": "Association of patellofemoral morphology and alignment with the radiographic severity of patellofemoral osteoarthritis.",
-    "journal": "Journal of orthopaedic surgery and research",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.95,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid - medical research unrelated to PFAS."
-  },
-  {
     "pmid": "34480479",
     "year": 2021,
     "title": "PFAS and Potential Adverse Effects on Bone and Adipose Tissue Through Interactions With PPARγ.",
@@ -37408,16 +36248,6 @@
     "score": 0.0,
     "confidence": 0.95,
     "reasoning": "This paper reports occurrence and spatial distribution of perfluoroalkyl acids in drinking water sources, focusing on environmental monitoring."
-  },
-  {
-    "pmid": "34470797",
-    "year": 2022,
-    "title": "Relationship of Patellofemoral Osteoarthritis to Changes in Performance-based Physical Function Over 7 Years: The Multicenter Osteoarthritis Study.",
-    "journal": "The Journal of rheumatology",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.95,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid - medical research unrelated to PFAS."
   },
   {
     "pmid": "34470153",
@@ -37970,16 +36800,6 @@
     "reasoning": "Review paper focused on sensor development and analytical methods for PFAS detection."
   },
   {
-    "pmid": "34332048",
-    "year": 2021,
-    "title": "Clinical value of weight-bearing CT and radiographs for detecting patellofemoral cartilage visualized by MRI in the MOST study.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.8,
-    "reasoning": "Paper about imaging methods for detecting patellofemoral osteoarthritis (PFOA here refers to joint condition, not the chemical)."
-  },
-  {
     "pmid": "34331232",
     "year": 2021,
     "title": "Perfluorooctanoic acid exposure in early pregnancy induces oxidative stress in mice uterus and liver.",
@@ -38140,16 +36960,6 @@
     "reasoning": "Epidemiological study investigating associations between prenatal PFAS exposure and neurodevelopmental disorders (ADHD/ASD) in children."
   },
   {
-    "pmid": "34290558",
-    "year": 2021,
-    "title": "ONE-YEAR RESULTS OF BRACING FOR PATELLO-FEMORAL OSTEOARTHRITIS. PROSPECTIVE RANDOMIZED STUDY.",
-    "journal": "Acta ortopedica brasileira",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA) treatment with braces, not perfluorooctanoic acid - likely misclassified in search results."
-  },
-  {
     "pmid": "34289618",
     "year": 2021,
     "title": "Energy-efficient removal of PFOA and PFOS in water using electrocoagulation with an air-cathode.",
@@ -38250,26 +37060,6 @@
     "reasoning": "Study investigating associations between parental PFAS exposure and reproductive hormones, placental function, and birth weight - health effects research."
   },
   {
-    "pmid": "34262680",
-    "year": 2021,
-    "title": "Impaired muscle capacity of the hip and knee in individuals with isolated patellofemoral osteoarthritis: a cross-sectional study.",
-    "journal": "Therapeutic advances in chronic disease",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.9,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA as medical abbreviation), not the chemical perfluorooctanoic acid."
-  },
-  {
-    "pmid": "34256109",
-    "year": 2022,
-    "title": "Arthroscopic Lateral Patellar Facetectomy and Lateral Release Can Be Recommended for Isolated Patellofemoral Osteoarthritis.",
-    "journal": "Arthroscopy : the journal of arthroscopic & related surgery : official publication of the Arthroscopy Association of North America and the International Arthroscopy Association",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.9,
-    "reasoning": "This paper discusses arthroscopic treatment for patellofemoral osteoarthritis (medical PFOA), not the chemical compound."
-  },
-  {
     "pmid": "34252714",
     "year": 2021,
     "title": "Perfluoroalkyl substances (PFASs) exposure and kidney damage: Causal interpretation using the US 2003-2018 National Health and Nutrition Examination Survey (NHANES) datasets.",
@@ -38328,16 +37118,6 @@
     "score": -0.5,
     "confidence": 0.9,
     "reasoning": "This study investigates long-term leaching behavior and persistence of PFAS in contaminated agricultural soils."
-  },
-  {
-    "pmid": "34245873",
-    "year": 2021,
-    "title": "Automated detection of patellofemoral osteoarthritis from knee lateral view radiographs using deep learning: data from the Multicenter Osteoarthritis Study (MOST).",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.9,
-    "reasoning": "This paper develops deep learning methods to detect patellofemoral osteoarthritis (medical condition), not chemical PFAS."
   },
   {
     "pmid": "34244932",
@@ -38848,16 +37628,6 @@
     "score": 0.5,
     "confidence": 0.7,
     "reasoning": "This paper develops random copolymer complexes for segregating organic molecules, focusing on material development and processing techniques."
-  },
-  {
-    "pmid": "34078392",
-    "year": 2021,
-    "title": "The short-term effectiveness and safety of second-generation patellofemoral arthroplasty and total knee arthroplasty on isolated patellofemoral osteoarthritis: a systematic review and meta-analysis.",
-    "journal": "Journal of orthopaedic surgery and research",
-    "category": "NOT_PFAS",
-    "score": 0.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral arthroplasty for knee osteoarthritis, not PFAS compounds - PFOA here refers to patellofemoral osteoarthritis."
   },
   {
     "pmid": "34077336",
@@ -39410,16 +38180,6 @@
     "reasoning": "This paper reports monitoring and occurrence of PFASs in surface water and emission sources, focusing on environmental detection and distribution."
   },
   {
-    "pmid": "33858458",
-    "year": 2021,
-    "title": "Patellofemoral arthroplasty versus total knee arthroplasty for isolated patellofemoral osteoarthritis: a systematic review and meta-analysis.",
-    "journal": "Journal of orthopaedic surgery and research",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "This paper is about knee arthroplasty and osteoarthritis, not related to PFOA at all - likely misclassified in the input."
-  },
-  {
     "pmid": "33853480",
     "year": 2021,
     "title": "Systemic PFOS and PFOA exposure and disturbed lipid homeostasis in humans: what do we know and what not?",
@@ -39478,16 +38238,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "This news feature discusses how PFAS might impair the immune system, focusing on health effects and harm to humans."
-  },
-  {
-    "pmid": "33825970",
-    "year": 2022,
-    "title": "Midterm results of modern patellofemoral arthroplasty versus total knee arthroplasty for isolated patellofemoral arthritis: systematic review and meta-analysis of comparative studies.",
-    "journal": "Archives of orthopaedic and trauma surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral arthroplasty (PFA) vs total knee arthroplasty (TKA) for patellofemoral osteoarthritis (PFOA), which is unrelated to perfluorooctanoic acid."
   },
   {
     "pmid": "33824413",
@@ -39730,16 +38480,6 @@
     "reasoning": "This paper develops a framework for PFAS mixture toxicity assessment using the hazard index approach, focusing on health risk evaluation."
   },
   {
-    "pmid": "33753265",
-    "year": 2021,
-    "title": "Prevalence of trochlear dysplasia in symptomatic isolated lateral patellofemoral osteoarthritis: Transverse study of 101 cases.",
-    "journal": "Orthopaedics & traumatology, surgery & research : OTSR",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (medical condition) not perfluorooctanoic acid, likely a PMID classification error."
-  },
-  {
     "pmid": "33751946",
     "year": 2021,
     "title": "Epigenetic changes by per- and polyfluoroalkyl substances (PFAS).",
@@ -39878,16 +38618,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This paper studies how PFOA exposure exacerbates airway hyperresponsiveness and affects glucocorticoid receptors in asthmatic mice, examining health effects and disease mechanisms."
-  },
-  {
-    "pmid": "33686488",
-    "year": 2021,
-    "title": "Association between Patellofemoral and medial Tibiofemoral compartment osteoarthritis progression: exploring the effect of body weight using longitudinal data from osteoarthritis initiative (OAI).",
-    "journal": "Skeletal radiology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about osteoarthritis progression and body weight, not PFAS-related research, but classified as ALARM based on health outcome focus."
   },
   {
     "pmid": "33677611",
@@ -40420,16 +39150,6 @@
     "reasoning": "This study explores the adverse effects of maternal PFOA exposure on testicular development in male offspring mice."
   },
   {
-    "pmid": "33461534",
-    "year": 2021,
-    "title": "Early patellofemoral articular cartilage degeneration in a rat model of patellar instability is associated with activation of the NF-κB signaling pathway.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.9,
-    "reasoning": "This paper investigates patellofemoral osteoarthritis (PFOA refers to the medical condition, not the chemical) and cartilage degeneration mechanisms."
-  },
-  {
     "pmid": "33460636",
     "year": 2021,
     "title": "Exposure to perfluoroalkyl substances (PFAS) and dyslipidemia, hypertension and obesity in adolescents. The Fit Futures study.",
@@ -40468,16 +39188,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This acute toxicity study demonstrates negative effects of PFAS on nine species of larval amphibians, establishing species-specific tolerance benchmarks."
-  },
-  {
-    "pmid": "33448191",
-    "year": 2021,
-    "title": "[Expert consensus on surgical treatment of patellofemoral osteoarthritis].",
-    "journal": "Zhongguo xiu fu chong jian wai ke za zhi = Zhongguo xiufu chongjian waike zazhi = Chinese journal of reparative and reconstructive surgery",
-    "category": "RECKONING",
-    "score": -1.0,
-    "confidence": 0.9,
-    "reasoning": "This is an expert consensus on surgical treatment of patellofemoral osteoarthritis (PFOA refers to the medical condition, not the chemical)."
   },
   {
     "pmid": "33444659",
@@ -41480,16 +40190,6 @@
     "reasoning": "Study investigates the association between PFAS and cholesterol levels in humans, examining potential health effects and confounding factors."
   },
   {
-    "pmid": "36418610",
-    "year": 2023,
-    "title": "Revision lateralization osteotomy of the tibial tubercle has excellent outcomes in patients suffering from previous medial tibial tubercle overcorrection.",
-    "journal": "Archives of orthopaedic and trauma surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA) surgical treatment, not perfluorooctanoic acid - likely misclassified in the dataset."
-  },
-  {
     "pmid": "36417070",
     "year": 2023,
     "title": "Legacy and emerging poly- and perfluoroalkyl substances in wastewater treatment plant and receiving water: abundance, removal, and potential ecological risk.",
@@ -41568,16 +40268,6 @@
     "score": 0.5,
     "confidence": 0.8,
     "reasoning": "Develops and optimizes a chromatographic separation method using PFOA as a surfactant for analytical purposes."
-  },
-  {
-    "pmid": "36397352",
-    "year": 2022,
-    "title": "Patellofemoral osteoarthritis does not influence clinical outcomes of fixed-bearing unicompartmental knee arthroplasty.",
-    "journal": "Medicine",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis in knee surgery, not PFAS compounds - likely misclassified in the dataset."
   },
   {
     "pmid": "36396760",
@@ -42220,16 +40910,6 @@
     "reasoning": "Reports distribution and concentrations of PFAS in riverine and coastal sediments, focusing on environmental occurrence."
   },
   {
-    "pmid": "36197459",
-    "year": 2023,
-    "title": "Correlation between the quality of cartilage repair tissue and patellofemoral osteoarthritis after matrix-induced autologous chondrocyte implantation at three-year follow-up: a cross-sectional study.",
-    "journal": "International orthopaedics",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies patellofemoral osteoarthritis (PFOA) after cartilage implantation - this appears to be medical research unrelated to perfluorooctanoic acid."
-  },
-  {
     "pmid": "36191486",
     "year": 2022,
     "title": "Transdermal absorption of ",
@@ -42720,16 +41400,6 @@
     "reasoning": "This study examines health effects of drinking water PFAS exposure on lipid outcomes in exposed residents."
   },
   {
-    "pmid": "36064729",
-    "year": 2022,
-    "title": "Immediate effects of hip strap and foot orthoses on self-reported measures and lower limb kinematics during functional tasks in individuals with patellofemoral osteoarthritis: protocol for a randomised crossover clinical trial.",
-    "journal": "Trials",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "This clinical trial protocol studies interventions for patellofemoral osteoarthritis (PFOA here refers to the medical condition, not the chemical)."
-  },
-  {
     "pmid": "36064024",
     "year": 2022,
     "title": "A rapid assessment bioaccumulation screening (RABS) study design for emerging per-and polyfluoroalkyl substances in mice exposed to industrially impacted surface water.",
@@ -42948,16 +41618,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "Study evaluates health impacts of PFAS exposure on folate concentrations in adolescents."
-  },
-  {
-    "pmid": "40309325",
-    "year": 2022,
-    "title": "Inlay Patellofemoral Arthroplasty: A Readily Reproducible Technique.",
-    "journal": "Video journal of sports medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "Paper describes surgical technique for patellofemoral osteoarthritis (PFOA here means patellofemoral osteoarthritis, not perfluorooctanoic acid)."
   },
   {
     "pmid": "35977639",
@@ -43610,16 +42270,6 @@
     "reasoning": "This study investigates PFOA-induced oxidative stress and tissue damage in mouse brain and liver, demonstrating toxic effects."
   },
   {
-    "pmid": "35788755",
-    "year": 2023,
-    "title": "Automatic measurement of the patellofemoral joint parameters in the Laurin view: a deep learning-based approach.",
-    "journal": "European radiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper develops a deep learning algorithm for automatic measurement of patellofemoral joint parameters, which is unrelated to PFAS research."
-  },
-  {
     "pmid": "35788477",
     "year": 2022,
     "title": "Perfluorooctanoic acid promotes pancreatic β cell dysfunction and apoptosis through ER stress and the ATF4/CHOP/TRIB3 pathway.",
@@ -43788,16 +42438,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This study investigates associations between PFAS exposure and mortality in US adults, examining health impacts and disease outcomes."
-  },
-  {
-    "pmid": "35729426",
-    "year": 2022,
-    "title": "Tibial tubercle-Roman arch (TT-RA) distance is superior to tibial tubercle-trochlear groove (TT-TG) distance when evaluating coronal malalignment in patients with knee osteoarthritis.",
-    "journal": "European radiology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This study compares measurement methods for evaluating knee osteoarthritis and is unrelated to PFAS research."
   },
   {
     "pmid": "35729349",
@@ -44470,16 +43110,6 @@
     "reasoning": "Studies degradation mechanisms of PFAS using hydrated electrons for remediation purposes through computational modeling."
   },
   {
-    "pmid": "35476842",
-    "year": 2022,
-    "title": "Frontal plane biomechanics during single-leg squat and hip strength in patients with isolated patellofemoral osteoarthritis compared to matched controls: A cross-sectional study.",
-    "journal": "PloS one",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Studies biomechanics in patellofemoral osteoarthritis patients (PFOA here refers to the medical condition, not the chemical)."
-  },
-  {
     "pmid": "35475652",
     "year": 2022,
     "title": "Exposure to per- and Polyfluoroalkyl Substances and Markers of Liver Injury: A Systematic Review and Meta-Analysis.",
@@ -44688,16 +43318,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "This study quantifies human exposure to legacy PFAS from precursors using paired blood and diet samples, focusing on exposure assessment."
-  },
-  {
-    "pmid": "35410487",
-    "year": 2023,
-    "title": "Automatic diagnosis and grading of patellofemoral osteoarthritis from the axial radiographic view: a deep learning-based approach.",
-    "journal": "Acta radiologica (Stockholm, Sweden : 1987)",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "This paper develops a deep learning approach for diagnosing patellofemoral osteoarthritis (PFOA refers to the medical condition, not the chemical), focusing on diagnostic methodology."
   },
   {
     "pmid": "35405606",
@@ -45110,16 +43730,6 @@
     "reasoning": "Study investigates formation and fate of PFAAs during wastewater treatment processes, focusing on environmental fate and transport."
   },
   {
-    "pmid": "35315804",
-    "year": 2022,
-    "title": "Patellofemoral Arthroplasty Results in Better Time-weighted Patient-reported Outcomes After 6 Years than TKA: A Randomized Controlled Trial.",
-    "journal": "Clinical orthopaedics and related research",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "Study compares surgical outcomes of patellofemoral arthroplasty versus TKA, unrelated to PFAS research - appears to be misclassified in this dataset."
-  },
-  {
     "pmid": "35312196",
     "year": 2022,
     "title": "Temporal Trends of Organochlorine and Perfluorinated Contaminants in a Terrestrial Raptor in Northern Europe Over 34 years (1986-2019).",
@@ -45280,16 +43890,6 @@
     "reasoning": "Studies ecotoxic effects of PFAS on soil respiration and enzymatic activity, documenting environmental harm."
   },
   {
-    "pmid": "35257862",
-    "year": 2022,
-    "title": "Muscle activation, strength, and volume in people with patellofemoral osteoarthritis: a systematic review and meta-analysis.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.95,
-    "reasoning": "Systematic review of muscle dysfunction in patellofemoral osteoarthritis (PFOA refers to the medical condition, not the chemical)."
-  },
-  {
     "pmid": "35257342",
     "year": 2022,
     "title": "Perfluoroalkyl substances (PFAS) in freshwater fish from urban lakes in Hanoi, Vietnam: concentrations, tissue distribution, and implication for risk assessment.",
@@ -45328,16 +43928,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Investigates the health effects of PFAS on rheumatoid arthritis development and clinical outcomes in humans."
-  },
-  {
-    "pmid": "35244809",
-    "year": 2022,
-    "title": "Patellofemoral arthroplasty: expert opinion.",
-    "journal": "Journal of experimental orthopaedics",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) and arthroplasty - not about perfluorooctanoic acid at all, but medical orthopedic procedures."
   },
   {
     "pmid": "35240384",
@@ -45610,16 +44200,6 @@
     "reasoning": "Paper focuses on developing electrodes for decomposing PFOA through electrocatalytic oxidation, which is a remediation/treatment technology."
   },
   {
-    "pmid": "35179099",
-    "year": 2022,
-    "title": "Fatal non-traumatic gas gangrene caused by ",
-    "journal": "Journal of veterinary diagnostic investigation : official publication of the American Association of Veterinary Laboratory Diagnosticians, Inc",
-    "category": "NOT_PFAS",
-    "score": 0.0,
-    "confidence": 1.0,
-    "reasoning": "Paper is about gas gangrene in a dog caused by Clostridium perfringens, not related to PFAS compounds."
-  },
-  {
     "pmid": "35173445",
     "year": 2022,
     "title": "Risk of Cancer in a Community Exposed to Per- and Poly-Fluoroalkyl Substances.",
@@ -45768,16 +44348,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "This study investigates PFOA-induced hepatotoxicity mechanisms including cellular stress and apoptosis, clearly focused on harmful effects to organisms."
-  },
-  {
-    "pmid": "35122541",
-    "year": 2022,
-    "title": "Intraarticular injection of microfragmented adipose tissue plus arthroscopy in isolated primary patellofemoral osteoarthritis is clinically effective and not affected by age, BMI, or stage of osteoarthritis.",
-    "journal": "Journal of orthopaedics and traumatology : official journal of the Italian Society of Orthopaedics and Traumatology",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.8,
-    "reasoning": "This appears to be a medical study about patellofemoral osteoarthritis treatment (PFOA as medical abbreviation), not about perfluorooctanoic acid compound."
   },
   {
     "pmid": "35121066",
@@ -46290,16 +44860,6 @@
     "reasoning": "Study using passive samplers to measure PFAS contamination from textile mills into coastal rivers, focusing on environmental occurrence."
   },
   {
-    "pmid": "38213796",
-    "year": 2023,
-    "title": "Association between patellofemoral osteoarthritis with demographic features and anatomical variants of the knee in non-traumatic patients.",
-    "journal": "International journal of physiology, pathophysiology and pharmacology",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Study on patellofemoral osteoarthritis (PFOA in this context refers to the medical condition, not the chemical), focusing on health outcomes."
-  },
-  {
     "pmid": "38203307",
     "year": 2023,
     "title": "Perfluorooctanoic Acid (PFOA) Exposure Compromises Fertility by Affecting Ovarian and Oocyte Development.",
@@ -46770,16 +45330,6 @@
     "reasoning": "Study investigates how PFOS and PFOA promote migration of colorectal cancer spheroids and their relationship with cancer progression."
   },
   {
-    "pmid": "38057743",
-    "year": 2023,
-    "title": "Anatomic femoral tunnel position in medial patellofemoral ligament reconstruction: anterior versus posterior.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper is about medial patellofemoral ligament reconstruction surgical techniques and is not related to PFAS research."
-  },
-  {
     "pmid": "38054701",
     "year": 2023,
     "title": "Associations of Prenatal Per- and Polyfluoroalkyl Substance (PFAS) Exposures with Offspring Adiposity and Body Composition at 16-20 Years of Age: Project Viva.",
@@ -46938,16 +45488,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "Develops enhanced piezoelectric catalysis method for PFOA defluorination using mechanochemical destruction, which is a treatment technology."
-  },
-  {
-    "pmid": "38025380",
-    "year": 2023,
-    "title": "Patellofemoral Arthroplasty for Irreducible Chronic Bilateral Patella Dislocation-A Case Report.",
-    "journal": "Journal of orthopaedic case reports",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "Medical case report about patellofemoral joint arthroplasty treatment - appears to be unrelated to PFAS compounds despite PFOA abbreviation in medical context."
   },
   {
     "pmid": "38019639",
@@ -47990,16 +46530,6 @@
     "reasoning": "Analyzes multiple endocrine disrupting chemicals including PFAS in tap water samples, reporting environmental occurrence."
   },
   {
-    "pmid": "37798323",
-    "year": 2023,
-    "title": "Morphological analysis of three-dimensional MR images of patellofemoral joints in asymptomatic subjects.",
-    "journal": "Scientific reports",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis analysis using MR images, not PFAS-related research."
-  },
-  {
     "pmid": "37797575",
     "year": 2024,
     "title": "A systematic investigation of single solute, binary and ternary PFAS transport in water-saturated soil using batch and 1-dimensional column studies: Focus on mixture effects.",
@@ -48038,16 +46568,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Evaluates toxicological impact of PFOA on insects, showing behavioral impairment and oxidative injury."
-  },
-  {
-    "pmid": "37783341",
-    "year": 2024,
-    "title": "Associations between anterior knee pain and 2-year patellofemoral cartilage worsening: The MOST study.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies anterior knee pain and patellofemoral osteoarthritis (PFOA here refers to osteoarthritis, not the chemical)."
   },
   {
     "pmid": "37775181",
@@ -48718,16 +47238,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Study investigating developmental toxicity of diverse PFAS including PFOA in zebrafish, focusing on adverse biological effects and toxicology."
-  },
-  {
-    "pmid": "37632547",
-    "year": 2024,
-    "title": "Effect of ascending and descending medial open wedge high tibial osteotomy on patella height and functional outcomes-a retrospective study.",
-    "journal": "European journal of orthopaedic surgery & traumatology : orthopedie traumatologie",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about orthopedic surgery (tibial osteotomy) and is likely misclassified in a PFAS database."
   },
   {
     "pmid": "37624076",
@@ -50400,16 +48910,6 @@
     "reasoning": "Investigates multigenerational reproductive health effects from complex environmental exposures including PFAS during development."
   },
   {
-    "pmid": "37231089",
-    "year": 2023,
-    "title": "Particular genomic and virulence traits associated with preterm infant-derived toxigenic Clostridium perfringens strains.",
-    "journal": "Nature microbiology",
-    "category": "NOT_PFAS",
-    "score": null,
-    "confidence": 1.0,
-    "reasoning": "This paper is about Clostridium perfringens bacteria and necrotizing enterocolitis, not PFAS compounds."
-  },
-  {
     "pmid": "37228732",
     "year": 2023,
     "title": "Association between perfluoroalkyl and polyfluoroalkyl internal exposure and serum α-Klotho levels in middle-old aged participants.",
@@ -50908,16 +49408,6 @@
     "score": -1.0,
     "confidence": 0.85,
     "reasoning": "Study investigating prenatal PFOA exposure effects on birth weight and molecular mechanisms of harm."
-  },
-  {
-    "pmid": "37100957",
-    "year": 2023,
-    "title": "A decreased tibial tuberosity-trochlear groove distance is associated with lateral patellofemoral joint degeneration after implantation of medial fixed-bearing unicompartmental knee arthroplasty - a minimum five year follow-up.",
-    "journal": "International orthopaedics",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.95,
-    "reasoning": "Medical study about patellofemoral osteoarthritis (PFOA refers to joint condition, not the chemical compound)."
   },
   {
     "pmid": "37099098",
@@ -52440,16 +50930,6 @@
     "reasoning": "Studies PFOA-induced reproductive toxicity by disrupting blood-testis barrier through autophagy mechanisms."
   },
   {
-    "pmid": "36732733",
-    "year": 2023,
-    "title": "Study on the correlation between the severity of patellofemoral arthritis and the morphology of the distal femur.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "Study on patellofemoral arthritis and femoral morphology - appears unrelated to PFAS research."
-  },
-  {
     "pmid": "36731575",
     "year": 2023,
     "title": "Bioaccumulation and toxicity of perfluorooctanoic acid and perfluorooctane sulfonate in marine algae Chlorella sp.",
@@ -52650,16 +51130,6 @@
     "reasoning": "Studies PFAS transfer from maternal serum to breast milk in highly exposed populations, assessing exposure pathways and potential infant health risks."
   },
   {
-    "pmid": "36683021",
-    "year": 2023,
-    "title": "The remaining parameters of patellar instability could be affected for osteoarthritic change after medial patellofemoral ligament reconstruction with or without anteromedialization of the tibial tubercle osteotomy for patellar instability: a retrospective cohort study.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "NOT_PFAS",
-    "score": null,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellar instability and knee surgery, not PFAS compounds."
-  },
-  {
     "pmid": "36680904",
     "year": 2023,
     "title": "Enhancement of perfluorooctanoic acid and perfluorooctane sulphonic acid removal in constructed wetland using iron mineral: Performance and mechanisms.",
@@ -52758,16 +51228,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "This paper develops relative potency factors for PFAS mixture risk assessment based on immunotoxicity effects."
-  },
-  {
-    "pmid": "36623637",
-    "year": 2023,
-    "title": "3D patellar shape is associated with radiological and clinical signs of patellofemoral osteoarthritis.",
-    "journal": "Osteoarthritis and cartilage",
-    "category": "NOT_PFAS",
-    "score": null,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA refers to the medical condition, not the chemical)."
   },
   {
     "pmid": "36621891",
@@ -52948,16 +51408,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "This study examines duckweed's potential for PFOA phytoremediation and removal from the environment, focusing on remediation technology using plants."
-  },
-  {
-    "pmid": "39896863",
-    "year": 2025,
-    "title": "Partial lateral patellar facetectomy is beneficial for patients with patellofemoral osteoarthritis: A systematic review and meta-analysis.",
-    "journal": "Journal of orthopaedics",
-    "category": "NOT_PFAS",
-    "score": 0.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) surgery, not perfluorooctanoic acid - completely unrelated to PFAS compounds."
   },
   {
     "pmid": "39884810",
@@ -53870,16 +52320,6 @@
     "reasoning": "This study focuses on biochar adsorption-desorption for removing PFOA from contaminated water, which is a remediation technology."
   },
   {
-    "pmid": "39567862",
-    "year": 2024,
-    "title": "Meniscus Injury Induces Patellofemoral Osteoarthritis Development Mediated by Synovitis and Gait Kinematics: A Preclinical Study.",
-    "journal": "Cartilage",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.85,
-    "reasoning": "This paper studies patellofemoral osteoarthritis (PFOA in this context means patellofemoral osteoarthritis, not perfluorooctanoic acid) development in rats, focusing on disease mechanisms."
-  },
-  {
     "pmid": "39567791",
     "year": 2024,
     "title": "Photocatalytic low-temperature defluorination of PFASs.",
@@ -54338,16 +52778,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This paper investigates PFOA toxicity in Daphnia magna and potential mitigation strategies, focusing on documented toxic effects and harm to organisms."
-  },
-  {
-    "pmid": "39487515",
-    "year": 2024,
-    "title": "Risk factors for early onset patellofemoral osteoarthritis following anterior cruciate ligament reconstruction with hamstring tendon autograft.",
-    "journal": "Journal of orthopaedic surgery and research",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be a medical paper about patellofemoral osteoarthritis (PFOA as abbreviation), not about perfluorooctanoic acid, but following the classification request."
   },
   {
     "pmid": "39486543",
@@ -54828,16 +53258,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Assesses exposure, distribution, and health risks of PFAAs in commercial fish species, emphasizing health risk evaluation."
-  },
-  {
-    "pmid": "39406678",
-    "year": 2024,
-    "title": "Analysis of Risk Factors on Patellofemoral Osteoarthritis: Distribution Characteristics and Radiographic Parameters of Patellofemoral Joint.",
-    "journal": "Orthopaedic surgery",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.7,
-    "reasoning": "Medical study about patellofemoral osteoarthritis (PFOA as abbreviation), not related to perfluorooctanoic acid compound."
   },
   {
     "pmid": "39406268",
@@ -55930,16 +54350,6 @@
     "reasoning": "Characterization of novel sorbent for PFAS separation and remediation, focused on treatment technology development."
   },
   {
-    "pmid": "39192628",
-    "year": 2024,
-    "title": "The presence of differentiated C2C12 muscle cells enhances toxin production and growth by ",
-    "journal": "Virulence",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.8,
-    "reasoning": "Study of Clostridium perfringens toxin production using muscle cells, appears to be about bacterial toxins not PFAS compounds."
-  },
-  {
     "pmid": "39190742",
     "year": 2024,
     "title": "Directed Assembly of Proteinaceous-Polysaccharide Nanofibrils to Fabricate Membranes for Emerging Contaminant Remediation.",
@@ -57030,16 +55440,6 @@
     "reasoning": "Study measuring total mass of PFASs in California cosmetics to assess occurrence and contribution to environmental load."
   },
   {
-    "pmid": "38930477",
-    "year": 2024,
-    "title": "Binary Enterotoxin Producing ",
-    "journal": "Microorganisms",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "Paper about Clostridium perfringens enterotoxin discovery and characterization, not related to PFOA compounds."
-  },
-  {
     "pmid": "38927462",
     "year": 2024,
     "title": "Association of Vitamin D with Perfluorinated Alkyl Acids in Women with and without Non-Obese Polycystic Ovary Syndrome.",
@@ -57168,16 +55568,6 @@
     "score": 0.0,
     "confidence": 0.95,
     "reasoning": "This paper reports PFAS occurrence and concentrations in meat from various animals, documenting environmental contamination levels."
-  },
-  {
-    "pmid": "38897413",
-    "year": 2024,
-    "title": "Physiopathology of patello-femoral osteoarthritis: current concepts.",
-    "journal": "Journal of ISAKOS : joint disorders & orthopaedic sports medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid, so classification is uncertain."
   },
   {
     "pmid": "38896032",
@@ -57740,16 +56130,6 @@
     "reasoning": "Research identifies and characterizes PFAS sources in Las Vegas Wash watershed, reporting occurrence and contamination patterns in surface waters."
   },
   {
-    "pmid": "38774690",
-    "year": 2024,
-    "title": "Three-dimensional kinematics of the trunk, pelvis, hip, and knee during the single-leg squat and hip torque in subjects with isolated patellofemoral osteoarthritis compared to individually matched controls: Preliminary results.",
-    "journal": "Archives of rheumatology",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.7,
-    "reasoning": "Study compares biomechanics in subjects with patellofemoral osteoarthritis (PFOA refers to medical condition, not the chemical compound)."
-  },
-  {
     "pmid": "38768789",
     "year": 2024,
     "title": "Prenatal per- and polyfluoroalkyl substances (PFAS) and maternal oxidative stress: Evidence from the LIFECODES study.",
@@ -57900,16 +56280,6 @@
     "reasoning": "Examines dietary sources and associations with PFAS concentrations in maternal plasma and human milk during pregnancy."
   },
   {
-    "pmid": "38739657",
-    "year": 2024,
-    "title": "Superior Pain Reduction with Anteromedialization Tibial Tubercle Osteotomy Versus Non-Operative Management for Patellofemoral Osteoarthritis.",
-    "journal": "Bulletin of the Hospital for Joint Disease (2013)",
-    "category": "NOT_PFAS",
-    "score": 0.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) which is a knee condition, not perfluorooctanoic acid."
-  },
-  {
     "pmid": "38735219",
     "year": 2024,
     "title": "Systematic evidence mapping of potential correlates of exposure for per- and poly-fluoroalkyl substances (PFAS) based on measured occurrence in biomatrices and surveys of dietary consumption and product use.",
@@ -57988,16 +56358,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "This paper examines occurrence and levels of PFAS in bivalve molluscs from coastal China, reporting contamination concentrations."
-  },
-  {
-    "pmid": "38720842",
-    "year": 2024,
-    "title": "Association between quadriceps fat pad edema and patellofemoral osteoarthritis: a quantitative Q-Dixon-based magnetic resonance imaging (MRI) analysis.",
-    "journal": "Quantitative imaging in medicine and surgery",
-    "category": "NOT_PFAS",
-    "score": 0.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) as a knee condition, not perfluorooctanoic acid."
   },
   {
     "pmid": "38719042",
@@ -58578,16 +56938,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "This study examines mechanochemical degradation of PFAS in soil using industrial-scale ball mills for remediation purposes."
-  },
-  {
-    "pmid": "38604249",
-    "year": 2024,
-    "title": "Deep Learning for Predicting Progression of Patellofemoral Osteoarthritis Based on Lateral Knee Radiographs, Demographic Data, and Symptomatic Assessments.",
-    "journal": "Methods of information in medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.8,
-    "reasoning": "This paper develops a deep learning framework for predicting patellofemoral osteoarthritis progression (PFOA here refers to patellofemoral osteoarthritis, not perfluorooctanoic acid)."
   },
   {
     "pmid": "38603905",
@@ -59240,16 +57590,6 @@
     "reasoning": "Develops novel membrane technology (ZIF-L/PEI nanocomposite) specifically for removing PFAS from water treatment systems."
   },
   {
-    "pmid": "38492064",
-    "year": 2024,
-    "title": "Clinical outcomes of patellofemoral arthroplasty: robotic assistance produces superior short and mid-term outcomes.",
-    "journal": "Archives of orthopaedic and trauma surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper is about patellofemoral arthroplasty (knee surgery), not PFOA/PFAS compounds - appears to be misclassified in the input."
-  },
-  {
     "pmid": "38490632",
     "year": 2024,
     "title": "Trend of PFAS concentrations and prediction of potential risks in Taihu Lake of China by AQUATOX.",
@@ -59428,16 +57768,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Study evaluates removal of PFOS/PFOA using nanohybrid technology, focusing on remediation methods."
-  },
-  {
-    "pmid": "38440779",
-    "year": 2024,
-    "title": "Radiomics analysis of patellofemoral joint improves knee replacement risk prediction: Data from the Multicenter Osteoarthritis Study (MOST).",
-    "journal": "Osteoarthritis and cartilage open",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper is about knee osteoarthritis and radiomics analysis, not PFAS compounds - appears to be misclassified in the batch."
   },
   {
     "pmid": "38423340",
@@ -59698,16 +58028,6 @@
     "score": -1.0,
     "confidence": 0.85,
     "reasoning": "Study investigating transport and health risk of PFAS in urban water cycle, with emphasis on health risk assessment and concern for emerging alternatives."
-  },
-  {
-    "pmid": "38368533",
-    "year": 2024,
-    "title": "Development of patellofemoral osteoarthritis with knee joint malalignment and lateral patellar dislocation after hindlimb suspension in growing rats.",
-    "journal": "Journal of orthopaedic research : official publication of the Orthopaedic Research Society",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.9,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) in rats, not perfluorooctanoic acid - it's developing a disease model which represents novel research methodology."
   },
   {
     "pmid": "38367719",
@@ -60400,16 +58720,6 @@
     "reasoning": "This study investigates the molecular mechanisms by which PFOA and PFOS cause hepatic steatosis, focusing on adverse health effects and toxicity pathways."
   },
   {
-    "pmid": "38185247",
-    "year": 2024,
-    "title": "Patello-femoral arthroplasty- indications and contraindications.",
-    "journal": "Journal of ISAKOS : joint disorders & orthopaedic sports medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.1,
-    "reasoning": "This paper appears to be about patellofemoral arthroplasty (PFA) surgery, not PFOA compounds - likely a misclassification in the input data."
-  },
-  {
     "pmid": "38185161",
     "year": 2024,
     "title": "Perfluorooctanoic acid induces Leydig cell injury via inhibition of autophagosomes formation and activation of endoplasmic reticulum stress.",
@@ -60608,16 +58918,6 @@
     "score": -0.5,
     "confidence": 0.9,
     "reasoning": "Studies how submerge-emerge alternation influences PFAS fate in wetland plants, focusing on environmental fate and transport mechanisms."
-  },
-  {
-    "pmid": "41497441",
-    "year": 2026,
-    "title": "Excellent Short-Term Outcomes After Kinematic Alignment, Medial-Pivot Total Knee Arthroplasty for Isolated Patellofemoral Osteoarthritis.",
-    "journal": "Arthroplasty today",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This is about patellofemoral osteoarthritis (PFOA) medical treatment, not perfluorooctanoic acid - medical procedure development."
   },
   {
     "pmid": "41496226",
@@ -61560,16 +59860,6 @@
     "reasoning": "Investigates occurrence and distribution of PFAS and other pollutants in river basin before and after flood events."
   },
   {
-    "pmid": "41323545",
-    "year": 2025,
-    "title": "Patellofemoral arthroplasty in isolated Iwano grade IV patellofemoral osteoarthritis: 86% 10-year survival.",
-    "journal": "Journal of experimental orthopaedics",
-    "category": "NOT_PFAS",
-    "score": 0.0,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) surgery, not perfluorooctanoic acid."
-  },
-  {
     "pmid": "41319879",
     "year": 2026,
     "title": "Microbial electrochemical buffer zones enable PFAS detoxification and hidden risk mitigation in reclaimed water.",
@@ -61708,16 +59998,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "Review summarizing PFAS concerns including health effects, regulatory issues, and environmental impacts with focus on harmful effects."
-  },
-  {
-    "pmid": "41301106",
-    "year": 2025,
-    "title": "Intra-Articular Injection of Bone Marrow Concentrate for Patellofemoral Osteoarthritis Treatment: Preliminary Results Using a New Tibial Endplate Sample Under Ultrasound Guidance.",
-    "journal": "Bioengineering (Basel, Switzerland)",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Medical study about patellofemoral osteoarthritis treatment methodology using bone marrow concentrate injection technique (PFOA here means patellofemoral osteoarthritis, not perfluorooctanoic acid)."
   },
   {
     "pmid": "41297771",
@@ -61860,16 +60140,6 @@
     "reasoning": "Study investigating combined effects of chemical mixtures including PFAS on liver injury markers, focusing on health impacts."
   },
   {
-    "pmid": "41281824",
-    "year": 2025,
-    "title": "Comparative Study of Conventional Exercises Combined With Laser Therapy versus Longwave Diathermy along with Conventional Exercises in Patellofemoral Osteoarthritis: Effects on Pain and Functional Outcomes.",
-    "journal": "Journal of orthopaedic case reports",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "Clinical study comparing therapeutic interventions for patellofemoral osteoarthritis (PFOA appears to be medical abbreviation, not the chemical)."
-  },
-  {
     "pmid": "41279863",
     "year": 2025,
     "title": "Brief report on differential toxicity of legacy and second-generation PFAS on dopaminergic neurons and mitochondria.",
@@ -61948,16 +60218,6 @@
     "score": 0.0,
     "confidence": 0.9,
     "reasoning": "Study establishing reference values and concentrations of PFAS in Korean adult serum samples from national health survey."
-  },
-  {
-    "pmid": "41262468",
-    "year": 2025,
-    "title": "Elevated risk of patellofemoral osteoarthritis following ACL reconstruction compared to contralateral knees: A systematic review and meta-analysis.",
-    "journal": "Journal of experimental orthopaedics",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) in knee surgery, not perfluorooctanoic acid - the medical abbreviation creates confusion but this is clearly orthopedic research."
   },
   {
     "pmid": "41262144",
@@ -62060,26 +60320,6 @@
     "reasoning": "This paper develops an analytical method for therapeutic drug monitoring of cancer drugs in plasma - not related to PFAS/PFOA compounds."
   },
   {
-    "pmid": "41248880",
-    "year": 2025,
-    "title": "Efficacy of single intra-articular 2% sodium hyaluronate versus corticosteroid injection in isolated patellofemoral osteoarthritis: A double-blind, randomized controlled trial.",
-    "journal": "Journal of ISAKOS : joint disorders & orthopaedic sports medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) treatment in orthopedics, not perfluorooctanoic acid - medical abbreviation confusion."
-  },
-  {
-    "pmid": "41245722",
-    "year": 2025,
-    "title": "Systematic review and meta-analysis of implant-specific outcomes in inlay and onlay patellofemoral arthroplasty for isolated patellofemoral osteoarthritis.",
-    "journal": "Journal of experimental orthopaedics",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This systematic review compares surgical outcomes for patellofemoral osteoarthritis (PFOA) - orthopedic research, not PFAS chemistry."
-  },
-  {
     "pmid": "41245578",
     "year": 2025,
     "title": "Mechanochemical-Aging Synthesis of Bismuth Oxide Nanosheets for Photocatalysis.",
@@ -62088,16 +60328,6 @@
     "score": 1.0,
     "confidence": 0.8,
     "reasoning": "This paper describes synthesis of bismuth oxide nanosheets for photocatalysis - not related to PFAS/PFOA compounds."
-  },
-  {
-    "pmid": "41245289",
-    "year": 2025,
-    "title": "Short-Term Outcomes of Robotic-Arm-Assisted Patellofemoral Arthroplasty in Four Patients with Isolated Patellofemoral Arthritis: A Retrospective Surgical Case Series.",
-    "journal": "Indian journal of orthopaedics",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "This paper reports surgical outcomes for robotic patellofemoral arthroplasty - orthopedic research using PFOA as medical abbreviation, not PFAS."
   },
   {
     "pmid": "41241993",
@@ -62388,16 +60618,6 @@
     "score": 0.5,
     "confidence": 0.9,
     "reasoning": "Develops UV-reducible organic fluorine assay for rapid screening and quantification of PFAS in various matrices."
-  },
-  {
-    "pmid": "41187977",
-    "year": 2025,
-    "title": "Virulence Gene Profiling and Antibiotic Resistance Analysis of ",
-    "journal": "Foodborne pathogens and disease",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.7,
-    "reasoning": "Studies virulence and antibiotic resistance of Clostridium perfringens, focusing on pathogen characteristics and health risks."
   },
   {
     "pmid": "41187534",
@@ -62720,16 +60940,6 @@
     "reasoning": "Field demonstration of in-situ soil stabilization technology to immobilize PFAS in contaminated soil is clearly a remediation approach."
   },
   {
-    "pmid": "41109608",
-    "year": 2025,
-    "title": "Iliotibial band release significantly improves pain, function, and quality of life in patients with isolated patellofemoral osteoarthritis: A 2-year retrospective study.",
-    "journal": "Journal of ISAKOS : joint disorders & orthopaedic sports medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.8,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) medical condition, not perfluorooctanoic acid - appears to be misclassified in the dataset."
-  },
-  {
     "pmid": "41109194",
     "year": 2025,
     "title": "Per- and polyfluoroalkyl substances (PFAS) in the United States: Current knowledge and regulatory context.",
@@ -62888,16 +61098,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Study demonstrates GenX (PFOA replacement) causing developmental toxicity and vascular damage in offspring, focusing on harmful effects."
-  },
-  {
-    "pmid": "41081197",
-    "year": 2025,
-    "title": "Quantitative assessment of patellofemoral osteoarthritis via the pressure band test: an innovative and objective test.",
-    "journal": "Quantitative imaging in medicine and surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "Paper develops a diagnostic test method for patellofemoral osteoarthritis (PFOA in this context refers to the medical condition, not the chemical)."
   },
   {
     "pmid": "41077058",
@@ -63130,16 +61330,6 @@
     "reasoning": "This study investigates the combined impacts of PFASs and CAHs on microbial communities, examining environmental fate and ecological effects."
   },
   {
-    "pmid": "41038457",
-    "year": 2025,
-    "title": "Genome sequencing and comparative genome analysis of Clostridium perfringens of animal origin.",
-    "journal": "Microbial pathogenesis",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "This paper focuses on genome sequencing methodology and comparative analysis of Clostridium perfringens, not directly related to PFAS research."
-  },
-  {
     "pmid": "41038116",
     "year": 2026,
     "title": "Enhanced full-process method for the quantitative analysis of PFAS in sludge: Robust extraction and matrix effect-minimized method.",
@@ -63238,16 +61428,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Study investigates tumorigenesis mechanisms of PFOA and PFOS through multi-organ transcriptomic analysis to understand cancer-causing pathways."
-  },
-  {
-    "pmid": "41020410",
-    "year": 2025,
-    "title": "The effectiveness of knee bracing in non-operative soft tissue and degenerative knee injuries: A systematic review.",
-    "journal": "Knee surgery, sports traumatology, arthroscopy : official journal of the ESSKA",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "Medical paper about knee bracing effectiveness where PFOA refers to patellofemoral osteoarthritis, not the chemical compound."
   },
   {
     "pmid": "41019138",
@@ -63840,16 +62020,6 @@
     "reasoning": "This systematic review evaluates health risks and regulation of PFAS in global drinking water, focusing on risk assessment and regulatory aspects."
   },
   {
-    "pmid": "40936848",
-    "year": 2025,
-    "title": "Effectiveness of Muscle Energy Technique, Strengthening, and Patellar Mobilization in the Physiotherapeutic Management of Patellofemoral Osteoarthritis.",
-    "journal": "Journal of orthopaedic case reports",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This paper appears to be about patellofemoral osteoarthritis (PFOA as medical abbreviation) and physiotherapy techniques, not PFAS compounds."
-  },
-  {
     "pmid": "40936172",
     "year": 2025,
     "title": "Global Serum Per- and Polyfluoroalkyl Substances Exposures and Their Correlation with Lipids: A Systematic Review and Meta-Analysis.",
@@ -64090,16 +62260,6 @@
     "reasoning": "This study investigates PFOA degradation behavior at gas-liquid interfaces under various conditions, focusing on environmental fate and breakdown mechanisms."
   },
   {
-    "pmid": "40891929",
-    "year": 2025,
-    "title": "Patellofemoral arthroplasty-patient demographics and revision causes compared with total and medial unicompartmental knee arthroplasty: long-term follow-up data from the Norwegian Arthroplasty Register.",
-    "journal": "Acta orthopaedica",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral arthroplasty (surgical procedure) rather than perfluorooctanoic acid, likely a misclassification in the dataset."
-  },
-  {
     "pmid": "40891830",
     "year": 2025,
     "title": "Letter to the Editor: \"Unraveling the molecular mechanisms of PFOA in clear cell renal cell carcinoma through network toxicology and molecular docking strategies.",
@@ -64308,16 +62468,6 @@
     "score": 1.0,
     "confidence": 0.9,
     "reasoning": "Synthetic chemistry paper developing new method for perfluoro-tert-butylation of alcohols, focusing on novel chemical synthesis and material development."
-  },
-  {
-    "pmid": "40858216",
-    "year": 2025,
-    "title": "Tuina improves patellofemoral osteoarthritis by alleviating the degree of lateral patellar tilt: a correlation analysis based on a randomized controlled trial.",
-    "journal": "Complementary therapies in medicine",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "Clinical study on Tuina treatment for patellofemoral osteoarthritis (PFOA here refers to medical condition, not the chemical compound)."
   },
   {
     "pmid": "40858016",
@@ -65158,16 +63308,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Study investigates adverse effects of prenatal PFAS exposure on childhood neurodevelopmental outcomes including executive function and behavioral difficulties."
-  },
-  {
-    "pmid": "40683082",
-    "year": 2025,
-    "title": "Myostatin induces subchondral bone destruction and cartilage matrix degradation through upregulation of the Wnt/β-catenin pathway during patellofemoral osteoarthritis.",
-    "journal": "The Knee",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.8,
-    "reasoning": "Study on patellofemoral osteoarthritis pathogenesis involving myostatin, though PFOA here appears to be an abbreviation for the disease rather than the chemical compound."
   },
   {
     "pmid": "40681633",
@@ -66490,16 +64630,6 @@
     "reasoning": "Develops pharmacokinetic model for PFOA exposure and risk assessment to estimate organ concentrations and health impacts."
   },
   {
-    "pmid": "40446837",
-    "year": 2025,
-    "title": "Reliability of a Novel Magnetic Resonance Imaging Scoring System to Evaluate Patellofemoral Osteoarthritis.",
-    "journal": "The journal of knee surgery",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (knee condition), not PFOA the chemical compound - appears to be misclassified."
-  },
-  {
     "pmid": "40446787",
     "year": 2025,
     "title": "Emerging contaminants in Taihu lake Basin: Multi-dimensional prioritization, colloidal adsorption, and trophic-level disruptions.",
@@ -66870,16 +65000,6 @@
     "reasoning": "Assessment of hair analysis as a non-invasive method for monitoring PFAS exposure in wildlife, focusing on methodological development for exposure assessment."
   },
   {
-    "pmid": "40371973",
-    "year": 2025,
-    "title": "The Perioperative Resource Use and Effectiveness of Patellofemoral Arthroplasty Versus Total Knee Arthroplasty: A Meta-Analysis.",
-    "journal": "Orthopaedic surgery",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.3,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA) and knee surgery, not perfluorooctanoic acid - likely misclassified in the input."
-  },
-  {
     "pmid": "40371378",
     "year": 2025,
     "title": "Improving the Hydrophobicity of Powder Activated Carbon to Enhance the Adsorption Kinetics of Per- and Polyfluoroalkyl Substances.",
@@ -67018,16 +65138,6 @@
     "score": 0.5,
     "confidence": 0.9,
     "reasoning": "Develops optimized QuEChERS analytical method for determining emerging contaminants including PFAS in Antarctic bivalves."
-  },
-  {
-    "pmid": "40348144",
-    "year": 2025,
-    "title": "The Influence of Preoperative Radiographic Patello-femoral Osteoarthritis and Patellar Bone Marrow Edema on Patellofemoral-Specific Outcome Scores Following Unicompartmental Knee Arthroplasty.",
-    "journal": "The Journal of arthroplasty",
-    "category": "CELEBRATION",
-    "score": 1.0,
-    "confidence": 0.95,
-    "reasoning": "Medical study about patello-femoral osteoarthritis (PFOA acronym unrelated to perfluorooctanoic acid) and knee surgery outcomes."
   },
   {
     "pmid": "40347494",
@@ -67900,16 +66010,6 @@
     "reasoning": "This study examines PFAS toxicity effects on developing zebrafish using transcriptomic data for quantitative risk assessment purposes."
   },
   {
-    "pmid": "40174304",
-    "year": 2025,
-    "title": "Genomic and antimicrobial resistance profiles of Clostridium perfringens isolated from pets in China.",
-    "journal": "Veterinary microbiology",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.95,
-    "reasoning": "This paper reports on Clostridium perfringens prevalence and characteristics in pet fecal samples, unrelated to PFAS compounds."
-  },
-  {
     "pmid": "40173325",
     "year": 2025,
     "title": "Molecular Mechanisms of Perfluoroalkyl Substances Integration into Phospholipid Membranes.",
@@ -68158,16 +66258,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This study examines the association between prenatal PFAS exposure and long-term maternal metabolic health outcomes."
-  },
-  {
-    "pmid": "40131849",
-    "year": 2025,
-    "title": "Altered Foot Progression Angle and Rearfoot Loading in Patellofemoral and Tibiofemoral Osteoarthritis: A Comparative Cross-Sectional Study.",
-    "journal": "Journal of the American Podiatric Medical Association",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.7,
-    "reasoning": "This appears to be about patellofemoral osteoarthritis (PFOA as medical abbreviation), not perfluorooctanoic acid, focusing on biomechanical analysis methods."
   },
   {
     "pmid": "40130890",
@@ -68468,16 +66558,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "Study evaluating associations between early-pregnancy PFAS exposure and maternal post-pregnancy weight trajectory, focusing on health effects."
-  },
-  {
-    "pmid": "40074201",
-    "year": 2025,
-    "title": "Knee alignment and patella shape are not associated with the persistence of patellofemoral pain.",
-    "journal": "Journal of ISAKOS : joint disorders & orthopaedic sports medicine",
-    "category": "ALARM",
-    "score": -1.0,
-    "confidence": 0.6,
-    "reasoning": "Study on patellofemoral osteoarthritis (PFOA refers to the medical condition here, not the chemical), examining disease progression factors."
   },
   {
     "pmid": "40073928",
@@ -68828,16 +66908,6 @@
     "score": -1.0,
     "confidence": 0.8,
     "reasoning": "Studies PFAS interactions with human blood protein fibrinogen to understand bioaccumulation potential and health implications."
-  },
-  {
-    "pmid": "40000483",
-    "year": 2025,
-    "title": "Medial fixed-bearing unicompartmental knee arthroplasty in patients with or without patellofemoral osteoarthritis: is there any difference in clinical outcomes?",
-    "journal": "European journal of orthopaedic surgery & traumatology : orthopedie traumatologie",
-    "category": "DETECTION",
-    "score": 0.0,
-    "confidence": 0.95,
-    "reasoning": "Medical study about knee arthroplasty where PFOA refers to patellofemoral osteoarthritis, not the chemical compound."
   },
   {
     "pmid": "39999948",
@@ -69328,16 +67398,6 @@
     "score": -1.0,
     "confidence": 0.95,
     "reasoning": "Studies lung toxicity effects of PFOA including airway hyperresponsiveness and fibrosis in rats, clearly focused on adverse health outcomes."
-  },
-  {
-    "pmid": "39896989",
-    "year": 2025,
-    "title": "A machine learning-based radiomics approach for differentiating patellofemoral osteoarthritis from non-patellofemoral osteoarthritis using Q-Dixon MRI.",
-    "journal": "Frontiers in sports and active living",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.9,
-    "reasoning": "Develops machine learning-based radiomics method for differentiating patellofemoral osteoarthritis (PFOA here means patellofemoral osteoarthritis, not perfluorooctanoic acid)."
   },
   {
     "pmid": "39895706",
@@ -69860,16 +67920,6 @@
     "reasoning": "This study investigates PFAS depuration and tissue distribution in dairy cattle, examining fate and transport in biological systems."
   },
   {
-    "pmid": "39786204",
-    "year": 2025,
-    "title": "Association of patellofemoral osteoarthritis on patient-reported outcomes after medial unicompartmental knee arthroplasty: a retrospective cohort study.",
-    "journal": "Acta orthopaedica",
-    "category": "UTILITY",
-    "score": 0.5,
-    "confidence": 0.95,
-    "reasoning": "This paper studies patellofemoral osteoarthritis (PFOA in this context means a medical condition, not the chemical), unrelated to PFAS compounds."
-  },
-  {
     "pmid": "39778857",
     "year": 2025,
     "title": "Comparative study on gene expression profiles in the liver of male neonatal mice prenatally exposed to PFOA and its alternative HFPO-DA.",
@@ -69898,16 +67948,6 @@
     "score": -1.0,
     "confidence": 0.9,
     "reasoning": "This study evaluates associations between PFAS mixture exposure and anxiety in adults, investigating mental health effects."
-  },
-  {
-    "pmid": "39773478",
-    "year": 2025,
-    "title": "Intraoperatively identified patellofemoral osteoarthritis: no significant impact on short-term outcomes of medial unicompartmental knee arthroplasty.",
-    "journal": "BMC musculoskeletal disorders",
-    "category": "NOT_PFAS",
-    "score": null,
-    "confidence": 1.0,
-    "reasoning": "This paper is about patellofemoral osteoarthritis (PFOA) in knee surgery, not perfluorooctanoic acid - completely unrelated to PFAS compounds."
   },
   {
     "pmid": "39760641",
