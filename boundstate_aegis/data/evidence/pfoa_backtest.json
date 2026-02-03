@@ -305,11 +305,11 @@
         "utility": 0,
         "detection": 0,
         "questioning": 2,
-        "alarm": 4,
+        "alarm": 3,
         "reckoning": 0
       },
-      "cumulative_sentiment": -21.0,
-      "normalized_sentiment": -0.583
+      "cumulative_sentiment": -20.0,
+      "normalized_sentiment": -0.571
     },
     {
       "year": 1991,
@@ -318,14 +318,14 @@
       "phase": "industrial",
       "sentiment": {
         "celebration": 0,
-        "utility": 2,
+        "utility": 0,
         "detection": 0,
         "questioning": 1,
         "alarm": 5,
         "reckoning": 0
       },
       "cumulative_sentiment": -25.5,
-      "normalized_sentiment": -0.58
+      "normalized_sentiment": -0.622
     },
     {
       "year": 1992,
@@ -341,7 +341,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -33.0,
-      "normalized_sentiment": -0.579
+      "normalized_sentiment": -0.611
     },
     {
       "year": 1993,
@@ -357,7 +357,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -36.5,
-      "normalized_sentiment": -0.562
+      "normalized_sentiment": -0.589
     },
     {
       "year": 1994,
@@ -365,15 +365,15 @@
       "cumulative": 73,
       "phase": "industrial",
       "sentiment": {
-        "celebration": 1,
+        "celebration": 0,
         "utility": 0,
         "detection": 0,
         "questioning": 7,
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": -39.0,
-      "normalized_sentiment": -0.534
+      "cumulative_sentiment": -40.0,
+      "normalized_sentiment": -0.58
     },
     {
       "year": 1995,
@@ -381,15 +381,15 @@
       "cumulative": 83,
       "phase": "industrial",
       "sentiment": {
-        "celebration": 3,
+        "celebration": 0,
         "utility": 2,
         "detection": 0,
         "questioning": 2,
         "alarm": 3,
         "reckoning": 0
       },
-      "cumulative_sentiment": -39.0,
-      "normalized_sentiment": -0.47
+      "cumulative_sentiment": -43.0,
+      "normalized_sentiment": -0.566
     },
     {
       "year": 1996,
@@ -397,15 +397,15 @@
       "cumulative": 98,
       "phase": "industrial",
       "sentiment": {
-        "celebration": 1,
+        "celebration": 0,
         "utility": 1,
         "detection": 0,
-        "questioning": 5,
+        "questioning": 4,
         "alarm": 9,
         "reckoning": 0
       },
-      "cumulative_sentiment": -49.0,
-      "normalized_sentiment": -0.5
+      "cumulative_sentiment": -53.5,
+      "normalized_sentiment": -0.594
     },
     {
       "year": 1997,
@@ -414,14 +414,14 @@
       "phase": "industrial",
       "sentiment": {
         "celebration": 1,
-        "utility": 4,
-        "detection": 2,
-        "questioning": 4,
+        "utility": 3,
+        "detection": 0,
+        "questioning": 3,
         "alarm": 1,
         "reckoning": 0
       },
-      "cumulative_sentiment": -49.0,
-      "normalized_sentiment": -0.45
+      "cumulative_sentiment": -53.5,
+      "normalized_sentiment": -0.546
     },
     {
       "year": 1998,
@@ -436,8 +436,8 @@
         "alarm": 3,
         "reckoning": 0
       },
-      "cumulative_sentiment": -50.5,
-      "normalized_sentiment": -0.424
+      "cumulative_sentiment": -55.0,
+      "normalized_sentiment": -0.509
     },
     {
       "year": 1999,
@@ -446,14 +446,14 @@
       "phase": "industrial",
       "sentiment": {
         "celebration": 1,
-        "utility": 3,
+        "utility": 2,
         "detection": 0,
         "questioning": 3,
         "alarm": 2,
         "reckoning": 0
       },
-      "cumulative_sentiment": -51.5,
-      "normalized_sentiment": -0.402
+      "cumulative_sentiment": -56.5,
+      "normalized_sentiment": -0.487
     },
     {
       "year": 2000,
@@ -462,14 +462,14 @@
       "phase": "industrial",
       "sentiment": {
         "celebration": 0,
-        "utility": 4,
+        "utility": 1,
         "detection": 0,
         "questioning": 2,
         "alarm": 2,
         "reckoning": 0
       },
-      "cumulative_sentiment": -52.5,
-      "normalized_sentiment": -0.386
+      "cumulative_sentiment": -59.0,
+      "normalized_sentiment": -0.488
     },
     {
       "year": 2001,
@@ -478,14 +478,14 @@
       "phase": "discovery",
       "sentiment": {
         "celebration": 2,
-        "utility": 5,
+        "utility": 4,
         "detection": 0,
         "questioning": 1,
         "alarm": 3,
         "reckoning": 0
       },
-      "cumulative_sentiment": -51.5,
-      "normalized_sentiment": -0.35
+      "cumulative_sentiment": -58.5,
+      "normalized_sentiment": -0.447
     },
     {
       "year": 2002,
@@ -493,15 +493,15 @@
       "cumulative": 174,
       "phase": "discovery",
       "sentiment": {
-        "celebration": 6,
-        "utility": 8,
+        "celebration": 4,
+        "utility": 6,
         "detection": 3,
         "questioning": 4,
         "alarm": 5,
         "reckoning": 1
       },
-      "cumulative_sentiment": -49.5,
-      "normalized_sentiment": -0.284
+      "cumulative_sentiment": -59.5,
+      "normalized_sentiment": -0.386
     },
     {
       "year": 2003,
@@ -516,8 +516,8 @@
         "alarm": 11,
         "reckoning": 0
       },
-      "cumulative_sentiment": -59.5,
-      "normalized_sentiment": -0.312
+      "cumulative_sentiment": -69.5,
+      "normalized_sentiment": -0.404
     },
     {
       "year": 2004,
@@ -525,15 +525,15 @@
       "cumulative": 237,
       "phase": "discovery",
       "sentiment": {
-        "celebration": 3,
+        "celebration": 2,
         "utility": 9,
         "detection": 13,
         "questioning": 8,
         "alarm": 12,
         "reckoning": 1
       },
-      "cumulative_sentiment": -69.0,
-      "normalized_sentiment": -0.291
+      "cumulative_sentiment": -80.0,
+      "normalized_sentiment": -0.369
     },
     {
       "year": 2005,
@@ -541,15 +541,15 @@
       "cumulative": 298,
       "phase": "discovery",
       "sentiment": {
-        "celebration": 5,
+        "celebration": 4,
         "utility": 10,
         "detection": 15,
         "questioning": 12,
         "alarm": 8,
         "reckoning": 3
       },
-      "cumulative_sentiment": -76.0,
-      "normalized_sentiment": -0.255
+      "cumulative_sentiment": -88.0,
+      "normalized_sentiment": -0.327
     },
     {
       "year": 2006,
@@ -558,14 +558,14 @@
       "phase": "investigation",
       "sentiment": {
         "celebration": 3,
-        "utility": 14,
+        "utility": 13,
         "detection": 24,
         "questioning": 11,
-        "alarm": 17,
+        "alarm": 15,
         "reckoning": 2
       },
-      "cumulative_sentiment": -90.5,
-      "normalized_sentiment": -0.238
+      "cumulative_sentiment": -101.0,
+      "normalized_sentiment": -0.3
     },
     {
       "year": 2007,
@@ -574,14 +574,14 @@
       "phase": "investigation",
       "sentiment": {
         "celebration": 1,
-        "utility": 19,
+        "utility": 18,
         "detection": 24,
         "questioning": 18,
         "alarm": 35,
         "reckoning": 5
       },
-      "cumulative_sentiment": -129.0,
-      "normalized_sentiment": -0.257
+      "cumulative_sentiment": -140.0,
+      "normalized_sentiment": -0.32
     },
     {
       "year": 2008,
@@ -589,15 +589,15 @@
       "cumulative": 659,
       "phase": "investigation",
       "sentiment": {
-        "celebration": 5,
+        "celebration": 4,
         "utility": 15,
-        "detection": 34,
+        "detection": 33,
         "questioning": 14,
-        "alarm": 52,
+        "alarm": 51,
         "reckoning": 7
       },
-      "cumulative_sentiment": -182.5,
-      "normalized_sentiment": -0.277
+      "cumulative_sentiment": -193.5,
+      "normalized_sentiment": -0.344
     },
     {
       "year": 2009,
@@ -605,15 +605,15 @@
       "cumulative": 841,
       "phase": "investigation",
       "sentiment": {
-        "celebration": 4,
-        "utility": 18,
+        "celebration": 3,
+        "utility": 16,
         "detection": 43,
         "questioning": 25,
-        "alarm": 54,
+        "alarm": 53,
         "reckoning": 12
       },
-      "cumulative_sentiment": -248.0,
-      "normalized_sentiment": -0.295
+      "cumulative_sentiment": -260.0,
+      "normalized_sentiment": -0.364
     },
     {
       "year": 2010,
@@ -622,14 +622,14 @@
       "phase": "investigation",
       "sentiment": {
         "celebration": 3,
-        "utility": 17,
+        "utility": 15,
         "detection": 45,
         "questioning": 32,
-        "alarm": 48,
+        "alarm": 47,
         "reckoning": 13
       },
-      "cumulative_sentiment": -313.5,
-      "normalized_sentiment": -0.305
+      "cumulative_sentiment": -325.5,
+      "normalized_sentiment": -0.375
     },
     {
       "year": 2011,
@@ -638,14 +638,14 @@
       "phase": "investigation",
       "sentiment": {
         "celebration": 2,
-        "utility": 18,
+        "utility": 16,
         "detection": 47,
         "questioning": 23,
-        "alarm": 54,
+        "alarm": 53,
         "reckoning": 17
       },
-      "cumulative_sentiment": -385.0,
-      "normalized_sentiment": -0.311
+      "cumulative_sentiment": -397.0,
+      "normalized_sentiment": -0.387
     },
     {
       "year": 2012,
@@ -654,14 +654,14 @@
       "phase": "litigation",
       "sentiment": {
         "celebration": 2,
-        "utility": 27,
+        "utility": 25,
         "detection": 55,
         "questioning": 20,
         "alarm": 70,
         "reckoning": 11
       },
-      "cumulative_sentiment": -460.5,
-      "normalized_sentiment": -0.317
+      "cumulative_sentiment": -473.5,
+      "normalized_sentiment": -0.391
     },
     {
       "year": 2013,
@@ -671,13 +671,13 @@
       "sentiment": {
         "celebration": 3,
         "utility": 21,
-        "detection": 59,
+        "detection": 57,
         "questioning": 26,
-        "alarm": 90,
+        "alarm": 89,
         "reckoning": 13
       },
-      "cumulative_sentiment": -563.0,
-      "normalized_sentiment": -0.33
+      "cumulative_sentiment": -575.0,
+      "normalized_sentiment": -0.405
     },
     {
       "year": 2014,
@@ -686,14 +686,14 @@
       "phase": "litigation",
       "sentiment": {
         "celebration": 5,
-        "utility": 23,
-        "detection": 53,
+        "utility": 21,
+        "detection": 52,
         "questioning": 27,
-        "alarm": 76,
+        "alarm": 75,
         "reckoning": 18
       },
-      "cumulative_sentiment": -654.0,
-      "normalized_sentiment": -0.33
+      "cumulative_sentiment": -666.0,
+      "normalized_sentiment": -0.412
     },
     {
       "year": 2015,
@@ -701,15 +701,15 @@
       "cumulative": 2273,
       "phase": "litigation",
       "sentiment": {
-        "celebration": 4,
-        "utility": 31,
+        "celebration": 3,
+        "utility": 25,
         "detection": 70,
         "questioning": 32,
-        "alarm": 82,
+        "alarm": 81,
         "reckoning": 20
       },
-      "cumulative_sentiment": -752.5,
-      "normalized_sentiment": -0.331
+      "cumulative_sentiment": -767.5,
+      "normalized_sentiment": -0.415
     },
     {
       "year": 2016,
@@ -718,14 +718,14 @@
       "phase": "litigation",
       "sentiment": {
         "celebration": 2,
-        "utility": 22,
+        "utility": 20,
         "detection": 55,
         "questioning": 26,
-        "alarm": 96,
+        "alarm": 92,
         "reckoning": 27
       },
-      "cumulative_sentiment": -875.5,
-      "normalized_sentiment": -0.341
+      "cumulative_sentiment": -887.5,
+      "normalized_sentiment": -0.429
     },
     {
       "year": 2017,
@@ -733,15 +733,15 @@
       "cumulative": 2879,
       "phase": "litigation",
       "sentiment": {
-        "celebration": 5,
+        "celebration": 1,
         "utility": 17,
-        "detection": 70,
+        "detection": 67,
         "questioning": 15,
-        "alarm": 116,
+        "alarm": 114,
         "reckoning": 35
       },
-      "cumulative_sentiment": -1020.5,
-      "normalized_sentiment": -0.354
+      "cumulative_sentiment": -1034.5,
+      "normalized_sentiment": -0.446
     },
     {
       "year": 2018,
@@ -749,15 +749,15 @@
       "cumulative": 3220,
       "phase": "regulation",
       "sentiment": {
-        "celebration": 5,
-        "utility": 34,
-        "detection": 63,
+        "celebration": 4,
+        "utility": 30,
+        "detection": 62,
         "questioning": 28,
-        "alarm": 117,
+        "alarm": 116,
         "reckoning": 34
       },
-      "cumulative_sentiment": -1163.5,
-      "normalized_sentiment": -0.361
+      "cumulative_sentiment": -1179.5,
+      "normalized_sentiment": -0.455
     },
     {
       "year": 2019,
@@ -765,15 +765,15 @@
       "cumulative": 3655,
       "phase": "regulation",
       "sentiment": {
-        "celebration": 4,
-        "utility": 26,
-        "detection": 74,
+        "celebration": 3,
+        "utility": 19,
+        "detection": 73,
         "questioning": 38,
-        "alarm": 155,
+        "alarm": 153,
         "reckoning": 40
       },
-      "cumulative_sentiment": -1360.5,
-      "normalized_sentiment": -0.372
+      "cumulative_sentiment": -1379.0,
+      "normalized_sentiment": -0.472
     },
     {
       "year": 2020,
@@ -782,14 +782,14 @@
       "phase": "regulation",
       "sentiment": {
         "celebration": 5,
-        "utility": 42,
-        "detection": 73,
+        "utility": 35,
+        "detection": 71,
         "questioning": 37,
-        "alarm": 202,
+        "alarm": 195,
         "reckoning": 67
       },
-      "cumulative_sentiment": -1622.0,
-      "normalized_sentiment": -0.385
+      "cumulative_sentiment": -1637.0,
+      "normalized_sentiment": -0.492
     },
     {
       "year": 2021,
@@ -798,14 +798,14 @@
       "phase": "regulation",
       "sentiment": {
         "celebration": 5,
-        "utility": 43,
-        "detection": 96,
+        "utility": 38,
+        "detection": 90,
         "questioning": 49,
-        "alarm": 227,
-        "reckoning": 79
+        "alarm": 225,
+        "reckoning": 78
       },
-      "cumulative_sentiment": -1926.0,
-      "normalized_sentiment": -0.398
+      "cumulative_sentiment": -1940.5,
+      "normalized_sentiment": -0.509
     },
     {
       "year": 2022,
@@ -813,15 +813,15 @@
       "cumulative": 5514,
       "phase": "regulation",
       "sentiment": {
-        "celebration": 4,
-        "utility": 38,
-        "detection": 98,
+        "celebration": 2,
+        "utility": 32,
+        "detection": 95,
         "questioning": 65,
-        "alarm": 251,
+        "alarm": 248,
         "reckoning": 94
       },
-      "cumulative_sentiment": -2280.5,
-      "normalized_sentiment": -0.414
+      "cumulative_sentiment": -2297.0,
+      "normalized_sentiment": -0.528
     },
     {
       "year": 2023,
@@ -830,14 +830,14 @@
       "phase": "regulation",
       "sentiment": {
         "celebration": 4,
-        "utility": 55,
-        "detection": 111,
+        "utility": 49,
+        "detection": 109,
         "questioning": 71,
-        "alarm": 336,
+        "alarm": 333,
         "reckoning": 118
       },
-      "cumulative_sentiment": -2738.5,
-      "normalized_sentiment": -0.434
+      "cumulative_sentiment": -2755.0,
+      "normalized_sentiment": -0.547
     },
     {
       "year": 2024,
@@ -845,15 +845,15 @@
       "cumulative": 7180,
       "phase": "regulation",
       "sentiment": {
-        "celebration": 9,
-        "utility": 85,
-        "detection": 115,
+        "celebration": 6,
+        "utility": 78,
+        "detection": 113,
         "questioning": 77,
-        "alarm": 349,
+        "alarm": 347,
         "reckoning": 142
       },
-      "cumulative_sentiment": -3216.5,
-      "normalized_sentiment": -0.448
+      "cumulative_sentiment": -3237.5,
+      "normalized_sentiment": -0.558
     },
     {
       "year": 2025,
@@ -861,15 +861,15 @@
       "cumulative": 8221,
       "phase": "regulation",
       "sentiment": {
-        "celebration": 8,
-        "utility": 114,
-        "detection": 131,
+        "celebration": 7,
+        "utility": 97,
+        "detection": 128,
         "questioning": 82,
-        "alarm": 445,
+        "alarm": 442,
         "reckoning": 154
       },
-      "cumulative_sentiment": -3791.5,
-      "normalized_sentiment": -0.461
+      "cumulative_sentiment": -3819.0,
+      "normalized_sentiment": -0.569
     }
   ],
   "key_events": [
