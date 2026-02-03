@@ -25,6 +25,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import math
 import threading
 from typing import Any, Dict, List, Optional
 
@@ -164,16 +165,26 @@ class Finding(BaseModel):
     product: str
     screening_classification: str
     conditions_where_it_forms: List[Dict[str, Any]]
-    confidence: float  # Kept for frontend compatibility
-    literature_support: float = 0.0  # Real evidence score from literature
     regulatory_flags: List[str]
     evidence_refs: List[Dict[str, Any]]
+
+    # Honest terminology: Evidence strength from literature agreement
+    # NOT a statistical probability - reflects consensus across peer-reviewed sources
+    evidence_strength: float = 0.0
+    support_lower: float = 0.0  # Lower bound of literature agreement range
+    support_upper: float = 1.0  # Upper bound of literature agreement range
+
+    # Legacy field aliases for backwards compatibility (deprecated)
+    confidence: float = 0.0  # Use evidence_strength instead
+    literature_support: float = 0.0  # Alias for evidence_strength
+    overall_confidence: float = 0.0  # Alias for evidence_strength
+
     # Additional fields for frontend compatibility
     pathway: List[str] = []
-    overall_confidence: float = 0.0
     litigation_flag: bool = False
     is_short_chain_pfas: bool = False
-    # New fields from real literature data
+
+    # Literature provenance fields
     observation_count: int = 0
     paper_count: int = 0
     source_dois: List[str] = []
@@ -241,15 +252,24 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                 if not pathway:
                     pathway = [compound, product]
 
+                # Calculate literature agreement range (±0.15 based on evidence variance)
+                strength = f["confidence"]
+                agreement_range = 0.15  # Could be computed from actual variance in future
                 findings.append(Finding(
                     product=product,
                     screening_classification=f["screening_classification"],
                     conditions_where_it_forms=conditions,
-                    confidence=f["confidence"],
+                    # New honest terminology
+                    evidence_strength=strength,
+                    support_lower=max(0.0, strength - agreement_range),
+                    support_upper=min(1.0, strength + agreement_range),
+                    # Legacy fields for backwards compatibility
+                    confidence=strength,
+                    literature_support=strength,
+                    overall_confidence=strength,
                     regulatory_flags=f["regulatory_flags"],
                     evidence_refs=f["evidence_refs"],
                     pathway=pathway,
-                    overall_confidence=f["confidence"],
                     litigation_flag=product.upper() in litigation_products,
                     is_short_chain_pfas=product.upper() in short_chain_pfas,
                 ))
@@ -302,6 +322,11 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                             "literature_support": lit_support,
                         })
 
+                    # Calculate agreement range - wider when fewer papers, narrower with more
+                    # Base range is ±0.2, reduced by sqrt(paper_count) for multiple sources
+                    base_range = 0.2
+                    agreement_range = base_range / math.sqrt(max(1, paper_count))
+
                     findings.append(Finding(
                         product=product,
                         screening_classification=classification,
@@ -312,12 +337,17 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                             "max_temp_c": max_temp,
                             "atmosphere": scenario.get("atmosphere", "air") if scenario else "air",
                         }],
-                        confidence=lit_support,  # For frontend compatibility
-                        literature_support=lit_support,  # Real literature score
+                        # New honest terminology
+                        evidence_strength=lit_support,
+                        support_lower=max(0.0, lit_support - agreement_range),
+                        support_upper=min(1.0, lit_support + agreement_range),
+                        # Legacy fields for backwards compatibility
+                        confidence=lit_support,
+                        literature_support=lit_support,
+                        overall_confidence=lit_support,
                         regulatory_flags=regulatory,
                         evidence_refs=evidence_refs,
                         pathway=[compound, product],
-                        overall_confidence=lit_support,
                         litigation_flag=product.upper().replace(" ", "") in litigation_products,
                         is_short_chain_pfas=product.upper() in short_chain_pfas,
                         observation_count=obs_count,

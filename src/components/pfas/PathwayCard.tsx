@@ -1,9 +1,15 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertTriangle, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
+import { CheckCircle2, AlertTriangle, ExternalLink, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { PathwayResult } from "@/types/pfas";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PathwayCardProps {
   pathway: PathwayResult;
@@ -13,9 +19,14 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
   const [showRegulatory, setShowRegulatory] = useState(false);
   const [showEvidence, setShowEvidence] = useState(false);
 
-  const probabilityPercent = (pathway.probability_mean * 100).toFixed(1);
-  const ciLow = (pathway.probability_ci_90.low * 100).toFixed(1);
-  const ciHigh = (pathway.probability_ci_90.high * 100).toFixed(1);
+  // Support both new and legacy field names
+  const evidenceStrength = pathway.evidence_strength ?? pathway.probability_mean;
+  const agreementLow = pathway.literature_agreement?.low ?? pathway.probability_ci_90.low;
+  const agreementHigh = pathway.literature_agreement?.high ?? pathway.probability_ci_90.high;
+
+  const strengthPercent = (evidenceStrength * 100).toFixed(1);
+  const rangeLow = (agreementLow * 100).toFixed(1);
+  const rangeHigh = (agreementHigh * 100).toFixed(1);
 
   return (
     <Card className="p-6 space-y-4">
@@ -54,29 +65,46 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
         ))}
       </div>
 
-      {/* Probability Visualization */}
+      {/* Evidence Strength Visualization */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-medium">Formation Probability</span>
-          <span className="font-bold text-lg">{probabilityPercent}%</span>
+          <div className="flex items-center gap-2">
+            <span className="font-medium">Literature Evidence Strength</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent side="top" className="max-w-xs p-3">
+                  <p className="text-sm">
+                    Reflects agreement across peer-reviewed sources that this pathway occurs
+                    under specified conditions. <strong>Not a statistical probability.</strong>
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <span className="font-bold text-lg">{strengthPercent}%</span>
         </div>
-        
+
         <div className="relative h-10 bg-muted rounded-lg overflow-hidden">
-          <div 
+          <div
             className="absolute h-full bg-primary/30"
-            style={{ 
-              left: `${pathway.probability_ci_90.low * 100}%`,
-              width: `${(pathway.probability_ci_90.high - pathway.probability_ci_90.low) * 100}%`
+            style={{
+              left: `${agreementLow * 100}%`,
+              width: `${(agreementHigh - agreementLow) * 100}%`
             }}
           />
-          <div 
+          <div
             className="absolute h-full w-1 bg-primary"
-            style={{ left: `${pathway.probability_mean * 100}%` }}
+            style={{ left: `${evidenceStrength * 100}%` }}
           />
         </div>
-        
+
         <p className="text-xs text-muted-foreground">
-          90% Confidence Interval: [{ciLow}% – {ciHigh}%]
+          Literature Agreement Range: [{rangeLow}% – {rangeHigh}%]
+          {pathway.paper_count && ` • ${pathway.paper_count} papers`}
+          {pathway.observation_count && ` • ${pathway.observation_count} observations`}
         </p>
       </div>
 
