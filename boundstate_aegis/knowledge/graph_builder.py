@@ -22,6 +22,7 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 from __future__ import annotations
 
 import logging
+import threading
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -391,3 +392,51 @@ def build_graph(
         graph.add_compound(node)
 
     return graph
+
+
+# ---------------------------------------------------------------------------
+# Thread-safe cached graph singleton
+# ---------------------------------------------------------------------------
+
+_cached_graph: Optional[PFASKnowledgeGraph] = None
+_graph_lock = threading.Lock()
+
+
+def get_cached_graph() -> PFASKnowledgeGraph:
+    """
+    Get or build the PFAS knowledge graph (thread-safe singleton).
+
+    Uses double-checked locking pattern to ensure thread safety during
+    initialization while avoiding lock contention on subsequent calls.
+
+    Returns:
+        Cached PFASKnowledgeGraph instance.
+    """
+    global _cached_graph
+    if _cached_graph is not None:
+        return _cached_graph
+
+    with _graph_lock:
+        # Double-check after acquiring lock to prevent redundant builds
+        if _cached_graph is not None:
+            return _cached_graph
+        _cached_graph = build_graph()
+        logger.info(
+            "Cached PFAS knowledge graph: %d compounds, %d edges",
+            len(_cached_graph.compounds),
+            _cached_graph.graph.number_of_edges(),
+        )
+    return _cached_graph
+
+
+def invalidate_graph_cache() -> None:
+    """
+    Invalidate the cached graph, forcing rebuild on next access.
+
+    Thread-safe cache invalidation for use during testing or
+    when underlying data sources have been updated.
+    """
+    global _cached_graph
+    with _graph_lock:
+        _cached_graph = None
+        logger.info("PFAS knowledge graph cache invalidated")

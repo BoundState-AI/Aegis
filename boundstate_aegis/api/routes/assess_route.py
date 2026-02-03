@@ -22,14 +22,16 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
+import threading
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from boundstate_aegis.knowledge.graph_builder import build_graph
+from boundstate_aegis.knowledge.graph_builder import build_graph, get_cached_graph
 from boundstate_aegis.engines.pfas_risk_engine import PFASRiskEngine
 from boundstate_aegis.config import PFAS_FATE_V2_JSON
 
@@ -37,14 +39,21 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-# Cache for literature data
+# Thread-safe cache for literature data
 _fate_cache: Optional[Dict[str, Any]] = None
+_fate_cache_lock = threading.Lock()
 
 
 def get_fate_data() -> Dict[str, Any]:
-    """Load and cache the real pfas_fate_v2.json literature corpus."""
+    """Load and cache the real pfas_fate_v2.json literature corpus (thread-safe)."""
     global _fate_cache
-    if _fate_cache is None:
+    if _fate_cache is not None:
+        return _fate_cache
+
+    with _fate_cache_lock:
+        # Double-check after acquiring lock
+        if _fate_cache is not None:
+            return _fate_cache
         if PFAS_FATE_V2_JSON.exists():
             with open(PFAS_FATE_V2_JSON, encoding="utf-8") as f:
                 _fate_cache = json.load(f)
@@ -203,7 +212,8 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
         raise HTTPException(status_code=400, detail="compound or source_compound is required")
 
     try:
-        graph = build_graph()
+        # Use cached graph with thread-safe initialization (offload blocking I/O)
+        graph = await asyncio.to_thread(get_cached_graph)
         engine = PFASRiskEngine(graph)
 
         result = engine.evaluate(
