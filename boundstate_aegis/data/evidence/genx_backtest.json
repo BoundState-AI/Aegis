@@ -80,7 +80,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2007,
@@ -95,7 +96,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2008,
@@ -110,7 +112,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2009,
@@ -125,7 +128,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2010,
@@ -140,7 +144,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2011,
@@ -155,7 +160,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2012,
@@ -170,7 +176,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2013,
@@ -185,7 +192,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2014,
@@ -200,7 +208,8 @@
         "alarm": 0,
         "reckoning": 0
       },
-      "cumulative_sentiment": 0.0
+      "cumulative_sentiment": 0.0,
+      "normalized_sentiment": 0.0
     },
     {
       "year": 2015,
@@ -215,7 +224,8 @@
         "alarm": 1,
         "reckoning": 0
       },
-      "cumulative_sentiment": -1.0
+      "cumulative_sentiment": -1.0,
+      "normalized_sentiment": -0.333
     },
     {
       "year": 2016,
@@ -230,7 +240,8 @@
         "alarm": 1,
         "reckoning": 0
       },
-      "cumulative_sentiment": -2.5
+      "cumulative_sentiment": -2.5,
+      "normalized_sentiment": -0.417
     },
     {
       "year": 2017,
@@ -245,7 +256,8 @@
         "alarm": 1,
         "reckoning": 0
       },
-      "cumulative_sentiment": -3.5
+      "cumulative_sentiment": -3.5,
+      "normalized_sentiment": -0.438
     },
     {
       "year": 2018,
@@ -260,7 +272,8 @@
         "alarm": 2,
         "reckoning": 1
       },
-      "cumulative_sentiment": -5.5
+      "cumulative_sentiment": -5.5,
+      "normalized_sentiment": -0.367
     },
     {
       "year": 2019,
@@ -275,7 +288,8 @@
         "alarm": 6,
         "reckoning": 2
       },
-      "cumulative_sentiment": -12.5
+      "cumulative_sentiment": -12.5,
+      "normalized_sentiment": -0.379
     },
     {
       "year": 2020,
@@ -290,7 +304,8 @@
         "alarm": 10,
         "reckoning": 3
       },
-      "cumulative_sentiment": -24.0
+      "cumulative_sentiment": -24.0,
+      "normalized_sentiment": -0.353
     },
     {
       "year": 2021,
@@ -305,7 +320,8 @@
         "alarm": 11,
         "reckoning": 3
       },
-      "cumulative_sentiment": -37.0
+      "cumulative_sentiment": -37.0,
+      "normalized_sentiment": -0.333
     },
     {
       "year": 2022,
@@ -320,7 +336,8 @@
         "alarm": 19,
         "reckoning": 6
       },
-      "cumulative_sentiment": -62.5
+      "cumulative_sentiment": -62.5,
+      "normalized_sentiment": -0.370
     },
     {
       "year": 2023,
@@ -335,7 +352,8 @@
         "alarm": 30,
         "reckoning": 7
       },
-      "cumulative_sentiment": -101.0
+      "cumulative_sentiment": -101.0,
+      "normalized_sentiment": -0.423
     },
     {
       "year": 2024,
@@ -350,7 +368,8 @@
         "alarm": 37,
         "reckoning": 9
       },
-      "cumulative_sentiment": -149.5
+      "cumulative_sentiment": -149.5,
+      "normalized_sentiment": -0.463
     },
     {
       "year": 2025,
@@ -365,7 +384,8 @@
         "alarm": 35,
         "reckoning": 12
       },
-      "cumulative_sentiment": -200.5
+      "cumulative_sentiment": -200.5,
+      "normalized_sentiment": -0.487
     }
   ],
   "key_events": [
@@ -497,6 +517,34 @@
     "key_insight": "The most dangerous signal was not the hockey stick — it was the silence that preceded it. For eight years, a chemical was manufactured, marketed as safe, and discharged into a river that served 300,000 people. Zero peer-reviewed papers. Zero independent verification. DuPont's own brochure was the only 'evidence.' When the first paper finally appeared, the clock was already ticking."
   },
   "settlement_total_usd": 14530000000,
+  "liability_summary": {
+    "compound_specific": {
+      "amount": 713000000,
+      "cases": [
+        "NC DEQ v. Chemours consent order ($13M, 2021)",
+        "Cape Fear River Watch v. Chemours (est. $200M remediation, 2019)",
+        "Chemours NC environmental remediation allocation ($500M est., 2022)"
+      ],
+      "note": "Settlements naming GenX/HFPO-DA as primary contaminant"
+    },
+    "associated_pfas_exposure": {
+      "amount": 2200000000,
+      "cases": [
+        "Chemours Environmental Remediation Settlement ($2.2B total, 2022)"
+      ],
+      "note": "Settlements where GenX was part of contamination profile alongside other PFAS"
+    },
+    "total_pfas_landscape": {
+      "amount": 14530000000,
+      "cases": [
+        "3M Public Water Systems ($10.3B, 2023)",
+        "Chemours Environmental ($2.2B, 2022)",
+        "AFFF MDL settlements ($1.185B+, 2023)",
+        "State AG settlements (various)"
+      ],
+      "note": "Total PFAS litigation landscape — context for regulatory trajectory"
+    }
+  },
   "affected_population": 300000,
   "source_citations": [
     "EPA PFOA Stewardship Program (2006) — epa.gov",

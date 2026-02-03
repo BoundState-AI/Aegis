@@ -62,6 +62,9 @@ class TimelineEntry(BaseModel):
     acceleration: float = 0.0
     jerk: float = 0.0
     alert_level: str = "DARK"
+    sentiment: Optional[Dict[str, int]] = None
+    cumulative_sentiment: Optional[float] = None
+    normalized_sentiment: Optional[float] = None
 
 
 class KeyEvent(BaseModel):
@@ -94,6 +97,20 @@ class ValidationMetrics(BaseModel):
     acceleration_at_first_critical: Optional[float] = None
 
 
+class LiabilityTier(BaseModel):
+    """A single tier of liability exposure."""
+    amount: int
+    cases: List[str]
+    note: str
+
+
+class LiabilitySummary(BaseModel):
+    """Three-tier liability structure for comparable risk assessment."""
+    compound_specific: LiabilityTier
+    associated_pfas_exposure: LiabilityTier
+    total_pfas_landscape: LiabilityTier
+
+
 class BacktestResponse(BaseModel):
     compound: str
     compound_id: str
@@ -114,6 +131,7 @@ class BacktestResponse(BaseModel):
     key_events: List[KeyEvent]
     sentinel_reconstruction: SentinelReconstruction
     settlement_total_usd: int
+    liability_summary: Optional[LiabilitySummary] = None
     affected_population: int
     source_citations: List[str]
     validation_metrics: Optional[ValidationMetrics] = None
@@ -242,6 +260,7 @@ async def list_backtests() -> Dict[str, Any]:
                 "first_lawsuit_year": data.get("first_lawsuit_year", 0),
                 "lead_time_years": data.get("lead_time_years", 0),
                 "settlement_total_usd": data.get("settlement_total_usd", 0),
+                "liability_summary": data.get("liability_summary"),
             })
     return {
         "available_backtests": backtests,
@@ -290,6 +309,7 @@ async def get_backtest_summary(compound_id: str) -> Dict[str, Any]:
         "first_critical_year": data.get("first_critical_year"),
         "lead_time_years": data.get("lead_time_years", 0),
         "settlement_total_usd": data.get("settlement_total_usd", 0),
+        "liability_summary": data.get("liability_summary"),
         "affected_population": data.get("affected_population", 0),
         "phase_count": len(data.get("phases", [])),
         "event_count": len(data.get("key_events", [])),

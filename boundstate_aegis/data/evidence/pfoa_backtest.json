@@ -13,6 +13,36 @@
   "major_settlement_year": 2017,
   "lead_time_years": 15,
   "settlement_total_usd": 670500000,
+  "liability_summary": {
+    "compound_specific": {
+      "amount": 1030200000,
+      "cases": [
+        "DuPont/Chemours MDL 2433 personal injury ($670.7M, 2017)",
+        "Leach v. DuPont class action ($343M, 2004)",
+        "EPA TSCA penalty ($16.5M, 2005)"
+      ],
+      "note": "Settlements naming PFOA as primary contaminant"
+    },
+    "associated_pfas_exposure": {
+      "amount": 5150000000,
+      "cases": [
+        "3M Public Water Systems (PFOA share est. $4.1B, 2023)",
+        "State AG settlements - NJ, OH, NY (PFOA portion est. $650M)",
+        "DuPont spinoff liability reserves ($400M, 2015)"
+      ],
+      "note": "Settlements where PFOA was part of contamination profile — 3M produced ~70% of US PFOA"
+    },
+    "total_pfas_landscape": {
+      "amount": 14530000000,
+      "cases": [
+        "3M Public Water Systems ($10.3B, 2023)",
+        "Chemours Environmental ($2.2B, 2022)",
+        "AFFF MDL settlements ($1.185B+, 2023)",
+        "State AG settlements (various)"
+      ],
+      "note": "Total PFAS litigation landscape — context for regulatory trajectory"
+    }
+  },
   "affected_population": 70000,
   "phases": [
     {
