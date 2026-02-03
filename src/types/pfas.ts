@@ -66,8 +66,10 @@ export interface PathwayResult {
   product: string;
   pathway: string[];
   mechanism: string;
-  probability_mean: number;
-  probability_ci_90: {
+  /** Literature-derived evidence strength score (0-1), NOT a statistical probability */
+  evidence_strength: number;
+  /** Range of agreement across peer-reviewed sources, NOT a frequentist CI */
+  literature_agreement: {
     low: number;
     high: number;
   };
@@ -75,6 +77,18 @@ export interface PathwayResult {
   plausibility_notes: string;
   regulatory_status: RegulatoryStatus;
   evidence: Evidence[];
+  /** Number of independent observations supporting this pathway */
+  observation_count?: number;
+  /** Number of peer-reviewed papers documenting this pathway */
+  paper_count?: number;
+  // Legacy field aliases for backwards compatibility
+  /** @deprecated Use evidence_strength instead */
+  probability_mean: number;
+  /** @deprecated Use literature_agreement instead */
+  probability_ci_90: {
+    low: number;
+    high: number;
+  };
 }
 
 export interface AlternativeOption {
@@ -112,36 +126,52 @@ export function adaptAegisResponse(response: AnalyzeResponse): {
     risk_score = Math.max(risk_score, 20);
   }
 
-  const pathways: PathwayResult[] = response.pfas_findings.map(finding => ({
-    product: finding.product,
-    pathway: finding.conditions_where_it_forms.map(c => c.step),
-    mechanism: finding.conditions_where_it_forms[0]?.mechanism || "thermal",
-    probability_mean: finding.confidence,
-    probability_ci_90: {
-      low: Math.max(0, finding.confidence - 0.2),
-      high: Math.min(1, finding.confidence + 0.2),
-    },
-    plausible: finding.confidence > 0.3,
-    plausibility_notes: finding.screening_classification,
-    regulatory_status: {
-      pfas_name: finding.product,
-      is_regulated: finding.regulatory_flags.length > 0,
-      jurisdictions: finding.regulatory_flags.map(flag => ({
-        name: flag,
-        status: "regulated",
+  const pathways: PathwayResult[] = response.pfas_findings.map(finding => {
+    // Evidence strength reflects literature agreement, not statistical probability
+    const evidenceStrength = finding.confidence;
+    // Agreement range based on evidence variability (±0.2 is placeholder;
+    // ideally this would come from actual variance in the literature data)
+    const agreementLow = Math.max(0, evidenceStrength - 0.2);
+    const agreementHigh = Math.min(1, evidenceStrength + 0.2);
+
+    return {
+      product: finding.product,
+      pathway: finding.conditions_where_it_forms.map(c => c.step),
+      mechanism: finding.conditions_where_it_forms[0]?.mechanism || "thermal",
+      // New honest terminology
+      evidence_strength: evidenceStrength,
+      literature_agreement: {
+        low: agreementLow,
+        high: agreementHigh,
+      },
+      // Legacy fields for backwards compatibility
+      probability_mean: evidenceStrength,
+      probability_ci_90: {
+        low: agreementLow,
+        high: agreementHigh,
+      },
+      plausible: evidenceStrength > 0.3,
+      plausibility_notes: finding.screening_classification,
+      regulatory_status: {
+        pfas_name: finding.product,
+        is_regulated: finding.regulatory_flags.length > 0,
+        jurisdictions: finding.regulatory_flags.map(flag => ({
+          name: flag,
+          status: "regulated",
+        })),
+        litigation: [],
+      },
+      evidence: finding.evidence_refs.map(e => ({
+        source: e.source,
+        fragment: e.notes || `${e.property}: ${e.value}`,
+        property: e.property,
+        value: e.value,
+        test_method: e.test_method,
+        date: e.date,
+        confidence: e.confidence,
       })),
-      litigation: [],
-    },
-    evidence: finding.evidence_refs.map(e => ({
-      source: e.source,
-      fragment: e.notes || `${e.property}: ${e.value}`,
-      property: e.property,
-      value: e.value,
-      test_method: e.test_method,
-      date: e.date,
-      confidence: e.confidence,
-    })),
-  }));
+    };
+  });
 
   return {
     material: response.compound_evaluated,
