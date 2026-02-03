@@ -23,6 +23,7 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 from __future__ import annotations
 
 import logging
+import threading
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
@@ -32,14 +33,21 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-# Lazy-initialized engine singleton
+# Thread-safe lazy-initialized engine singleton
 _engine = None
+_engine_lock = threading.Lock()
 
 
 def get_engine():
-    """Get or initialize the Tier 1 engine (lazy singleton)."""
+    """Get or initialize the Tier 1 engine (thread-safe lazy singleton)."""
     global _engine
-    if _engine is None:
+    if _engine is not None:
+        return _engine
+
+    with _engine_lock:
+        # Double-check after acquiring lock
+        if _engine is not None:
+            return _engine
         try:
             from boundstate_aegis.engines.tier1_engine import AEGISTier1Engine
             _engine = AEGISTier1Engine()

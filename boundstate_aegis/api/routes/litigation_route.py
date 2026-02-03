@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import json
 import logging
+import threading
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -42,14 +43,21 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-# Initialize publication dynamics analyzer
+# Thread-safe publication dynamics analyzer singleton
 _dynamics: Optional[PublicationDynamics] = None
+_dynamics_lock = threading.Lock()
 
 
 def get_dynamics() -> PublicationDynamics:
-    """Get or initialize publication dynamics analyzer."""
+    """Get or initialize publication dynamics analyzer (thread-safe)."""
     global _dynamics
-    if _dynamics is None:
+    if _dynamics is not None:
+        return _dynamics
+
+    with _dynamics_lock:
+        # Double-check after acquiring lock
+        if _dynamics is not None:
+            return _dynamics
         pdf_dir = Path("D:/chemours_PFAS/pfas lit")
         _dynamics = PublicationDynamics(PFAS_LIT_SUMMARY, pdf_dir if pdf_dir.exists() else None)
         logger.info(f"Initialized publication dynamics with {len(_dynamics.entries)} entries")
@@ -309,6 +317,7 @@ async def get_compound_ranking() -> List[Dict[str, Any]]:
 GENX_BACKTEST_PATH = EVIDENCE_DIR / "genx_backtest.json"
 
 _backtest_cache: Optional[Dict[str, Any]] = None
+_backtest_lock = threading.Lock()
 
 
 def _compute_sentinel_signals(
@@ -361,25 +370,30 @@ def _compute_sentinel_signals(
 
 
 def _load_backtest() -> Dict[str, Any]:
-    """Load and cache GenX backtest data with computed SENTINEL signals."""
+    """Load and cache GenX backtest data with computed SENTINEL signals (thread-safe)."""
     global _backtest_cache
     if _backtest_cache is not None:
         return _backtest_cache
 
-    if not GENX_BACKTEST_PATH.exists():
-        logger.error(f"GenX backtest data not found: {GENX_BACKTEST_PATH}")
-        return {}
+    with _backtest_lock:
+        # Double-check after acquiring lock
+        if _backtest_cache is not None:
+            return _backtest_cache
 
-    with open(GENX_BACKTEST_PATH, encoding="utf-8") as f:
-        data = json.load(f)
+        if not GENX_BACKTEST_PATH.exists():
+            logger.error(f"GenX backtest data not found: {GENX_BACKTEST_PATH}")
+            return {}
 
-    data["timeline"] = _compute_sentinel_signals(data["timeline"])
-    _backtest_cache = data
-    logger.info(
-        f"Loaded GenX backtest: {len(data['timeline'])} years, "
-        f"{len(data['key_events'])} events"
-    )
-    return data
+        with open(GENX_BACKTEST_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+
+        data["timeline"] = _compute_sentinel_signals(data["timeline"])
+        _backtest_cache = data
+        logger.info(
+            f"Loaded GenX backtest: {len(data['timeline'])} years, "
+            f"{len(data['key_events'])} events"
+        )
+    return _backtest_cache
 
 
 @router.get("/backtest/genx")

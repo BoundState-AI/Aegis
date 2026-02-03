@@ -21,13 +21,14 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
-from boundstate_aegis.knowledge.graph_builder import build_graph
+from boundstate_aegis.knowledge.graph_builder import get_cached_graph
 from boundstate_aegis.knowledge.graph_queries import (
     trace_pathways,
     get_downstream_products,
@@ -66,8 +67,10 @@ async def trace_compound_pathways(
     Trace potential degradation pathways from a source compound to PFAS endpoints.
     """
     try:
-        graph = build_graph()
-        pathways = trace_pathways(
+        # Offload blocking graph operations to thread pool
+        graph = await asyncio.to_thread(get_cached_graph)
+        pathways = await asyncio.to_thread(
+            trace_pathways,
             graph=graph,
             start_compound=compound,
             max_depth=max_depth,
@@ -108,8 +111,9 @@ async def get_downstream(
 ) -> CompoundListResponse:
     """Get all compounds reachable from a source compound."""
     try:
-        graph = build_graph()
-        products = get_downstream_products(graph, compound, max_depth)
+        # Offload blocking graph operations to thread pool
+        graph = await asyncio.to_thread(get_cached_graph)
+        products = await asyncio.to_thread(get_downstream_products, graph, compound, max_depth)
 
         return CompoundListResponse(
             source=compound,
@@ -129,8 +133,9 @@ async def get_upstream(
 ) -> CompoundListResponse:
     """Get all compounds that can degrade to a target compound."""
     try:
-        graph = build_graph()
-        sources = get_upstream_sources(graph, compound, max_depth)
+        # Offload blocking graph operations to thread pool
+        graph = await asyncio.to_thread(get_cached_graph)
+        sources = await asyncio.to_thread(get_upstream_sources, graph, compound, max_depth)
 
         return CompoundListResponse(
             source=compound,
