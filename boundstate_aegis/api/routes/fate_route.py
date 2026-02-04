@@ -112,18 +112,35 @@ _INTERMEDIATE_PATTERN = re.compile(r'^(IM\d+|INT\d+|S\d+)$', re.IGNORECASE)
 
 def _is_fluorinated_compound(name: str) -> bool:
     """
-    Determine if a compound is fluorinated using RDKit chemistry with string fallback.
+    Determine if a compound is a fluorochemistry product (PFAS/fluoropolymer).
 
     Priority:
     1. Exclude intermediate labels (IM2, INT3, S1, etc.)
-    2. Check RDKit if SMILES available
-    3. Fall back to string pattern matching
+    2. Exclude known non-fluorochemistry compounds (pharmaceuticals, inorganics)
+    3. Check RDKit if SMILES available
+    4. Fall back to string pattern matching
     """
     # Reject intermediate/vague labels
     if _INTERMEDIATE_PATTERN.match(name.strip()):
         return False
 
-    # Try RDKit-based check first
+    name_lower = name.lower()
+
+    # EARLY EXCLUSION: Compounds that contain fluorine but are NOT fluorochemistry products
+    # These must be checked BEFORE RDKit since they have F atoms but shouldn't be included
+    non_fluorochemistry_exclusions = [
+        # Fluoroquinolone antibiotics (contain F but are pharmaceuticals)
+        'floxacin',  # catches ciprofloxacin, norfloxacin, levofloxacin, etc.
+        # Inorganic fluorides (not fluorochemistry products)
+        'caf2', 'calcium fluoride',
+        # Battery electrolytes
+        'lipf6',
+    ]
+    for pattern in non_fluorochemistry_exclusions:
+        if pattern in name_lower:
+            return False
+
+    # Try RDKit-based check
     smiles_lookup = _load_smiles_lookup()
     smiles = smiles_lookup.get(name.upper())
     if smiles:
@@ -131,13 +148,12 @@ def _is_fluorinated_compound(name: str) -> bool:
         if result is not None:
             return result
 
-    # Fallback: string-based fluorine pattern matching
-    name_lower = name.lower()
+    # Fallback: string-based pattern matching for compounds without SMILES
 
     # Known non-fluorinated patterns (exclude these)
     non_fluor_patterns = [
-        'bisphenol', 'carbamazepine', 'ciprofloxacin', 'ibuprofen',
-        'norfloxacin', 'sulfamethoxazole', 'tetracycline', 'congo red',
+        'bisphenol', 'carbamazepine', 'ibuprofen',
+        'sulfamethoxazole', 'tetracycline', 'congo red',
         'methyl orange', 'methylene blue', 'rhodamine', 'pyrene',
         'polyethylene', 'polypropylene', 'polystyrene', 'polyvinyl',
         'hmx', 'rdx', 'parathion', 'benzothiazole', 'hexachlorocyclohexane',
