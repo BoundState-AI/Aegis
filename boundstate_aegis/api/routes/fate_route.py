@@ -50,6 +50,121 @@ _graph_cache = None
 _kg_cache: Optional[PFASKnowledgeGraph] = None
 _database_cache: Optional[Dict[str, Dict[str, Any]]] = None
 
+# SMILES lookup cache for fluorine detection
+_smiles_cache: Optional[Dict[str, str]] = None
+
+
+def _load_smiles_lookup() -> Dict[str, str]:
+    """Load SMILES from enrichment and registry files for fluorine detection."""
+    global _smiles_cache
+    if _smiles_cache is not None:
+        return _smiles_cache
+
+    _smiles_cache = {}
+    data_dir = Path(__file__).parent.parent.parent / "data"
+
+    # Load smiles_enrichment.json (primary source - PubChem resolved)
+    enrichment_path = data_dir / "compounds" / "smiles_enrichment.json"
+    if enrichment_path.exists():
+        try:
+            data = json.loads(enrichment_path.read_text(encoding="utf-8"))
+            for name, info in data.get("compounds", {}).items():
+                if info.get("smiles"):
+                    _smiles_cache[name.upper()] = info["smiles"]
+        except Exception as e:
+            logger.warning(f"Failed to load smiles_enrichment.json: {e}")
+
+    # Load compound_registry_clean.json
+    registry_path = data_dir / "compounds" / "compound_registry_clean.json"
+    if registry_path.exists():
+        try:
+            data = json.loads(registry_path.read_text(encoding="utf-8"))
+            for inchikey, info in data.get("compounds", {}).items():
+                smiles = info.get("smiles_canonical") or info.get("smiles_raw")
+                if smiles:
+                    name = info.get("primary_name", "").upper()
+                    if name and name not in _smiles_cache:
+                        _smiles_cache[name] = smiles
+                    for alias in info.get("aliases", []):
+                        if alias and alias.upper() not in _smiles_cache:
+                            _smiles_cache[alias.upper()] = smiles
+        except Exception as e:
+            logger.warning(f"Failed to load compound_registry_clean.json: {e}")
+
+    logger.info(f"Loaded {len(_smiles_cache)} SMILES entries for fluorine detection")
+    return _smiles_cache
+
+
+def _has_fluorine_rdkit(smiles: str) -> Optional[bool]:
+    """Check if SMILES contains fluorine atoms using RDKit. Returns None if invalid."""
+    try:
+        mol = Chem.MolFromSmiles(smiles)
+        if mol is None:
+            return None
+        return any(atom.GetAtomicNum() == 9 for atom in mol.GetAtoms())
+    except Exception:
+        return None
+
+
+# Intermediate label pattern (IM2, INT3, S1, etc.)
+_INTERMEDIATE_PATTERN = re.compile(r'^(IM\d+|INT\d+|S\d+)$', re.IGNORECASE)
+
+
+def _is_fluorinated_compound(name: str) -> bool:
+    """
+    Determine if a compound is fluorinated using RDKit chemistry with string fallback.
+
+    Priority:
+    1. Exclude intermediate labels (IM2, INT3, S1, etc.)
+    2. Check RDKit if SMILES available
+    3. Fall back to string pattern matching
+    """
+    # Reject intermediate/vague labels
+    if _INTERMEDIATE_PATTERN.match(name.strip()):
+        return False
+
+    # Try RDKit-based check first
+    smiles_lookup = _load_smiles_lookup()
+    smiles = smiles_lookup.get(name.upper())
+    if smiles:
+        result = _has_fluorine_rdkit(smiles)
+        if result is not None:
+            return result
+
+    # Fallback: string-based fluorine pattern matching
+    name_lower = name.lower()
+
+    # Known non-fluorinated patterns (exclude these)
+    non_fluor_patterns = [
+        'bisphenol', 'carbamazepine', 'ciprofloxacin', 'ibuprofen',
+        'norfloxacin', 'sulfamethoxazole', 'tetracycline', 'congo red',
+        'methyl orange', 'methylene blue', 'rhodamine', 'pyrene',
+        'polyethylene', 'polypropylene', 'polystyrene', 'polyvinyl',
+        'hmx', 'rdx', 'parathion', 'benzothiazole', 'hexachlorocyclohexane',
+        'malic acid', 'boron', 'b2o3', 'cotton', 'tbbpa', 'aucl4',
+        'peroxymonosulfate', 'persulfate', 'sulfate radical', ' hcl',
+        'reactive yellow', 'cobaltocenium', 'silicone rubber',
+        'dichlorophen', 'waste polypropylene', 'low-density polyethylene',
+    ]
+    for pattern in non_fluor_patterns:
+        if pattern in name_lower:
+            return False
+
+    # Fluorinated patterns (positive indicators)
+    fluor_patterns = [
+        'pf', 'ptfe', 'pvdf', 'pfa', 'fep', 'etfe', 'pctfe', 'ectfe',
+        'fluor', 'ft', 'hfp', 'vdf', 'genx', 'hfpo', 'tfa', 'cof2',
+        'cf', 'c2f', 'c3f', 'c4f', 'c5f', 'c6f', 'c7f', 'c8f', 'c9f',
+        'afff', 'fkm', 'fos', 'fasa', 'fase', 'pfpe', 'pfepe', 'ppve',
+        'hfc', 'hfo', 'chf', ':2 f', 'dipap', 'monopap', 'fasi',
+    ]
+    for pattern in fluor_patterns:
+        if pattern in name_lower:
+            return True
+
+    # Default: reject if no clear fluorine indicator
+    return False
+
 
 def get_graph():
     """Get or build the pathway graph (returns the underlying NetworkX MultiDiGraph)."""
@@ -190,6 +305,13 @@ def get_pfas_database() -> Dict[str, Dict[str, Any]]:
     global _database_cache
     if _database_cache is None:
         _database_cache = _build_pfas_database()
+
+        # Log fluorine filter statistics
+        total = len([n for n, d in _database_cache.items() if d.get("degradation_products")])
+        fluorinated = len([n for n, d in _database_cache.items()
+                          if d.get("degradation_products") and _is_fluorinated_compound(n)])
+        logger.info(f"Compound filter: {total} total -> {fluorinated} fluorinated ({total - fluorinated} removed)")
+
     return _database_cache
 
 
@@ -261,19 +383,22 @@ async def get_summary() -> GraphSummary:
 
 @router.get("/parents", response_model=ParentsResponse)
 async def get_parents() -> ParentsResponse:
-    """Get list of parent compounds that have degradation pathways."""
+    """Get list of fluorinated parent compounds that have degradation pathways."""
     database = get_pfas_database()
 
-    # Get all compounds with degradation products (parents)
+    # Get fluorinated compounds with degradation products (parents)
     parents = []
     for name, data in database.items():
         products = data.get("degradation_products", [])
         if products and not data.get("is_endpoint"):
-            parents.append(name)
+            # Only include fluorinated compounds
+            if _is_fluorinated_compound(name):
+                parents.append(name)
 
     # Sort by number of degradation products (most first), then alphabetically
     parents.sort(key=lambda n: (-len(database[n].get("degradation_products", [])), n))
 
+    logger.info(f"Returning {len(parents)} fluorinated parent compounds")
     return ParentsResponse(parents=parents)
 
 
