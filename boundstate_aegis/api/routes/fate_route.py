@@ -376,9 +376,11 @@ async def get_summary() -> GraphSummary:
     """Get summary statistics for the PFAS knowledge graph."""
     database = get_pfas_database()
 
-    # Use comprehensive database for accurate counts
+    # Count fluorinated parent compounds (matches dropdown filter)
+    # This ensures the header stat matches what users can actually query
     parents = [name for name, data in database.items()
-               if data.get("degradation_products") and not data.get("is_endpoint")]
+               if data.get("degradation_products") and not data.get("is_endpoint")
+               and _is_fluorinated_compound(name)]
     endpoints = [name for name, data in database.items()
                  if data.get("is_endpoint") or not data.get("degradation_products")]
 
