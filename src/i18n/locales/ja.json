@@ -152,6 +152,7 @@
     "eventTimelineDescription": "EPA提出書類、裁判記録、公開情報からの主要イベント",
     "andMore": "他{{count}}件。",
     "loadingCaseStudy": "{{compound}}のケーススタディを読み込み中...",
+    "loadingCaseStudies": "ケーススタディを読み込み中...",
     "forecastParameters": "予測パラメータ",
     "configureRiskAssessment": "訴訟リスク評価を設定",
     "compound": "化合物",

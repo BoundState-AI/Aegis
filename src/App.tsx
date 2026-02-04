@@ -17,6 +17,7 @@ import Ensurance from "./pages/Ensurance";
 import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
 import { BoundStateLogo } from "./components/layout/BoundStateLogo";
 import { LanguageToggle } from "./components/ui/language-toggle";
+import { useBackendWarmup } from "./hooks/use-backend-warmup";
 
 const queryClient = new QueryClient();
 
@@ -89,7 +90,10 @@ const Navigation = () => {
 const AppContent = () => {
   const location = useLocation();
   const isStandalone = standaloneRoutes.includes(location.pathname);
-  
+
+  // Keep Railway backend warm to prevent cold start delays
+  useBackendWarmup();
+
   return (
     <div className={isStandalone ? '' : 'pb-20'}>
       <Routes>
