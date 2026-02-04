@@ -19,6 +19,12 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
   const [showRegulatory, setShowRegulatory] = useState(false);
   const [showEvidence, setShowEvidence] = useState(false);
 
+  // Extract unique DOIs from evidence array
+  const getUniqueDois = (evidence: typeof pathway.evidence): string[] => {
+    const dois = evidence.map(ev => ev.doi).filter((doi): doi is string => !!doi);
+    return [...new Set(dois)];
+  };
+
   // Support both new and legacy field names
   const evidenceStrength = pathway.evidence_strength ?? pathway.probability_mean;
   const agreementLow = pathway.literature_agreement?.low ?? pathway.probability_ci_90.low;
@@ -106,6 +112,33 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
           {pathway.paper_count && ` • ${pathway.paper_count} papers`}
           {pathway.observation_count && ` • ${pathway.observation_count} observations`}
         </p>
+
+        {/* Source DOI Links */}
+        {pathway.evidence.length > 0 && getUniqueDois(pathway.evidence).length > 0 && (
+          <div className="flex items-center gap-2 flex-wrap text-sm pt-2">
+            <span className="text-muted-foreground font-medium">Sources:</span>
+            {getUniqueDois(pathway.evidence).slice(0, 3).map((doi, idx) => (
+              <a
+                key={idx}
+                href={`https://doi.org/${doi}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+              >
+                <ExternalLink className="h-3 w-3" />
+                <span className="font-mono text-xs">{doi}</span>
+              </a>
+            ))}
+            {getUniqueDois(pathway.evidence).length > 3 && (
+              <button
+                onClick={() => setShowEvidence(true)}
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                +{getUniqueDois(pathway.evidence).length - 3} more
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Regulatory Status Toggle */}
