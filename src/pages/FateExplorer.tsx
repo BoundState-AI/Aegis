@@ -35,6 +35,7 @@ interface FateQueryResponse {
   total_transformations: number;
   transformations: Transformation[];
   compounds_involved: string[];
+  compound_found: boolean;
 }
 
 interface GraphSummary {
@@ -277,124 +278,172 @@ const FateExplorer = () => {
           <div className="lg:col-span-3 space-y-6">
             {results && (
               <>
-                {/* Summary Card */}
-                <Card className="bg-white border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-chemours-dark flex items-center gap-2">
-                      <AlertTriangle className="h-5 w-5 text-chemours-orange" />
-                      {results.total_transformations} {t('fateExplorer.degradationPathwaysFound')}
-                    </CardTitle>
-                    <CardDescription>
-                      {t('fateExplorer.query')}: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                {/* Case 1: Compound not found in database */}
+                {!results.compound_found && (
+                  <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-amber-500">
+                    <CardContent className="py-12 text-center">
+                      <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-amber-100 flex items-center justify-center">
+                        <AlertTriangle className="h-8 w-8 text-amber-600" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-chemours-dark mb-2">
+                        {t('fateExplorer.compoundNotInDatabase')}
+                      </h3>
+                      <p className="text-gray-500 max-w-md mx-auto mb-2">
+                        {t('fateExplorer.fateExplorerScope')}
+                      </p>
+                      <p className="text-gray-600 font-medium">
+                        {t('fateExplorer.trySuggestions')}
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
 
-                {/* Results Table */}
-                <Card className="bg-white border-gray-200 shadow-sm">
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-gray-200 hover:bg-gray-50">
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.product')}</TableHead>
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.confidence')}</TableHead>
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.temperature')}</TableHead>
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.mechanism')}</TableHead>
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.hazard')}</TableHead>
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.regulated')}</TableHead>
-                          <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.sources')}</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {results.transformations.map((tr, i) => (
-                          <TableRow key={i} className="border-gray-200 hover:bg-gray-50">
-                            <TableCell className="font-medium text-chemours-dark">{tr.child}</TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2 min-w-[100px]">
-                                <Progress
-                                  value={tr.score * 100}
-                                  className="h-2 w-16"
-                                />
-                                <span className="text-xs text-gray-500 tabular-nums">
-                                  {(tr.score * 100).toFixed(0)}%
-                                </span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-gray-600">{tr.temp_range || t('common.notAvailable')}</TableCell>
-                            <TableCell>
-                              <span className="text-gray-600 text-xs capitalize">
-                                {(tr.degradation_types?.[0] || t('common.unknown')).replace(/_/g, " ")}
-                              </span>
-                            </TableCell>
-                            <TableCell>
-                              <Badge className={getHazardColor(tr.hazard_level)}>
-                                {tr.hazard_level || t('common.unknown')}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              {tr.is_regulated ? (
-                                <Badge className="bg-chemours-red">{t('common.regulated')}</Badge>
-                              ) : (
-                                <span className="text-gray-400">—</span>
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              {tr.citations && tr.citations.length > 0 ? (
-                                <Popover>
-                                  <PopoverTrigger asChild>
-                                    <Button variant="ghost" size="sm" className="h-auto p-1 text-gray-500 hover:text-chemours-red">
-                                      <FileText className="h-4 w-4 mr-1" />
+                {/* Case 2: Compound found but no pathways match filters */}
+                {results.compound_found && results.total_transformations === 0 && (
+                  <Card className="bg-white border-gray-200 shadow-sm">
+                    <CardHeader>
+                      <CardTitle className="text-chemours-dark flex items-center gap-2">
+                        <AlertTriangle className="h-5 w-5 text-chemours-orange" />
+                        0 {t('fateExplorer.degradationPathwaysFound')}
+                      </CardTitle>
+                      <CardDescription>
+                        {t('fateExplorer.query')}: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center py-8">
+                      <p className="text-gray-600 mb-2">
+                        {t('fateExplorer.noPathwaysMatchFilters')}
+                      </p>
+                      <p className="text-gray-500 text-sm">
+                        {t('fateExplorer.tryAdjustingFilters')}
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Case 3: Compound found with pathways */}
+                {results.compound_found && results.total_transformations > 0 && (
+                  <>
+                    {/* Summary Card */}
+                    <Card className="bg-white border-gray-200 shadow-sm">
+                      <CardHeader>
+                        <CardTitle className="text-chemours-dark flex items-center gap-2">
+                          <AlertTriangle className="h-5 w-5 text-chemours-orange" />
+                          {results.total_transformations} {t('fateExplorer.degradationPathwaysFound')}
+                        </CardTitle>
+                        <CardDescription>
+                          {t('fateExplorer.query')}: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
+                        </CardDescription>
+                      </CardHeader>
+                    </Card>
+
+                    {/* Results Table */}
+                    <Card className="bg-white border-gray-200 shadow-sm">
+                      <CardContent className="p-0">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="border-gray-200 hover:bg-gray-50">
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.product')}</TableHead>
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.confidence')}</TableHead>
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.temperature')}</TableHead>
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.mechanism')}</TableHead>
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.hazard')}</TableHead>
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.regulated')}</TableHead>
+                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.sources')}</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {results.transformations.map((tr, i) => (
+                              <TableRow key={i} className="border-gray-200 hover:bg-gray-50">
+                                <TableCell className="font-medium text-chemours-dark">{tr.child}</TableCell>
+                                <TableCell>
+                                  <div className="flex items-center gap-2 min-w-[100px]">
+                                    <Progress
+                                      value={tr.score * 100}
+                                      className="h-2 w-16"
+                                    />
+                                    <span className="text-xs text-gray-500 tabular-nums">
+                                      {(tr.score * 100).toFixed(0)}%
+                                    </span>
+                                  </div>
+                                </TableCell>
+                                <TableCell className="text-gray-600">{tr.temp_range || t('common.notAvailable')}</TableCell>
+                                <TableCell>
+                                  <span className="text-gray-600 text-xs capitalize">
+                                    {(tr.degradation_types?.[0] || t('common.unknown')).replace(/_/g, " ")}
+                                  </span>
+                                </TableCell>
+                                <TableCell>
+                                  <Badge className={getHazardColor(tr.hazard_level)}>
+                                    {tr.hazard_level || t('common.unknown')}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell>
+                                  {tr.is_regulated ? (
+                                    <Badge className="bg-chemours-red">{t('common.regulated')}</Badge>
+                                  ) : (
+                                    <span className="text-gray-400">—</span>
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {tr.citations && tr.citations.length > 0 ? (
+                                    <Popover>
+                                      <PopoverTrigger asChild>
+                                        <Button variant="ghost" size="sm" className="h-auto p-1 text-gray-500 hover:text-chemours-red">
+                                          <FileText className="h-4 w-4 mr-1" />
+                                          {tr.source_count}
+                                        </Button>
+                                      </PopoverTrigger>
+                                      <PopoverContent className="w-80" align="end">
+                                        <div className="space-y-2">
+                                          <h4 className="font-medium text-sm text-chemours-dark">{t('fateExplorer.sourceReferences')}</h4>
+                                          <div className="space-y-1 max-h-48 overflow-y-auto">
+                                            {tr.citations.map((doi, idx) => (
+                                              <a
+                                                key={idx}
+                                                href={doi.startsWith('http') ? doi : `https://doi.org/${doi}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="block text-xs text-blue-600 hover:text-blue-800 hover:underline truncate"
+                                              >
+                                                {doi}
+                                              </a>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </PopoverContent>
+                                    </Popover>
+                                  ) : (
+                                    <div className="flex items-center gap-1 text-gray-400">
+                                      <FileText className="h-4 w-4" />
                                       {tr.source_count}
-                                    </Button>
-                                  </PopoverTrigger>
-                                  <PopoverContent className="w-80" align="end">
-                                    <div className="space-y-2">
-                                      <h4 className="font-medium text-sm text-chemours-dark">{t('fateExplorer.sourceReferences')}</h4>
-                                      <div className="space-y-1 max-h-48 overflow-y-auto">
-                                        {tr.citations.map((doi, idx) => (
-                                          <a
-                                            key={idx}
-                                            href={doi.startsWith('http') ? doi : `https://doi.org/${doi}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="block text-xs text-blue-600 hover:text-blue-800 hover:underline truncate"
-                                          >
-                                            {doi}
-                                          </a>
-                                        ))}
-                                      </div>
                                     </div>
-                                  </PopoverContent>
-                                </Popover>
-                              ) : (
-                                <div className="flex items-center gap-1 text-gray-400">
-                                  <FileText className="h-4 w-4" />
-                                  {tr.source_count}
-                                </div>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </CardContent>
+                    </Card>
 
-                {/* Degradation Types Legend */}
-                <Card className="bg-white border-gray-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-chemours-dark text-sm">{t('fateExplorer.degradationTypesInResults')}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {Array.from(new Set(results.transformations.flatMap(tr => tr.degradation_types))).map((type) => (
-                        <Badge key={type} variant="outline" className="border-gray-400 text-gray-600 capitalize">
-                          {type.replace(/_/g, " ")}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                    {/* Degradation Types Legend */}
+                    <Card className="bg-white border-gray-200 shadow-sm">
+                      <CardHeader>
+                        <CardTitle className="text-chemours-dark text-sm">{t('fateExplorer.degradationTypesInResults')}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2">
+                          {Array.from(new Set(results.transformations.flatMap(tr => tr.degradation_types))).map((type) => (
+                            <Badge key={type} variant="outline" className="border-gray-400 text-gray-600 capitalize">
+                              {type.replace(/_/g, " ")}
+                            </Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </>
+                )}
               </>
             )}
 
