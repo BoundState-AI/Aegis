@@ -152,6 +152,7 @@
     "eventTimelineDescription": "Key events from EPA filings, court records, and public sources",
     "andMore": "and {{count}} more.",
     "loadingCaseStudy": "Loading {{compound}} case study...",
+    "loadingCaseStudies": "Loading case studies...",
     "forecastParameters": "Forecast Parameters",
     "configureRiskAssessment": "Configure litigation risk assessment",
     "compound": "Compound",

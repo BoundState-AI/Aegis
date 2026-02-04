@@ -295,6 +295,8 @@ const LitigationRisk = () => {
   const { toast } = useToast();
   const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingBacktest, setIsLoadingBacktest] = useState(false);
+  const [isLoadingBacktests, setIsLoadingBacktests] = useState(true);
   const [forecast, setForecast] = useState<LitigationForecast | null>(null);
   const [backtest, setBacktest] = useState<BacktestData | null>(null);
   const [availableBacktests, setAvailableBacktests] = useState<BacktestSummary[]>([]);
@@ -320,6 +322,7 @@ const LitigationRisk = () => {
   }, [selectedCompound]);
 
   const loadAvailableBacktests = async () => {
+    setIsLoadingBacktests(true);
     try {
       const res = await fetch(`${API_BASE}/api/sentinel/backtests`);
       if (res.ok) {
@@ -335,10 +338,13 @@ const LitigationRisk = () => {
     } catch {
       // Fallback to default compound on error
       setSelectedCompound("genx");
+    } finally {
+      setIsLoadingBacktests(false);
     }
   };
 
   const loadBacktest = async (compoundId: string) => {
+    setIsLoadingBacktest(true);
     try {
       // Try new sentinel endpoint first
       let res = await fetch(`${API_BASE}/api/sentinel/backtest/${compoundId}`);
@@ -351,6 +357,8 @@ const LitigationRisk = () => {
       }
     } catch {
       // Silently handle - UI will show empty state
+    } finally {
+      setIsLoadingBacktest(false);
     }
   };
 
@@ -450,7 +458,12 @@ const LitigationRisk = () => {
           {/* ============================================================ */}
           <TabsContent value="casestudy" className="space-y-6 mt-6">
             {/* Compound Selector */}
-            {availableBacktests.length > 0 && (
+            {isLoadingBacktests ? (
+              <div className="flex items-center gap-2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                <Loader2 className="h-4 w-4 animate-spin text-chemours-red" />
+                <span className="text-sm text-gray-500">{t('litigation.loadingCaseStudies')}</span>
+              </div>
+            ) : availableBacktests.length > 0 && (
               <div className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                 <span className="text-sm font-medium text-gray-600">{t('litigation.selectCompound')}</span>
                 <div className="flex gap-2">
@@ -459,11 +472,15 @@ const LitigationRisk = () => {
                       key={bt.compound_id}
                       variant={selectedCompound === bt.compound_id ? "default" : "outline"}
                       size="sm"
+                      disabled={isLoadingBacktest}
                       className={selectedCompound === bt.compound_id
                         ? "bg-chemours-red hover:bg-chemours-red/90 text-white"
                         : "border-gray-300"}
                       onClick={() => setSelectedCompound(bt.compound_id)}
                     >
+                      {isLoadingBacktest && selectedCompound === bt.compound_id && (
+                        <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+                      )}
                       {bt.compound_id.toUpperCase()}
                       <Badge className="ml-2 bg-white/20 text-xs">
                         {bt.lead_time_years}yr
@@ -471,7 +488,7 @@ const LitigationRisk = () => {
                     </Button>
                   ))}
                 </div>
-                {backtest?.compound_id === "pfoa" && (
+                {backtest?.compound_id === "pfoa" && !isLoadingBacktest && (
                   <Badge className="bg-green-100 text-green-800 ml-auto">
                     {t('litigation.strongestValidation')}
                   </Badge>
