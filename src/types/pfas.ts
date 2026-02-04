@@ -20,6 +20,7 @@ export interface Evidence {
   date: string;
   confidence: number;
   notes?: string;
+  doi?: string;
 }
 
 export interface PathwayCondition {
