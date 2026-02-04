@@ -29,8 +29,13 @@ import math
 import threading
 from typing import Any, Dict, List, Optional
 
+from io import BytesIO
+from datetime import datetime
+
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
+from fpdf import FPDF
 
 from boundstate_aegis.knowledge.graph_builder import build_graph, get_cached_graph
 from boundstate_aegis.engines.pfas_risk_engine import PFASRiskEngine
@@ -413,3 +418,145 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
 async def evaluate_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
     """Alias for /analyze endpoint."""
     return await analyze_pfas(request)
+
+
+class PDFRequest(BaseModel):
+    """Request body for PDF generation."""
+    material: str
+    conditions: Optional[Dict[str, Any]] = None
+
+
+@router.post("/analyze/pdf")
+async def generate_analysis_pdf(request: PDFRequest):
+    """
+    Generate a PDF report for PFAS analysis results.
+
+    Returns a downloadable PDF document with analysis findings.
+    """
+    # First run the analysis
+    analyze_request = AnalyzeRequest(
+        compound=request.material,
+        scenario={
+            "incident_temp_c": request.conditions.get("temperature", 25) if request.conditions else 25,
+            "atmosphere": request.conditions.get("atmosphere", "air") if request.conditions else "air",
+        } if request.conditions else None
+    )
+
+    try:
+        analysis = await analyze_pfas(analyze_request)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+
+    # Generate PDF
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+
+    # Title
+    pdf.set_font("Helvetica", "B", 16)
+    pdf.cell(0, 10, "AEGIS PFAS Risk Assessment Report", ln=True, align="C")
+    pdf.ln(5)
+
+    # Metadata
+    pdf.set_font("Helvetica", "", 10)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(0, 5, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}", ln=True, align="C")
+    pdf.cell(0, 5, f"Material: {analysis.compound_evaluated}", ln=True, align="C")
+    pdf.ln(10)
+
+    # Disclaimer
+    pdf.set_fill_color(255, 245, 238)
+    pdf.set_text_color(180, 80, 50)
+    pdf.set_font("Helvetica", "I", 8)
+    pdf.multi_cell(0, 4, analysis.disclaimer, fill=True)
+    pdf.ln(8)
+
+    # Summary
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_font("Helvetica", "B", 12)
+    pdf.cell(0, 8, "Executive Summary", ln=True)
+    pdf.set_font("Helvetica", "", 10)
+    pdf.multi_cell(0, 5, analysis.summary)
+    pdf.ln(5)
+
+    # Conditions
+    if analysis.scenario_context:
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.cell(0, 8, "Analysis Conditions", ln=True)
+        pdf.set_font("Helvetica", "", 10)
+        for key, value in analysis.scenario_context.items():
+            pdf.cell(0, 5, f"  {key}: {value}", ln=True)
+        pdf.ln(5)
+
+    # Findings
+    pdf.set_font("Helvetica", "B", 12)
+    pdf.cell(0, 8, f"Identified Pathways ({len(analysis.pfas_findings)})", ln=True)
+    pdf.ln(3)
+
+    for i, finding in enumerate(analysis.pfas_findings, 1):
+        # Finding header
+        pdf.set_font("Helvetica", "B", 10)
+        classification_color = {
+            "REGULATED": (220, 50, 50),
+            "SHORT_CHAIN_PFAS": (200, 150, 50),
+            "DEGRADATION_PRODUCT": (100, 100, 100),
+        }.get(finding.screening_classification, (0, 0, 0))
+        pdf.set_text_color(*classification_color)
+        pdf.cell(0, 6, f"{i}. {finding.product} [{finding.screening_classification}]", ln=True)
+
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font("Helvetica", "", 9)
+
+        # Evidence strength
+        strength_pct = finding.evidence_strength * 100
+        pdf.cell(0, 5, f"   Evidence Strength: {strength_pct:.0f}% (range: {finding.support_lower*100:.0f}-{finding.support_upper*100:.0f}%)", ln=True)
+
+        # Pathway
+        if finding.pathway:
+            pdf.cell(0, 5, f"   Pathway: {' -> '.join(finding.pathway)}", ln=True)
+
+        # Regulatory flags
+        if finding.regulatory_flags:
+            pdf.set_text_color(180, 50, 50)
+            pdf.cell(0, 5, f"   Regulatory: {', '.join(finding.regulatory_flags)}", ln=True)
+            pdf.set_text_color(0, 0, 0)
+
+        # Conditions
+        for cond in finding.conditions_where_it_forms[:1]:
+            mechanism = cond.get("mechanism", "unknown")
+            min_t = cond.get("min_temp_c", "N/A")
+            max_t = cond.get("max_temp_c", "N/A")
+            pdf.cell(0, 5, f"   Mechanism: {mechanism} | Temp: {min_t}-{max_t} C", ln=True)
+
+        # DOIs
+        if finding.source_dois:
+            pdf.set_font("Helvetica", "I", 8)
+            pdf.set_text_color(80, 80, 150)
+            dois_str = ", ".join(finding.source_dois[:2])
+            pdf.cell(0, 4, f"   Sources: {dois_str}", ln=True)
+            pdf.set_text_color(0, 0, 0)
+
+        pdf.ln(3)
+
+    # Footer
+    pdf.ln(10)
+    pdf.set_font("Helvetica", "I", 8)
+    pdf.set_text_color(128, 128, 128)
+    pdf.cell(0, 4, f"Data source: {analysis.data_source}", ln=True)
+    pdf.cell(0, 4, f"Literature corpus: {analysis.papers_in_corpus} papers", ln=True)
+    pdf.cell(0, 4, "AEGIS by BoundState AI - For screening purposes only", ln=True)
+
+    # Output PDF
+    pdf_buffer = BytesIO()
+    pdf.output(pdf_buffer)
+    pdf_buffer.seek(0)
+
+    filename = f"aegis-pfas-analysis-{request.material}-{datetime.now().strftime('%Y%m%d')}.pdf"
+
+    return StreamingResponse(
+        pdf_buffer,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
