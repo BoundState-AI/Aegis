@@ -487,9 +487,10 @@ async def query_fate(
             prod_min, prod_max = _parse_temp_range(product_temp_range)
 
             # Apply temperature filter
-            # If user specified a real temp range (not default 0-1000), exclude unknown-temp pathways
-            user_filtered_temp = (temp_min > 0 or temp_max < 1000)
-            if prod_min is None and prod_max is None and user_filtered_temp:
+            # Only exclude unknown-temp pathways when user explicitly narrows the range
+            # (not just using wide defaults like 0-1400 or 20-1400)
+            user_explicitly_filtered = (temp_min > 100 or temp_max < 800)
+            if prod_min is None and prod_max is None and user_explicitly_filtered:
                 continue
             if prod_min is not None and prod_min > temp_max:
                 continue
