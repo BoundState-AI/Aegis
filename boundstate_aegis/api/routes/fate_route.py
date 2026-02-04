@@ -23,11 +23,14 @@ from __future__ import annotations
 
 import json
 import logging
+import re
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import yaml
 from fastapi import APIRouter, Query
 from pydantic import BaseModel
+from rdkit import Chem
 
 from boundstate_aegis.knowledge.graph_builder import build_graph, PFASKnowledgeGraph
 from boundstate_aegis.config import (
@@ -227,6 +230,7 @@ class FateQueryResponse(BaseModel):
     total_transformations: int
     transformations: List[Transformation]
     compounds_involved: List[str]
+    compound_found: bool = True
 
 
 @router.get("/summary", response_model=GraphSummary)
@@ -329,6 +333,9 @@ async def query_fate(
     parent_upper = parent.upper()
     parent_data = database.get(parent_upper) or database.get(parent)
 
+    # Track if compound exists in database (will also check graph below)
+    compound_in_database = parent_data is not None
+
     if parent_data:
         for product in parent_data.get("degradation_products", []):
             child = product["child"]
@@ -389,7 +396,8 @@ async def query_fate(
 
     # Also check graph for any additional pathways not in database
     graph = get_graph()
-    if parent in graph or parent_upper in graph:
+    compound_in_graph = parent in graph or parent_upper in graph
+    if compound_in_graph:
         graph_parent = parent if parent in graph else parent_upper
         for _, child, key, data in graph.out_edges(graph_parent, keys=True, data=True):
             # Skip if already added from database
@@ -460,4 +468,5 @@ async def query_fate(
         total_transformations=len(transformations),
         transformations=transformations,
         compounds_involved=list(compounds),
+        compound_found=compound_in_database or compound_in_graph,
     )

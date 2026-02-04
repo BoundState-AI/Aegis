@@ -100,7 +100,12 @@
     "selectParentAndTemp": "Select a parent compound and temperature range to explore degradation pathways.",
     "loadingKnowledgeGraph": "Loading knowledge graph...",
     "foundPathways": "Found {{count}} degradation pathways for {{compound}}",
-    "sourceReferences": "Source References (DOI)"
+    "sourceReferences": "Source References (DOI)",
+    "compoundNotInDatabase": "This compound is not in the AEGIS database.",
+    "fateExplorerScope": "Fate Explorer covers per- and polyfluoroalkyl substances.",
+    "trySuggestions": "Try PFOA, GenX, or PTFE.",
+    "noPathwaysMatchFilters": "No pathways match your current filter settings.",
+    "tryAdjustingFilters": "Try adjusting the temperature range or atmosphere filter."
   },
   "litigation": {
     "title": "AEGIS SENTINEL",

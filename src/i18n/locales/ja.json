@@ -100,7 +100,12 @@
     "selectParentAndTemp": "親化合物と温度範囲を選択して分解経路を探索してください。",
     "loadingKnowledgeGraph": "ナレッジグラフを読み込み中...",
     "foundPathways": "{{compound}}について{{count}}件の分解経路が見つかりました",
-    "sourceReferences": "引用文献 (DOI)"
+    "sourceReferences": "引用文献 (DOI)",
+    "compoundNotInDatabase": "この化合物はAEGISデータベースに存在しません。",
+    "fateExplorerScope": "Fate Explorerはパーおよびポリフルオロアルキル物質を対象としています。",
+    "trySuggestions": "PFOA、GenX、またはPTFEをお試しください。",
+    "noPathwaysMatchFilters": "現在のフィルター設定に一致する経路がありません。",
+    "tryAdjustingFilters": "温度範囲または雰囲気フィルターを調整してください。"
   },
   "litigation": {
     "title": "AEGIS SENTINEL",
