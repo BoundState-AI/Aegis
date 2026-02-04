@@ -8,7 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart } from "lucide-react";
+import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
@@ -37,6 +43,27 @@ interface PortfolioResponse {
 }
 
 const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
+
+const RISK_CATEGORY_DEFINITIONS = {
+  LOW: {
+    label: "Low",
+    color: "bg-green-500",
+    textColor: "text-green-600",
+    description: "Compound shows minimal regulatory activity and no documented litigation exposure. Limited degradation pathways to regulated endpoints.",
+  },
+  MEDIUM: {
+    label: "Medium",
+    color: "bg-yellow-500",
+    textColor: "text-yellow-600",
+    description: "Compound has documented degradation pathways and active regulatory attention in 2+ jurisdictions. Not yet subject to compound-specific litigation.",
+  },
+  HIGH: {
+    label: "High",
+    color: "bg-red-500",
+    textColor: "text-red-600",
+    description: "Compound has established regulatory limits, documented litigation history, or known degradation to heavily regulated endpoints (e.g., PFOA, PFOS).",
+  },
+} as const;
 
 const PortfolioAssessment = () => {
   const { t } = useTranslation();
@@ -232,12 +259,53 @@ const PortfolioAssessment = () => {
                     <CardTitle className="text-chemours-dark">{t('portfolio.assessmentResults')}</CardTitle>
                   </CardHeader>
                   <CardContent>
+                    {/* Risk Category Legend */}
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-4 pb-4 border-b border-gray-100">
+                      <span className="font-medium">Risk Categories:</span>
+                      <TooltipProvider>
+                        {(Object.keys(RISK_CATEGORY_DEFINITIONS) as Array<keyof typeof RISK_CATEGORY_DEFINITIONS>).map((key) => {
+                          const cat = RISK_CATEGORY_DEFINITIONS[key];
+                          return (
+                            <Tooltip key={key}>
+                              <TooltipTrigger asChild>
+                                <div className="flex items-center gap-1.5 cursor-help">
+                                  <Badge className={`${cat.color} text-white text-xs`}>{key}</Badge>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-xs p-3">
+                                <p className="font-semibold mb-1">{cat.label} Risk</p>
+                                <p className="text-sm text-muted-foreground">{cat.description}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          );
+                        })}
+                      </TooltipProvider>
+                    </div>
                     <Table>
                       <TableHeader>
                         <TableRow className="border-gray-200">
                           <TableHead className="text-gray-600">{t('portfolio.tableHeaders.material')}</TableHead>
                           <TableHead className="text-gray-600">{t('portfolio.tableHeaders.riskScore')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.category')}</TableHead>
+                          <TableHead className="text-gray-600">
+                            <span className="flex items-center gap-1">
+                              {t('portfolio.tableHeaders.category')}
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                                  </TooltipTrigger>
+                                  <TooltipContent side="bottom" className="max-w-sm p-3">
+                                    <p className="font-semibold mb-2">Risk Category Definitions</p>
+                                    <div className="space-y-2 text-sm">
+                                      <div><span className="font-medium text-green-600">LOW:</span> <span className="text-muted-foreground">{RISK_CATEGORY_DEFINITIONS.LOW.description}</span></div>
+                                      <div><span className="font-medium text-yellow-600">MEDIUM:</span> <span className="text-muted-foreground">{RISK_CATEGORY_DEFINITIONS.MEDIUM.description}</span></div>
+                                      <div><span className="font-medium text-red-600">HIGH:</span> <span className="text-muted-foreground">{RISK_CATEGORY_DEFINITIONS.HIGH.description}</span></div>
+                                    </div>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            </span>
+                          </TableHead>
                           <TableHead className="text-gray-600">{t('portfolio.tableHeaders.pfasProducts')}</TableHead>
                           <TableHead className="text-gray-600">{t('portfolio.tableHeaders.regFlags')}</TableHead>
                           <TableHead className="text-gray-600">{t('portfolio.tableHeaders.litigationPercent')}</TableHead>
