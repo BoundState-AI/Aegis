@@ -294,7 +294,7 @@
       "observation_count": 2,
       "source_dois": [
         "10.1016/j.chemosphere.2019.01.174",
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.823,
       "temp_c_median": 500.0,
@@ -305,7 +305,7 @@
       "yield_percent_median": 4.5,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 7.8,
@@ -1378,7 +1378,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1389,7 +1389,7 @@
       "yield_percent_median": 10.8,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 10.8,
@@ -1408,7 +1408,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1419,7 +1419,7 @@
       "yield_percent_median": null,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": null,
@@ -1438,7 +1438,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1449,7 +1449,7 @@
       "yield_percent_median": 9.5,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 9.5,
@@ -1468,7 +1468,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1479,7 +1479,7 @@
       "yield_percent_median": 13.1,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 13.1,
@@ -1498,7 +1498,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1509,7 +1509,7 @@
       "yield_percent_median": 6.3,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 6.3,
@@ -1528,7 +1528,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1539,7 +1539,7 @@
       "yield_percent_median": 7.2,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 7.2,
@@ -1558,7 +1558,7 @@
       "temp_bucket": "high",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.77,
       "temp_c_median": 500.0,
@@ -1569,7 +1569,7 @@
       "yield_percent_median": 2.5,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 500.0,
           "yield_percent": 2.5,
@@ -8630,7 +8630,7 @@
       "temp_bucket": "medium",
       "observation_count": 1,
       "source_dois": [
-        "10.1038/35081648"
+        "10.1038/35085548"
       ],
       "evidence_score": 0.71,
       "temp_c_median": 360.0,
@@ -8641,7 +8641,7 @@
       "yield_percent_median": null,
       "evidence_refs": [
         {
-          "doi": "10.1038/35081648",
+          "doi": "10.1038/35085548",
           "source_file": "teflon.thermolysis.pdf",
           "temperature_c": 360.0,
           "yield_percent": null,
