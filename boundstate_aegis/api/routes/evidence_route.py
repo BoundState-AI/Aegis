@@ -186,7 +186,7 @@ def _build_evidence_database() -> Dict[str, List[EvidenceItem]]:
 
         item = EvidenceItem(
             source=record.get("source_id", "Ellis2001"),
-            doi="10.1038/35073634" if "Ellis" in record.get("source_id", "") else None,
+            doi="10.1038/35085548" if "Ellis" in record.get("source_id", "") else None,
             year=2001,
             confidence=_normalize_confidence(record.get("confidence", "high")),
             finding=record.get("text_fragment", record.get("mechanism", "")),
@@ -208,7 +208,7 @@ def _build_evidence_database() -> Dict[str, List[EvidenceItem]]:
 
         item = EvidenceItem(
             source=record.get("source_id", "manual"),
-            doi="10.1038/35073634" if "THERMO_PTFE" in record.get("source_id", "") else None,
+            doi="10.1038/35085548" if "THERMO_PTFE" in record.get("source_id", "") else None,
             year=2001 if "THERMO" in record.get("source_id", "") else 2003,
             confidence=_normalize_confidence(record.get("confidence", "high")),
             finding=record.get("text_fragment", ""),
