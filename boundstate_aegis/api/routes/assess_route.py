@@ -252,6 +252,22 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                 if not pathway:
                     pathway = [compound, product]
 
+                # Normalize evidence_refs to include explicit doi field
+                raw_refs = f.get("evidence_refs", [])
+                evidence_refs = []
+                for ref in raw_refs:
+                    normalized = dict(ref)
+                    # Extract DOI from source field if not already present
+                    if "doi" not in normalized or not normalized.get("doi"):
+                        source = ref.get("source", "")
+                        if source.startswith("DOI:"):
+                            normalized["doi"] = source[4:]
+                        elif source.startswith("10."):
+                            normalized["doi"] = source
+                        else:
+                            normalized["doi"] = None
+                    evidence_refs.append(normalized)
+
                 # Calculate literature agreement range (±0.15 based on evidence variance)
                 strength = f["confidence"]
                 agreement_range = 0.15  # Could be computed from actual variance in future
@@ -268,7 +284,7 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                     literature_support=strength,
                     overall_confidence=strength,
                     regulatory_flags=f["regulatory_flags"],
-                    evidence_refs=f["evidence_refs"],
+                    evidence_refs=evidence_refs,
                     pathway=pathway,
                     litigation_flag=product.upper() in litigation_products,
                     is_short_chain_pfas=product.upper() in short_chain_pfas,
@@ -308,6 +324,7 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                             "property": "degradation_pathway",
                             "value": ev.get("verbatim_quote", "")[:200] if ev.get("verbatim_quote") else mechanism,
                             "source": ev.get("doi", "literature"),
+                            "doi": ev.get("doi"),  # Explicit DOI field for frontend
                             "test_method": mechanism,
                             "date": ev.get("source_file", "literature"),
                             "literature_support": lit_support,
@@ -317,6 +334,7 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                             "property": "degradation_pathway",
                             "value": f"{compound} degrades to {product} via {mechanism}",
                             "source": source_dois[0] if source_dois else "pfas_fate_v2.json",
+                            "doi": source_dois[0] if source_dois else None,  # Explicit DOI field
                             "test_method": mechanism,
                             "date": "literature_extraction",
                             "literature_support": lit_support,
