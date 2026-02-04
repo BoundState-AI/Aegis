@@ -87,7 +87,7 @@
     "query": "Query",
     "tableHeaders": {
       "product": "Product",
-      "confidence": "Confidence",
+      "confidence": "Evidence Strength",
       "temperature": "Temperature",
       "mechanism": "Mechanism",
       "hazard": "Hazard",
@@ -692,6 +692,38 @@
         "The coverage report shows resolution rate — low coverage means rules are based on fewer compounds",
         "All evidence is DOI-linked — click any citation to verify the source paper"
       ]
+    }
+  },
+  "tooltips": {
+    "product": {
+      "explanation": "A chemical compound formed when the parent material breaks down. Products can be intermediates (temporary) or endpoints (final)."
+    },
+    "productIntermediate": {
+      "explanation": "A temporary compound formed during degradation. Named P1, P2, etc. in order of detection. These often break down further into other products."
+    },
+    "massToCharge": {
+      "explanation": "A measurement from mass spectrometry used to identify chemicals. Each compound has a unique M/Z value, like a molecular fingerprint."
+    },
+    "confidence": {
+      "explanation": "How strongly the scientific literature supports this pathway. Based on the number of independent studies and consistency of findings. Higher = more evidence."
+    },
+    "mechanism": {
+      "explanation": "The chemical process by which the compound breaks down. Examples: thermal (heat), oxidative (oxygen reaction), hydrolytic (water reaction)."
+    },
+    "hazard": {
+      "explanation": "Potential health or environmental risk. Based on toxicity data and regulatory assessments. CRITICAL and HIGH warrant immediate attention."
+    },
+    "regulated": {
+      "explanation": "Whether restricted by environmental agencies (EPA, EU, Stockholm Convention). Regulated = legal limits exist for this substance."
+    },
+    "degradationProducts": {
+      "explanation": "Chemicals formed when a material breaks down under heat, UV, or other conditions. Important because some are more harmful than the original."
+    },
+    "sources": {
+      "explanation": "Number of peer-reviewed papers documenting this pathway. More sources = higher confidence the pathway is real."
+    },
+    "temperature": {
+      "explanation": "Temperatures at which degradation was observed in laboratory studies. Shown in degrees Celsius."
     }
   }
 }
