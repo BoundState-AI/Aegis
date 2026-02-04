@@ -592,7 +592,7 @@ const LitigationRisk = () => {
                     <div className="h-[400px]">
                       <ResponsiveContainer width="100%" height="100%">
                         {chartView === "signal" ? (
-                          <ComposedChart data={backtest.timeline} margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
+                          <ComposedChart data={backtest.timeline} margin={{ top: 60, right: 60, bottom: 20, left: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                             <XAxis
                               dataKey="year"
@@ -613,7 +613,7 @@ const LitigationRisk = () => {
                               label={{ value: "Acceleration", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#f97316" } }}
                             />
                             <Tooltip content={<BacktestTooltip events={backtest.key_events} />} />
-                            {litigationEvents.map((e) => (
+                            {litigationEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`lit-${e.year}`}
                                 x={e.year}
@@ -621,7 +621,7 @@ const LitigationRisk = () => {
                                 stroke="#ef4444"
                                 strokeWidth={2}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 9, fontWeight: 600 }}
+                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             <ReferenceLine
@@ -629,7 +629,7 @@ const LitigationRisk = () => {
                               yAxisId="velocity"
                               stroke="#eab308"
                               strokeWidth={2}
-                              label={{ value: "SENTINEL SIGNAL", position: "insideTopRight", fill: "#eab308", fontSize: 10, fontWeight: 700 }}
+                              label={{ value: "SENTINEL SIGNAL", position: "insideTopRight", fill: "#eab308", fontSize: 9, fontWeight: 700 }}
                             />
                             <Bar yAxisId="velocity" dataKey="velocity" radius={[3, 3, 0, 0]}>
                               {backtest.timeline.map((entry, idx) => (
@@ -646,7 +646,7 @@ const LitigationRisk = () => {
                             />
                           </ComposedChart>
                         ) : chartView === "sentiment" ? (
-                          <ComposedChart data={backtest.timeline} margin={{ top: 20, right: 40, bottom: 20, left: 20 }}>
+                          <ComposedChart data={backtest.timeline} margin={{ top: 60, right: 60, bottom: 20, left: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                             <XAxis
                               dataKey="year"
@@ -669,7 +669,7 @@ const LitigationRisk = () => {
                               label={{ value: "Avg Sentiment", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
                             />
                             <Tooltip content={<SentimentTooltip />} />
-                            {industryEvents.map((e) => (
+                            {industryEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`ind-${e.year}`}
                                 x={e.year}
@@ -677,10 +677,10 @@ const LitigationRisk = () => {
                                 stroke="#22c55e"
                                 strokeWidth={2}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#22c55e", fontSize: 9, fontWeight: 600 }}
+                                label={{ value: e.label, position: "top", fill: "#22c55e", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
-                            {litigationEvents.map((e) => (
+                            {litigationEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`lit-${e.year}`}
                                 x={e.year}
@@ -688,7 +688,7 @@ const LitigationRisk = () => {
                                 stroke="#ef4444"
                                 strokeWidth={1.5}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "insideTopLeft", fill: "#ef4444", fontSize: 9 }}
+                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 8, dy: (idx + industryEvents.length) % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             <Area yAxisId="papers" type="monotone" dataKey="sentiment.reckoning" stackId="sentiment" fill={SENTIMENT_COLORS.reckoning} stroke={SENTIMENT_COLORS.reckoning} fillOpacity={0.85} />
@@ -708,7 +708,7 @@ const LitigationRisk = () => {
                             />
                           </ComposedChart>
                         ) : (
-                          <BarChart data={backtest.timeline} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                          <BarChart data={backtest.timeline} margin={{ top: 60, right: 60, bottom: 20, left: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                             <XAxis
                               dataKey="year"
@@ -721,31 +721,31 @@ const LitigationRisk = () => {
                               label={{ value: "Publications", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
                             />
                             <Tooltip content={<BacktestTooltip events={backtest.key_events} />} />
-                            {litigationEvents.map((e) => (
+                            {litigationEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`lit-${e.year}`}
                                 x={e.year}
                                 stroke="#ef4444"
                                 strokeWidth={2}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 9, fontWeight: 600 }}
+                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
-                            {settlementEvents.map((e) => (
+                            {settlementEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`set-${e.year}`}
                                 x={e.year}
                                 stroke="#991b1b"
                                 strokeWidth={1.5}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#991b1b", fontSize: 9 }}
+                                label={{ value: e.label, position: "top", fill: "#991b1b", fontSize: 8, dy: (idx + litigationEvents.length) % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             <ReferenceLine
                               x={backtest.first_publication_year}
                               stroke="#eab308"
                               strokeWidth={2}
-                              label={{ value: "SENTINEL SIGNAL", position: "insideTopRight", fill: "#eab308", fontSize: 10, fontWeight: 700 }}
+                              label={{ value: "SENTINEL SIGNAL", position: "insideTopRight", fill: "#eab308", fontSize: 9, fontWeight: 700 }}
                             />
                             <Bar dataKey="publications" radius={[3, 3, 0, 0]}>
                               {backtest.timeline.map((entry, idx) => (
