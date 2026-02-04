@@ -11,6 +11,7 @@ import { Loader2, FileText, Download, Lock, ChevronRight } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
+import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 
 interface ReportSection {
   title: string;
@@ -196,7 +197,11 @@ const ExecutiveReports = () => {
 
                       {section.data?.products && (
                         <div>
-                          <p className="text-sm text-gray-500 mb-2">Degradation Products:</p>
+                          <p className="text-sm text-gray-500 mb-2">
+                            <TermWithTooltip explanationKey="tooltips.degradationProducts">
+                              Degradation Products:
+                            </TermWithTooltip>
+                          </p>
                           <div className="flex flex-wrap gap-2">
                             {section.data.products.map((p: string) => (
                               <Badge key={p} variant="outline" className="border-chemours-orange text-chemours-orange">{p}</Badge>

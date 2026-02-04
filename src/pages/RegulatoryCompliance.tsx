@@ -11,6 +11,7 @@ import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe }
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
+import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 
 interface RegulatoryStatus {
   framework: string;
@@ -204,7 +205,9 @@ const RegulatoryCompliance = () => {
                     {checkResult.degradation_products.length > 0 && (
                       <div className="mb-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <p className="text-sm text-gray-500">Degradation Products:</p>
+                          <TermWithTooltip explanationKey="tooltips.degradationProducts" className="text-sm text-gray-500">
+                              Degradation Products:
+                            </TermWithTooltip>
                           {checkResult.degradation_pathway_count > 0 && (
                             <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
                               {checkResult.degradation_pathway_count} pathways from {checkResult.degradation_paper_count} papers

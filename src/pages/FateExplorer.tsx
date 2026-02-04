@@ -15,6 +15,8 @@ import { Loader2, Search, AlertTriangle, FileText, ChevronsUpDown, Check } from 
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
+import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
+import { ProductLabel } from "@/components/pfas/ProductLabel";
 
 interface Transformation {
   parent: string;
@@ -343,19 +345,49 @@ const FateExplorer = () => {
                         <Table>
                           <TableHeader>
                             <TableRow className="border-gray-200 hover:bg-gray-50">
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.product')}</TableHead>
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.confidence')}</TableHead>
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.temperature')}</TableHead>
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.mechanism')}</TableHead>
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.hazard')}</TableHead>
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.regulated')}</TableHead>
-                              <TableHead className="text-gray-700">{t('fateExplorer.tableHeaders.sources')}</TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.product">
+                                  {t('fateExplorer.tableHeaders.product')}
+                                </TermWithTooltip>
+                              </TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.confidence">
+                                  {t('fateExplorer.tableHeaders.confidence')}
+                                </TermWithTooltip>
+                              </TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.temperature">
+                                  {t('fateExplorer.tableHeaders.temperature')}
+                                </TermWithTooltip>
+                              </TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.mechanism">
+                                  {t('fateExplorer.tableHeaders.mechanism')}
+                                </TermWithTooltip>
+                              </TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.hazard">
+                                  {t('fateExplorer.tableHeaders.hazard')}
+                                </TermWithTooltip>
+                              </TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.regulated">
+                                  {t('fateExplorer.tableHeaders.regulated')}
+                                </TermWithTooltip>
+                              </TableHead>
+                              <TableHead className="text-gray-700">
+                                <TermWithTooltip explanationKey="tooltips.sources">
+                                  {t('fateExplorer.tableHeaders.sources')}
+                                </TermWithTooltip>
+                              </TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
                             {results.transformations.map((tr, i) => (
                               <TableRow key={i} className="border-gray-200 hover:bg-gray-50">
-                                <TableCell className="font-medium text-chemours-dark">{tr.child}</TableCell>
+                                <TableCell className="font-medium text-chemours-dark">
+                                  <ProductLabel value={tr.child} />
+                                </TableCell>
                                 <TableCell>
                                   <div className="flex items-center gap-2 min-w-[100px]">
                                     <Progress
