@@ -235,12 +235,12 @@ const PortfolioAssessment = () => {
                     <Table>
                       <TableHeader>
                         <TableRow className="border-gray-200">
-                          <TableHead className="text-gray-600">{t('portfolio.tableMaterial')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tableRiskScore')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tableCategory')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tablePfasProducts')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tableRegFlags')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tableLitigation')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.material')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.riskScore')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.category')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.pfasProducts')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.regFlags')}</TableHead>
+                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.litigationPercent')}</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
