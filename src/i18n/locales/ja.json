@@ -14,7 +14,7 @@
     "papers": "論文",
     "papersExtracted": "抽出論文数",
     "citations": "引用",
-    "confidence": "信頼度",
+    "confidence": "エビデンス強度",
     "temperature": "温度",
     "atmosphere": "雰囲気",
     "exposure": "曝露",
@@ -87,7 +87,7 @@
     "query": "クエリ",
     "tableHeaders": {
       "product": "生成物",
-      "confidence": "信頼度",
+      "confidence": "エビデンス強度",
       "temperature": "温度",
       "mechanism": "メカニズム",
       "hazard": "有害性",
@@ -375,7 +375,7 @@
     "rulesTableHeaders": {
       "pattern": "パターン",
       "endpoint": "エンドポイント",
-      "confidence": "信頼度",
+      "confidence": "エビデンス強度",
       "ci": "CI",
       "n": "n",
       "k": "k"

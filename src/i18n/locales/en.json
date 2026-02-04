@@ -14,7 +14,7 @@
     "papers": "papers",
     "papersExtracted": "papers extracted",
     "citations": "Citations",
-    "confidence": "Confidence",
+    "confidence": "Evidence Strength",
     "temperature": "Temperature",
     "atmosphere": "Atmosphere",
     "exposure": "Exposure",
@@ -375,7 +375,7 @@
     "rulesTableHeaders": {
       "pattern": "Pattern",
       "endpoint": "Endpoint",
-      "confidence": "Confidence",
+      "confidence": "Evidence Strength",
       "ci": "CI",
       "n": "n",
       "k": "k"
@@ -705,7 +705,7 @@
       "explanation": "A measurement from mass spectrometry used to identify chemicals. Each compound has a unique M/Z value, like a molecular fingerprint."
     },
     "confidence": {
-      "explanation": "How strongly the scientific literature supports this pathway. Based on the number of independent studies and consistency of findings. Higher = more evidence."
+      "explanation": "How strongly the scientific literature supports this pathway. Based on the number of independent papers documenting this transformation. Higher percentage = more publications. This is not a statistical confidence interval."
     },
     "mechanism": {
       "explanation": "The chemical process by which the compound breaks down. Examples: thermal (heat), oxidative (oxygen reaction), hydrolytic (water reaction)."
