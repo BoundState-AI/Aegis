@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangle } from "lucide-react";
+import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangle, ExternalLink } from "lucide-react";
 import { AnalyzeResponse } from "@/types/pfas";
 import AnalysisResults from "@/components/pfas/AnalysisResults";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
@@ -250,7 +250,7 @@ const PFASAnalysis = () => {
                   className="w-full border-gray-300 text-gray-600 hover:bg-gray-100"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  {t('common.downloadPdfReport')}
+                  {t('analysis.downloadPdfReport')}
                 </Button>
               )}
             </CardContent>
@@ -299,7 +299,7 @@ const PFASAnalysis = () => {
                           <div className="flex items-center justify-between mb-2">
                             <span className="font-medium text-chemours-dark text-lg">{finding.product}</span>
                             <Badge variant="outline" className="border-chemours-red text-chemours-red">
-                              {(finding.overall_confidence * 100).toFixed(0)}% confidence
+                              {(finding.overall_confidence * 100).toFixed(0)}% {t('common.confidence')}
                             </Badge>
                           </div>
 
@@ -336,6 +336,30 @@ const PFASAnalysis = () => {
                               </Badge>
                             )}
                           </div>
+
+                          {/* Source DOI Links */}
+                          {finding.evidence_refs?.length > 0 && finding.evidence_refs.some(e => e.doi) && (
+                            <div className="flex items-center gap-2 flex-wrap text-sm mt-3 pt-3 border-t border-gray-200">
+                              <span className="text-gray-500 font-medium">{t('common.sources')}:</span>
+                              {[...new Set(finding.evidence_refs.map(e => e.doi).filter((doi): doi is string => !!doi))].slice(0, 3).map((doi, idx) => (
+                                <a
+                                  key={idx}
+                                  href={`https://doi.org/${doi}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-chemours-red/10 text-chemours-red hover:bg-chemours-red/20 transition-colors"
+                                >
+                                  <ExternalLink className="h-3 w-3" />
+                                  <span className="font-mono text-xs">{doi}</span>
+                                </a>
+                              ))}
+                              {[...new Set(finding.evidence_refs.map(e => e.doi).filter((doi): doi is string => !!doi))].length > 3 && (
+                                <span className="text-xs text-gray-400">
+                                  +{[...new Set(finding.evidence_refs.map(e => e.doi).filter((doi): doi is string => !!doi))].length - 3} more
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
