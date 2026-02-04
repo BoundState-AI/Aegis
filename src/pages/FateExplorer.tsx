@@ -66,8 +66,8 @@ const FateExplorer = () => {
 
   const [formData, setFormData] = useState({
     parent: "PTFE",
-    tempMin: 400,
-    tempMax: 600,
+    tempMin: 0,
+    tempMax: 1400,
     atmosphere: "any",
     minObservations: 1,
   });
