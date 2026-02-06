@@ -170,8 +170,8 @@ const StructuralSimilarity = () => {
   const { toast } = useToast();
   const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
-  const [smiles, setSmiles] = useState("");
-  const [compoundName, setCompoundName] = useState("");
+  const [smiles, setSmiles] = useState(DEMO_COMPOUNDS[0].smiles); // Default to GenX
+  const [compoundName, setCompoundName] = useState(DEMO_COMPOUNDS[0].name);
   const [result, setResult] = useState<Tier1Result | null>(null);
   const [summary, setSummary] = useState<Tier1Summary | null>(null);
   const [showEvidence, setShowEvidence] = useState(false);
@@ -189,6 +189,8 @@ const StructuralSimilarity = () => {
   useEffect(() => {
     loadSummary();
     loadTier2Coverage();
+    // Auto-query GenX on mount
+    handleQuery();
   }, []);
 
   const loadSummary = async () => {

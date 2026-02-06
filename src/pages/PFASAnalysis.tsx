@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,6 +38,11 @@ const PFASAnalysis = () => {
     atmosphere: "air",
     time: 6
   });
+
+  // Auto-analyze PTFE on mount
+  useEffect(() => {
+    handleAnalyze();
+  }, []);
 
   const handleAnalyze = async () => {
     if (!formData.material) {

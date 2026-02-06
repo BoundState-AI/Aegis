@@ -51,6 +51,8 @@ const EvidenceChain = () => {
 
   useEffect(() => {
     loadSourceStats();
+    // Auto-load PTFE evidence on mount
+    handleSearch();
   }, []);
 
   const loadSourceStats = async () => {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,6 +38,11 @@ const ExecutiveReports = () => {
   const [includeLitigation, setIncludeLitigation] = useState(true);
   const [includeRegulatory, setIncludeRegulatory] = useState(true);
   const [report, setReport] = useState<ExecutiveReport | null>(null);
+
+  // Auto-generate PTFE report on mount
+  useEffect(() => {
+    handleGenerate();
+  }, []);
 
   const handleGenerate = async () => {
     setIsLoading(true);
