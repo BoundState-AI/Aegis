@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -59,6 +59,11 @@ const RegulatoryCompliance = () => {
   const [checkResult, setCheckResult] = useState<RegulatoryCheck | null>(null);
   const [cascade, setCascade] = useState<CascadeResponse | null>(null);
   const [forecastYear, setForecastYear] = useState(2025);
+
+  // Auto-load PTFE compliance on mount
+  useEffect(() => {
+    handleCheck();
+  }, []);
 
   const handleCheck = async () => {
     setIsLoading(true);

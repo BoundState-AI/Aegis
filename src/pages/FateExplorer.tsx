@@ -72,10 +72,12 @@ const FateExplorer = () => {
     minObservations: 1,
   });
 
-  // Load summary and parent list on mount
+  // Load summary, parent list, and run initial search on mount
   useEffect(() => {
     loadSummary();
     loadParents();
+    // Auto-load PTFE results on page load
+    handleSearch();
   }, []);
 
   const loadSummary = async () => {

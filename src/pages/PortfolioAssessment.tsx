@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -77,6 +77,11 @@ const PortfolioAssessment = () => {
   const [newMaterial, setNewMaterial] = useState("");
   const [newVolume, setNewVolume] = useState(10000);
   const [assessment, setAssessment] = useState<PortfolioResponse | null>(null);
+
+  // Auto-assess pre-populated portfolio on mount
+  useEffect(() => {
+    handleAssess();
+  }, []);
 
   const addItem = () => {
     if (!newMaterial) return;
