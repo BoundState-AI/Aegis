@@ -91,7 +91,7 @@ const PFASAnalysis = () => {
 
   const handleDownloadPDF = async () => {
     try {
-      const response = await fetch(`${API_BASE}/pfas/analyze/pdf`, {
+      const response = await fetch(`${API_BASE}/api/pfas/analyze/pdf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
