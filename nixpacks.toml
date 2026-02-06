@@ -1,2 +1,7 @@
 # Force Python provider for Railway
 providers = ["python"]
+
+# Force pip to use requirements.txt instead of pyproject.toml
+# (pyproject.toml has local dependency boundstate-core that can't be resolved from PyPI)
+[phases.install]
+cmds = ["pip install -r requirements.txt"]
