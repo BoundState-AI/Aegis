@@ -384,7 +384,8 @@
     "searchDescription": "Enter a SMILES string to find structurally similar compounds in the EPA PFAS database and see what the published literature documents about their degradation pathways. Not prediction — evidence.",
     "fateCompounds": "fate compounds",
     "resolvedPrecursors": "resolved precursors",
-    "riskSignal": "{{name}}: {{signal}} risk signal ({{count}} neighbors with pathway data)"
+    "riskSignal": "{{name}}: {{signal}} risk signal ({{count}} neighbors with pathway data)",
+    "withPathways": "with pathways"
   },
   "ensurance": {
     "newCategory": "A New Category in Chemical Intelligence",
