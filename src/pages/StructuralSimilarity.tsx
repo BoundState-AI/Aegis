@@ -441,7 +441,7 @@ const StructuralSimilarity = () => {
                     {t('tier1.degradationEndpoints')}
                   </CardTitle>
                   <CardDescription>
-                    {t('tier1.degradationEndpointsDescription')}
+                    {t('tier1.endpointsDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -474,7 +474,7 @@ const StructuralSimilarity = () => {
                     {t('tier1.degradationMechanisms')}
                   </CardTitle>
                   <CardDescription>
-                    {t('tier1.degradationMechanismsDescription')}
+                    {t('tier1.mechanismsDescription')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -508,7 +508,7 @@ const StructuralSimilarity = () => {
                     {t('tier1.substructureFingerprint')}
                   </CardTitle>
                   <CardDescription>
-                    {t('tier1.substructureFingerprintDescription')}
+                    {t('tier1.patternsDetected')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -590,7 +590,7 @@ const StructuralSimilarity = () => {
                     }
                   </div>
                   <CardDescription>
-                    {t('tier1.patternBasedCorrelationsDescription')}
+                    {t('tier1.correlationsDescription')}
                     {tier2Result.coverage_info.resolved_precursors != null && (
                       <span className="ml-1">
                         Based on {tier2Result.coverage_info.resolved_precursors as number} resolved precursors.
@@ -827,7 +827,7 @@ const StructuralSimilarity = () => {
                   }
                 </div>
                 <CardDescription>
-                  {t('tier1.corpusRulesExplorerDescription')}
+                  {t('tier1.browseAllRules')}
                 </CardDescription>
               </CardHeader>
               {showRulesExplorer && (
@@ -960,7 +960,7 @@ const StructuralSimilarity = () => {
               </div>
               <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('tier1.structuralSimilaritySearch')}</h3>
               <p className="text-gray-500 max-w-lg mx-auto">
-                {t('tier1.structuralSimilaritySearchDescription')}
+                {t('tier1.searchDescription')}
               </p>
               {summary && (
                 <div className="flex justify-center gap-8 mt-6 text-sm text-gray-500 flex-wrap">
