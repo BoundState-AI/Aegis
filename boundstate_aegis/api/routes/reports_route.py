@@ -48,19 +48,67 @@ def get_graph() -> PFASKnowledgeGraph:
 
 
 def _get_degradation_products(graph: PFASKnowledgeGraph, material: str) -> List[Dict[str, Any]]:
-    """Get degradation products for a material from the knowledge graph."""
+    """Get degradation products for a material from V2 curated database."""
+    # Import V2 database (same source as Fate Explorer)
+    try:
+        from boundstate_aegis.api.routes.fate_route import get_pfas_database
+        database = get_pfas_database()
+    except ImportError:
+        logger.warning("Could not import V2 PFAS database, falling back to graph")
+        return _get_degradation_products_from_graph(graph, material)
+
     products = []
     mat_upper = material.upper()
 
-    # Check if material exists in graph
+    # Look up in V2 curated database
+    parent_data = database.get(mat_upper)
+    if not parent_data:
+        return products
+
+    # Extract degradation products from V2 format
+    for product in parent_data.get("degradation_products", []):
+        # Parse temp_range string (e.g., "400-600°C" or "~500°C")
+        temp_range = product.get("temp_range", "N/A")
+        min_temp = None
+        max_temp = None
+        if temp_range and temp_range != "N/A":
+            temp_str = temp_range.replace("°C", "").strip()
+            if "-" in temp_str:
+                parts = temp_str.split("-")
+                try:
+                    min_temp = float(parts[0])
+                    max_temp = float(parts[1])
+                except (ValueError, IndexError):
+                    pass
+            elif temp_str.startswith("~"):
+                try:
+                    min_temp = max_temp = float(temp_str[1:])
+                except ValueError:
+                    pass
+
+        products.append({
+            "product": product.get("child", "Unknown"),
+            "mechanism": product.get("mechanism", "thermal"),
+            "min_temp_c": min_temp,
+            "max_temp_c": max_temp,
+            "confidence": product.get("confidence", 0.8),
+            "atmosphere": product.get("atmosphere", "air"),
+        })
+
+    return products
+
+
+def _get_degradation_products_from_graph(graph: PFASKnowledgeGraph, material: str) -> List[Dict[str, Any]]:
+    """Fallback: Get degradation products from legacy NetworkX graph."""
+    products = []
+    mat_upper = material.upper()
+
     if mat_upper not in graph.graph:
         return products
 
-    # Get all outgoing edges (degradation pathways)
     for successor in graph.graph.successors(mat_upper):
         edge_data = graph.graph.get_edge_data(mat_upper, successor)
         if edge_data:
-            # May have multiple edges (different mechanisms)
             for key, data in edge_data.items():
                 products.append({
                     "product": successor,
