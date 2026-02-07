@@ -5,10 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Package, Plus, Trash2, AlertTriangle, PieChart, Info, TrendingUp } from "lucide-react";
+import { Loader2, Package, Plus, Trash2, AlertTriangle, PieChart, Info } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -228,7 +227,7 @@ const PortfolioAssessment = () => {
             {assessment ? (
               <>
                 {/* Summary Cards */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="pt-6 text-center">
                       <Package className="h-8 w-8 text-chemours-red mx-auto mb-2" />
@@ -241,15 +240,6 @@ const PortfolioAssessment = () => {
                       <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-2" />
                       <p className="text-3xl font-bold text-red-500">{assessment.high_risk_count}</p>
                       <p className="text-sm text-gray-500">{t('portfolio.highRisk')}</p>
-                    </CardContent>
-                  </Card>
-                  <Card className="bg-white border-gray-200 shadow-sm">
-                    <CardContent className="pt-6 text-center">
-                      <TrendingUp className="h-8 w-8 text-blue-500 mx-auto mb-2" />
-                      <p className="text-3xl font-bold text-blue-600">
-                        {(assessment.results.reduce((sum, r) => sum + r.risk_score, 0) / assessment.results.length).toFixed(0)}
-                      </p>
-                      <p className="text-sm text-gray-500">{t('portfolio.avgRiskScore')}</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -286,7 +276,6 @@ const PortfolioAssessment = () => {
                       <TableHeader>
                         <TableRow className="border-gray-200">
                           <TableHead className="text-gray-600">{t('portfolio.tableHeaders.material')}</TableHead>
-                          <TableHead className="text-gray-600">{t('portfolio.tableHeaders.riskScore')}</TableHead>
                           <TableHead className="text-gray-600">
                             <span className="flex items-center gap-1">
                               {t('portfolio.tableHeaders.category')}
@@ -316,12 +305,6 @@ const PortfolioAssessment = () => {
                         {assessment.results.map((r, i) => (
                           <TableRow key={i} className="border-gray-200">
                             <TableCell className="font-medium text-chemours-dark">{r.material}</TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <Progress value={r.risk_score} className="w-16" />
-                                <span className="text-gray-600 text-sm">{r.risk_score.toFixed(0)}</span>
-                              </div>
-                            </TableCell>
                             <TableCell>
                               <Badge className={getRiskColor(r.risk_category)}>{r.risk_category}</Badge>
                             </TableCell>

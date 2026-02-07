@@ -242,16 +242,12 @@ async def assess_portfolio(request: AssessRequest) -> PortfolioAssessment:
     if not recommendations:
         recommendations.append("Portfolio risk profile is within acceptable limits; continue monitoring")
 
-    # Generate executive summary as styled prose
-    avg_risk_score = (sum(m.risk_score for m in materials_result) / len(materials_result)) if materials_result else 0
-
     # Build summary paragraphs
     summary_parts = []
 
     # Overview paragraph
     summary_parts.append(
-        f"Assessed {len(material_list)} materials in portfolio. "
-        f"Average risk score: {avg_risk_score:.0f}/100 (evidence-weighted from peer-reviewed literature)."
+        f"Assessed {len(material_list)} materials in portfolio."
     )
 
     # Risk distribution
