@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Package, Plus, Trash2, AlertTriangle, DollarSign, PieChart, Info } from "lucide-react";
+import { Loader2, Package, Plus, Trash2, AlertTriangle, PieChart, Info, TrendingUp } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -141,12 +141,6 @@ const PortfolioAssessment = () => {
     }
   };
 
-  const formatCurrency = (value: number) => {
-    if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}B`;
-    if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
-    return `$${value.toLocaleString()}`;
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <ChemoursHeader title={t('portfolio.title')} subtitle={t('portfolio.subtitle')} helpContent={helpContent.portfolio} />
@@ -251,9 +245,11 @@ const PortfolioAssessment = () => {
                   </Card>
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="pt-6 text-center">
-                      <DollarSign className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                      <p className="text-3xl font-bold text-green-600">{formatCurrency(assessment.total_exposure_usd)}</p>
-                      <p className="text-sm text-gray-500">{t('portfolio.totalExposure')}</p>
+                      <TrendingUp className="h-8 w-8 text-blue-500 mx-auto mb-2" />
+                      <p className="text-3xl font-bold text-blue-600">
+                        {(assessment.results.reduce((sum, r) => sum + r.risk_score, 0) / assessment.results.length).toFixed(0)}
+                      </p>
+                      <p className="text-sm text-gray-500">{t('portfolio.avgRiskScore')}</p>
                     </CardContent>
                   </Card>
                 </div>
