@@ -38,6 +38,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 
 from boundstate_aegis.config import EPA_COMPTOX_CSV, PFAS_FATE_V2_JSON
+from boundstate_aegis.taxonomy import ENDPOINT_TAXONOMY, classify_endpoint
 
 logger = logging.getLogger(__name__)
 
@@ -171,43 +172,6 @@ CAS_MAP: Dict[str, str] = {
 
 
 # =============================================================================
-# ENDPOINT TAXONOMY
-# =============================================================================
-
-ENDPOINT_TAXONOMY: Dict[str, List[str]] = {
-    "long_chain_acids": ["PFOA", "PFNA", "PFDA", "PFUnDA", "PFDoDA", "perfluorooctanoic acid"],
-    "short_chain_acids": ["TFA", "PFBA", "PFPeA", "PFHxA", "PFHpA", "trifluoroacetic acid"],
-    "sulfonates": ["PFOS", "PFHxS", "PFBS", "perfluorooctane sulfonic acid"],
-    "fluorotelomers": ["6:2 FTOH", "8:2 FTOH", "4:2 FTOH", "10:2 FTOH", "6:2 FTCA", "8:2 FTCA"],
-    "gases": ["HF", "COF2", "CF4", "CO2", "F2", "carbonyl fluoride"],
-    "benign": ["H2O", "CO2", "fluoride", "F-", "acetic acid", "formic acid"],
-    "radicals": [],
-}
-
-
-def classify_endpoint(product_name: str) -> str:
-    """Classify a product into an endpoint bucket."""
-    name_lower = product_name.lower()
-
-    for category, members in ENDPOINT_TAXONOMY.items():
-        for member in members:
-            if member.lower() in name_lower or name_lower in member.lower():
-                return category
-
-    # Heuristics for unclassified
-    if "radical" in name_lower or "\u2022" in product_name:
-        return "radicals"
-    if "pfoa" in name_lower or "perfluorooctan" in name_lower:
-        return "long_chain_acids"
-    if "pfos" in name_lower or "sulfon" in name_lower:
-        return "sulfonates"
-    if "ftoh" in name_lower or "fluorotelomer" in name_lower:
-        return "fluorotelomers"
-
-    return "other"
-
-
-# =============================================================================
 # MAIN ENGINE
 # =============================================================================
 
@@ -254,6 +218,7 @@ class AEGISTier1Engine:
 
     def _load_epa_data(self, csv_path: Path) -> None:
         """Load EPA PFAS database."""
+        skipped = 0
         with open(csv_path, "r", encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -282,10 +247,14 @@ class AEGISTier1Engine:
                         mw=Descriptors.MolWt(mol),
                     )
                     self.epa_compounds.append(compound)
-                except Exception:
-                    pass
+                except Exception as e:
+                    skipped += 1
+                    logger.debug("Skipping EPA compound %s: %s", smiles, e)
 
-        logger.info("Loaded %d EPA compounds with SMILES", len(self.epa_compounds))
+        logger.info(
+            "Loaded %d EPA compounds with SMILES (%d skipped)",
+            len(self.epa_compounds), skipped,
+        )
 
     def _load_fate_data(self, json_path: Path) -> None:
         """Load pathway/fate data."""
@@ -356,6 +325,7 @@ class AEGISTier1Engine:
     def _compute_fingerprints(self) -> None:
         """Compute fingerprints for fate compounds with SMILES."""
         computed = 0
+        skipped = 0
         for comp in self.compounds.values():
             if comp.smiles:
                 mol = Chem.MolFromSmiles(comp.smiles)
@@ -372,10 +342,17 @@ class AEGISTier1Engine:
                         )
                         comp.mw = Descriptors.MolWt(mol)
                         computed += 1
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        skipped += 1
+                        logger.debug(
+                            "Fingerprint failed for %s (%s): %s",
+                            comp.name, comp.smiles, e,
+                        )
 
-        logger.info("Computed fingerprints for %d fate compounds", computed)
+        logger.info(
+            "Computed fingerprints for %d fate compounds (%d skipped)",
+            computed, skipped,
+        )
 
     # -----------------------------------------------------------------
     # Public API
@@ -560,7 +537,7 @@ class AEGISTier1Engine:
         """Call Tier 2 engine and return pattern correlations."""
         try:
             from boundstate_aegis.engines.tier2_substructure_engine import Tier2Engine
-            tier2 = Tier2Engine()
+            tier2 = Tier2Engine(tier1_engine=self)
             return tier2.predict_endpoints(smiles).model_dump()
         except Exception as e:
             logger.warning("Tier 2 unavailable: %s", e)
