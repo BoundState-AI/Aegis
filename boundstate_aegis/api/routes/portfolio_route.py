@@ -242,26 +242,43 @@ async def assess_portfolio(request: AssessRequest) -> PortfolioAssessment:
     if not recommendations:
         recommendations.append("Portfolio risk profile is within acceptable limits; continue monitoring")
 
-    # Generate executive summary
-    summary_lines = [
-        f"Portfolio Analysis: {len(material_list)} materials assessed",
-        f"Risk Distribution: {risk_dist['CRITICAL']} critical, {risk_dist['HIGH']} high, {risk_dist['MEDIUM']} medium, {risk_dist['LOW']} low",
-        f"Overall Risk Score: {overall_score:.2f}",
-        f"Total Estimated Exposure: ${total_exposure:,.0f}",
-        "",
-        "Key Recommendations:",
-    ]
-    for rec in recommendations:
-        summary_lines.append(f"  - {rec}")
+    # Generate executive summary as styled prose
+    avg_risk_score = (sum(m.risk_score for m in materials_result) / len(materials_result)) if materials_result else 0
+
+    # Build summary paragraphs
+    summary_parts = []
+
+    # Overview paragraph
+    summary_parts.append(
+        f"Assessed {len(material_list)} materials in portfolio. "
+        f"Average risk score: {avg_risk_score:.0f}/100 (evidence-weighted from peer-reviewed literature)."
+    )
+
+    # Risk distribution
+    if high_risk_count > 0:
+        summary_parts.append(
+            f"Risk distribution: {risk_dist['CRITICAL']} critical, {risk_dist['HIGH']} high, "
+            f"{risk_dist['MEDIUM']} medium, {risk_dist['LOW']} low. "
+            f"{high_risk_count} material(s) require priority attention."
+        )
+    else:
+        summary_parts.append(
+            f"Risk distribution: {risk_dist['MEDIUM']} medium, {risk_dist['LOW']} low. "
+            f"No critical or high-risk materials identified."
+        )
+
+    # Recommendations paragraph
+    if recommendations:
+        summary_parts.append("Recommendations: " + " ".join(recommendations))
 
     return PortfolioAssessment(
         total_materials=len(material_list),
         overall_risk_score=round(overall_score, 3),
         high_risk_count=high_risk_count,
-        total_exposure_usd=total_exposure,
+        total_exposure_usd=total_exposure,  # Kept for API compatibility but not displayed
         risk_distribution=risk_dist,
         materials=materials_result,
         results=materials_result,  # Alias for frontend
         recommendations=recommendations,
-        executive_summary="\n".join(summary_lines),
+        executive_summary="\n\n".join(summary_parts),
     )
