@@ -231,7 +231,7 @@
     "addAtLeastOne": "Add at least one material to assess",
     "materials": "Materials",
     "highRisk": "High Risk",
-    "totalExposure": "Total Exposure",
+    "avgRiskScore": "Avg Risk Score",
     "assessmentResults": "Assessment Results",
     "tableHeaders": {
       "material": "Material",
