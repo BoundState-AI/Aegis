@@ -19,8 +19,6 @@ Oracle 1: ClaudeOpus 4.5 <noreply@anthropic.com>
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import pytest
 
 from boundstate_aegis.engines.tier1_engine import AEGISTier1Engine
@@ -42,10 +40,7 @@ FTOH_6_2_SMILES = "OCCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F"
 
 @pytest.fixture(scope="module")
 def tier1_engine():
-    return AEGISTier1Engine(
-        epa_csv_path=Path("D:/chemours_PFAS/data/epa_pfas.csv"),
-        fate_json_path=Path("D:/BoundState/boundstate_aegis/data/evidence/pfas_fate_v2.json"),
-    )
+    return AEGISTier1Engine()
 
 
 @pytest.fixture(scope="module")

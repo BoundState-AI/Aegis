@@ -45,10 +45,7 @@ PFAS_FATE_V2_RAW = EVIDENCE_DIR / "pfas_fate_v2_raw.json"
 EPA_PFAS_CSV = REGULATIONS_DIR / "epa_pfas.csv"
 
 # External EPA CompTox dataset (full 10,974+ compounds with SMILES)
-# Use local copy in repo for deployment, fall back to external path for dev
-_EPA_EXTERNAL = Path("D:/chemours_PFAS/data/epa_pfas.csv")
-_EPA_LOCAL = REGULATIONS_DIR / "epa_pfas.csv"
-EPA_COMPTOX_CSV = _EPA_LOCAL if _EPA_LOCAL.exists() else _EPA_EXTERNAL
+EPA_COMPTOX_CSV = REGULATIONS_DIR / "epa_pfas.csv"
 REGULATORY_FRAMEWORK_YAML = REGULATIONS_DIR / "regulatory_framework.yaml"
 TFA_REGULATORY_ASSERTIONS = REGULATIONS_DIR / "tfa_regulatory_assertions.yaml"  # Comprehensive TFA regulatory status
 

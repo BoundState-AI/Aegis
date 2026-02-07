@@ -39,6 +39,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 from pydantic import BaseModel
 
 from boundstate_aegis.config import COMPOUNDS_DIR, EPA_COMPTOX_CSV, PFAS_FATE_V2_JSON
+from boundstate_aegis.taxonomy import ENDPOINT_TAXONOMY, classify_endpoint
 
 logger = logging.getLogger(__name__)
 
@@ -272,52 +273,6 @@ def _get_compiled_smarts() -> Dict[str, Any]:
             else:
                 _COMPILED_SMARTS[name] = pat
     return _COMPILED_SMARTS
-
-
-# Endpoint taxonomy — shared with Tier 1
-ENDPOINT_TAXONOMY: Dict[str, List[str]] = {
-    "long_chain_acids": [
-        "PFOA", "PFNA", "PFDA", "PFUnDA", "PFDoDA",
-        "perfluorooctanoic acid",
-    ],
-    "short_chain_acids": [
-        "TFA", "PFBA", "PFPeA", "PFHxA", "PFHpA",
-        "trifluoroacetic acid",
-    ],
-    "sulfonates": [
-        "PFOS", "PFHxS", "PFBS",
-        "perfluorooctane sulfonic acid",
-    ],
-    "fluorotelomers": [
-        "6:2 FTOH", "8:2 FTOH", "4:2 FTOH", "10:2 FTOH",
-        "6:2 FTCA", "8:2 FTCA",
-    ],
-    "gases": ["HF", "COF2", "CF4", "CO2", "F2", "carbonyl fluoride"],
-    "benign": ["H2O", "CO2", "fluoride", "F-", "acetic acid", "formic acid"],
-    "radicals": [],
-}
-
-
-def classify_endpoint(product_name: str) -> str:
-    """Classify a product into an endpoint bucket."""
-    name_lower = product_name.lower()
-
-    for category, members in ENDPOINT_TAXONOMY.items():
-        for member in members:
-            if member.lower() in name_lower or name_lower in member.lower():
-                return category
-
-    # Heuristics for unclassified
-    if "radical" in name_lower or "\u2022" in product_name:
-        return "radicals"
-    if "pfoa" in name_lower or "perfluorooctan" in name_lower:
-        return "long_chain_acids"
-    if "pfos" in name_lower or "sulfon" in name_lower:
-        return "sulfonates"
-    if "ftoh" in name_lower or "fluorotelomer" in name_lower:
-        return "fluorotelomers"
-
-    return "other"
 
 
 # =============================================================================
@@ -714,6 +669,7 @@ class Tier2Engine:
         fate_json_path: Optional[Path] = None,
         epa_csv_path: Optional[Path] = None,
         min_support: int = MIN_SUPPORT,
+        tier1_engine: Optional[Any] = None,
     ):
         if not HAS_RDKIT:
             raise RuntimeError(
@@ -739,8 +695,8 @@ class Tier2Engine:
         # Load enrichment file if available
         self._load_enrichment()
 
-        # Load and mine
-        self._tier1_engine = None
+        # Accept injected Tier 1 engine (avoids duplicate EPA database in memory)
+        self._tier1_engine = tier1_engine
         self._mine_corpus()
 
     def _load_enrichment(self) -> None:

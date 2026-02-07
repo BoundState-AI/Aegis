@@ -42,7 +42,15 @@ def get_engine():
     if _engine is None:
         try:
             from boundstate_aegis.engines.tier2_substructure_engine import Tier2Engine
-            _engine = Tier2Engine()
+            from boundstate_aegis.api.routes.tier1_route import get_engine as get_tier1
+
+            # Reuse the Tier 1 singleton to avoid duplicate EPA data in memory
+            try:
+                tier1 = get_tier1()
+            except Exception:
+                tier1 = None
+
+            _engine = Tier2Engine(tier1_engine=tier1)
             logger.info(
                 "Tier 2 engine initialized: %d rules mined",
                 len(_engine.rules),

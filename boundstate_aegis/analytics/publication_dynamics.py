@@ -29,6 +29,7 @@ import json
 import logging
 import re
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
@@ -248,7 +249,7 @@ class PublicationDynamics:
         if not years:
             return 0.0
 
-        current_year = 2025  # Could be datetime.now().year
+        current_year = datetime.now().year
         recent_years = [y for y in years if y >= current_year - window_years]
 
         if not recent_years:
@@ -272,7 +273,7 @@ class PublicationDynamics:
             return 0.0
 
         # Compare last 2 years vs previous 2 years
-        current_year = 2025
+        current_year = datetime.now().year
         recent = sum(years.get(y, 0) for y in [current_year, current_year - 1])
         prior = sum(years.get(y, 0) for y in [current_year - 2, current_year - 3])
 
@@ -296,7 +297,7 @@ class PublicationDynamics:
         if not years:
             return 0.0
 
-        current_year = 2025
+        current_year = datetime.now().year
 
         # Acceleration for recent period
         recent = sum(years.get(y, 0) for y in [current_year, current_year - 1])
