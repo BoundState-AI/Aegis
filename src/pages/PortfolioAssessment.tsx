@@ -341,9 +341,9 @@ const PortfolioAssessment = () => {
                     <CardTitle className="text-chemours-dark">{t('portfolio.executiveSummary')}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-gray-600 whitespace-pre-wrap text-sm leading-relaxed bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <p className="text-gray-600 whitespace-pre-wrap text-sm leading-relaxed">
                       {assessment.executive_summary}
-                    </div>
+                    </p>
                   </CardContent>
                 </Card>
 
