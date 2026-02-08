@@ -29,11 +29,20 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import sys
 import time
 from pathlib import Path
 from typing import Any
 import urllib.request
 import xml.etree.ElementTree as ET
+
+# Add package root to path for imports
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from boundstate_aegis.sentiment import (
+    CATEGORY_SCORES,
+    aggregate_sentiment,
+    update_backtest_sentiment,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -42,7 +51,7 @@ logger = logging.getLogger(__name__)
 # Paths
 # ---------------------------------------------------------------------------
 
-EVIDENCE_DIR = Path(__file__).resolve().parent.parent / "data" / "evidence"
+EVIDENCE_DIR = Path(__file__).resolve().parent.parent / "boundstate_aegis" / "data" / "evidence"
 RAW_PATH = EVIDENCE_DIR / "genx_papers_raw.json"
 CLASSIFIED_PATH = EVIDENCE_DIR / "genx_sentiment_classified.json"
 BACKTEST_PATH = EVIDENCE_DIR / "genx_backtest.json"
@@ -290,109 +299,8 @@ def classify_papers(papers: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 # ---------------------------------------------------------------------------
-# Aggregation
+# Aggregation — uses shared sentiment module
 # ---------------------------------------------------------------------------
-
-CATEGORY_SCORES = {
-    "CELEBRATION": 1.0,
-    "UTILITY": 0.5,
-    "DETECTION": 0.0,
-    "QUESTIONING": -0.5,
-    "ALARM": -1.0,
-    "RECKONING": -1.0,
-}
-
-
-def aggregate_sentiment(classified: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
-    """Aggregate per-paper classifications into year-by-year sentiment breakdowns."""
-    yearly: dict[int, dict[str, int]] = {}
-
-    for paper in classified:
-        year = paper["year"]
-        cat = paper["category"].upper()
-        if year not in yearly:
-            yearly[year] = {
-                "celebration": 0,
-                "utility": 0,
-                "detection": 0,
-                "questioning": 0,
-                "alarm": 0,
-                "reckoning": 0,
-            }
-        key = cat.lower()
-        if key in yearly[year]:
-            yearly[year][key] += 1
-
-    # Compute cumulative sentiment
-    cumulative = 0.0
-    result = {}
-    for year in sorted(yearly.keys()):
-        counts = yearly[year]
-        year_score = sum(
-            counts[cat.lower()] * score
-            for cat, score in CATEGORY_SCORES.items()
-        )
-        cumulative += year_score
-        result[year] = {
-            "sentiment": counts,
-            "year_sentiment_score": round(year_score, 1),
-            "cumulative_sentiment": round(cumulative, 1),
-        }
-
-    return result
-
-
-def update_backtest(yearly_sentiment: dict[int, dict[str, Any]]) -> None:
-    """Update genx_backtest.json with sentiment breakdowns."""
-    with open(BACKTEST_PATH, encoding="utf-8") as f:
-        backtest = json.load(f)
-
-    # Update timeline entries
-    for entry in backtest["timeline"]:
-        year = entry["year"]
-        cumulative_papers = entry.get("cumulative", 0)
-        if year in yearly_sentiment:
-            entry["sentiment"] = yearly_sentiment[year]["sentiment"]
-            entry["cumulative_sentiment"] = yearly_sentiment[year]["cumulative_sentiment"]
-            # Normalized sentiment: average sentiment per paper (-1 to +1 scale)
-            if cumulative_papers > 0:
-                entry["normalized_sentiment"] = round(
-                    yearly_sentiment[year]["cumulative_sentiment"] / cumulative_papers, 3
-                )
-            else:
-                entry["normalized_sentiment"] = 0.0
-        else:
-            # Pre-publication years: no sentiment data
-            entry["sentiment"] = {
-                "celebration": 0,
-                "utility": 0,
-                "detection": 0,
-                "questioning": 0,
-                "alarm": 0,
-                "reckoning": 0,
-            }
-            entry["cumulative_sentiment"] = 0.0
-            entry["normalized_sentiment"] = 0.0
-
-    # Add sentiment category metadata
-    backtest["sentiment_categories"] = [
-        {"id": "celebration", "label": "Celebration", "score": 1.0, "color": "#22c55e",
-         "description": "Synthesis, novel properties, applications"},
-        {"id": "utility", "label": "Methods & Utility", "score": 0.5, "color": "#86efac",
-         "description": "Analytical methods, processing techniques"},
-        {"id": "detection", "label": "Detection", "score": 0.0, "color": "#eab308",
-         "description": "Environmental occurrence, monitoring"},
-        {"id": "questioning", "label": "Questioning", "score": -0.5, "color": "#f97316",
-         "description": "Persistence, fate, bioaccumulation"},
-        {"id": "alarm", "label": "Alarm", "score": -1.0, "color": "#ef4444",
-         "description": "Health effects, toxicology, exposure"},
-        {"id": "reckoning", "label": "Reckoning", "score": -1.0, "color": "#991b1b",
-         "description": "Regulation, remediation, litigation"},
-    ]
-
-    with open(BACKTEST_PATH, "w", encoding="utf-8") as f:
-        json.dump(backtest, f, indent=2, ensure_ascii=False)
-    logger.info(f"Updated {BACKTEST_PATH} with sentiment data")
 
 
 def print_review_report(classified: list[dict[str, Any]]) -> None:
@@ -458,7 +366,7 @@ def main():
         with open(CLASSIFIED_PATH, encoding="utf-8") as f:
             classified = json.load(f)
         yearly = aggregate_sentiment(classified)
-        update_backtest(yearly)
+        update_backtest_sentiment(BACKTEST_PATH, yearly)
         print_review_report(classified)
         return
 
@@ -478,7 +386,7 @@ def main():
 
     logger.info("Step 3: Aggregating by year...")
     yearly = aggregate_sentiment(classified)
-    update_backtest(yearly)
+    update_backtest_sentiment(BACKTEST_PATH, yearly)
 
     logger.info("Step 4: Review report...")
     print_review_report(classified)

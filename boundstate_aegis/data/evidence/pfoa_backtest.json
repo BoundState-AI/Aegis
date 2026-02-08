@@ -197,7 +197,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -1.5,
-      "normalized_sentiment": -0.214
+      "normalized_sentiment": -0.125
     },
     {
       "year": 1984,
@@ -213,7 +213,7 @@
         "reckoning": 1
       },
       "cumulative_sentiment": -3.5,
-      "normalized_sentiment": -0.389
+      "normalized_sentiment": -0.6
     },
     {
       "year": 1985,
@@ -229,7 +229,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -6.0,
-      "normalized_sentiment": -0.462
+      "normalized_sentiment": -0.786
     },
     {
       "year": 1986,
@@ -245,7 +245,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -9.0,
-      "normalized_sentiment": -0.562
+      "normalized_sentiment": -0.833
     },
     {
       "year": 1987,
@@ -261,7 +261,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -11.5,
-      "normalized_sentiment": -0.548
+      "normalized_sentiment": -0.667
     },
     {
       "year": 1988,
@@ -277,7 +277,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -12.0,
-      "normalized_sentiment": -0.545
+      "normalized_sentiment": -0.667
     },
     {
       "year": 1989,
@@ -293,7 +293,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -16.0,
-      "normalized_sentiment": -0.533
+      "normalized_sentiment": -0.5
     },
     {
       "year": 1990,
@@ -309,7 +309,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -20.0,
-      "normalized_sentiment": -0.571
+      "normalized_sentiment": -0.607
     },
     {
       "year": 1991,
@@ -325,7 +325,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -25.5,
-      "normalized_sentiment": -0.622
+      "normalized_sentiment": -0.711
     },
     {
       "year": 1992,
@@ -341,7 +341,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -33.0,
-      "normalized_sentiment": -0.611
+      "normalized_sentiment": -0.708
     },
     {
       "year": 1993,
@@ -357,7 +357,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -36.5,
-      "normalized_sentiment": -0.589
+      "normalized_sentiment": -0.611
     },
     {
       "year": 1994,
@@ -373,7 +373,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -40.0,
-      "normalized_sentiment": -0.58
+      "normalized_sentiment": -0.518
     },
     {
       "year": 1995,
@@ -389,7 +389,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -43.0,
-      "normalized_sentiment": -0.566
+      "normalized_sentiment": -0.455
     },
     {
       "year": 1996,
@@ -405,7 +405,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -53.5,
-      "normalized_sentiment": -0.594
+      "normalized_sentiment": -0.607
     },
     {
       "year": 1997,
@@ -421,7 +421,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -53.5,
-      "normalized_sentiment": -0.546
+      "normalized_sentiment": -0.466
     },
     {
       "year": 1998,
@@ -437,7 +437,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -55.0,
-      "normalized_sentiment": -0.509
+      "normalized_sentiment": -0.375
     },
     {
       "year": 1999,
@@ -453,7 +453,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -56.5,
-      "normalized_sentiment": -0.487
+      "normalized_sentiment": -0.115
     },
     {
       "year": 2000,
@@ -469,7 +469,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -59.0,
-      "normalized_sentiment": -0.488
+      "normalized_sentiment": -0.239
     },
     {
       "year": 2001,
@@ -485,7 +485,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -58.5,
-      "normalized_sentiment": -0.447
+      "normalized_sentiment": -0.152
     },
     {
       "year": 2002,
@@ -501,7 +501,7 @@
         "reckoning": 1
       },
       "cumulative_sentiment": -59.5,
-      "normalized_sentiment": -0.386
+      "normalized_sentiment": -0.079
     },
     {
       "year": 2003,
@@ -517,7 +517,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -69.5,
-      "normalized_sentiment": -0.404
+      "normalized_sentiment": -0.206
     },
     {
       "year": 2004,
@@ -533,7 +533,7 @@
         "reckoning": 1
       },
       "cumulative_sentiment": -80.0,
-      "normalized_sentiment": -0.369
+      "normalized_sentiment": -0.25
     },
     {
       "year": 2005,
@@ -549,7 +549,7 @@
         "reckoning": 3
       },
       "cumulative_sentiment": -88.0,
-      "normalized_sentiment": -0.327
+      "normalized_sentiment": -0.248
     },
     {
       "year": 2006,
@@ -565,7 +565,7 @@
         "reckoning": 2
       },
       "cumulative_sentiment": -101.0,
-      "normalized_sentiment": -0.3
+      "normalized_sentiment": -0.191
     },
     {
       "year": 2007,
@@ -581,7 +581,7 @@
         "reckoning": 5
       },
       "cumulative_sentiment": -140.0,
-      "normalized_sentiment": -0.32
+      "normalized_sentiment": -0.271
     },
     {
       "year": 2008,
@@ -597,7 +597,7 @@
         "reckoning": 7
       },
       "cumulative_sentiment": -193.5,
-      "normalized_sentiment": -0.344
+      "normalized_sentiment": -0.36
     },
     {
       "year": 2009,
@@ -613,7 +613,7 @@
         "reckoning": 12
       },
       "cumulative_sentiment": -260.0,
-      "normalized_sentiment": -0.364
+      "normalized_sentiment": -0.422
     },
     {
       "year": 2010,
@@ -629,7 +629,7 @@
         "reckoning": 13
       },
       "cumulative_sentiment": -325.5,
-      "normalized_sentiment": -0.375
+      "normalized_sentiment": -0.43
     },
     {
       "year": 2011,
@@ -645,7 +645,7 @@
         "reckoning": 17
       },
       "cumulative_sentiment": -397.0,
-      "normalized_sentiment": -0.387
+      "normalized_sentiment": -0.438
     },
     {
       "year": 2012,
@@ -661,7 +661,7 @@
         "reckoning": 11
       },
       "cumulative_sentiment": -473.5,
-      "normalized_sentiment": -0.391
+      "normalized_sentiment": -0.43
     },
     {
       "year": 2013,
@@ -677,7 +677,7 @@
         "reckoning": 13
       },
       "cumulative_sentiment": -575.0,
-      "normalized_sentiment": -0.405
+      "normalized_sentiment": -0.454
     },
     {
       "year": 2014,
@@ -693,7 +693,7 @@
         "reckoning": 18
       },
       "cumulative_sentiment": -666.0,
-      "normalized_sentiment": -0.412
+      "normalized_sentiment": -0.456
     },
     {
       "year": 2015,
@@ -709,7 +709,7 @@
         "reckoning": 20
       },
       "cumulative_sentiment": -767.5,
-      "normalized_sentiment": -0.415
+      "normalized_sentiment": -0.461
     },
     {
       "year": 2016,
@@ -725,7 +725,7 @@
         "reckoning": 27
       },
       "cumulative_sentiment": -887.5,
-      "normalized_sentiment": -0.429
+      "normalized_sentiment": -0.48
     },
     {
       "year": 2017,
@@ -741,7 +741,7 @@
         "reckoning": 35
       },
       "cumulative_sentiment": -1034.5,
-      "normalized_sentiment": -0.446
+      "normalized_sentiment": -0.525
     },
     {
       "year": 2018,
@@ -757,7 +757,7 @@
         "reckoning": 34
       },
       "cumulative_sentiment": -1179.5,
-      "normalized_sentiment": -0.455
+      "normalized_sentiment": -0.553
     },
     {
       "year": 2019,
@@ -773,7 +773,7 @@
         "reckoning": 40
       },
       "cumulative_sentiment": -1379.0,
-      "normalized_sentiment": -0.472
+      "normalized_sentiment": -0.579
     },
     {
       "year": 2020,
@@ -789,7 +789,7 @@
         "reckoning": 67
       },
       "cumulative_sentiment": -1637.0,
-      "normalized_sentiment": -0.492
+      "normalized_sentiment": -0.597
     },
     {
       "year": 2021,
@@ -805,7 +805,7 @@
         "reckoning": 78
       },
       "cumulative_sentiment": -1940.5,
-      "normalized_sentiment": -0.509
+      "normalized_sentiment": -0.623
     },
     {
       "year": 2022,
@@ -821,7 +821,7 @@
         "reckoning": 94
       },
       "cumulative_sentiment": -2297.0,
-      "normalized_sentiment": -0.528
+      "normalized_sentiment": -0.642
     },
     {
       "year": 2023,
@@ -837,7 +837,7 @@
         "reckoning": 118
       },
       "cumulative_sentiment": -2755.0,
-      "normalized_sentiment": -0.547
+      "normalized_sentiment": -0.656
     },
     {
       "year": 2024,
@@ -853,7 +853,7 @@
         "reckoning": 142
       },
       "cumulative_sentiment": -3237.5,
-      "normalized_sentiment": -0.558
+      "normalized_sentiment": -0.654
     },
     {
       "year": 2025,
@@ -869,7 +869,7 @@
         "reckoning": 154
       },
       "cumulative_sentiment": -3819.0,
-      "normalized_sentiment": -0.569
+      "normalized_sentiment": -0.646
     }
   ],
   "key_events": [
@@ -1016,5 +1016,6 @@
       "color": "#991b1b",
       "description": "Regulation, remediation, litigation"
     }
-  ]
+  ],
+  "sentiment_window": 3
 }

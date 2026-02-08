@@ -48,6 +48,14 @@ AVAILABLE_BACKTESTS = {
     "pfoa": PFOA_BACKTEST_PATH,
 }
 
+# Classified sentiment data (per-paper details for drill-down)
+CLASSIFIED_PATHS = {
+    "genx": EVIDENCE_DIR / "genx_sentiment_classified.json",
+    "pfoa": EVIDENCE_DIR / "pfoa_sentiment_classified.json",
+}
+
+_classified_cache: Dict[str, List[Dict[str, Any]]] = {}
+
 
 # ---------------------------------------------------------------------------
 # Pydantic models
@@ -314,6 +322,70 @@ async def get_backtest_summary(compound_id: str) -> Dict[str, Any]:
         "phase_count": len(data.get("phases", [])),
         "event_count": len(data.get("key_events", [])),
         "validation_metrics": data.get("validation_metrics"),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Paper drill-down endpoint
+# ---------------------------------------------------------------------------
+
+def _load_classified(compound_id: str) -> List[Dict[str, Any]]:
+    """Load and cache classified paper data for drill-down."""
+    global _classified_cache
+
+    if compound_id in _classified_cache:
+        return _classified_cache[compound_id]
+
+    path = CLASSIFIED_PATHS.get(compound_id)
+    if not path or not path.exists():
+        return []
+
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    _classified_cache[compound_id] = data
+    logger.info(f"Loaded {compound_id} classified papers: {len(data)} papers")
+    return data
+
+
+@router.get("/backtest/{compound_id}/papers/{year}")
+async def get_papers_by_year(compound_id: str, year: int) -> Dict[str, Any]:
+    """
+    Get individual classified papers for a compound in a given year.
+
+    Returns paper details including title, journal, PMID, sentiment
+    category, confidence, and classification reasoning. Used for
+    drill-down from the sentiment chart tooltip.
+    """
+    if compound_id not in CLASSIFIED_PATHS:
+        from fastapi import HTTPException
+        raise HTTPException(
+            status_code=404,
+            detail=f"Classified data not found for {compound_id}. Available: {list(CLASSIFIED_PATHS.keys())}"
+        )
+
+    classified = _load_classified(compound_id)
+    papers = [p for p in classified if p.get("year") == year]
+
+    # Sort: alarm/reckoning first, then by confidence descending
+    category_order = {"RECKONING": 0, "ALARM": 1, "QUESTIONING": 2, "DETECTION": 3, "UTILITY": 4, "CELEBRATION": 5}
+    papers.sort(key=lambda p: (category_order.get(p.get("category", "").upper(), 9), -p.get("confidence", 0)))
+
+    return {
+        "compound_id": compound_id,
+        "year": year,
+        "total": len(papers),
+        "papers": [
+            {
+                "pmid": p.get("pmid", ""),
+                "title": p.get("title", ""),
+                "journal": p.get("journal", ""),
+                "category": p.get("category", ""),
+                "confidence": p.get("confidence", 0),
+                "reasoning": p.get("reasoning", ""),
+            }
+            for p in papers
+        ],
     }
 
 
