@@ -14,13 +14,8 @@ const ChemoursHeader = ({ title, subtitle, children, helpContent }: ChemoursHead
     <header className="border-b border-gray-200 bg-white sticky top-0 z-40 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Left side - Chemours logo + Title */}
+          {/* Left side - Title */}
           <div className="flex items-center gap-4">
-            <img
-              src="/chemours-logo.png"
-              alt="Chemours"
-              className="h-10 w-auto"
-            />
             <div>
               <h1 className="text-xl font-bold text-chemours-dark flex items-center gap-2">
                 {title}
@@ -40,16 +35,13 @@ const ChemoursHeader = ({ title, subtitle, children, helpContent }: ChemoursHead
             </div>
           )}
 
-          {/* Right side - AEGIS Branding */}
+          {/* Right side - Chemours Branding */}
           <div className="flex items-center gap-2">
-            <div className="text-right">
-              <div className="text-2xl font-bold bg-gradient-to-r from-chemours-red to-chemours-orange bg-clip-text text-transparent">
-                AEGIS
-              </div>
-              <div className="text-xs text-gray-500 tracking-wide">
-                by BoundState
-              </div>
-            </div>
+            <img
+              src="/chemours-logo.png"
+              alt="Chemours"
+              className="h-10 w-auto"
+            />
           </div>
         </div>
       </div>
