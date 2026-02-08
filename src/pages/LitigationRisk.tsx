@@ -298,11 +298,6 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
           </span>
         </div>
       )}
-      {total > 0 && (
-        <div className="mt-2 pt-2 border-t border-gray-100 text-center">
-          <span className="text-xs text-blue-500 font-medium">Click to view papers</span>
-        </div>
-      )}
     </div>
   );
 };
@@ -844,6 +839,11 @@ const LitigationRisk = () => {
                         ))
                       )}
                     </div>
+
+                    {/* Click hint for sentiment view */}
+                    {chartView === "sentiment" && (
+                      <p className="text-center text-xs text-blue-400 mt-2">Click any year on the chart to explore its papers</p>
+                    )}
 
                     {/* Sentiment annotation */}
                     {chartView === "sentiment" && (
