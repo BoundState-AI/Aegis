@@ -12,7 +12,7 @@ interface ChemoursHeaderProps {
 const ChemoursHeader = ({ title, subtitle, children, helpContent }: ChemoursHeaderProps) => {
   return (
     <header className="border-b border-gray-200 bg-white sticky top-0 z-40 shadow-sm">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           {/* Left side - Title */}
           <div className="flex items-center gap-4">
