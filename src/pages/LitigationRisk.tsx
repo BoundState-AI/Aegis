@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight, Info } from "lucide-react";
+import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight, Info, ExternalLink, X } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
@@ -76,6 +76,22 @@ interface IndustryClaim {
   claim: string;
   reality: string;
   reality_year: number;
+}
+
+interface SentimentPaper {
+  pmid: string;
+  title: string;
+  journal: string;
+  category: string;
+  confidence: number;
+  reasoning: string;
+}
+
+interface PapersResponse {
+  compound_id: string;
+  year: number;
+  total: number;
+  papers: SentimentPaper[];
 }
 
 interface BacktestData {
@@ -276,10 +292,15 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
       </div>
       {entry.normalized_sentiment != null && (
         <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
-          <span className="text-gray-500">Avg sentiment</span>
+          <span className="text-gray-500">Sentiment (3yr avg)</span>
           <span className={`font-bold ${entry.normalized_sentiment < 0 ? "text-red-600" : "text-green-600"}`}>
             {entry.normalized_sentiment > 0 ? "+" : ""}{entry.normalized_sentiment.toFixed(2)}
           </span>
+        </div>
+      )}
+      {total > 0 && (
+        <div className="mt-2 pt-2 border-t border-gray-100 text-center">
+          <span className="text-xs text-blue-500 font-medium">Click to view papers</span>
         </div>
       )}
     </div>
@@ -303,6 +324,8 @@ const LitigationRisk = () => {
   const [selectedCompound, setSelectedCompound] = useState<string>("pfoa");
 
   const [chartView, setChartView] = useState<"publications" | "signal" | "sentiment">("publications");
+  const [paperDrilldown, setPaperDrilldown] = useState<PapersResponse | null>(null);
+  const [isLoadingPapers, setIsLoadingPapers] = useState(false);
   const [formData, setFormData] = useState({
     compound: "PFOA",
     volume: 100000,
@@ -359,6 +382,33 @@ const LitigationRisk = () => {
       // Silently handle - UI will show empty state
     } finally {
       setIsLoadingBacktest(false);
+    }
+  };
+
+  const loadPapersForYear = async (year: number) => {
+    if (!selectedCompound) return;
+    setIsLoadingPapers(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/sentinel/backtest/${selectedCompound}/papers/${year}`);
+      if (res.ok) {
+        const data: PapersResponse = await res.json();
+        setPaperDrilldown(data);
+      }
+    } catch {
+      // Silently handle
+    } finally {
+      setIsLoadingPapers(false);
+    }
+  };
+
+  const handleSentimentChartClick = (data: any) => {
+    if (data?.activePayload?.[0]?.payload) {
+      const entry = data.activePayload[0].payload as TimelineEntry;
+      const categories = ["celebration", "utility", "detection", "questioning", "alarm", "reckoning"] as const;
+      const total = categories.reduce((s, c) => s + (entry.sentiment?.[c] || 0), 0);
+      if (total > 0) {
+        loadPapersForYear(entry.year);
+      }
     }
   };
 
@@ -646,7 +696,7 @@ const LitigationRisk = () => {
                             />
                           </ComposedChart>
                         ) : chartView === "sentiment" ? (
-                          <ComposedChart data={backtest.timeline} margin={{ top: 60, right: 60, bottom: 20, left: 20 }}>
+                          <ComposedChart data={backtest.timeline} margin={{ top: 60, right: 60, bottom: 20, left: 20 }} onClick={handleSentimentChartClick} style={{ cursor: "pointer" }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                             <XAxis
                               dataKey="year"
@@ -666,7 +716,7 @@ const LitigationRisk = () => {
                               tick={{ fontSize: 11, fill: "#ef4444" }}
                               tickLine={false}
                               tickFormatter={(v) => v.toFixed(1)}
-                              label={{ value: "Avg Sentiment", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
+                              label={{ value: "Sentiment (3yr avg)", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
                             />
                             <Tooltip content={<SentimentTooltip />} />
                             {industryEvents.map((e, idx) => (
@@ -782,7 +832,7 @@ const LitigationRisk = () => {
                           ))}
                           <div className="flex items-center gap-1.5">
                             <div className="w-6 h-0.5 rounded" style={{ borderTop: "2px dashed #dc2626" }} />
-                            <span className="text-xs text-gray-600">{t('litigation.cumulativeSentiment')}</span>
+                            <span className="text-xs text-gray-600">Sentiment (3yr avg)</span>
                           </div>
                         </>
                       ) : (
@@ -801,6 +851,78 @@ const LitigationRisk = () => {
                         <p className="text-xs text-amber-900 leading-relaxed">
                           <span className="font-semibold">{t('litigation.sentimentKeyFinding')}</span> {t('litigation.sentimentAnnotation')}
                         </p>
+                      </div>
+                    )}
+
+                    {/* Paper drill-down panel */}
+                    {chartView === "sentiment" && (paperDrilldown || isLoadingPapers) && (
+                      <div className="mt-4 border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-sm text-chemours-dark">
+                              {paperDrilldown ? `${paperDrilldown.year} Papers` : "Loading..."}
+                            </span>
+                            {paperDrilldown && (
+                              <Badge variant="outline" className="text-xs">{paperDrilldown.total} papers</Badge>
+                            )}
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 w-7 p-0"
+                            onClick={() => setPaperDrilldown(null)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        {isLoadingPapers ? (
+                          <div className="p-6 text-center">
+                            <Loader2 className="h-5 w-5 mx-auto animate-spin text-chemours-red" />
+                          </div>
+                        ) : paperDrilldown?.papers && (
+                          <div className="max-h-[320px] overflow-y-auto divide-y divide-gray-100">
+                            {paperDrilldown.papers.map((paper, i) => (
+                              <div key={paper.pmid || i} className="px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <Badge
+                                        className="text-[10px] px-1.5 py-0"
+                                        style={{
+                                          backgroundColor: SENTIMENT_COLORS[paper.category.toLowerCase()] || "#9ca3af",
+                                          color: ["celebration", "utility", "detection"].includes(paper.category.toLowerCase()) ? "#1f2937" : "#ffffff",
+                                        }}
+                                      >
+                                        {SENTIMENT_LABELS[paper.category.toLowerCase()] || paper.category}
+                                      </Badge>
+                                      {paper.confidence >= 0.8 && (
+                                        <span className="text-[10px] text-gray-400">High confidence</span>
+                                      )}
+                                    </div>
+                                    <p className="text-sm text-gray-800 leading-snug">{paper.title}</p>
+                                    <p className="text-xs text-gray-400 mt-1">
+                                      {paper.journal}
+                                      {paper.reasoning && (
+                                        <span className="text-gray-300"> &mdash; {paper.reasoning}</span>
+                                      )}
+                                    </p>
+                                  </div>
+                                  {paper.pmid && (
+                                    <a
+                                      href={`https://pubmed.ncbi.nlm.nih.gov/${paper.pmid}/`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex-shrink-0 text-blue-500 hover:text-blue-700 transition-colors"
+                                      title="View on PubMed"
+                                    >
+                                      <ExternalLink className="h-3.5 w-3.5" />
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
                   </CardContent>

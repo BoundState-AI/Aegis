@@ -225,7 +225,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -1.0,
-      "normalized_sentiment": -0.333
+      "normalized_sentiment": -0.5
     },
     {
       "year": 2016,
@@ -241,7 +241,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -2.5,
-      "normalized_sentiment": -0.417
+      "normalized_sentiment": -0.625
     },
     {
       "year": 2017,
@@ -257,7 +257,7 @@
         "reckoning": 0
       },
       "cumulative_sentiment": -3.5,
-      "normalized_sentiment": -0.438
+      "normalized_sentiment": -0.7
     },
     {
       "year": 2018,
@@ -273,7 +273,7 @@
         "reckoning": 1
       },
       "cumulative_sentiment": -5.5,
-      "normalized_sentiment": -0.367
+      "normalized_sentiment": -0.5
     },
     {
       "year": 2019,
@@ -289,7 +289,7 @@
         "reckoning": 2
       },
       "cumulative_sentiment": -12.5,
-      "normalized_sentiment": -0.379
+      "normalized_sentiment": -0.455
     },
     {
       "year": 2020,
@@ -305,7 +305,7 @@
         "reckoning": 3
       },
       "cumulative_sentiment": -24.0,
-      "normalized_sentiment": -0.353
+      "normalized_sentiment": -0.387
     },
     {
       "year": 2021,
@@ -321,7 +321,7 @@
         "reckoning": 3
       },
       "cumulative_sentiment": -37.0,
-      "normalized_sentiment": -0.333
+      "normalized_sentiment": -0.444
     },
     {
       "year": 2022,
@@ -337,7 +337,7 @@
         "reckoning": 6
       },
       "cumulative_sentiment": -62.5,
-      "normalized_sentiment": -0.370
+      "normalized_sentiment": -0.472
     },
     {
       "year": 2023,
@@ -353,7 +353,7 @@
         "reckoning": 7
       },
       "cumulative_sentiment": -101.0,
-      "normalized_sentiment": -0.423
+      "normalized_sentiment": -0.583
     },
     {
       "year": 2024,
@@ -369,7 +369,7 @@
         "reckoning": 9
       },
       "cumulative_sentiment": -149.5,
-      "normalized_sentiment": -0.463
+      "normalized_sentiment": -0.622
     },
     {
       "year": 2025,
@@ -385,7 +385,7 @@
         "reckoning": 12
       },
       "cumulative_sentiment": -200.5,
-      "normalized_sentiment": -0.487
+      "normalized_sentiment": -0.663
     }
   ],
   "key_events": [
@@ -602,5 +602,6 @@
       "color": "#991b1b",
       "description": "Regulation, remediation, litigation"
     }
-  ]
+  ],
+  "sentiment_window": 3
 }
