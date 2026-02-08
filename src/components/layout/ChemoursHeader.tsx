@@ -40,7 +40,7 @@ const ChemoursHeader = ({ title, subtitle, children, helpContent }: ChemoursHead
             <img
               src="/chemours-logo.png"
               alt="Chemours"
-              className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto"
+              className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto"
             />
           </div>
         </div>
