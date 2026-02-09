@@ -13,9 +13,9 @@ import PortfolioAssessment from "./pages/PortfolioAssessment";
 import ExecutiveReports from "./pages/ExecutiveReports";
 import EvidenceChain from "./pages/EvidenceChain";
 import StructuralSimilarity from "./pages/StructuralSimilarity";
-import Ensurance from "./pages/Ensurance";
+// import Ensurance from "./pages/Ensurance";
 import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
-import { BoundStateLogo } from "./components/layout/BoundStateLogo";
+import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
 
@@ -33,7 +33,7 @@ const navItems = [
 ];
 
 // Routes that should NOT show the platform navigation
-const standaloneRoutes = ['/ensurance'];
+const standaloneRoutes: string[] = [];
 
 const Disclaimer = () => {
   const { t } = useTranslation();
@@ -78,8 +78,7 @@ const Navigation = () => {
               );
             })}
           </div>
-          <div className="flex-shrink-0 flex justify-end">
-            <BoundStateLogo variant="full" theme="light" size="sm" />
+          <div className="flex-shrink-0 w-24">
           </div>
         </div>
       </div>
@@ -105,7 +104,6 @@ const AppContent = () => {
         <Route path="/evidence" element={<EvidenceChain />} />
         <Route path="/analysis" element={<PFASAnalysis />} />
         <Route path="/tier1" element={<StructuralSimilarity />} />
-        <Route path="/ensurance" element={<Ensurance />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -115,15 +113,17 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

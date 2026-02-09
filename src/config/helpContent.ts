@@ -86,7 +86,7 @@ export const useHelpContent = () => {
       tips: t('help.litigation.tips', { returnObjects: true, defaultValue: [
         "Publication count is 'position' — velocity is papers/year, acceleration is how fast velocity changes",
         "Jerk (third derivative) spikes often precede regulatory action by 12–18 months",
-        "The GenX backtest is validated against real Chemours litigation timeline with 412 PubMed papers",
+        "The GenX analysis incorporates 412 peer-reviewed publications and regulatory filing data",
       ]}) as string[],
       relatedPages: [
         { name: t('nav.portfolio', 'Portfolio'), path: "/portfolio" },
@@ -351,7 +351,7 @@ const helpContent: Record<string, HelpContent> = {
     tips: [
       "Publication count is 'position' — velocity is papers/year, acceleration is how fast velocity changes",
       "Jerk (third derivative) spikes often precede regulatory action by 12–18 months",
-      "The GenX backtest is validated against real Chemours litigation timeline with 412 PubMed papers",
+      "The GenX analysis incorporates 412 peer-reviewed publications and regulatory filing data",
     ],
     relatedPages: [
       { name: "Portfolio", path: "/portfolio" },
