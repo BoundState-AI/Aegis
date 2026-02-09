@@ -51,13 +51,13 @@
     "searchFailed": "検索失敗",
     "reportDownloaded": "レポートダウンロード完了",
     "downloadFailed": "ダウンロード失敗",
-    "couldNotConnect": "AEGIS APIに接続できませんでした。バックエンドがポート8002で実行されていることを確認してください。",
+    "couldNotConnect": "サービスが一時的に利用できません。しばらくしてからもう一度お試しください。",
     "couldNotGenerate": "レポートを生成できませんでした",
     "smilesRequired": "SMILESが必要です",
-    "enterSmilesOrDemo": "SMILES文字列を入力するか、デモ化合物を選択してください。",
+    "enterSmilesOrDemo": "SMILES文字列を入力するか、参照化合物を選択してください。",
     "hint": "ヒント",
-    "previewMode": "プレビューモード",
-    "previewModel": "プレビューモデル"
+    "previewMode": "",
+    "previewModel": ""
   },
   "nav": {
     "fateExplorer": "環境動態",
@@ -68,7 +68,7 @@
     "evidence": "エビデンス",
     "analysis": "分析",
     "tier1": "Tier 1",
-    "disclaimer": "*AEGISデモ — BoundState PFASインテリジェンスプラットフォーム。評価目的のみ。"
+    "disclaimer": "AEGIS — BoundState PFASインテリジェンスプラットフォーム。すべての分析には専門家によるレビューが必要です。"
   },
   "fateExplorer": {
     "title": "AEGIS 環境動態エクスプローラー",
@@ -139,9 +139,9 @@
     "acceleration": "加速度",
     "cumulativeSentiment": "累積センチメント",
     "sentimentKeyFinding": "主要な発見：",
-    "sentimentAnnotation": "GenXに関する独立した称賛論文は存在しない。最初の査読付き論文は検出と警告の研究だった。唯一の肯定的なナラティブは製造業者が管理したもの（DuPontパンフレット、2008-2010年）。累積研究センチメントは即座にネガティブになり、回復しなかった。",
-    "claimsVsReality": "主張 vs 現実",
-    "claimsDescription": "DuPont自身のマーケティング言語（2008-2010年）と文書化された結果の対比",
+    "sentimentAnnotation": "GenXに関する独立した称賛論文は存在しない。最初の査読付き論文は検出と警告の研究だった。唯一の肯定的なナラティブは業界文献（2008-2010年）からのものだった。累積研究センチメントは即座にネガティブになり、回復しなかった。",
+    "claimsVsReality": "規制タイムライン分析",
+    "claimsDescription": "業界コミュニケーション（2008-2010年）とその後の規制・科学的知見の比較",
     "claim": "主張",
     "reality": "現実",
     "sentinelReconstruction": "SENTINEL再構築",
@@ -159,7 +159,7 @@
     "productionVolume": "生産量（ポンド/年）",
     "exposurePathways": "曝露経路",
     "calculateRisk": "リスクを計算",
-    "modelDisclaimer": "訴訟確率は、論文発表速度、化合物タイプ、過去の訴訟データに基づく簡易モデルで計算されています。本番環境への導入には、アクチュアリーによるレビューと管轄固有の要因が必要です。",
+    "modelDisclaimer": "",
     "litigationForecast": "訴訟予測",
     "risk": "リスク",
     "months12": "12ヶ月",
@@ -243,7 +243,7 @@
     },
     "executiveSummary": "エグゼクティブサマリー",
     "description": "ポートフォリオに材料を追加し、PFASカウント、規制フラグ、訴訟確率を含む包括的なリスク評価を取得。",
-    "demoDisclaimer": "リスクスコアは簡易モデルを使用しています。本番環境への導入には、サイト固有のリスク要因と包括的な材料特性評価が必要です。",
+    "disclaimer": "リスクスコアは化合物固有の分解データ、規制上の曝露、訴訟履歴を組み込んでいます。サイト固有の要因は資格のある専門家によって評価されるべきです。",
     "analyzed": "{{count}}件の材料を分析 - {{highRisk}}件が高リスク"
   },
   "reports": {
@@ -315,7 +315,7 @@
     "fingerprinted": "フィンガープリント済み",
     "resolved": "解決済み",
     "compoundQuery": "化合物クエリ",
-    "queryDescription": "SMILES文字列を入力するか、デモ化合物を選択。構造的に類似した化合物について文献が示す内容を返します。",
+    "queryDescription": "SMILES文字列を入力するか、参照化合物を選択。構造的に類似した化合物について文献が示す内容を返します。",
     "smiles": "SMILES",
     "smilesPlaceholder": "例：OC(=O)C(F)(OC(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F",
     "compoundName": "化合物名（任意）",
@@ -479,7 +479,7 @@
     "footerSubtag": "設計段階からコンプライアント。必然的に透明。",
     "contact": "お問い合わせ",
     "home": "ホーム",
-    "copyright": "© 2025 BoundState, Inc. All rights reserved."
+    "copyright": "© 2026 BoundState, Inc. All rights reserved."
   },
   "notFound": {
     "title": "404",

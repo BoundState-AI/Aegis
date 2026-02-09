@@ -346,7 +346,7 @@ const LitigationRisk = () => {
       if (res.ok) {
         const data = await res.json();
         setAvailableBacktests(data.available_backtests || []);
-        // Default to PFOA if available (stronger validation case)
+        // Default to PFOA if available
         if (data.available_backtests?.some((b: BacktestSummary) => b.compound_id === "pfoa")) {
           setSelectedCompound("pfoa");
         } else if (data.available_backtests?.length > 0) {
@@ -486,7 +486,7 @@ const LitigationRisk = () => {
       </ChemoursHeader>
 
       <main className="container mx-auto px-4 py-8 space-y-8">
-        <Tabs defaultValue="casestudy">
+        <Tabs defaultValue="forecast">
           <TabsList className="bg-white border border-gray-200 shadow-sm">
             <TabsTrigger value="casestudy" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
               <Eye className="mr-2 h-4 w-4" />
@@ -1114,14 +1114,6 @@ const LitigationRisk = () => {
               <div className="lg:col-span-2 space-y-6">
                 {forecast ? (
                   <>
-                    {/* Model Disclaimer Banner */}
-                    <Alert className="border-amber-200 bg-amber-50">
-                      <Info className="h-4 w-4 text-amber-600" />
-                      <AlertDescription className="text-amber-800 text-sm">
-                        <strong>{t('common.previewModel')}:</strong> {t('litigation.modelDisclaimer')}
-                      </AlertDescription>
-                    </Alert>
-
                     {/* Risk Summary */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>

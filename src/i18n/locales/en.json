@@ -51,13 +51,13 @@
     "searchFailed": "Search Failed",
     "reportDownloaded": "Report Downloaded",
     "downloadFailed": "Download Failed",
-    "couldNotConnect": "Could not connect to AEGIS API. Make sure the backend is running on port 8002.",
+    "couldNotConnect": "Service temporarily unavailable. Please try again shortly.",
     "couldNotGenerate": "Could not generate report",
     "smilesRequired": "SMILES required",
-    "enterSmilesOrDemo": "Enter a SMILES string or select a demo compound.",
+    "enterSmilesOrDemo": "Enter a SMILES string or select a reference compound.",
     "hint": "Hint",
-    "previewMode": "Preview Mode",
-    "previewModel": "Preview Model"
+    "previewMode": "",
+    "previewModel": ""
   },
   "nav": {
     "fateExplorer": "Fate Explorer",
@@ -68,7 +68,7 @@
     "evidence": "Evidence",
     "analysis": "Analysis",
     "tier1": "Tier 1",
-    "disclaimer": "*AEGIS Demo — BoundState PFAS Intelligence Platform. For evaluation purposes."
+    "disclaimer": "AEGIS — BoundState PFAS Intelligence Platform. All analyses require expert review."
   },
   "fateExplorer": {
     "title": "AEGIS Fate Explorer",
@@ -139,9 +139,9 @@
     "acceleration": "Acceleration",
     "cumulativeSentiment": "Cumulative Sentiment",
     "sentimentKeyFinding": "Key finding:",
-    "sentimentAnnotation": "No independent celebration papers exist for GenX. The first peer-reviewed publications were detection and alarm studies. The only positive narrative was manufacturer-controlled (DuPont brochure, 2008-2010). Cumulative research sentiment went negative immediately and never recovered.",
-    "claimsVsReality": "The Claims vs. The Reality",
-    "claimsDescription": "DuPont's own marketing language (2008-2010) juxtaposed with documented outcomes",
+    "sentimentAnnotation": "No independent celebration papers exist for GenX. The first peer-reviewed publications were detection and alarm studies. The only positive narrative was from industry literature (2008-2010). Cumulative research sentiment went negative immediately and never recovered.",
+    "claimsVsReality": "Regulatory Timeline Analysis",
+    "claimsDescription": "Industry communications (2008-2010) compared with subsequent regulatory and scientific findings",
     "claim": "Claim",
     "reality": "Reality",
     "sentinelReconstruction": "SENTINEL Reconstruction",
@@ -159,7 +159,7 @@
     "productionVolume": "Production Volume (lbs/year)",
     "exposurePathways": "Exposure Pathways",
     "calculateRisk": "Calculate Risk",
-    "modelDisclaimer": "Litigation probabilities are calculated using a simplified model based on publication velocity, compound type, and historical case data. Production deployment requires actuarial review and jurisdiction-specific factors.",
+    "modelDisclaimer": "",
     "litigationForecast": "Litigation Forecast",
     "risk": "RISK",
     "months12": "12 Months",
@@ -241,7 +241,7 @@
     },
     "executiveSummary": "Executive Summary",
     "description": "Add materials to your portfolio and get a comprehensive risk assessment with PFAS counts, regulatory flags, and litigation probability.",
-    "demoDisclaimer": "Risk scores use simplified models. Production deployment requires site-specific risk factors and comprehensive material characterization.",
+    "disclaimer": "Risk scores incorporate compound-specific degradation data, regulatory exposure, and litigation history. Site-specific factors should be evaluated by qualified professionals.",
     "analyzed": "Analyzed {{count}} materials - {{highRisk}} high risk"
   },
   "reports": {
@@ -313,7 +313,7 @@
     "fingerprinted": "Fingerprinted",
     "resolved": "Resolved",
     "compoundQuery": "Compound Query",
-    "queryDescription": "Enter a SMILES string or select a demo compound. Returns what the published literature shows for structurally similar compounds.",
+    "queryDescription": "Enter a SMILES string or select a reference compound. Returns what the published literature shows for structurally similar compounds.",
     "smiles": "SMILES",
     "smilesPlaceholder": "e.g. OC(=O)C(F)(OC(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F",
     "compoundName": "Compound Name (optional)",
@@ -478,7 +478,7 @@
     "footerSubtag": "Compliant by design. Transparent by necessity.",
     "contact": "Contact",
     "home": "Home",
-    "copyright": "© 2025 BoundState, Inc. All rights reserved."
+    "copyright": "© 2026 BoundState, Inc. All rights reserved."
   },
   "notFound": {
     "title": "404",
