@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Analytics } from "@vercel/analytics/react";
 import NotFound from "./pages/NotFound";
 import PFASAnalysis from "./pages/PFASAnalysis";
 import FateExplorer from "./pages/FateExplorer";
@@ -122,6 +123,7 @@ const App = () => (
       <BrowserRouter>
         <AppContent />
       </BrowserRouter>
+      <Analytics />
     </TooltipProvider>
   </QueryClientProvider>
 );
