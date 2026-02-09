@@ -129,10 +129,10 @@ interface Tier2Rule {
 }
 
 // ---------------------------------------------------------------------------
-// Demo compounds with known SMILES
+// Reference compounds with known SMILES
 // ---------------------------------------------------------------------------
 
-const DEMO_COMPOUNDS: Array<{ name: string; smiles: string }> = [
+const REFERENCE_COMPOUNDS: Array<{ name: string; smiles: string }> = [
   { name: "GenX", smiles: "OC(=O)C(F)(OC(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F" },
   { name: "PFOA", smiles: "OC(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F" },
   { name: "PFOS", smiles: "OS(=O)(=O)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F" },
@@ -170,8 +170,8 @@ const StructuralSimilarity = () => {
   const { toast } = useToast();
   const helpContent = useHelpContent();
   const [isLoading, setIsLoading] = useState(false);
-  const [smiles, setSmiles] = useState(DEMO_COMPOUNDS[0].smiles); // Default to GenX
-  const [compoundName, setCompoundName] = useState(DEMO_COMPOUNDS[0].name);
+  const [smiles, setSmiles] = useState(REFERENCE_COMPOUNDS[0].smiles); // Default to GenX
+  const [compoundName, setCompoundName] = useState(REFERENCE_COMPOUNDS[0].name);
   const [result, setResult] = useState<Tier1Result | null>(null);
   const [summary, setSummary] = useState<Tier1Summary | null>(null);
   const [showEvidence, setShowEvidence] = useState(false);
@@ -189,7 +189,7 @@ const StructuralSimilarity = () => {
   useEffect(() => {
     loadSummary();
     loadTier2Coverage();
-    // Auto-query GenX on mount
+    // Auto-query on mount
     handleQuery();
   }, []);
 
@@ -291,7 +291,7 @@ const StructuralSimilarity = () => {
     } catch (error: any) {
       toast({
         title: t('common.queryFailed'),
-        description: error.message || t('tier1.couldNotConnect'),
+        description: t('tier1.couldNotConnect'),
         variant: "destructive",
       });
     } finally {
@@ -370,7 +370,7 @@ const StructuralSimilarity = () => {
             <div>
               <Label className="text-gray-700 text-xs">{t('tier1.quickSelect')}</Label>
               <div className="flex flex-wrap gap-2 mt-1">
-                {DEMO_COMPOUNDS.map((c) => (
+                {REFERENCE_COMPOUNDS.map((c) => (
                   <Badge
                     key={c.name}
                     variant={smiles === c.smiles ? "default" : "outline"}
