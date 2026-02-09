@@ -486,7 +486,7 @@ const LitigationRisk = () => {
       </ChemoursHeader>
 
       <main className="container mx-auto px-4 py-8 space-y-8">
-        <Tabs defaultValue="forecast">
+        <Tabs defaultValue="casestudy">
           <TabsList className="bg-white border border-gray-200 shadow-sm">
             <TabsTrigger value="casestudy" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
               <Eye className="mr-2 h-4 w-4" />
