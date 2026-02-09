@@ -16,6 +16,7 @@ import StructuralSimilarity from "./pages/StructuralSimilarity";
 // import Ensurance from "./pages/Ensurance";
 import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { BoundStateLogo } from "./components/layout/BoundStateLogo";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
 
@@ -78,7 +79,8 @@ const Navigation = () => {
               );
             })}
           </div>
-          <div className="flex-shrink-0 w-24">
+          <div className="flex-shrink-0 w-24 flex justify-end">
+            <BoundStateLogo variant="icon" theme="light" size="sm" />
           </div>
         </div>
       </div>
