@@ -18,6 +18,7 @@ import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Finge
 import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
@@ -121,6 +122,7 @@ const App = () => (
         <BrowserRouter>
           <AppContent />
         </BrowserRouter>
+        <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
   </ErrorBoundary>
