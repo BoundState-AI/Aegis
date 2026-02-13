@@ -35,13 +35,8 @@ const ChemoursHeader = ({ title, subtitle, children, helpContent }: ChemoursHead
             </div>
           )}
 
-          {/* Right side - Chemours Branding */}
+          {/* Right side spacer */}
           <div className="flex items-center gap-2">
-            <img
-              src="/chemours-logo.png"
-              alt="Chemours"
-              className="h-10 md:h-12 w-auto"
-            />
           </div>
         </div>
       </div>
