@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "aegis": {
+      "type": "stdio",
+      "command": "D:\\BoundState\\.venv\\Scripts\\python.exe",
+      "args": ["-u", "D:\\BoundState\\mcp-servers\\aegis\\server.py"],
+      "env": {
+        "PYTHONUNBUFFERED": "1",
+        "AEGIS_API_URL": "http://localhost:8002"
+      }
+    },
+    "mira": {
+      "type": "stdio",
+      "command": "D:\\BoundState\\.venv\\Scripts\\python.exe",
+      "args": ["-u", "D:\\BoundState\\mcp-servers\\mira\\server.py"],
+      "env": {
+        "PYTHONUNBUFFERED": "1",
+        "MIRA_API_URL": "http://localhost:8001"
+      }
+    }
+  }
+}

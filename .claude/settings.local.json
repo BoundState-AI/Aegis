@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Add not-in-scope message for unknown compounds in Fate Explorer\n\n- Add compound_found field to API response to distinguish between\n  \"compound not in database\" vs \"no pathways match filters\"\n- Display helpful message when querying unknown compounds:\n  \"This compound is not in the AEGIS database...\"\n- Show filter adjustment guidance when compound exists but has no\n  matching pathways\n- Add i18n translations for English and Japanese\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Filter Fate Explorer dropdown to fluorinated compounds only\n\nUses RDKit chemistry to detect fluorine atoms \\(atomic number 9\\) from SMILES,\nwith string-pattern fallback for unresolved compounds. Removes 74 non-fluorinated\nentries \\(pharmaceuticals, dyes, plastics, intermediates\\) from 260 -> 186 compounds.\n\n- Add _is_fluorinated_compound\\(\\) with RDKit-first approach\n- Load SMILES from smiles_enrichment.json and compound_registry_clean.json\n- Exclude intermediate labels \\(IM2, INT3, S1, etc.\\) via regex\n- Log before/after filter statistics on startup\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npm run build:*)",
+      "Bash(npx vite build:*)",
+      "Bash(npm install)",
+      "Bash(git commit:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Add loading indicators to SENTINEL and backend keep-alive\n\n- Add loading spinners to SENTINEL compound buttons \\(PFOA/GenX\\) during data fetch\n- Add initial \"Loading case studies...\" state on page load\n- Create useBackendWarmup hook to ping /health every 4 minutes\n- Prevents Railway cold start delays by keeping backend warm\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Add visible DOI links to pathway cards\n\nDisplay source DOIs directly on pathway cards below the evidence\nstrength bar, making every claim traceable at a glance. Shows up to 3\nDOI badges with a \"+N more\" button for overflow that expands the\nevidence section.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git config:*)",
+      "Bash(powershell -Command \"Get-Content ''C:\\\\Users\\\\Jnwil\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--BoundState-boundstate-aegis\\\\tasks\\\\b05f61f.output'' | Select-Object -First 50\")",
+      "Bash(git fetch:*)",
+      "Bash(findstr:*)",
+      "Bash(gh api:*)",
+      "Bash(copy:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

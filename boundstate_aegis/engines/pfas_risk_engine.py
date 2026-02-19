@@ -31,15 +31,7 @@ if TYPE_CHECKING:
 from boundstate_aegis.config import HIGH_TEMP_THRESHOLD_C
 from boundstate_aegis.models.risk_models import RiskFinding, RiskAssessmentResult
 
-try:
-    from boundstate_core.exceptions import SafetyCriticalError
-except ImportError:
-    # Fallback if boundstate_core not installed
-    class SafetyCriticalError(Exception):
-        """Safety-critical error fallback."""
-        def __init__(self, message: str, context: dict | None = None):
-            super().__init__(message)
-            self.context = context or {}
+from boundstate_core.exceptions import SafetyCriticalError
 
 logger = logging.getLogger(__name__)
 
