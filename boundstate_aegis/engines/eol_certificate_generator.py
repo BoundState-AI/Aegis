@@ -21,17 +21,16 @@ Oracle 1: ClaudeOpus 4.5 <noreply@anthropic.com>
 
 from __future__ import annotations
 
+import json
 import logging
-from datetime import datetime
+import threading
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from boundstate_aegis.knowledge.graph_builder import build_graph, PFASKnowledgeGraph
-from boundstate_aegis.knowledge.graph_queries import (
-    trace_pathways,
-    get_downstream_products,
-    get_upstream_sources,
-)
+from boundstate_aegis.knowledge.graph_queries import trace_pathways
 from boundstate_aegis.knowledge.destruction_queries import (
     get_recommended_technology,
     get_chemours_capability_gap,
@@ -39,8 +38,45 @@ from boundstate_aegis.knowledge.destruction_queries import (
     get_technology,
 )
 from boundstate_aegis.models.destruction_technology import TechnologyRecommendation
+from boundstate_aegis.config import PFAS_FATE_V2_JSON, CONFIDENCE_MAPPING
 
 logger = logging.getLogger(__name__)
+
+# Thread-safe cache for pfas_fate_v2.json
+_fate_cache: Optional[Dict[str, Any]] = None
+_fate_cache_lock = threading.Lock()
+
+# Complete mapping from normalized technology names to YAML IDs
+_TECH_ID_MAP = {
+    "hydrothermal_alkaline_treatment": "halt",
+    "supercritical_water_oxidation": "scwo",
+    "plasma_arc_treatment": "plasma",
+    "high_temperature_incineration": "thermal_oxidizer",
+    "high-temperature_incineration": "thermal_oxidizer",
+    "electrochemical_oxidation": "electrochemical",
+    "clarostech_uv_photochemical_destruction": "clarostech_uv",
+    "clarostech_uv-photochemical_destruction": "clarostech_uv",
+    "clarostech": "clarostech_uv",
+}
+
+
+def _get_fate_data() -> Dict[str, Any]:
+    """Load and cache pfas_fate_v2.json (thread-safe)."""
+    global _fate_cache
+    if _fate_cache is not None:
+        return _fate_cache
+    with _fate_cache_lock:
+        if _fate_cache is not None:
+            return _fate_cache
+        if PFAS_FATE_V2_JSON.exists():
+            with open(PFAS_FATE_V2_JSON, encoding="utf-8") as f:
+                _fate_cache = json.load(f)
+            logger.info("EOL: Loaded %d pathways from pfas_fate_v2.json",
+                        len(_fate_cache.get("pathways", [])))
+        else:
+            logger.warning("EOL: pfas_fate_v2.json not found at %s", PFAS_FATE_V2_JSON)
+            _fate_cache = {"pathways": [], "metadata": {}}
+    return _fate_cache
 
 
 # =============================================================================
@@ -166,7 +202,7 @@ class EOLCertificateGenerator:
         Returns:
             Complete EOLProofCertificate with all evidence
         """
-        cert_id = f"EOL-{precursor.upper()}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        cert_id = f"EOL-{precursor.upper()}-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
 
         # Trace degradation pathway
         pathway_steps, all_citations = self._trace_pathway(precursor, target_product)
@@ -176,6 +212,11 @@ class EOLCertificateGenerator:
 
         # Get alternative and non-viable technologies
         tech_options = find_destruction_options(target_product, phase="aqueous", min_trl=1)
+        _exclude = set()
+        if destruction_proof:
+            _exclude.add(destruction_proof.technology)
+            if destruction_proof.technology_full_name:
+                _exclude.add(destruction_proof.technology_full_name)
         alternatives = [
             {
                 "technology": o["technology_name"],
@@ -183,7 +224,7 @@ class EOLCertificateGenerator:
                 "dre": o["dre"],
             }
             for o in tech_options
-            if o["viable"] and o["technology_name"] != (destruction_proof.technology if destruction_proof else "")
+            if o["viable"] and o["technology_name"] not in _exclude
         ][:3]
 
         not_viable = [
@@ -195,7 +236,8 @@ class EOLCertificateGenerator:
         # Determine mineralization products
         mineralization_products = []
         if destruction_proof:
-            tech = get_technology(destruction_proof.technology.lower().replace(" ", "_").replace("-", "_"))
+            raw_id = destruction_proof.technology.lower().replace(" ", "_").replace("-", "_")
+            tech = get_technology(_TECH_ID_MAP.get(raw_id, raw_id))
             if tech and tech.products:
                 mineralization_products = tech.products.get("primary", [])
 
@@ -217,7 +259,7 @@ class EOLCertificateGenerator:
 
         return EOLProofCertificate(
             certificate_id=cert_id,
-            generated_at=datetime.utcnow().isoformat() + "Z",
+            generated_at=datetime.now(timezone.utc).isoformat() + "Z",
             precursor=precursor,
             precursor_type=precursor_type,
             degradation_pathway=pathway_steps,
@@ -239,61 +281,110 @@ class EOLCertificateGenerator:
         precursor: str,
         target_product: str,
     ) -> tuple[List[PathwayStep], List[str]]:
-        """Trace degradation pathway from precursor to target."""
+        """Trace degradation pathway from precursor to target using pfas_fate_v2.json."""
         pathway_steps: List[PathwayStep] = []
         all_citations: List[str] = []
 
-        # Try direct path first
-        paths = trace_pathways(self.graph, precursor, targets=[target_product], max_depth=5)
+        # Primary source: pfas_fate_v2.json (732 aggregated pathways)
+        fate_data = _get_fate_data()
+        precursor_upper = precursor.upper()
+        target_upper = target_product.upper()
 
-        if paths:
-            # Use shortest path
-            best_path = min(paths, key=lambda p: len(p["path"]))
-            for i, condition in enumerate(best_path.get("conditions", [])):
-                step_str = condition.get("step", "")
-                if " -> " in step_str:
-                    source, product = step_str.split(" -> ", 1)
-                else:
-                    continue
+        matching_pathways = [
+            p for p in fate_data.get("pathways", [])
+            if p.get("precursor", "").upper() == precursor_upper
+            and p.get("product", "").upper() == target_upper
+        ]
 
-                # Extract citations from evidence_refs
-                step_citations = []
-                for ref in best_path.get("evidence_refs", []):
-                    source_str = ref.get("source", "")
-                    if source_str and source_str.startswith("DOI:"):
-                        step_citations.append(source_str)
-                    elif ref.get("notes"):
-                        step_citations.append(ref["notes"])
+        if matching_pathways:
+            # Use the pathway with best evidence score
+            best = max(matching_pathways, key=lambda p: p.get("evidence_score", 0))
 
-                pathway_steps.append(PathwayStep(
-                    source=source,
-                    product=product,
-                    mechanism=condition.get("mechanism") or "unknown",
-                    conditions={
-                        k: v for k, v in condition.items()
-                        if k not in ["step", "mechanism"] and v is not None
-                    },
-                    confidence=best_path.get("confidence", 1.0),
-                    citations=step_citations,
-                ))
-                all_citations.extend(step_citations)
-        else:
-            # No direct path - check if we have them in graph
-            logger.warning(
-                "No direct pathway found from %s to %s",
-                precursor, target_product
+            # Extract DOI citations from evidence_refs
+            step_citations = []
+            for ref in best.get("evidence_refs", []):
+                doi = ref.get("doi")
+                if doi:
+                    step_citations.append(f"DOI:{doi}")
+            # Also pull from source_dois
+            for doi in best.get("source_dois", []):
+                cite = f"DOI:{doi}"
+                if cite not in step_citations:
+                    step_citations.append(cite)
+
+            # Build conditions dict from available data
+            conditions: Dict[str, Any] = {}
+            if best.get("temp_c_median") is not None:
+                conditions["temperature_c"] = best["temp_c_median"]
+            if best.get("temp_c_range"):
+                conditions["temp_range_c"] = best["temp_c_range"]
+            if best.get("yield_percent_median") is not None:
+                conditions["yield_percent"] = best["yield_percent_median"]
+            if best.get("temp_bucket"):
+                conditions["temp_bucket"] = best["temp_bucket"]
+
+            # Map confidence string to float
+            conf_str = best.get("evidence_refs", [{}])[0].get("confidence", "medium") if best.get("evidence_refs") else "medium"
+            confidence = CONFIDENCE_MAPPING.get(conf_str, 0.5)
+
+            pathway_steps.append(PathwayStep(
+                source=best.get("precursor", precursor),
+                product=best.get("product", target_product),
+                mechanism=best.get("mechanism", "unknown"),
+                conditions=conditions if conditions else None,
+                confidence=confidence,
+                citations=step_citations,
+            ))
+            all_citations.extend(step_citations)
+
+            logger.info(
+                "EOL: Found pathway %s → %s via %s (score=%.2f, %d citations)",
+                precursor, target_product, best.get("mechanism"),
+                best.get("evidence_score", 0), len(step_citations),
             )
-            # Add manual pathway for known relationships
-            if precursor.upper() in ["HFO-1234YF", "OPTEON YF", "HFO"] and target_product.upper() == "TFA":
-                pathway_steps.append(PathwayStep(
-                    source=precursor,
-                    product="TFA",
-                    mechanism="atmospheric_oxidation",
-                    conditions={"atmosphere": "ambient", "trigger": "OH radical"},
-                    confidence=0.9,
-                    citations=["DOI:10.5194/acp-24-4341-2024"],
-                ))
-                all_citations.append("DOI:10.5194/acp-24-4341-2024")
+        else:
+            # Fallback: try knowledge graph
+            logger.info("EOL: No fate_v2 pathway for %s → %s, trying knowledge graph", precursor, target_product)
+            paths = trace_pathways(self.graph, precursor, targets=[target_product], max_depth=5)
+
+            if paths:
+                best_path = min(paths, key=lambda p: len(p["path"]))
+                for condition in best_path.get("conditions", []):
+                    step_str = condition.get("step", "")
+                    if " -> " not in step_str:
+                        continue
+                    source, product = step_str.split(" -> ", 1)
+                    step_citations = []
+                    for ref in best_path.get("evidence_refs", []):
+                        source_str = ref.get("source", "")
+                        if source_str and source_str.startswith("DOI:"):
+                            step_citations.append(source_str)
+
+                    pathway_steps.append(PathwayStep(
+                        source=source,
+                        product=product,
+                        mechanism=condition.get("mechanism") or "unknown",
+                        conditions={
+                            k: v for k, v in condition.items()
+                            if k not in ["step", "mechanism"] and v is not None
+                        },
+                        confidence=best_path.get("confidence", 1.0),
+                        citations=step_citations,
+                    ))
+                    all_citations.extend(step_citations)
+            else:
+                # Last resort: hardcoded HFO-1234yf → TFA
+                logger.warning("No pathway found from %s to %s in any source", precursor, target_product)
+                if precursor_upper in ["HFO-1234YF", "OPTEON YF", "HFO"] and target_upper == "TFA":
+                    pathway_steps.append(PathwayStep(
+                        source=precursor,
+                        product="TFA",
+                        mechanism="atmospheric_oxidation",
+                        conditions={"atmosphere": "ambient", "trigger": "OH radical"},
+                        confidence=0.9,
+                        citations=["DOI:10.5194/acp-24-4341-2024"],
+                    ))
+                    all_citations.append("DOI:10.5194/acp-24-4341-2024")
 
         return pathway_steps, all_citations
 
@@ -306,15 +397,7 @@ class EOLCertificateGenerator:
 
         # Get detailed technology info
         tech_id = recommendation.recommended_technology.lower().replace(" ", "_").replace("-", "_")
-        # Map common names to IDs
-        tech_id_map = {
-            "hydrothermal_alkaline_treatment": "halt",
-            "supercritical_water_oxidation": "scwo",
-            "plasma_arc_treatment": "plasma",
-            "high_temperature_incineration": "thermal_oxidizer",
-            "electrochemical_oxidation": "electrochemical",
-        }
-        tech_id = tech_id_map.get(tech_id, tech_id)
+        tech_id = _TECH_ID_MAP.get(tech_id, tech_id)
         tech = get_technology(tech_id)
 
         # Build citations list
@@ -369,10 +452,7 @@ class EOLCertificateGenerator:
         # Get recommended technology to check ownership
         recommendation = get_recommended_technology(compound, phase="aqueous")
         tech_id = recommendation.recommended_technology.lower().replace(" ", "_").replace("-", "_")
-        tech_id_map = {
-            "hydrothermal_alkaline_treatment": "halt",
-        }
-        tech_id = tech_id_map.get(tech_id, tech_id)
+        tech_id = _TECH_ID_MAP.get(tech_id, tech_id)
         tech = get_technology(tech_id)
 
         owns_tech = False
@@ -399,8 +479,20 @@ class EOLCertificateGenerator:
 
     def _is_pfas(self, compound: str) -> bool:
         """Check if compound is classified as PFAS."""
+        # Try knowledge graph first
         node_attrs = self.graph.get_node_attributes(compound)
-        return node_attrs.get("is_pfas", False)
+        if node_attrs.get("is_pfas"):
+            return True
+        # Fallback: check pfas_fate_v2.json compounds dict
+        fate_data = _get_fate_data()
+        compounds = fate_data.get("compounds", {})
+        comp_data = compounds.get(compound) or compounds.get(compound.upper())
+        if comp_data:
+            return comp_data.get("is_pfas", False)
+        # TFA is always PFAS for our purposes
+        if compound.upper() == "TFA":
+            return True
+        return False
 
     def _generate_conclusion(
         self,
@@ -425,7 +517,7 @@ class EOLCertificateGenerator:
                 f"(TRL {destruction.trl}) with demonstrated mineralization to {', '.join(destruction.products)}."
             )
             if destruction.dre:
-                parts.append(f"Destruction/Removal Efficiency: >={destruction.dre*100:.1f}%.")
+                parts.append(f"Destruction/Removal Efficiency: >={destruction.dre*100:.2f}%.")
         else:
             parts.append(f"No viable destruction technology identified for {terminal}.")
 

@@ -351,14 +351,110 @@ technologies:
       owns_ip: false
       notes: "Not viable for TFA destruction"
 
+  # ===========================================================================
+  # ClarosTech UV-Photochemical Destruction
+  # ===========================================================================
+  - id: clarostech_uv
+    name: "ClarosTech UV-Photochemical Destruction"
+    acronym: "ClarosTech"
+    mechanism: uv_photochemical
+
+    developer: "Claros Technologies Inc."
+    commercial_operator: "Claros Technologies Inc."
+    commercial_operators:
+      - "Claros Technologies Inc."
+    ip_holder: "Claros Technologies Inc."
+
+    trl: 8  # Commercial - Daikin operating at scale
+
+    effective_for:
+      - compound_class: "ultra-short-chain PFAS"
+        includes: ["TFA", "PFPrA"]
+        phase: aqueous
+        min_dre: 0.9999
+        conditions:
+          temperature_c: "near ambient"
+          pressure: "near atmospheric"
+          method: "UV-photochemical"
+          throughput: ">30 GPM single pass"
+        notes: "Claims 99.99% destruction of all PFAS including ultra-short chain (C2+)"
+
+      - compound_class: "short-chain PFAS"
+        includes: ["PFBA", "PFPeA", "PFHxA", "PFBS"]
+        phase: aqueous
+        min_dre: 0.9999
+        conditions:
+          temperature_c: "near ambient"
+          pressure: "near atmospheric"
+        notes: "Treats all chain lengths at same conditions"
+
+      - compound_class: "long-chain PFAS"
+        includes: ["PFOA", "PFOS", "PFNA", "PFDA"]
+        phase: aqueous
+        min_dre: 0.9999
+        conditions:
+          temperature_c: "near ambient"
+          pressure: "near atmospheric"
+        notes: "Long, short and ultra-short chain all treated"
+
+    ineffective_for: []  # Claims effectiveness across all PFAS classes
+
+    products:
+      primary: ["fluoride_ion", "carbon"]
+      notes: "Complete defluorination - breaks C-F bond; validated by mass spectrometry and TOF analysis"
+
+    challenges:
+      - "No peer-reviewed DOIs published yet (validated by third-party lab)"
+      - "Evidence base is commercial validation, not academic literature"
+      - "Optimal for high-concentration streams (>500 ppb)"
+
+    evidence:
+      primary:
+        - source: "ClarosTech PFAS Destruction Brochure (April 2025)"
+          key_finding: "99.99% destruction of all PFAS types including ultra-short chain at >30 GPM single pass"
+          validation: "ISO/IEC 17025 accredited laboratory; independent third-party evaluations"
+      supporting:
+        - source: "Daikin commercial deployment"
+          key_finding: "Operating at scale for major fluorochemicals manufacturer"
+          validation: "Commercial reference site"
+      lab_accreditation:
+        - standard: "ISO/IEC 17025"
+          accreditor: "ANAB"
+          capabilities: ["EPA draft method 1633", "ultra-short chain custom methods", "total organofluorine (TOF)"]
+
+    costs:
+      capex_estimate: "Not disclosed"
+      opex_estimate: "Claims cost-effective at scale; low energy; near ambient conditions"
+      notes: "Positioning as upstream of filtration to reduce downstream costs by tens of millions annually"
+
+    chemours_position:
+      owns_technology: false
+      owns_ip: false
+      must_license_from: "Claros Technologies Inc."
+      forced_buyer: true
+      notes: "Competitor Daikin already using at scale - Chemours must license independently"
+
+    company_info:
+      address: "1600 Broadway St NE, Suite 100, Minneapolis, MN 55413"
+      phone: "+1 (612) 564-7050"
+      website: "clarostech.com"
+      ceo: "Michelle Bellanca"
+      bd_contact: "Dr. Doug Parker, VP Business Development"
+      bd_email: "doug@clarostech.com"
+      bd_phone: "+1 (651) 226-4006"
+      university_affiliation: "University of Minnesota"
+
 # =============================================================================
 # TECHNOLOGY COMPARISON MATRIX
 # =============================================================================
 comparison_matrix:
   tfa_destruction:
-    recommended: "halt"
-    reason: "Only technology with demonstrated TFA mineralization at mild conditions"
+    recommended: "clarostech_uv"
+    reason: "Highest TRL (8), claims 99.99% DRE for all PFAS including TFA, near-ambient conditions, Daikin reference at scale"
     alternatives:
+      - id: "halt"
+        viability: "recommended"
+        notes: "TRL 7, peer-reviewed DOIs (Austin 2024), demonstrated TFA mineralization at 150-250°C"
       - id: "scwo"
         viability: "possible"
         notes: "May work at higher temps (>650°C) but TFA is recalcitrant"
@@ -378,14 +474,18 @@ comparison_matrix:
       - "Separation technologies (IX, GAC, membranes)"
     lacks:
       - "Aqueous TFA destruction capability"
+      - "ClarosTech UV-photochemical technology (Daikin already using at scale)"
       - "HALT technology"
       - "SCWO technology"
     must_license:
+      - technology: "clarostech_uv"
+        from: "Claros Technologies Inc."
+        reason: "Highest TRL, near-ambient TFA destruction, competitor Daikin already licensed"
       - technology: "halt"
         from: "Aquagga"
-        reason: "Only demonstrated TFA mineralization"
+        reason: "Peer-reviewed TFA mineralization with published DOIs"
       - technology: "scwo"
         from: "374Water or Revive Environmental"
-        reason: "Alternative if HALT unavailable"
+        reason: "Alternative if HALT and ClarosTech unavailable"
     forced_buyer_status: true
-    notes: "Chemours must acquire/license destruction technology for TFA in wastewater"
+    notes: "Chemours must acquire/license destruction technology for TFA in wastewater. Competitor Daikin already operates ClarosTech at scale."

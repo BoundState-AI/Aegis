@@ -41,6 +41,7 @@ from boundstate_aegis.api.routes import (
     tier1_route,
     tier2_route,
     sentinel_route,
+    eol_certificate_route,
 )
 from boundstate_aegis import __version__
 
@@ -170,6 +171,11 @@ def create_app(
         sentinel_route.router,
         prefix="/api/sentinel",
         tags=["SENTINEL Early Warning"],
+    )
+    app.include_router(
+        eol_certificate_route.router,
+        prefix="/api/v1/eol",
+        tags=["EOL Proof Certificate"],
     )
 
     @app.get("/health")
