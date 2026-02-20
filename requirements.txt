@@ -1,6 +1,9 @@
 # AEGIS API Dependencies
 # Generated for Railway deployment
 
+# BoundState shared core
+boundstate-core @ git+https://github.com/BoundState-AI/boundstate-core.git@main
+
 # Core web framework
 fastapi>=0.100.0
 uvicorn[standard]>=0.20.0
