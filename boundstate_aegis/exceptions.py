@@ -21,7 +21,30 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 
 from __future__ import annotations
 
-from boundstate_core.exceptions import SafetyCriticalError
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+# Try to import from boundstate_core, fall back to local definition
+try:
+    from boundstate_core.exceptions import SafetyCriticalError
+except ImportError:
+    logger.debug("boundstate_core not available, using local SafetyCriticalError definition")
+
+    class SafetyCriticalError(Exception):
+        """
+        Exception for safety-critical errors in PFAS risk assessment.
+
+        This exception should be raised when:
+        - Data integrity issues are detected
+        - Critical pathway calculations fail
+        - Regulatory data is inconsistent or missing
+        """
+
+        def __init__(self, message: str, context: dict | None = None):
+            super().__init__(message)
+            self.context = context or {}
 
 
 class AEGISValidationError(Exception):
