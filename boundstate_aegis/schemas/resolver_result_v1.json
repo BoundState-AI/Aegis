@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ResolverResult",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "query_compound",
+    "direct_exposure",
+    "class_exposure",
+    "degradation_tree",
+    "inherited_exposure",
+    "total_exposure",
+    "threat_flags",
+    "metadata"
+  ],
+  "properties": {
+    "query_compound": {
+      "type": "object",
+      "required": ["preferred_name", "cas", "resolution_method"],
+      "properties": {
+        "preferred_name": { "type": "string" },
+        "cas": { "type": ["string", "null"] },
+        "smiles": { "type": ["string", "null"] },
+        "inchi_key": { "type": ["string", "null"] },
+        "compound_classes": { "type": "array", "items": { "type": "string" } },
+        "pfas_class": { "type": "boolean" },
+        "resolution_method": {
+          "type": "string",
+          "enum": [
+            "product_manifest",
+            "exact_cas",
+            "exact_inchikey",
+            "smiles_resolution",
+            "normalized_name",
+            "fuzzy_name",
+            "unresolved"
+          ]
+        },
+        "product_info": {
+          "type": ["object", "null"],
+          "properties": {
+            "product_name": { "type": "string" },
+            "manufacturer": { "type": "string" },
+            "segments": { "type": "array", "items": { "type": "string" } },
+            "revenue_exposure": { "type": "string" }
+          }
+        }
+      }
+    },
+    "direct_exposure": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/MatchedAssertion" }
+    },
+    "class_exposure": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/MatchedAssertion" }
+    },
+    "degradation_tree": {
+      "type": "object",
+      "required": ["root", "nodes", "total_nodes", "max_depth_reached"],
+      "properties": {
+        "root": { "type": "string" },
+        "nodes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DegradationNode" }
+        },
+        "total_nodes": { "type": "integer" },
+        "max_depth_reached": { "type": "integer" },
+        "truncated": { "type": "boolean" },
+        "cycles_detected": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "inherited_exposure": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/MatchedAssertion" }
+    },
+    "total_exposure": {
+      "type": "object",
+      "required": ["jurisdictions_affected", "assertions_triggered", "most_severe_id", "trajectory"],
+      "properties": {
+        "jurisdictions_affected": { "type": "integer" },
+        "assertions_triggered": { "type": "integer" },
+        "most_severe_id": { "type": "string" },
+        "trajectory": {
+          "type": "string",
+          "enum": ["STABLE", "INCREASING", "ACCELERATING", "CONVERGING"]
+        }
+      }
+    },
+    "threat_flags": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/ThreatFlag" }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["resolver_version", "graph_version", "assertion_version", "resolved_at", "resolve_duration_ms"],
+      "properties": {
+        "resolver_version": { "type": "string" },
+        "graph_version": { "type": "string" },
+        "assertion_version": { "type": "string" },
+        "manifest_version": { "type": "string" },
+        "resolved_at": { "type": "string", "format": "date-time" },
+        "resolve_duration_ms": { "type": "integer" },
+        "traversal_params": {
+          "type": "object",
+          "properties": {
+            "max_depth": { "type": "integer" },
+            "max_nodes": { "type": "integer" },
+            "max_branching": { "type": "integer" },
+            "min_confidence": { "type": "number" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CompoundIdentity": {
+      "type": "object",
+      "required": ["preferred_name"],
+      "properties": {
+        "preferred_name": { "type": "string" },
+        "cas": { "type": ["string", "null"] },
+        "smiles": { "type": ["string", "null"] },
+        "inchi_key": { "type": ["string", "null"] },
+        "compound_classes": { "type": "array", "items": { "type": "string" } },
+        "pfas_class": { "type": "boolean" }
+      }
+    },
+    "DegradationNode": {
+      "type": "object",
+      "required": [
+        "compound",
+        "depth",
+        "pathway_from_parent",
+        "edge_confidence",
+        "cumulative_confidence",
+        "regulatory_exposure"
+      ],
+      "properties": {
+        "compound": { "$ref": "#/definitions/CompoundIdentity" },
+        "depth": { "type": "integer" },
+        "pathway_from_parent": {
+          "type": "object",
+          "properties": {
+            "mechanism": {
+              "type": "string",
+              "enum": ["thermal", "atmospheric", "aqueous", "photolytic", "biological", "unknown"]
+            },
+            "conditions": { "type": "string" },
+            "parent_compound": { "type": "string" }
+          }
+        },
+        "edge_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "cumulative_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "citations": { "type": "array", "items": { "type": "string" } },
+        "regulatory_exposure": { "type": "array", "items": { "$ref": "#/definitions/MatchedAssertion" } },
+        "children": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "MatchedAssertion": {
+      "type": "object",
+      "required": ["assertion_id", "jurisdiction", "status", "match_tier", "match_type"],
+      "properties": {
+        "assertion_id": { "type": "string" },
+        "jurisdiction": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string", "enum": ["enforced", "proposed", "consultation", "adopted", "withdrawn"] },
+        "severity": { "type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"] },
+        "effective_date": { "type": ["string", "null"] },
+        "source_url": { "type": ["string", "null"] },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "match_tier": {
+          "type": "string",
+          "enum": ["exact_cas", "exact_inchikey", "normalized_name", "compound_class", "pfas_class"]
+        },
+        "match_type": { "type": "string", "enum": ["direct", "class", "inherited"] },
+        "matched_on": { "type": "string" },
+        "inherited_from": { "type": ["string", "null"] }
+      }
+    },
+    "ThreatFlag": {
+      "type": "object",
+      "required": ["flag_type", "severity", "score", "compound", "detail", "citations"],
+      "properties": {
+        "flag_type": {
+          "type": "string",
+          "enum": ["INHERITED_LIABILITY", "DESTRUCTION_TECH_GAP", "REGULATORY_ACCELERATION"]
+        },
+        "severity": { "type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM"] },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "compound": { "type": "string" },
+        "detail": { "type": "string" },
+        "citations": { "type": "array", "items": { "type": "string" } },
+        "human_review_required": { "type": "boolean" }
+      }
+    }
+  }
+}

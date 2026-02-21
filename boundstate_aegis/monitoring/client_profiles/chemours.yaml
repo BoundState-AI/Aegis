@@ -1,0 +1,52 @@
+chemours_exposure_profile:
+  company: "Chemours Company (The)"
+  ticker: "CC"
+  former_parent: "DuPont de Nemours"
+  spinoff_date: "2015-07-01"
+
+  products:
+    fluoropolymers:
+      brands: ["Teflon", "Nafion", "Viton"]
+      compounds: ["PTFE", "FEP", "PFA", "PVDF", "ETFE"]
+      revenue_exposure: "high"
+      eu_derogation_strategy: "RO3 critical-use exemptions"
+    genx:
+      chemical_name: "HFPO-DA"
+      facility: "Fayetteville Works, NC"
+      litigation_exposure: "critical"
+    titanium_dioxide:
+      brands: ["Ti-Pure"]
+      pfas_relevance: "low"
+
+  regulatory_exposure:
+    us_epa:
+      pfoa_mcl: "4 ppt"
+      pfos_mcl: "4 ppt"
+      genx_mcl: "10 ppt"
+      cercla: "PFOA/PFOS designated hazardous substances"
+      tsca: "PFAS reporting rule active"
+      impact: "critical"
+    eu:
+      echa_universal_restriction:
+        status: "Under review — RAC/SEAC opinions pending"
+        threat_level: "existential for fluoropolymer segment"
+      drinking_water_directive: "PFAS parameters in force by 2026"
+      impact: "existential"
+    apac:
+      impact: "growing with Stockholm-driven adoption"
+
+  high_priority_triggers:
+    - keyword: "universal PFAS restriction"
+      reason: "Existential threat to fluoropolymer business."
+    - keyword: "fluoropolymer derogation|RO3"
+      reason: "Directly affects EU exemption survivability."
+    - keyword: "GenX|HFPO-DA"
+      reason: "Core product under direct regulatory pressure."
+    - keyword: "PFOA MCL|drinking water standard|PFOS MCL"
+      reason: "Moves remediation and treatment liability."
+    - keyword: "CERCLA|hazardous substance|Superfund"
+      reason: "Increases federal cleanup cost exposure."
+    - keyword: "Fayetteville|Cape Fear|consent order"
+      reason: "Direct site-level enforcement exposure."
+    - keyword: "AFFF|MDL|bellwether|class action"
+      reason: "Signals litigation trajectory changes."

@@ -1,0 +1,328 @@
+region: WESTERN
+created_at: "2026-02-20"
+purpose: "Approval gate for Western regulatory assertion drafting (pre-assertion source manifest)."
+schema_target: "Must align with apac_regulatory_assertions.yaml at assertion build stage."
+confidence_policy:
+  enacted_confirmed: "0.95-1.00"
+  finalized_not_yet_effective: "0.85-0.94"
+  proposed_or_consultation: "0.75-0.84"
+  draft_or_early_secondary: "0.60-0.74"
+
+critical_discontinuities:
+  - id: US_EPA_NPDWR_DISCONTINUITY_2024_2025
+    note: >
+      Treat April 2024 NPDWR final rule and May 2025 partial reconsideration/update
+      as separate assertions. HFPO-DA/GenX, PFHxS, PFNA status must be represented
+      as in-flux when applicable; never collapse this into a single "final rule" state.
+    planned_assertion_ids:
+      - US_EPA_NPDWR_2024_001
+      - US_EPA_NPDWR_2025_001
+
+jurisdictions:
+  us_federal:
+    planned_assertion_count: 12
+    planned_assertion_breakdown:
+      - "US_EPA_NPDWR_2024_001 — April 2024 final MCL package + HI framework"
+      - "US_EPA_NPDWR_2025_001 — May 2025 reconsideration/update discontinuity"
+      - "US_EPA_PFOA_MCL_001 — PFOA 4 ppt status and compliance timeline"
+      - "US_EPA_PFOS_MCL_001 — PFOS 4 ppt status and compliance timeline"
+      - "US_EPA_PFHXS_STATUS_001 — PFHxS status under reconsideration"
+      - "US_EPA_PFNA_STATUS_001 — PFNA status under reconsideration"
+      - "US_EPA_HFPODA_STATUS_001 — HFPO-DA/GenX status under reconsideration"
+      - "US_EPA_HAZARD_INDEX_001 — Hazard Index 1.0 framework status"
+      - "US_EPA_CERCLA_001 — PFOA/PFOS hazardous substance designation + effective date"
+      - "US_EPA_TSCA_REPORTING_001 — PFAS reporting scope"
+      - "US_EPA_TSCA_DEADLINE_001 — reporting deadlines/timeline"
+      - "US_EPA_COMPTOX_001 — PFAS master-list scope/size"
+    planned_topics:
+      - "NPDWR April 2024 MCLs and Hazard Index"
+      - "May 2025 EPA update/reconsideration and compliance timeline"
+      - "CERCLA hazardous substance designation (PFOA/PFOS)"
+      - "TSCA PFAS reporting rule scope and deadlines"
+      - "CompTox PFAS Master List scope/size"
+    sources:
+      - id: US_EPA_PFAS_001
+        url: "https://www.epa.gov/pfas"
+        label: "EPA — PFAS Strategic Roadmap landing page"
+        monitor_tier: primary
+        source_role: primary_portal
+        topics: ["federal_status", "program_updates"]
+      - id: US_EPA_SDWA_001
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        label: "EPA — SDWA PFAS drinking water rule (MCLs)"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["npdwr", "mcl", "hazard_index", "compliance_dates"]
+      - id: US_EPA_NPDWR_PDF_001
+        url: "https://www.govinfo.gov/content/pkg/FR-2024-04-26/pdf/2024-07773.pdf"
+        label: "EPA — Final PFAS NPDWR rule (PDF, April 2024)"
+        monitor_tier: document
+        source_role: primary_rule_text
+        topics: ["npdwr", "mcl_values", "effective_date"]
+      - id: US_EPA_CERCLA_001
+        url: "https://www.epa.gov/superfund/questions-and-answers-about-designation-pfoa-and-pfos-hazardous-substances-under-cercla"
+        label: "EPA — CERCLA PFAS hazardous substance designation"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["cercla", "hazardous_substance", "effective_date"]
+      - id: US_EPA_TSCA_001
+        url: "https://www.epa.gov/assessing-and-managing-chemicals-under-tsca/tsca-section-8a7-reporting-and-recordkeeping"
+        label: "EPA — TSCA PFAS reporting and testing"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["tsca", "reporting_rule", "deadlines", "scope"]
+      - id: US_EPA_COMPTOX_001
+        url: "https://comptox.epa.gov/dashboard/chemical-lists/PFASMASTER"
+        label: "EPA CompTox — PFAS Master List"
+        monitor_tier: primary
+        source_role: primary_dataset
+        topics: ["pfas_list_size", "structure_scope"]
+      - id: US_EPA_PRESS_001
+        url: "https://www.epa.gov/newsroom/browse-news-releases?search_api_fulltext=pfas"
+        label: "EPA — PFAS press releases feed"
+        monitor_tier: secondary
+        source_role: official_update_feed
+        topics: ["policy_updates", "reconsideration_notices"]
+      - id: US_EPA_PRESS_2025_001
+        url: "https://www.epa.gov/newsreleases/epa-announces-it-will-keep-maximum-contaminant-levels-pfoa-pfos"
+        label: "EPA — May 14, 2025 PFAS NPDWR reconsideration announcement"
+        monitor_tier: primary
+        source_role: primary_action_notice
+        topics: ["npdwr_reconsideration", "compliance_timeline", "regulatory_discontinuity"]
+
+  us_states:
+    planned_assertion_count: 6
+    planned_topics:
+      - "North Carolina DEQ GenX consent order and monitoring"
+      - "Michigan PFAS Action Response program status"
+      - "California Prop 65 PFOA/PFOS listings and listing dates"
+      - "California SWRCB PFAS drinking water actions"
+    sources:
+      - id: US_CA_SWRCB_001
+        url: "https://www.waterboards.ca.gov/drinking_water/certlic/drinkingwater/pfas.html"
+        label: "California SWRCB — PFAS drinking water program"
+        monitor_tier: primary
+        source_role: primary_state_program
+        topics: ["state_drinking_water", "response_levels", "notification_levels"]
+      - id: US_CA_PROP65_PFOA_001
+        url: "https://oehha.ca.gov/proposition-65/chemicals/perfluorooctanoic-acid-pfoa"
+        label: "California Prop 65 — PFOA listing"
+        monitor_tier: primary
+        source_role: primary_state_listing
+        topics: ["prop65", "listing_date", "warning_requirements"]
+      - id: US_CA_PROP65_PFOS_001
+        url: "https://oehha.ca.gov/proposition-65/chemicals/perfluorooctane-sulfonate-pfos"
+        label: "California Prop 65 — PFOS listing"
+        monitor_tier: primary
+        source_role: primary_state_listing
+        topics: ["prop65", "listing_date", "warning_requirements"]
+      - id: US_NC_GENX_001
+        url: "https://deq.nc.gov/news/key-issues/genx-investigation"
+        label: "North Carolina DEQ — GenX investigation"
+        monitor_tier: primary
+        source_role: primary_state_enforcement
+        topics: ["genx", "consent_order", "cape_fear"]
+      - id: US_MI_PFAS_001
+        url: "https://www.michigan.gov/pfasresponse"
+        label: "Michigan PFAS Action Response Team"
+        monitor_tier: primary
+        source_role: primary_state_program
+        topics: ["state_program", "site_response"]
+
+  european_union:
+    planned_assertion_count: 10
+    planned_assertion_breakdown:
+      - "EU_ECHA_PFAS_001 — Universal PFAS restriction current process state"
+      - "EU_ECHA_RAC_STATUS_001 — RAC opinion status checkpoint"
+      - "EU_ECHA_SEAC_STATUS_001 — SEAC opinion status checkpoint"
+      - "EU_ECHA_DEROGATION_001 — Derogation framework/critical-use contours"
+      - "EU_POPS_PFOA_001 — POPs Annex A status for PFOA"
+      - "EU_POPS_PFOS_001 — POPs Annex B status for PFOS"
+      - "EU_DWD_PFAS_PARAM_001 — PFAS sum parameter 0.5 µg/L"
+      - "EU_DWD_COMPLIANCE_001 — Directive compliance deadline and applicability"
+      - "EU_SVHC_PFOA_001 — PFOA SVHC identification status"
+      - "EU_REACH_PFAS_001 — REACH obligations context for PFAS"
+    planned_topics:
+      - "Universal PFAS restriction status (RAC/SEAC phase)"
+      - "POPs Regulation 2019/1021 status for PFOA/PFOS"
+      - "Drinking Water Directive 2020/2184 PFAS parameter and deadline"
+      - "PFOA SVHC identification state"
+      - "REACH obligations context"
+    sources:
+      - id: EU_ECHA_INTENT_001
+        url: "https://echa.europa.eu/registry-of-restriction-intentions/-/registry-of-restriction-intentions/q?p_p_id=com_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_restriction_intentions"
+        label: "ECHA — Registry of restriction intentions"
+        monitor_tier: primary
+        source_role: primary_reach_process
+        topics: ["universal_pfas_restriction", "process_status"]
+      - id: EU_ECHA_PFOA_SVHC_001
+        url: "https://echa.europa.eu/substances-of-very-high-concern-identification/-/substance-designation/-/substance/100.001.017"
+        label: "ECHA — PFOA SVHC identification"
+        monitor_tier: primary
+        source_role: primary_reach_listing
+        topics: ["svhc", "pfoa"]
+      - id: EU_ECHA_PFAS_TOPIC_001
+        url: "https://echa.europa.eu/hot-topics/perfluoroalkyl-chemicals-pfas"
+        label: "ECHA — PFAS hot topics overview"
+        monitor_tier: primary
+        source_role: primary_status_portal
+        topics: ["pfas_policy_status", "committee_milestones"]
+      - id: EU_POPS_001
+        url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R1021"
+        label: "EU POPs Regulation (2019/1021)"
+        monitor_tier: primary
+        source_role: primary_legal_text
+        topics: ["pops_annex", "pfoa", "pfos", "effective_dates"]
+      - id: EU_DWD_001
+        url: "https://eur-lex.europa.eu/eli/dir/2020/2184/oj"
+        label: "EU Drinking Water Directive 2020/2184"
+        monitor_tier: primary
+        source_role: primary_legal_text
+        topics: ["pfas_sum_parameter", "compliance_deadline"]
+      - id: EU_CHEMWATCH_001
+        url: "https://www.eea.europa.eu/en/search?SearchableText=PFAS"
+        label: "EEA — PFAS search and news index"
+        monitor_tier: secondary
+        source_role: secondary_early_signal
+        topics: ["timeline_watch", "cross_jurisdictional_updates"]
+
+  united_kingdom:
+    planned_assertion_count: 3
+    planned_topics:
+      - "UK REACH framework and divergence state"
+      - "PFOS/PFOA restriction carryover and current status"
+    sources:
+      - id: UK_HSE_REACH_001
+        url: "https://www.hse.gov.uk/reach/"
+        label: "HSE — UK REACH regulatory framework"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["uk_reach", "post_brexit_divergence"]
+      - id: UK_PFAS_INFO_001
+        url: "https://www.gov.uk/government/publications/environmental-risk-evaluation-reports-per-and-polyfluoroalkyl-substances-pfas"
+        label: "UK Gov — PFAS/PFOS/PFOA general information"
+        monitor_tier: primary
+        source_role: primary_guidance
+        topics: ["pfos_pfoa_status", "scope"]
+      - id: UK_DEFRA_COLLECTION_001
+        url: "https://www.gov.uk/government/publications/pfas-plan/pfas-plan-building-a-safer-future-together"
+        label: "UK Defra — PFAS policy collection"
+        monitor_tier: primary
+        source_role: primary_policy_collection
+        topics: ["policy_updates", "consultations"]
+
+  nordic_cosubmitter_set:
+    planned_assertion_count: 5
+    planned_topics:
+      - "Denmark food contact ban status/effective date"
+      - "Norway PFAS restriction actions"
+      - "Germany UBA restriction progress"
+      - "Sweden KEMI highly fluorinated program"
+      - "Netherlands RIVM PFAS guidance"
+    sources:
+      - id: DNK_MST_PFAS_001
+        url: "https://mst.dk/erhverv/sikker-kemi/kemikalier/fokus-paa-saerlige-stoffer/pfas"
+        label: "Danish EPA — PFAS focus"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["food_contact", "national_restrictions"]
+      - id: NOR_MILJODIR_PFAS_001
+        url: "https://www.miljodirektoratet.no/sok/?q=PFAS"
+        label: "Norwegian Environment Agency — PFAS restriction"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["reach_restriction", "national_actions"]
+      - id: DEU_UBA_PFAS_001
+        url: "https://www.umweltbundesamt.de/en/search?query=PFAS"
+        label: "UBA — PFAS restriction proposals"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["restriction_proposal_status"]
+      - id: SWE_KEMI_PFAS_001
+        url: "https://www.kemi.se/en/chemical-substances-and-materials/highly-fluorinated-substances"
+        label: "KEMI — Highly fluorinated substances"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["national_program", "risk_assessment"]
+      - id: NLD_RIVM_PFAS_001
+        url: "https://www.rivm.nl/en/pfas"
+        label: "RIVM — PFAS risk assessment and policy"
+        monitor_tier: primary
+        source_role: primary_science_policy
+        topics: ["guidance_values", "policy_support"]
+
+  canada:
+    planned_assertion_count: 3
+    planned_topics:
+      - "PFOS under CEPA toxic substances list"
+      - "Health Canada PFAS drinking water status"
+      - "Upcoming federal PFAS drinking water standards/guidelines"
+    sources:
+      - id: CAN_HC_PFAS_001
+        url: "https://www.canada.ca/en/health-canada/services/chemical-substances/other-chemical-substances-interest/per-polyfluoroalkyl-substances.html"
+        label: "Health Canada — PFAS overview and risk management"
+        monitor_tier: primary
+        source_role: primary_regulatory
+        topics: ["health_canada_status", "drinking_water_guidance"]
+      - id: CAN_ECCC_PFOS_001
+        url: "https://www.canada.ca/en/environment-climate-change/services/management-toxic-substances/list-canadian-environmental-protection-act/perfluorooctane-sulfonate.html"
+        label: "ECCC — PFOS under CEPA toxic substances"
+        monitor_tier: primary
+        source_role: primary_legal_status
+        topics: ["cepa_listing", "pfos"]
+
+  international:
+    planned_assertion_count: 4
+    planned_topics:
+      - "Stockholm listings: PFOS/PFOA/PFHxS and annex years"
+      - "WHO PFAS drinking water guidance values"
+      - "OECD coordination role and policy signals"
+    sources:
+      - id: INTL_STOCKHOLM_NEWPOPS_001
+        url: "http://chm.pops.int/TheConvention/ThePOPs/TheNewPOPs/tabid/2511/Default.aspx"
+        label: "Stockholm Convention — New POPs listings"
+        monitor_tier: primary
+        source_role: primary_treaty_status
+        topics: ["annex_status", "listing_dates"]
+      - id: INTL_STOCKHOLM_NIP_001
+        url: "http://chm.pops.int/Implementation/NationalImplementationPlans/NIPTransmission/tabid/253/Default.aspx"
+        label: "Stockholm Convention — National Implementation Plans"
+        monitor_tier: primary
+        source_role: primary_implementation_tracking
+        topics: ["national_implementation", "cascade_triggers"]
+      - id: INTL_WHO_PFAS_001
+        url: "https://www.who.int/teams/environment-climate-change-and-health/water-sanitation-and-health/chemical-hazards-in-drinking-water/per-and-polyfluoroalkyl-substances"
+        label: "WHO — PFAS in drinking water guidance"
+        monitor_tier: primary
+        source_role: primary_guidance
+        topics: ["guidance_values", "risk_assessment"]
+      - id: INTL_OECD_PFAS_001
+        url: "https://www.oecd.org/chemicalsafety/portal-perfluorinated-chemicals/"
+        label: "OECD — PFAS portal and policy coordination"
+        monitor_tier: primary
+        source_role: primary_coordination
+        topics: ["policy_coordination", "member_country_updates"]
+
+explicit_research_verification_required:
+  - "ECHA universal PFAS restriction current RAC/SEAC status as of 2026-02-20"
+  - "CERCLA PFOA/PFOS final rule effective date"
+  - "TSCA PFAS reporting rule exact scope and deadlines"
+  - "Denmark food contact PFAS ban effective date and scope"
+  - "Canada drinking water status (proposed vs enacted) and timeline"
+  - "EU Drinking Water Directive PFAS parameter compliance deadline"
+
+known_coverage_gaps_outside_western_scope:
+  note: >
+    These monitored jurisdictions are currently not covered in APAC assertions
+    or this Western manifest assertion scope. Track as explicit blind spots
+    until separate assertions are added.
+  monitored_jurisdictions:
+    - New Zealand
+    - Brazil
+  monitor_urls:
+    - "https://www.taumataarowai.govt.nz/"
+    - "https://www.epa.govt.nz/industry-areas/hazardous-substances/"
+    - "https://www.gov.br/anvisa/pt-br"
+  closure_options:
+    - "Add an `other_jurisdictions` block in western_regulatory_assertions.yaml."
+    - "Create a small `rest_of_world_regulatory_assertions.yaml` file and merge at query time."

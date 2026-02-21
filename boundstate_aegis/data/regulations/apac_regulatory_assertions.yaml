@@ -1,0 +1,1021 @@
+# =============================================================================
+# APAC REGULATORY ASSERTIONS DATABASE
+# AEGIS — Asia-Pacific PFAS & Fluoropolymer Regulatory Intelligence Layer
+# Created: 2026-02-20
+# Updated: 2026-02-20  (verified against primary government sources)
+#
+# Scope: ALL fluoropolymers and PFAS — not limited to legacy PFAS.
+# Includes PTFE, PVDF, FEP, PFA, ETFE, fluoroelastomers, and all
+# per-/polyfluoroalkyl substances regulated or monitored in APAC.
+#
+# Litigation-grade assertions for 7 APAC jurisdictions.
+# Every assertion is falsifiable and cites a primary government source
+# or a verified aggregator where primary is non-English-only.
+#
+# Schema follows tfa_regulatory_assertions.yaml.
+# Confidence calibration:
+#   0.95-1.00 — Enacted law, primary source confirmed, in effect
+#   0.85-0.94 — Finalized but not yet effective, or enacted with minor uncertainty
+#   0.75-0.84 — Proposed/consultation stage, well-sourced
+#   0.60-0.74 — Draft or early-stage, secondary sources
+#   Below 0.60 — Flag as LOW_CONFIDENCE
+#
+# SOURCE VERIFICATION:
+#   - Japan MOE press release (env.go.jp): 50 ng/L, April 2026, 2734 comments
+#   - NITE J-CHECK Class I list: PFOS/PFOA entries confirmed
+#   - NHMRC PFAS guideline values: PFOS 8 ng/L, PFOA 200 ng/L, PFHxS 30, PFBS 1000
+#   - NEA Singapore circular NEA/HS/6.6 (15 Mar 2024): AFFF ban confirmed
+#   - Taiwan UL Solutions / ChemRadar: 147 PFHxS, 357 PFOA/PFOS draft, 269 PFAS draft
+#   - REACH24H / CIRS Group: China third batch 29 PFAS, Sichuan DB51/3202-2024
+#   - TUV Rheinland / myfssai.in: India FSSAI October 6, 2025 draft
+#   - GlobalCosmeticsNews / CosmeticsDesign-Asia: Korea MFDS enacted April 1, 2022
+# =============================================================================
+
+region: APAC
+scope: "PFAS and fluoropolymers — all per-/polyfluoroalkyl substances including fluorinated polymers"
+coverage:
+  - Japan
+  - South Korea
+  - China
+  - Australia
+  - Singapore
+  - Taiwan
+  - India
+
+# =============================================================================
+# ASSERTIONS (24 total)
+# =============================================================================
+
+assertions:
+
+  # ===========================================================================
+  # JAPAN — Most mature APAC enforcement
+  # ===========================================================================
+
+  - id: JPN_CSCL_PFOA_001
+    assertion: "Japan banned 138 PFOA-related compounds as Class I Specified Chemical Substances under CSCL via joint ministerial order, with criminal penalties for non-compliance."
+    type: regulatory_enacted
+    compound_class: PFOA
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: "2024-09-09"
+      consultation_end: null
+      finalized: "2024-11-15"
+      effective: "2025-01-10"
+      enforcement: "2025-01-10"
+      sunset: null
+    citations:
+      - source: "Japan CSCL Ministerial Order No.4 of 2024"
+        url: "https://www.nite.go.jp/chem/english/kasinn/index.html"
+        tier: primary
+        doi: null
+        year: 2024
+      - source: "METI — Class I Specified Chemical Substances list"
+        url: "https://www.meti.go.jp/policy/chemical_management/kasinhou/todoke/1rui_tokuteikagaku.html"
+        tier: primary
+        doi: null
+        year: 2024
+      - source: "Acquis Compliance — Japan PFAS Ban CSCL 2025"
+        url: "https://www.acquiscompliance.com/blog/japan-pfas-ban-cscl-2025-138-substances/"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "MHLW + METI + MOE (joint action)"
+    compounds_covered: 138
+    threshold_value: null
+    scope: "manufacture, import, use — covers finished goods containing listed PFAS"
+    exemptions:
+      - "8:2 FTOH for medical-device coatings — sunset 2025-12-03"
+      - "Pharmaceutical intermediate PFOB — sunset 2036-12-31"
+    context:
+      - "Three-ministry joint action is unprecedented coordination in Japan chemical regulation"
+      - "Covers finished goods containing listed PFAS, not just raw chemicals"
+      - "Penalties: import bans, product seizures, criminal penalties for companies and executives, license suspension"
+      - "Fluoropolymer coatings flagged as concern area requiring alternative solutions"
+      - "Aligned with Stockholm Convention PFOA listing"
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: JPN_MOE_WATER_001
+    assertion: "Japan MOE is upgrading PFOS/PFOA from provisional water quality targets to legally binding Water Quality Standards at 50 ng/L combined, effective April 2026."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.92
+    status: finalized
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2025-10-01"
+      effective: "2026-04-01"
+      enforcement: "2026-04-01"
+      sunset: null
+    citations:
+      - source: "Japan MOE Press Release — Water Quality Standards Amendment"
+        url: "https://www.env.go.jp/water/"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Enviliance Asia — Japan MOE water quality upgrade"
+        url: "https://enviliance.com/regions/east-asia/jp"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "Japan Ministry of the Environment (MOE)"
+    compounds_covered: 2
+    threshold_value: "50 ng/L combined PFOS + PFOA"
+    scope: "drinking water quality standards — upgrade from advisory to legally binding"
+    exemptions: []
+    context:
+      - "Verified via MOE press release: 50 ng/L combined, effective April 1, 2026"
+      - "2734 public comments received during consultation — indicates high public concern"
+      - "Provisional targets have been in place since April 2020 — upgrade to binding makes enforceable"
+      - "Binding status enables regulatory enforcement actions against non-compliant water utilities"
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: JPN_MOE_FOOD_001
+    assertion: "Japan may have amended food contact material standards for PFAS via Cabinet Office Notification No.105 of 2025."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.65
+    status: unverified
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: "2025-06-30"
+      enforcement: "2025-06-30"
+      sunset: null
+    citations:
+      - source: "Cabinet Office Notification No.105 of 2025 (unverified)"
+        url: "https://www.caa.go.jp/"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Enviliance Asia — Japan food contact PFAS"
+        url: "https://enviliance.com/regions/east-asia/jp"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "Japan Consumer Affairs Agency / Cabinet Office (or MHLW — jurisdiction unconfirmed)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "food_contact"
+    exemptions: []
+    context:
+      - "LOW_CONFIDENCE: Jurisdictional mismatch — food contact materials are typically regulated by MHLW under Food Sanitation Act, not CAA"
+      - "Notification number and date need verification against official gazette (kanpou.npb.go.jp)"
+      - "If real, extends PFAS restrictions beyond industrial chemicals to consumer food contact"
+    litigation_relevance: low
+    jerk_signal: false
+
+  - id: JPN_CSCL_PFOS_001
+    assertion: "PFOS was designated as a Class I Specified Chemical Substance under Japan CSCL implementing the Stockholm Convention."
+    type: regulatory_enacted
+    compound_class: PFOS
+    confidence: 0.99
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: "2010-01-01"
+      enforcement: "2010-01-01"
+      sunset: null
+    citations:
+      - source: "Japan CSCL — NITE J-CHECK Database"
+        url: "https://www.nite.go.jp/chem/english/kasinn/index.html"
+        tier: primary
+        doi: null
+        year: 2010
+      - source: "NITE CHRIP searchable database"
+        url: "https://www.nite.go.jp/chem/chrip/chrip_search/sltLst"
+        tier: primary
+        doi: null
+        year: 2010
+    regulatory_body: "MHLW + METI + MOE"
+    compounds_covered: 1
+    threshold_value: null
+    scope: "manufacture, import, use"
+    exemptions: []
+    context:
+      - "Foundational PFAS restriction in Japan — Stockholm Convention implementation"
+      - "Predates the broader 2025 PFOA ban by 15 years"
+      - "Verified via NITE J-CHECK Class I list (39 total Class I substances)"
+    litigation_relevance: medium
+    jerk_signal: false
+
+  - id: JPN_AFFF_INVENTORY_001
+    assertion: "Japan is conducting a 4-year AFFF stockpile inventory under the Stockholm Convention National Implementation Plan, with 2024 survey showing AFFF volume down 45% and PFOS content down 36%."
+    type: factual
+    compound_class: PFOS
+    confidence: 0.90
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "OECD Japan Country PFAS Profile"
+        url: "https://www.oecd.org/chemicalsafety/portal-perfluorinated-chemicals/"
+        tier: secondary
+        doi: null
+        year: 2024
+      - source: "Stockholm Convention NIP — Japan submission"
+        url: "http://chm.pops.int/Implementation/NationalImplementationPlans/NIPTransmission/tabid/253/Default.aspx"
+        tier: secondary
+        doi: null
+        year: 2024
+    regulatory_body: "Japan MOE"
+    compounds_covered: null
+    threshold_value: null
+    scope: "AFFF stockpile management"
+    exemptions: []
+    context:
+      - "AFFF volume reduction of 45% indicates active phase-out in progress"
+      - "PFOS content reduction of 36% demonstrates substitution is occurring"
+      - "Stockpile data feeds into Stockholm Convention compliance reporting"
+    litigation_relevance: high
+    jerk_signal: false
+
+  # ===========================================================================
+  # SOUTH KOREA — K-REACH actively expanding
+  # ===========================================================================
+
+  - id: KOR_MOE_WATER_001
+    assertion: "South Korea MOE proposed PFAS amendments to the Water Environment Conservation Act and Sewage Act to establish PFAS discharge limits."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.80
+    status: consultation
+    dates:
+      proposed: "2025-06-12"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "Enviliance Asia — South Korea Water Act PFAS Amendments"
+        url: "https://enviliance.com/regions/east-asia/kr"
+        tier: secondary
+        doi: null
+        year: 2025
+      - source: "South Korea Ministry of Environment"
+        url: "https://www.me.go.kr/eng/web/main.do"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "South Korea Ministry of Environment (MOE)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "discharge limits to water bodies"
+    exemptions: []
+    context:
+      - "First formal PFAS-specific water discharge limits proposed in South Korea"
+      - "Covers both Water Environment Conservation Act and Sewage Act simultaneously"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: KOR_REACH_PFAS_001
+    assertion: "South Korea K-REACH requires registration and evaluation of PFAS compounds including PFOA, PFOS, and PFHxS per Stockholm Convention obligations."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: "2019-01-01"
+      enforcement: "2019-01-01"
+      sunset: null
+    citations:
+      - source: "K-REACH Portal — Act on Registration and Evaluation of Chemicals"
+        url: "https://www.me.go.kr/eng/web/main.do"
+        tier: primary
+        doi: null
+        year: 2019
+    regulatory_body: "South Korea Ministry of Environment (MOE)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "manufacture, import — registration and evaluation required"
+    exemptions: []
+    context:
+      - "K-REACH is South Korea's analogue to EU REACH"
+      - "Stockholm Convention PFAS compounds require registration"
+    litigation_relevance: medium
+    jerk_signal: false
+
+  - id: KOR_MFDS_COSMETICS_001
+    assertion: "South Korea MFDS enacted a ban on perfluorinated compounds in cosmetics via updated Regulation on Safety Standards for Cosmetics, effective April 1, 2022."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2022-04-01"
+      effective: "2022-04-01"
+      enforcement: "2022-04-01"
+      sunset: null
+    citations:
+      - source: "Global Cosmetics News — South Korea ban POPs and perfluorinated compounds in cosmetics"
+        url: "https://www.globalcosmeticsnews.com/south-korea-to-ban-pops-and-eight-perfluorinated-compounds-in-cosmetics/"
+        tier: secondary
+        doi: null
+        year: 2022
+      - source: "CosmeticsDesign-Asia — PFAS phase-out amid tightening regulations"
+        url: "https://www.cosmeticsdesign-asia.com/Article/2023/05/01/cosmetics-companies-advised-to-phase-out-pfas-in-products-and-develop-alternatives-amid-tightening-regulations/"
+        tier: secondary
+        doi: null
+        year: 2023
+      - source: "South Korea MFDS — Regulation on Safety Standards for Cosmetics"
+        url: "https://www.mfds.go.kr/eng/wpge/m_24/de011014l001.do"
+        tier: primary
+        doi: null
+        year: 2022
+    regulatory_body: "South Korea Ministry of Food and Drug Safety (MFDS)"
+    compounds_covered: 7
+    threshold_value: null
+    scope: "cosmetics — manufacture, import, sale"
+    exemptions: []
+    context:
+      - "CORRECTED: Originally listed as proposed — verified ENACTED April 1, 2022"
+      - "7 perfluorinated compounds added to prohibited ingredient inventory"
+      - "Also prohibited persistent organic pollutants (POPs) in same update"
+      - "Among first APAC cosmetics-specific PFAS bans — predates most Western equivalents"
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # CHINA — Large scale, accelerating from prior inaction
+  # ===========================================================================
+
+  - id: CHN_MEE_POLLUTANTS_001
+    assertion: "China MEE designated PFAS as priority pollutants under the List of New Pollutants for Priority Management, including PFOS and PFOA."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2022-12-30"
+      effective: "2023-03-01"
+      enforcement: "2023-03-01"
+      sunset: null
+    citations:
+      - source: "China MEE — List of New Pollutants for Priority Management (2023 Edition)"
+        url: "https://www.mee.gov.cn/"
+        tier: primary
+        doi: null
+        year: 2023
+    regulatory_body: "China Ministry of Ecology and Environment (MEE)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "all — manufacture, import, use, discharge"
+    exemptions: []
+    context:
+      - "Acceleration from prior regulatory inaction on PFAS in China"
+      - "First formal PFAS classification under Chinese domestic environmental law"
+      - "Aligned with Stockholm Convention obligations but applied to domestic industry"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: CHN_MEE_PFOA_CONSULT_001
+    assertion: "China MEE-FECO opened public consultation on indicative lists for PFOA, PFHxS, and long-chain PFCAs under Stockholm Convention domestic implementation, deadline May 19, 2025."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.90
+    status: consultation
+    dates:
+      proposed: "2025-02-25"
+      consultation_end: "2025-05-19"
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "ChemRadar — China Seeks Public Feedback on Three PFAS Regulatory Lists"
+        url: "https://www.chemradar.com/lawinfo/news/detail/eezvvg1ips00"
+        tier: secondary
+        doi: null
+        year: 2025
+      - source: "Enviliance Asia — China releases draft lists of long-chain PFCAs, PFOA, PFHxS"
+        url: "https://enviliance.com/regions/east-asia/cn/report_13306"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "China MEE Foreign Environmental Cooperation Office (FECO)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Stockholm Convention domestic implementation — indicative substance lists for PFOA, PFHxS, long-chain PFCAs"
+    exemptions: []
+    context:
+      - "FECO is MEE's Stockholm Convention implementation arm"
+      - "Consultation signals intent to move from monitoring to binding restrictions"
+      - "Long-chain PFCAs inclusion extends scope well beyond legacy PFOS/PFOA"
+      - "Deadline confirmed: May 19, 2025 for all three lists"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: CHN_MEE_THIRD_BATCH_001
+    assertion: "China MEE released draft Third Batch of Priority Controlled Chemicals including 29 specific PFAS compounds covering long-chain PFCAs, perfluoroalkyl sulfonates, and derivatives."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.85
+    status: consultation
+    dates:
+      proposed: "2025-11-19"
+      consultation_end: "2025-12-02"
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "REACH24H — China Releases Draft Third Batch of Priority Controlled Chemicals"
+        url: "https://en.reach24h.com/news/industry-news/chemical/china-draft-third-batch-of-priority-controlled-chemicals"
+        tier: secondary
+        doi: null
+        year: 2025
+      - source: "CIRS Group — Third Batch of Priority Controlled Substances, 24 High-Risk Substances"
+        url: "https://www.cirs-group.com/en/chemicals/china-releases-third-batch-of-priority-controlled-substances-24-high-risk-substances-subject-to-enhanced-regulation"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "China MEE + National Administration of Disease Prevention and Control (NADPC)"
+    compounds_covered: 29
+    threshold_value: null
+    scope: "environmental impact assessments, pollutant discharge permits, soil/groundwater protection, facility dismantling plans"
+    exemptions: []
+    context:
+      - "29 PFAS listed under item PC064 in the draft"
+      - "Scope expansion from prior batches (limited to PFOS/PFOA) to broader PFAS family"
+      - "If finalized, triggers mandatory environmental impact assessments for PFAS-handling facilities"
+      - "Joint release with NADPC signals health + environment co-regulation"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: CHN_SICHUAN_LOCAL_001
+    assertion: "Sichuan Province issued China's first local regulation setting PFOA and PFOS discharge limits for chemical industrial parks (DB51/3202-2024)."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.90
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2024-12-01"
+      effective: "2025-07-01"
+      enforcement: "2025-07-01"
+      sunset: null
+    citations:
+      - source: "CIRS Group — China Implements First Chemical Park PFOA and PFOS Control Standards"
+        url: "https://www.cirs-group.com/en/chemicals/china-implements-first-chemical-park-pfoa-and-pfos-control-standards"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "Sichuan Province Department of Ecology and Environment + Administration for Market Regulation"
+    compounds_covered: 2
+    threshold_value: "PFOA/PFOS discharge limits (specific values in DB51/3202-2024)"
+    scope: "water pollutant discharge from chemical industrial parks in Sichuan Province"
+    exemptions: []
+    context:
+      - "First local PFAS discharge standard in China — potential model for other provinces"
+      - "Local standards can be stricter than national requirements under Chinese environmental law"
+      - "Chemical parks are major PFAS point sources — targeting them is strategically significant"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: CHN_PATENT_SIGNAL_001
+    assertion: "China is the only major economy where PFAS commercial patent filings are still increasing, while all other major economies show declining filings."
+    type: scientific
+    compound_class: PFAS_and_fluoropolymer
+    confidence: 0.85
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "CAS Content Collection — PFAS Patent Trend Analysis"
+        url: "https://www.cas.org/"
+        tier: secondary
+        doi: null
+        year: 2024
+    regulatory_body: null
+    compounds_covered: null
+    threshold_value: null
+    scope: null
+    exemptions: []
+    context:
+      - "Increasing patent activity indicates growing PFAS and fluoropolymer manufacturing base in China"
+      - "Divergence from global trend creates potential future liability concentration"
+      - "Manufacturing liability exposure rises as other economies restrict PFAS/fluoropolymer production"
+      - "China hosts significant PTFE and PVDF manufacturing capacity — fluoropolymer production growth is part of this trend"
+    litigation_relevance: high
+    jerk_signal: false
+
+  # ===========================================================================
+  # AUSTRALIA — English primary sources, highest ingestion quality
+  # ===========================================================================
+
+  - id: AUS_NHMRC_WATER_001
+    assertion: "NHMRC released Australian Drinking Water Guidelines v4.0 with PFAS guideline values: PFOS 8 ng/L, PFOA 200 ng/L, PFHxS 30 ng/L, PFBS 1000 ng/L."
+    type: regulatory_guidance
+    compound_class: PFAS_class
+    confidence: 0.98
+    status: guidance
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2025-06-25"
+      effective: "2025-06-25"
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "NHMRC — Updated Australian Drinking Water Guidelines"
+        url: "https://www.nhmrc.gov.au/about-us/news-centre/updated-australian-drinking-water-guidelines"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "NHMRC — PFAS in Australian Drinking Water review"
+        url: "https://www.nhmrc.gov.au/health-advice/environmental-health/water/PFAS-review"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "NHMRC ADWG Part 5 — PFAS guideline values"
+        url: "https://guidelines.nhmrc.gov.au/australian-drinking-water-guidelines/part-5/physical-chemical-characteristics/cas-numbers-1763-23-1-pfos-335-67-1-pfoa-355-46-4-pfhxs"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "National Health and Medical Research Council (NHMRC)"
+    compounds_covered: 4
+    threshold_value: "PFOS 8 ng/L, PFOA 200 ng/L, PFHxS 30 ng/L, PFBS 1000 ng/L"
+    scope: "drinking water guideline values"
+    exemptions: []
+    context:
+      - "PFOS: 8 ng/L (revised from draft 4 ng/L based on consultation feedback, down from prior 70 ng/L — 8.75x reduction)"
+      - "PFOA: 200 ng/L (down from prior 560 ng/L — 2.8x reduction)"
+      - "PFHxS: 30 ng/L (new — no prior guideline value)"
+      - "PFBS: 1000 ng/L (new — no prior guideline value)"
+      - "Guideline values are advisory but adopted by state/territory regulators as binding"
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: AUS_NEMP_001
+    assertion: "Australia's PFAS National Environmental Management Plan (PFAS NEMP) provides the binding framework for PFAS site investigation and remediation across all states and territories."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.97
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2020-01-01"
+      effective: "2020-01-01"
+      enforcement: "2020-01-01"
+      sunset: null
+    citations:
+      - source: "DCCEEW — PFAS National Environmental Management Plan"
+        url: "https://www.dcceew.gov.au/environment/protection/chemicals-management/pfas"
+        tier: primary
+        doi: null
+        year: 2020
+    regulatory_body: "Department of Climate Change, Energy, the Environment and Water (DCCEEW)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "site investigation, remediation, waste management"
+    exemptions: []
+    context:
+      - "PFAS NEMP is adopted by all Australian states and territories"
+      - "Provides screening levels for soil, groundwater, surface water"
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # SINGAPORE — AFFF ban with verified thresholds
+  # ===========================================================================
+
+  - id: SGP_NEA_AFFF_001
+    assertion: "Singapore NEA prohibited firefighting foams containing PFAS from January 1, 2026 under the Environmental Protection and Management Act, with specific concentration thresholds."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2024-03-15"
+      effective: "2026-01-01"
+      enforcement: "2026-01-01"
+      sunset: null
+    citations:
+      - source: "NEA Circular NEA/HS/6.6 — Phase-out of fire-fighting foams containing PFAS chemicals"
+        url: "https://www.nea.gov.sg/docs/default-source/default-document-library/phase-out-of-fire-fighting-foams-containing-pfas-chemicals-listed-under-the-stockholm-convention_15mar24.pdf"
+        tier: primary
+        doi: null
+        year: 2024
+      - source: "NEA — Industry guideline on phase-out of PFAS containing firefighting foams"
+        url: "https://www.nea.gov.sg/docs/default-source/hs/industry-guideline-on-the-phase-out-of-pfas-containing-firefighting-foams.pdf"
+        tier: primary
+        doi: null
+        year: 2024
+      - source: "DNV — PFOS prohibited in fire-extinguishing media from 1 January 2026"
+        url: "https://www.dnv.com/news/2025/pfos-prohibited-in-fire-extinguishing-media-from-1-january-2026/"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "National Environment Agency (NEA)"
+    compounds_covered: 3
+    threshold_value: "PFOA: 25 ppb, PFOS: 10000 ppb, PFHxS: 100 ppb — foams exceeding these are prohibited"
+    scope: "import and use of fire-fighting foams containing PFAS listed under Stockholm Convention"
+    exemptions: []
+    context:
+      - "Circular NEA/HS/6.6 issued March 15, 2024 — provides 22-month compliance window"
+      - "Foams exceeding thresholds must be disposed via NEA-licensed Toxic Industrial Waste Collectors (TIWCs)"
+      - "Singapore issued first-of-its-kind PFAS AFFF treatment licence (October 2025)"
+      - "Singapore publishes in English — clean primary source availability"
+      - "Follows Stockholm Convention recommendation on PFOS-containing AFFF phase-out"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  # ===========================================================================
+  # TAIWAN — Most advanced APAC regulator after Japan
+  # (Upgraded from "drafts in progress" based on verification)
+  # ===========================================================================
+
+  - id: TWN_MOENV_DRINKING_001
+    assertion: "Taiwan revised drinking water quality standards to include PFAS limits in November 2024, becoming the first country in Asia to legalize PFAS drinking water quality standards."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2024-11-01"
+      effective: "2025-01-01"
+      enforcement: "2025-01-01"
+      sunset: null
+    citations:
+      - source: "ChemLinked — Taiwan Drafts Standards for PFAS in Drinking Water"
+        url: "https://sustainability.chemlinked.com/news/taiwan-drafts-standards-for-pfas-in-drinking-water"
+        tier: secondary
+        doi: null
+        year: 2024
+      - source: "GPC Gateway — Taiwan Strengthens Drinking Water Safety with New PFAS Guidelines"
+        url: "https://gpcgateway.com/common/news_details/MjI3OQ/MTA/crc32"
+        tier: secondary
+        doi: null
+        year: 2024
+      - source: "Focus Taiwan — Taiwan moves to strengthen drinking water regulations"
+        url: "https://focustaiwan.tw/society/202408120007"
+        tier: secondary
+        doi: null
+        year: 2024
+    regulatory_body: "Taiwan Ministry of Environment (MOENV)"
+    compounds_covered: 20
+    threshold_value: "PFOA+PFOS: 50 ng/L, PFOS+PFHxS: 70 ng/L, Total PFAS (20 compounds): 100 ng/L"
+    scope: "drinking water quality — legally binding standards"
+    exemptions: []
+    context:
+      - "FIRST IN ASIA to legalize PFAS drinking water quality standards"
+      - "Testing at 130 large-scale water treatment plants covering 91% of national water supply"
+      - "All results meeting standards as of early 2025"
+      - "20-compound total PFAS metric is more comprehensive than most international standards"
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: TWN_MOENV_PFHXS_001
+    assertion: "Taiwan banned 147 PFHxS-related compounds as Class 1 Toxic Chemical Substances with 0% control concentration, effective April 24, 2024."
+    type: regulatory_enacted
+    compound_class: PFHxS
+    confidence: 0.97
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2024-04-24"
+      effective: "2024-04-24"
+      enforcement: "2024-04-24"
+      sunset: null
+    citations:
+      - source: "UL Solutions — Taiwan Strengthens the Bans on PFHxS and Related Compounds"
+        url: "https://www.ul.com/news/taiwan-strengthens-bans-pfhxs-and-related-compounds"
+        tier: secondary
+        doi: null
+        year: 2024
+      - source: "Taiwan Chemicals Administration — PFHxS designation"
+        url: "https://www.cha.gov.tw/fp-193-6212-09aa4-2.html"
+        tier: primary
+        doi: null
+        year: 2024
+      - source: "ChemRadar — China Taiwan Updates Compliance Timelines for PFHxS"
+        url: "https://www.chemradar.com/en/service/detail/dn16u28u91xc"
+        tier: secondary
+        doi: null
+        year: 2024
+    regulatory_body: "Taiwan Ministry of Environment (MOENV) — Chemicals Administration"
+    compounds_covered: 147
+    threshold_value: "0% control concentration in mixture — complete prohibition"
+    scope: "manufacture, import, sale, use — prohibited except for research, testing, and education"
+    exemptions:
+      - "Research, testing, and education purposes only"
+    context:
+      - "Brings total regulated PFAS to 151 (4 legacy PFOS/PFOA/PFOSF/PFOS-Li + 147 PFHxS)"
+      - "0% threshold is the most stringent possible — effectively a complete ban"
+      - "Effective immediately upon publication — no transition period"
+      - "Aligned with Stockholm Convention Annex A (Elimination) listing of PFHxS (2022)"
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: TWN_MOENV_357_001
+    assertion: "Taiwan MOENV announced draft regulation to add 357 PFOA and PFOS family chemicals to the toxic chemical substances list with 0% control concentration."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.85
+    status: consultation
+    dates:
+      proposed: "2024-10-21"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "UL Solutions — Taiwan to Further Tighten Controls on PFAS"
+        url: "https://www.ul.com/news/taiwan-further-tighten-controls-pfas"
+        tier: secondary
+        doi: null
+        year: 2024
+    regulatory_body: "Taiwan Ministry of Environment (MOENV)"
+    compounds_covered: 357
+    threshold_value: "0% control concentration in mixture (proposed)"
+    scope: "manufacture, import, sale, use — 5 PFOS salts/related + 352 PFOA salts/related"
+    exemptions:
+      - "Research, testing, and education"
+      - "Hard metal electroplating (specific industrial use)"
+    context:
+      - "If finalized, Taiwan total regulated PFAS would exceed 500 substances"
+      - "357 new substances = 5 additional PFOS family + 352 PFOA family"
+      - "30-day public comment period from October 21, 2024"
+      - "Signals Taiwan's intent to have most comprehensive PFAS regulation in APAC"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: TWN_MOENV_269_001
+    assertion: "Taiwan MOENV announced draft regulation to designate 269 PFAS as concerned chemical substances."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.80
+    status: consultation
+    dates:
+      proposed: "2025-08-05"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "UL Solutions — Taiwan Drafts New Management Measures on PFAS"
+        url: "https://www.ul.com/news/taiwan-drafts-new-management-measures-pfas"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "Taiwan Ministry of Environment (MOENV)"
+    compounds_covered: 269
+    threshold_value: null
+    scope: "concerned chemical substances — lower tier than toxic, enables monitoring and reporting"
+    exemptions: []
+    context:
+      - "Concerned chemical substance designation enables government monitoring and data collection"
+      - "May serve as pipeline for future elevation to toxic chemical substance status"
+      - "269 PFAS represents broad net — likely includes fluoropolymer processing aids"
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # INDIA — Early stage, watch signal
+  # ===========================================================================
+
+  - id: IND_FSSAI_FOOD_001
+    assertion: "India FSSAI proposed a complete ban on PFAS and BPA in food contact materials via draft amendment to Food Safety and Standards (Packaging) Regulations 2018, published October 6, 2025."
+    type: regulatory_pending
+    compound_class: PFAS_and_fluoropolymer
+    confidence: 0.85
+    status: proposed
+    dates:
+      proposed: "2025-10-06"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "TUV Rheinland — India FSSAI Proposes Prohibition of PFAS and BPA in Food Packaging"
+        url: "https://www.tuv.com/regulations-and-standards/en/india-fssai-proposes-prohibition-of-pfas-and-bpa-in-food-packaging-and-contact-materials.html"
+        tier: secondary
+        doi: null
+        year: 2025
+      - source: "myfssai.in — FSSAI Proposes Ban on PFAs and BPA in Food Contact Packaging"
+        url: "https://myfssai.in/fssai_updates/fssai-ban-pfas-bpa-food-contact-packaging/"
+        tier: secondary
+        doi: null
+        year: 2025
+      - source: "ChemRadar — India Plans to Completely Ban PFAS and BPA in Food Contact Materials"
+        url: "https://www.chemradar.com/en/news/detail/f36du4j43oqo"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: "Food Safety and Standards Authority of India (FSSAI)"
+    compounds_covered: null
+    threshold_value: "Complete ban — PFAS shall not be used in manufacturing of food contact materials"
+    scope: "food contact materials — packaging, all polycarbonate and epoxy resins must be BPA-free"
+    exemptions: []
+    context:
+      - "CORRECTED: Draft published October 6, 2025 (not December as previously stated)"
+      - "Title: Food Safety and Standards (Packaging) Amendment Regulations, 2025"
+      - "Complete PFAS ban in food contact materials — broadest scope in APAC for this sector"
+      - "60-day public comment period from gazette publication date"
+      - "India's 1.4B population market makes this commercially significant for fluoropolymer-coated food packaging"
+      - "Scope explicitly includes fluoropolymer coatings (e.g., PTFE non-stick) in food contact applications"
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: IND_CPCB_MONITORING_001
+    assertion: "India CPCB has no formal PFAS regulations. PFAS contamination has been documented near industrial sites but regulatory development is at early stage."
+    type: factual
+    compound_class: PFAS_class
+    confidence: 0.85
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "India CPCB — Hazardous Waste Management Rules"
+        url: "https://cpcb.nic.in/"
+        tier: primary
+        doi: null
+        year: 2024
+    regulatory_body: "Central Pollution Control Board (CPCB)"
+    compounds_covered: null
+    threshold_value: null
+    scope: null
+    exemptions: []
+    context:
+      - "Gap assertion: absence of regulation is itself a signal for future liability"
+      - "PFAS contamination documented near industrial sites without regulatory response"
+      - "Regulatory vacuum creates future liability exposure for manufacturers operating in India"
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # CROSS-APAC: FLUOROPOLYMER-SPECIFIC ASSERTIONS
+  # ===========================================================================
+
+  - id: APAC_FLUOROPOLYMER_GAP_001
+    assertion: "No APAC country currently regulates fluoropolymers (PTFE, PVDF, FEP, PFA, ETFE) as finished products separate from PFAS processing aids, but broad PFAS definitions in pending regulations may capture them."
+    type: factual
+    compound_class: fluoropolymer
+    confidence: 0.85
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "Plastics Europe — Fluoropolymers Product Group, EU PFAS restriction analysis"
+        url: "https://fluoropolymers.eu/eu-pfas-restriction/"
+        tier: secondary
+        doi: null
+        year: 2025
+      - source: "OECD Polymer of Low Concern criteria — 96% of commercial fluoropolymers meet PLC"
+        url: "https://fluoropolymers.eu/2025/"
+        tier: secondary
+        doi: null
+        year: 2025
+    regulatory_body: null
+    compounds_covered: null
+    threshold_value: null
+    scope: "all APAC jurisdictions — fluoropolymer finished products"
+    exemptions: []
+    context:
+      - "Current APAC PFAS regulations target processing aids (PFOA, PFOS, PFHxS) used in fluoropolymer manufacturing, not the polymers themselves"
+      - "96% of commercial fluoropolymers meet OECD Polymer of Low Concern (PLC) criteria — negligibly soluble, non-mobile, non-bioavailable"
+      - "EU ECHA updated restriction proposal (October 2025) provides separate fluoropolymer treatment — APAC regulators may follow this precedent"
+      - "India FSSAI food contact ban (IND_FSSAI_FOOD_001) is closest to catching fluoropolymer products (PTFE coatings)"
+      - "Taiwan's broad 269-PFAS concerned substances designation (TWN_MOENV_269_001) may include fluoropolymer processing aids"
+      - "Japan's 138 PFOA ban references 'fluoropolymer coatings' as concern area"
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: APAC_FLUOROPOLYMER_MARKET_001
+    assertion: "Asia-Pacific holds 42.93% of the global fluoropolymers market (2024), making regional regulation commercially critical for PTFE, PVDF, and fluoroelastomer manufacturers."
+    type: factual
+    compound_class: fluoropolymer
+    confidence: 0.90
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "Straits Research — Fluoropolymers Market Size & Share, Forecast 2033"
+        url: "https://straitsresearch.com/report/fluoropolymers-market"
+        tier: secondary
+        doi: null
+        year: 2024
+      - source: "Grand View Research — Fluoropolymers Market Size & Share"
+        url: "https://www.grandviewresearch.com/industry-analysis/fluoropolymers-market"
+        tier: secondary
+        doi: null
+        year: 2024
+    regulatory_body: null
+    compounds_covered: null
+    threshold_value: null
+    scope: "APAC fluoropolymer manufacturing and consumption"
+    exemptions: []
+    context:
+      - "Global fluoropolymers market: USD 10.64B (2024), projected USD 17.85B by 2030 (CAGR 9.1%)"
+      - "APAC share 42.93% — driven by electronics, automotive, construction, healthcare, chemical processing"
+      - "Technologies available to manufacture 80%+ of fluoropolymer volume without fluorinated polymerization aids"
+      - "Solvay targeting fluorosurfactant phase-out by 2026; Arkema already eliminated in US"
+      - "Regulation of processing aids (PFOA used in PTFE production) already impacts manufacturing costs"
+      - "Any future APAC fluoropolymer product-level restrictions would affect nearly half of global market"
+    litigation_relevance: high
+    jerk_signal: false
+
+
+# =============================================================================
+# REGULATORY TRAJECTORY BY COUNTRY
+# =============================================================================
+
+regulatory_trajectory:
+  japan:
+    current_status: "ENFORCED — Class I ban effective Jan 2025, 138 PFOA compounds; water standards binding April 2026"
+    momentum: high
+    next_milestone: "Water quality standards binding April 1, 2026"
+    litigation_risk_for_manufacturers: high
+    fluoropolymer_exposure: "Fluoropolymer coatings flagged in CSCL ban context; processing aids restricted"
+
+  south_korea:
+    current_status: "K-REACH active, cosmetics PFAS ban enacted April 2022, Water Act amendments proposed June 2025"
+    momentum: medium_high
+    next_milestone: "Water/Sewage Act amendment finalization"
+    litigation_risk_for_manufacturers: medium_high
+    fluoropolymer_exposure: "No direct fluoropolymer product regulation; processing aids under K-REACH"
+
+  china:
+    current_status: "Priority pollutant list enforced March 2023, third batch draft Nov 2025, Sichuan local discharge limits"
+    momentum: medium_high
+    next_milestone: "Third batch finalization; MEE-FECO consultation outcomes"
+    litigation_risk_for_manufacturers: medium
+    fluoropolymer_exposure: "Major PTFE/PVDF manufacturing base; patent filings increasing; processing aid restrictions tightening"
+
+  australia:
+    current_status: "NEMP enforced, NHMRC v4.0 guidelines published June 2025 (PFOS 8 ng/L, PFOA 200 ng/L)"
+    momentum: medium
+    next_milestone: "Packaging regulation reform"
+    litigation_risk_for_manufacturers: medium
+    fluoropolymer_exposure: "No direct fluoropolymer regulation; PFAS NEMP covers contaminated sites"
+
+  singapore:
+    current_status: "AFFF ban effective Jan 1, 2026 with specific ppb thresholds"
+    momentum: medium
+    next_milestone: "Broader PFAS restrictions expected post-2026"
+    litigation_risk_for_manufacturers: low_medium
+    fluoropolymer_exposure: "Limited — AFFF focus only; no product-level fluoropolymer restrictions"
+
+  taiwan:
+    current_status: "FIRST IN ASIA for drinking water PFAS standards; 151 PFAS banned; 357 + 269 in pipeline"
+    momentum: high
+    next_milestone: "357 PFOA/PFOS family finalization; 269 concerned substances designation"
+    litigation_risk_for_manufacturers: medium_high
+    fluoropolymer_exposure: "269 concerned substances designation may capture fluoropolymer processing aids; broadest APAC PFAS net"
+
+  india:
+    current_status: "FSSAI food contact PFAS + BPA ban proposed October 2025; no environmental PFAS regulation"
+    momentum: low_medium
+    next_milestone: "FSSAI regulation finalization"
+    litigation_risk_for_manufacturers: low
+    fluoropolymer_exposure: "FSSAI ban scope includes PTFE-coated food contact materials — commercially significant for non-stick coatings"

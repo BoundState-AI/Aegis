@@ -1,0 +1,1515 @@
+# =============================================================================
+# WESTERN REGULATORY ASSERTIONS DATABASE
+# AEGIS — Western PFAS & Fluoropolymer Regulatory Intelligence Layer
+# Created: 2026-02-20
+# Updated: 2026-02-20 (primary-source verification pass)
+#
+# Scope: Western jurisdictions monitored by AEGIS URL monitor.
+# Includes US federal/state, EU, UK, Nordic co-submitters, Canada, and
+# international treaty/guidance bodies relevant to Chemours exposure.
+#
+# Confidence calibration:
+#   0.95-1.00 — Enacted law/rule and primary source confirms in-force status
+#   0.85-0.94 — Finalized status with pending or phased implementation
+#   0.75-0.84 — Proposed/consultation stage with reliable primary sourcing
+#   0.60-0.74 — Early-stage signal or partial-confirmation status
+# =============================================================================
+
+region: WESTERN
+scope: "PFAS and fluoropolymers — regulatory status, thresholds, and implementation timelines"
+coverage:
+  - US Federal
+  - US States
+  - European Union
+  - United Kingdom
+  - Denmark
+  - Norway
+  - Germany
+  - Sweden
+  - Netherlands
+  - Canada
+  - International
+
+# =============================================================================
+# ASSERTIONS (43 total)
+# =============================================================================
+
+assertions:
+
+  # ===========================================================================
+  # US FEDERAL (12)
+  # ===========================================================================
+
+  - id: US_EPA_NPDWR_2024_001
+    assertion: "EPA finalized PFAS NPDWR in April 2024 with enforceable standards for six PFAS metrics and an effective date of June 25, 2024."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: "2023-03-14"
+      consultation_end: null
+      finalized: "2024-04-10"
+      effective: "2024-06-25"
+      enforcement: "2029-01-01"
+      sunset: null
+    citations:
+      - source: "EPA SDWA PFAS NPDWR page"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "EPA PFAS NPDWR final rule PDF"
+        url: "https://www.govinfo.gov/content/pkg/FR-2024-04-26/pdf/2024-07773.pdf"
+        tier: primary
+        doi: null
+        year: 2024
+    regulatory_body: "US EPA"
+    compounds_covered: 6
+    threshold_value: "Multiple: PFOA 4 ppt, PFOS 4 ppt, PFHxS 10 ppt, PFNA 10 ppt, HFPO-DA 10 ppt, Hazard Index 1.0"
+    scope: "Public water systems nationwide"
+    exemptions: []
+    context:
+      - "Rule created enforceable MCLs for five individual PFAS plus one Hazard Index framework for mixtures."
+      - "Compliance implementation originally staged through 2027 monitoring and 2029 treatment/public notification obligations."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_EPA_NPDWR_2025_001
+    assertion: "EPA announced in May 2025 it will retain PFOA/PFOS MCLs, propose extending compliance to 2031, and intends to rescind/reconsider PFHxS/PFNA/HFPO-DA and Hazard Index determinations."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.93
+    status: proposed
+    dates:
+      proposed: "2025-05-14"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "EPA press release (May 14, 2025)"
+        url: "https://www.epa.gov/newsreleases/epa-announces-it-will-keep-maximum-contaminant-levels-pfoa-pfos"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "EPA SDWA PFAS NPDWR page update"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 6
+    threshold_value: "Proposed compliance extension for PFOA/PFOS from 2029 to 2031; PFHxS/PFNA/HFPO-DA and HI under reconsideration"
+    scope: "Public water systems nationwide"
+    exemptions:
+      - "Federal exemption framework announced as intent in May 2025 (details pending rulemaking)."
+    context:
+      - "This is a live regulatory discontinuity and must remain separate from April 2024 final-rule assertions."
+      - "GenX/HFPO-DA status became explicitly in-flux under EPA's announced rescission/reconsideration intent."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_EPA_PFOA_MCL_001
+    assertion: "EPA's PFOA Maximum Contaminant Level remains 4 ppt with MCLG of zero under current NPDWR posture."
+    type: regulatory_enacted
+    compound_class: PFOA
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: "2023-03-14"
+      consultation_end: null
+      finalized: "2024-04-10"
+      effective: "2024-06-25"
+      enforcement: "2029-01-01"
+      sunset: null
+    citations:
+      - source: "EPA SDWA PFAS NPDWR rule summary table"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 1
+    threshold_value: "4 ppt (ng/L), MCLG 0"
+    scope: "Drinking water"
+    exemptions: []
+    context:
+      - "EPA's May 2025 action explicitly retained this MCL."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_EPA_PFOS_MCL_001
+    assertion: "EPA's PFOS Maximum Contaminant Level remains 4 ppt with MCLG of zero under current NPDWR posture."
+    type: regulatory_enacted
+    compound_class: PFOS
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: "2023-03-14"
+      consultation_end: null
+      finalized: "2024-04-10"
+      effective: "2024-06-25"
+      enforcement: "2029-01-01"
+      sunset: null
+    citations:
+      - source: "EPA SDWA PFAS NPDWR rule summary table"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 1
+    threshold_value: "4 ppt (ng/L), MCLG 0"
+    scope: "Drinking water"
+    exemptions: []
+    context:
+      - "EPA's May 2025 action explicitly retained this MCL."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_EPA_PFHXS_STATUS_001
+    assertion: "EPA announced intent to rescind and reconsider PFHxS drinking water determinations that were finalized in 2024."
+    type: regulatory_pending
+    compound_class: PFHxS
+    confidence: 0.91
+    status: proposed
+    dates:
+      proposed: "2025-05-14"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "EPA PFAS reconsideration announcement (May 14, 2025)"
+        url: "https://www.epa.gov/newsreleases/epa-announces-it-will-keep-maximum-contaminant-levels-pfoa-pfos"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 1
+    threshold_value: "Prior 2024 MCL 10 ppt now under announced reconsideration"
+    scope: "Drinking water"
+    exemptions: []
+    context:
+      - "Regulatory status should be treated as in-flux, not settled."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: US_EPA_PFNA_STATUS_001
+    assertion: "EPA announced intent to rescind and reconsider PFNA drinking water determinations that were finalized in 2024."
+    type: regulatory_pending
+    compound_class: PFNA
+    confidence: 0.91
+    status: proposed
+    dates:
+      proposed: "2025-05-14"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "EPA PFAS reconsideration announcement (May 14, 2025)"
+        url: "https://www.epa.gov/newsreleases/epa-announces-it-will-keep-maximum-contaminant-levels-pfoa-pfos"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 1
+    threshold_value: "Prior 2024 MCL 10 ppt now under announced reconsideration"
+    scope: "Drinking water"
+    exemptions: []
+    context:
+      - "Regulatory status should be treated as in-flux, not settled."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: US_EPA_HFPODA_STATUS_001
+    assertion: "EPA announced intent to rescind and reconsider HFPO-DA (GenX) drinking water determinations that were finalized in 2024."
+    type: regulatory_pending
+    compound_class: GENX
+    confidence: 0.92
+    status: proposed
+    dates:
+      proposed: "2025-05-14"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "EPA PFAS reconsideration announcement (May 14, 2025)"
+        url: "https://www.epa.gov/newsreleases/epa-announces-it-will-keep-maximum-contaminant-levels-pfoa-pfos"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "EPA SDWA PFAS NPDWR page summary"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 1
+    threshold_value: "Prior 2024 MCL 10 ppt now under announced reconsideration"
+    scope: "Drinking water"
+    exemptions: []
+    context:
+      - "This is the key GenX discontinuity for Chemours and must be monitored as a critical signal."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_EPA_HAZARD_INDEX_001
+    assertion: "EPA announced intent to rescind and reconsider the PFAS Hazard Index mixture determination introduced in the 2024 NPDWR."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.90
+    status: proposed
+    dates:
+      proposed: "2025-05-14"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "EPA PFAS reconsideration announcement (May 14, 2025)"
+        url: "https://www.epa.gov/newsreleases/epa-announces-it-will-keep-maximum-contaminant-levels-pfoa-pfos"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "EPA SDWA PFAS NPDWR page summary"
+        url: "https://www.epa.gov/sdwa/and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 4
+    threshold_value: "Hazard Index 1.0 framework under announced reconsideration"
+    scope: "Mixtures containing PFHxS, PFNA, HFPO-DA, PFBS"
+    exemptions: []
+    context:
+      - "Hazard Index discontinuity materially affects mixture compliance analysis."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: US_EPA_CERCLA_001
+    assertion: "PFOA and PFOS are designated as CERCLA hazardous substances; the rule took effect July 8, 2024."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.97
+    status: enforced
+    dates:
+      proposed: "2022-09-06"
+      consultation_end: null
+      finalized: "2024-04-19"
+      effective: "2024-07-08"
+      enforcement: "2024-07-08"
+      sunset: null
+    citations:
+      - source: "EPA CERCLA Q&A page"
+        url: "https://www.epa.gov/superfund/questions-and-answers-about-designation-pfoa-and-pfos-hazardous-substances-under-cercla"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Federal Register proposed CERCLA designation rule (PFOA/PFOS)"
+        url: "https://www.federalregister.gov/documents/2022/09/06/2022-18657/designation-of-perfluorooctanoic-acid-pfoa-and-perfluorooctanesulfonic-acid-pfos-as-cercla"
+        tier: primary
+        doi: null
+        year: 2022
+      - source: "EPA next steps update (rule became effective July 8, 2024)"
+        url: "https://www.epa.gov/newsreleases/trump-epa-announces-next-steps-regulatory-pfoa-and-pfos-cleanup-efforts-provides"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 2
+    threshold_value: "CERCLA hazardous substance designation (no concentration threshold in assertion)"
+    scope: "Federal Superfund liability and response framework"
+    exemptions: []
+    context:
+      - "Designation activates CERCLA cost recovery/enforcement tools for qualifying releases."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_EPA_TSCA_REPORTING_001
+    assertion: "TSCA section 8(a)(7) requires reporting for PFAS manufactured/imported since 2011, including PFAS-containing articles."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.96
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2023-10-11"
+      effective: "2023-11-13"
+      enforcement: "2026-04-13"
+      sunset: null
+    citations:
+      - source: "EPA TSCA section 8(a)(7) PFAS reporting page"
+        url: "https://www.epa.gov/assessing-and-managing-chemicals-under-tsca/tsca-section-8a7-reporting-and-recordkeeping"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: null
+    threshold_value: "Reporting obligation for PFAS manufactured/imported 2011-2022"
+    scope: "Manufacturing/import, use, disposal, byproducts, worker/environmental effects reporting"
+    exemptions: []
+    context:
+      - "Rule is a foundational federal data-disclosure mechanism for PFAS lifecycle oversight."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: US_EPA_TSCA_DEADLINE_001
+    assertion: "EPA extended TSCA PFAS reporting window to start April 13, 2026; submissions due October 13, 2026 (most) and April 13, 2027 (small article importers)."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.94
+    status: finalized
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2025-05-12"
+      effective: "2025-05-12"
+      enforcement: "2026-04-13"
+      sunset: null
+    citations:
+      - source: "EPA interim final rule summary (May 12, 2025)"
+        url: "https://www.epa.gov/chemicals-under-tsca/epa-extends-reporting-period-pfas-manufacturers"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "EPA TSCA section 8(a)(7) updates page"
+        url: "https://www.epa.gov/assessing-and-managing-chemicals-under-tsca/tsca-section-8a7-reporting-and-recordkeeping"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: null
+    threshold_value: "Start: 2026-04-13; Due (most): 2026-10-13; Due (small article importers): 2027-04-13"
+    scope: "TSCA PFAS data reporting submission schedule"
+    exemptions: []
+    context:
+      - "Schedule drift is material for compliance operations and disclosure risk."
+      - "EPA also initiated a November 2025 proposal to adjust scope/exemptions."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: US_EPA_COMPTOX_001
+    assertion: "EPA's CompTox PFAS list framework identifies PFASSTRUCT as the active structure inventory with 14,735 chemicals, while legacy PFASMASTER is retired."
+    type: factual
+    compound_class: PFAS_class
+    confidence: 0.90
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "EPA CompTox PFASMASTER list page (retired)"
+        url: "https://comptox.epa.gov/dashboard/chemical-lists/PFASMASTER"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "EPA CompTox PFASSTRUCT list page (active; 14,735 chemicals)"
+        url: "https://comptox.epa.gov/dashboard/chemical-lists/PFASSTRUCT"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "US EPA"
+    compounds_covered: 14735
+    threshold_value: "PFASSTRUCT active baseline: 14,735 chemicals (latest structure list); monitor list-size drift over time"
+    scope: "Federal PFAS inventory and analytics support"
+    exemptions: []
+    context:
+      - "PFASMASTER is explicitly marked retired by EPA CompTox and replaced by active PFASSTRUCT/PFASDEV pathways."
+      - "List-size and composition drift are material scope-expansion signals for regulatory exposure modeling."
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # US STATES (6)
+  # ===========================================================================
+
+  - id: US_CA_PROP65_PFOA_001
+    assertion: "California listed PFOA under Proposition 65 effective November 10, 2017 (reproductive toxicity)."
+    type: regulatory_enacted
+    compound_class: PFOA
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: "2016-09-16"
+      consultation_end: "2016-11-16"
+      finalized: "2017-11-09"
+      effective: "2017-11-10"
+      enforcement: "2017-11-10"
+      sunset: null
+    citations:
+      - source: "OEHHA Proposition 65 listing notice for PFOA/PFOS"
+        url: "https://oehha.ca.gov/proposition-65/crnr/chemicals-listed-effective-november-10-2017-known-state-california-cause-reproductive-toxicity"
+        tier: primary
+        doi: null
+        year: 2017
+    regulatory_body: "California OEHHA"
+    compounds_covered: 1
+    threshold_value: "Proposition 65 listed chemical (warning framework)"
+    scope: "California consumer/product exposure warning regime"
+    exemptions: []
+    context:
+      - "Prop 65 listing drives warning and litigation exposure in California supply chains."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: US_CA_PROP65_PFOS_001
+    assertion: "California listed PFOS under Proposition 65 effective November 10, 2017 (reproductive toxicity)."
+    type: regulatory_enacted
+    compound_class: PFOS
+    confidence: 0.98
+    status: enforced
+    dates:
+      proposed: "2016-09-16"
+      consultation_end: "2016-11-16"
+      finalized: "2017-11-09"
+      effective: "2017-11-10"
+      enforcement: "2017-11-10"
+      sunset: null
+    citations:
+      - source: "OEHHA Proposition 65 listing notice for PFOA/PFOS"
+        url: "https://oehha.ca.gov/proposition-65/crnr/chemicals-listed-effective-november-10-2017-known-state-california-cause-reproductive-toxicity"
+        tier: primary
+        doi: null
+        year: 2017
+    regulatory_body: "California OEHHA"
+    compounds_covered: 1
+    threshold_value: "Proposition 65 listed chemical (warning framework)"
+    scope: "California consumer/product exposure warning regime"
+    exemptions: []
+    context:
+      - "Prop 65 listing drives warning and litigation exposure in California supply chains."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: US_CA_SWRCB_PFAS_001
+    assertion: "California SWRCB PFAS drinking-water program currently uses nonregulatory notification and response levels, including updated values issued October 29, 2025."
+    type: regulatory_guidance
+    compound_class: PFAS_class
+    confidence: 0.93
+    status: guidance
+    dates:
+      proposed: "2025-06-27"
+      consultation_end: null
+      finalized: "2025-10-29"
+      effective: "2025-10-29"
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "California SWRCB PFAS webpage (notification/response levels)"
+        url: "https://www.waterboards.ca.gov/drinking_water/certlic/drinkingwater/pfas.html"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "CA PFAS timeline (October 29, 2025 updates)"
+        url: "https://www.waterboards.ca.gov/pfas/ca_pfas_timeline.html"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "California SWRCB / DDW"
+    compounds_covered: 4
+    threshold_value: "PFOA NL/RL 4/10 ng/L; PFOS NL/RL 4/40 ng/L; PFHxS NL/RL 3/10 ng/L; PFHxA NL/RL 1/10 ug/L"
+    scope: "State drinking water advisories and response actions"
+    exemptions: []
+    context:
+      - "These are advisory/response levels, not MCLs, but operationally significant for utilities and public notices."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: US_NC_GENX_CONSENT_001
+    assertion: "North Carolina's court-entered Chemours consent order (February 2019) remains the core state enforcement framework for GenX/PFAS controls at Fayetteville Works."
+    type: regulatory_enacted
+    compound_class: GENX
+    confidence: 0.96
+    status: enforced
+    dates:
+      proposed: "2019-02-20"
+      consultation_end: null
+      finalized: "2019-02-25"
+      effective: "2019-02-25"
+      enforcement: "2019-02-25"
+      sunset: null
+    citations:
+      - source: "NC DEQ Chemours Consent Order page"
+        url: "https://www.deq.nc.gov/news/key-issues/genx-investigation/chemours-consent-order"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "NC DEQ court approval release (Feb 25, 2019)"
+        url: "https://www.deq.nc.gov/news/press-releases/2019/02/25/court-approves-order-stop-pfas-entering-cape-fear"
+        tier: primary
+        doi: null
+        year: 2019
+    regulatory_body: "North Carolina DEQ / Superior Court"
+    compounds_covered: null
+    threshold_value: "Operational controls include 99.9% GenX air-emission reduction commitments"
+    scope: "Facility-specific air, water, groundwater and private-well obligations"
+    exemptions: []
+    context:
+      - "State enforcement posture directly affects Chemours site liability and remediation obligations."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: US_NC_CAPEFEAR_MONITOR_001
+    assertion: "North Carolina continues Cape Fear PFAS monitoring and replacement-water obligations under the Chemours enforcement framework."
+    type: factual
+    compound_class: PFAS_class
+    confidence: 0.92
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "NC DEQ GenX investigation page"
+        url: "https://deq.nc.gov/news/key-issues/genx-investigation"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "North Carolina DEQ"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Cape Fear basin and affected private wells"
+    exemptions: []
+    context:
+      - "Ongoing monitoring and supply obligations remain a persistent liability signal."
+    litigation_relevance: critical
+    jerk_signal: false
+
+  - id: US_MI_MPART_001
+    assertion: "Michigan's MPART remains an active statewide PFAS response program coordinating investigations and response actions."
+    type: factual
+    compound_class: PFAS_class
+    confidence: 0.90
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "Michigan PFAS Action Response Team portal"
+        url: "https://www.michigan.gov/pfasresponse"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "Michigan PFAS Action Response Team (MPART)"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Statewide investigation and response"
+    exemptions: []
+    context:
+      - "Program activity signals continuing state-level expansion of PFAS accountability."
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # EUROPEAN UNION (10)
+  # ===========================================================================
+
+  - id: EU_ECHA_PFAS_001
+    assertion: "The EU-wide REACH restriction proposal for PFAS remains under scientific committee evaluation with staged sector conclusions."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.88
+    status: consultation
+    dates:
+      proposed: "2023-01-13"
+      consultation_end: "2023-09-25"
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "ECHA restriction intentions registry"
+        url: "https://echa.europa.eu/registry-of-restriction-intentions/-/registry-of-restriction-intentions/q?p_p_id=com_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_restriction_intentions"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "ECHA PFAS hot topics page"
+        url: "https://echa.europa.eu/hot-topics/perfluoroalkyl-chemicals-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "ECHA RAC/SEAC under REACH process"
+    compounds_covered: null
+    threshold_value: null
+    scope: "EU/EEA restriction proposal"
+    exemptions: []
+    context:
+      - "Proposal was submitted by five-country dossier submitters and remains one of the most material PFAS policy drivers globally."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: EU_ECHA_RAC_STATUS_001
+    assertion: "As of late 2025 updates, RAC was expected to adopt its PFAS restriction opinion in March 2026."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.86
+    status: consultation
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "ECHA December 2025 RAC/SEAC meeting highlights"
+        url: "https://echa.europa.eu/fr/-/highlights-from-december-2025-rac-and-seac-meetings"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "ECHA September 2025 RAC/SEAC meeting highlights"
+        url: "https://echa.europa.eu/-/highlights-from-september-2025-rac-and-seac-meetings"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "ECHA RAC"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Scientific opinion phase"
+    exemptions: []
+    context:
+      - "RAC timing is a key milestone for downstream Commission decision sequencing."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: EU_ECHA_SEAC_STATUS_001
+    assertion: "ECHA communicated that SEAC draft PFAS opinion would be agreed in March 2026, followed by a 60-day consultation and finalization target by end-2026."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.86
+    status: consultation
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "ECHA consultation announcement (September 2025)"
+        url: "https://www.echa.europa.eu/-/echa-to-consult-on-pfas-draft-opinion-in-spring-2026"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "ECHA December 2025 RAC/SEAC meeting highlights"
+        url: "https://echa.europa.eu/fr/-/highlights-from-december-2025-rac-and-seac-meetings"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "ECHA SEAC"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Socio-economic opinion phase"
+    exemptions: []
+    context:
+      - "SEAC draft/final sequence drives industry comment window and final recommendation content."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: EU_ECHA_DEROGATION_001
+    assertion: "ECHA committee work has included sector-by-sector provisional conclusions and horizontal issues relevant to derogation design (concentration limits, enforceability, monitorability, PFAS management plans)."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.84
+    status: consultation
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "ECHA June 2025 RAC/SEAC highlights"
+        url: "https://echa.europa.eu/cs/-/highlights-from-june-2025-rac-and-seac-meetings"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "ECHA December 2025 RAC/SEAC highlights"
+        url: "https://echa.europa.eu/fr/-/highlights-from-december-2025-rac-and-seac-meetings"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "ECHA RAC/SEAC"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Derogation and feasibility framing within restriction proposal"
+    exemptions: []
+    context:
+      - "This is a Chemours-critical signal for fluoropolymer and semiconductor use-case survivability."
+    litigation_relevance: critical
+    jerk_signal: true
+
+  - id: EU_POPS_PFOA_001
+    assertion: "PFOA, its salts and related compounds are listed under the EU POPs Regulation framework aligned with Stockholm implementation."
+    type: regulatory_enacted
+    compound_class: PFOA
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2019-06-20"
+      effective: "2020-07-04"
+      enforcement: "2020-07-04"
+      sunset: null
+    citations:
+      - source: "EU POPs Regulation 2019/1021 (Eur-Lex)"
+        url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R1021"
+        tier: primary
+        doi: null
+        year: 2019
+    regulatory_body: "European Commission / EU Member States"
+    compounds_covered: 1
+    threshold_value: "POPs listing controls and exemptions per annex entries"
+    scope: "EU POPs framework"
+    exemptions: []
+    context:
+      - "POPs status is foundational for national enforcement and supply-chain restrictions."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: EU_POPS_PFOS_001
+    assertion: "PFOS, its salts and related PFOSF substances remain controlled under the EU POPs framework aligned with Annex B convention obligations."
+    type: regulatory_enacted
+    compound_class: PFOS
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2019-06-20"
+      effective: "2019-06-20"
+      enforcement: "2019-06-20"
+      sunset: null
+    citations:
+      - source: "EU POPs Regulation 2019/1021 (Eur-Lex)"
+        url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R1021"
+        tier: primary
+        doi: null
+        year: 2019
+    regulatory_body: "European Commission / EU Member States"
+    compounds_covered: 1
+    threshold_value: "POPs listing controls and exemptions per annex entries"
+    scope: "EU POPs framework"
+    exemptions: []
+    context:
+      - "PFOS restrictions remain a central legacy-PFAS liability anchor."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: EU_DWD_PFAS_PARAM_001
+    assertion: "EU Drinking Water Directive sets PFAS parametric values of 0.50 ug/L for PFAS Total and 0.10 ug/L for Sum of PFAS."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2020-12-16"
+      effective: "2021-01-12"
+      enforcement: "2026-01-12"
+      sunset: null
+    citations:
+      - source: "Directive (EU) 2020/2184"
+        url: "https://eur-lex.europa.eu/eli/dir/2020/2184/oj"
+        tier: primary
+        doi: null
+        year: 2020
+      - source: "EU technical guidelines citing DWD PFAS compliance date"
+        url: "https://eur-lex.europa.eu/eli/C/2024/4910"
+        tier: primary
+        doi: null
+        year: 2024
+    regulatory_body: "European Commission / Member States"
+    compounds_covered: 20
+    threshold_value: "PFAS Total 0.50 ug/L; Sum of PFAS 0.10 ug/L"
+    scope: "Water intended for human consumption"
+    exemptions: []
+    context:
+      - "Directive values are core threshold anchors for EU drinking-water PFAS compliance."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: EU_DWD_COMPLIANCE_001
+    assertion: "EU Member States are required to comply with DWD PFAS parameters by 12 January 2026."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.94
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2020-12-16"
+      effective: "2026-01-12"
+      enforcement: "2026-01-12"
+      sunset: null
+    citations:
+      - source: "EU technical guidelines under Article 13(7), Directive 2020/2184"
+        url: "https://eur-lex.europa.eu/eli/C/2024/4910"
+        tier: primary
+        doi: null
+        year: 2024
+      - source: "Directive (EU) 2020/2184"
+        url: "https://eur-lex.europa.eu/eli/dir/2020/2184/oj"
+        tier: primary
+        doi: null
+        year: 2020
+    regulatory_body: "European Commission / Member States"
+    compounds_covered: 20
+    threshold_value: "Compliance deadline: 2026-01-12"
+    scope: "Member State implementation of PFAS drinking-water parameters"
+    exemptions: []
+    context:
+      - "Deadline conversion from policy to enforceable operations is a key jurisdictional trigger."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: EU_SVHC_PFOA_001
+    assertion: "PFOA is identified in ECHA's SVHC framework, reinforcing persistent high-regulatory-risk classification in the EU."
+    type: regulatory_enacted
+    compound_class: PFOA
+    confidence: 0.92
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2013-06-20"
+      effective: "2013-06-20"
+      enforcement: "2013-06-20"
+      sunset: null
+    citations:
+      - source: "ECHA PFOA SVHC identification page"
+        url: "https://echa.europa.eu/substances-of-very-high-concern-identification/-/substance-designation/-/substance/100.001.017"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "ECHA"
+    compounds_covered: 1
+    threshold_value: null
+    scope: "SVHC identification and related REACH consequences"
+    exemptions: []
+    context:
+      - "SVHC status supports inclusion pressure across product and supply-chain controls."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: EU_REACH_PFAS_001
+    assertion: "EU REACH continues as the legal process framework for universal PFAS restriction evaluation and eventual Commission decision."
+    type: factual
+    compound_class: PFAS_class
+    confidence: 0.88
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "ECHA PFAS topic page"
+        url: "https://echa.europa.eu/hot-topics/perfluoroalkyl-chemicals-pfas"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "ECHA restriction intentions registry"
+        url: "https://echa.europa.eu/registry-of-restriction-intentions/-/registry-of-restriction-intentions/q?p_p_id=com_liferay_portal_search_web_portlet_SearchPortlet_INSTANCE_restriction_intentions"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "ECHA / European Commission"
+    compounds_covered: null
+    threshold_value: null
+    scope: "REACH restriction process"
+    exemptions: []
+    context:
+      - "This assertion anchors process-state transitions used by monitor triage."
+    litigation_relevance: high
+    jerk_signal: false
+
+  # ===========================================================================
+  # UNITED KINGDOM (3)
+  # ===========================================================================
+
+  - id: UK_HSE_REACH_001
+    assertion: "The UK maintains an independent UK REACH framework administered by HSE post-Brexit."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.92
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2021-01-01"
+      effective: "2021-01-01"
+      enforcement: "2021-01-01"
+      sunset: null
+    citations:
+      - source: "HSE UK REACH framework page"
+        url: "https://www.hse.gov.uk/reach/"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "UK HSE"
+    compounds_covered: null
+    threshold_value: null
+    scope: "UK chemicals regulatory framework"
+    exemptions: []
+    context:
+      - "UK REACH divergence risk requires separate monitoring from EU process milestones."
+    litigation_relevance: medium
+    jerk_signal: false
+
+  - id: UK_PFAS_POLICY_001
+    assertion: "The UK maintains active government PFAS policy collections and PFOS/PFOA information resources indicating continuing policy development."
+    type: factual
+    compound_class: PFAS_class
+    confidence: 0.88
+    status: monitoring
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "UK Gov PFAS collection"
+        url: "https://www.gov.uk/government/publications/pfas-plan/pfas-plan-building-a-safer-future-together"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "UK Gov PFAS/PFOS/PFOA information"
+        url: "https://www.gov.uk/government/publications/environmental-risk-evaluation-reports-per-and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "UK Government / Defra"
+    compounds_covered: null
+    threshold_value: null
+    scope: "UK policy and information framework"
+    exemptions: []
+    context:
+      - "Signal assertion for monitoring policy divergence velocity relative to EU."
+    litigation_relevance: medium
+    jerk_signal: false
+
+  - id: UK_PFOS_PFOA_CARRYOVER_001
+    assertion: "UK PFOS/PFOA controls continue via retained and UK-specific chemicals governance pathways following EU exit."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.84
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2021-01-01"
+      effective: "2021-01-01"
+      enforcement: "2021-01-01"
+      sunset: null
+    citations:
+      - source: "HSE UK REACH framework page"
+        url: "https://www.hse.gov.uk/reach/"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "UK Gov PFAS/PFOS/PFOA information"
+        url: "https://www.gov.uk/government/publications/environmental-risk-evaluation-reports-per-and-polyfluoroalkyl-substances-pfas"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "UK HSE / Defra"
+    compounds_covered: 2
+    threshold_value: null
+    scope: "UK PFOS/PFOA control continuity"
+    exemptions: []
+    context:
+      - "Maintains baseline restriction continuity while divergence monitoring remains necessary."
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # NORDIC CO-SUBMITTERS (5)
+  # ===========================================================================
+
+  - id: DNK_FCM_PFAS_001
+    assertion: "Denmark has banned marketing of paper and board food contact materials with added PFAS since 2020."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: "2020-01-01"
+      enforcement: "2020-01-01"
+      sunset: null
+    citations:
+      - source: "Danish food authority PFAS page (English)"
+        url: "https://en.foedevarestyrelsen.dk/food/food-safety-and-hygiene/chemical-food-safety/pfas"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "Danish authority press release confirming since-2020 ban"
+        url: "https://foedevarestyrelsen.dk/nyheder/pressemeddelelser/2025/maj/dansk-forbud-mod-pfas-i-pizzabakker-og-engangsemballage-virker"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "Danish Veterinary, Food, Agriculture and Fisheries Agency"
+    compounds_covered: null
+    threshold_value: "Use/marketing ban in paper and board FCM with added PFAS"
+    scope: "Food-contact paper/board materials"
+    exemptions: []
+    context:
+      - "Denmark is an early mover and practical precedent for product-level PFAS controls."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: NOR_PFAS_RESTRICTION_001
+    assertion: "Norway implemented a new drinking-water limit of 4 ng/L for the sum of four PFAS from January 1, 2026, with a 100 ng/L sum-20 PFAS value pending EEA incorporation."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.94
+    status: enforced
+    dates:
+      proposed: "2025-12-19"
+      consultation_end: null
+      finalized: "2025-12-19"
+      effective: "2026-01-01"
+      enforcement: "2026-01-01"
+      sunset: null
+    citations:
+      - source: "Norwegian Food Safety Authority notice on new PFAS drinking-water limit"
+        url: "https://www.mattilsynet.no/mat-og-drikke/drikkevann/ny-grenseverdi-for-pfas-i-drikkevann"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Norwegian Food Safety Authority PFAS in drinking water guidance"
+        url: "https://www.mattilsynet.no/mat-og-drikke/drikkevann/pfas-i-drikkevann"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "Norwegian Food Safety Authority / public water regulations"
+    compounds_covered: 20
+    threshold_value: "PFAS-4 sum: 4 ng/L effective 2026-01-01; PFAS-20 sum: 100 ng/L after EEA incorporation"
+    scope: "Drinking water quality limits and compliance oversight"
+    exemptions: []
+    context:
+      - "Norwegian primary guidance explicitly states PFAS4 became binding from January 2026."
+      - "PFAS20 value is published as pending EEA legal incorporation, creating a staged compliance trajectory."
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: DEU_UBA_PFAS_001
+    assertion: "Germany's amended Drinking Water Ordinance sets staged PFAS limits: 0.10 ug/L for PFAS-20 from January 12, 2026 and 0.020 ug/L for PFAS-4 from January 12, 2028."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: finalized
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2023-06-23"
+      effective: "2026-01-12"
+      enforcement: "2026-01-12"
+      sunset: null
+    citations:
+      - source: "UBA update on new Drinking Water Ordinance PFAS thresholds"
+        url: "https://www.umweltbundesamt.de/en/topics/water/drinking-water/new-drinking-water-ordinance-ensures-high-quality"
+        tier: primary
+        doi: null
+        year: 2023
+      - source: "German Federal Law Gazette - Second Ordinance amending Drinking Water Ordinance"
+        url: "https://www.recht.bund.de/bgbl/1/2023/159/VO.html"
+        tier: primary
+        doi: null
+        year: 2023
+    regulatory_body: "German Environment Agency (UBA)"
+    compounds_covered: 20
+    threshold_value: "PFAS-20 sum: 0.10 ug/L from 2026-01-12; PFAS-4 sum: 0.020 ug/L from 2028-01-12"
+    scope: "National drinking-water quality regulation"
+    exemptions: []
+    context:
+      - "German ordinance establishes two-stage tightening with a 2028 hardening from PFAS20 to PFAS4 metric."
+      - "Values align with EU DWD implementation while adding explicit national enforcement staging."
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: SWE_KEMI_PFAS_001
+    assertion: "Sweden's drinking-water framework applies PFAS limits from January 1, 2026 at 4 ng/L for PFAS-4 and 100 ng/L for PFAS-21."
+    type: regulatory_enacted
+    compound_class: PFAS_class
+    confidence: 0.93
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: "2026-01-01"
+      enforcement: "2026-01-01"
+      sunset: null
+    citations:
+      - source: "Swedish National Food Agency FAQ on PFAS drinking-water regulations"
+        url: "https://www.livsmedelsverket.se/foretagande-regler-kontroll/dricksvattenproduktion/regler-om-dricksvatten/fragor-och-svar-om-dricksvattenforeskrifterna"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "Swedish control wiki guidance summarizing PFAS4/PFAS21 limits and transition"
+        url: "https://kontrollwiki.livsmedelsverket.se/artikel/879/dricksvatten-kontroll-av-pfas-och-bly"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "Swedish National Food Agency / drinking-water regulations"
+    compounds_covered: 21
+    threshold_value: "PFAS-4 sum: 4 ng/L; PFAS-21 sum: 100 ng/L (effective 2026-01-01)"
+    scope: "National drinking-water compliance thresholds"
+    exemptions: []
+    context:
+      - "Swedish limits are explicitly tied to the 2026 implementation transition and define both strict PFAS4 and broader PFAS21 metrics."
+    litigation_relevance: medium
+    jerk_signal: true
+
+  - id: NLD_RIVM_PFAS_001
+    assertion: "The Netherlands' RIVM continues publishing PFAS risk and policy guidance, including national-level drinking-water context relevant to EU policy direction."
+    type: regulatory_guidance
+    compound_class: PFAS_class
+    confidence: 0.86
+    status: guidance
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "RIVM PFAS policy/risk page"
+        url: "https://www.rivm.nl/en/pfas"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "RIVM"
+    compounds_covered: null
+    threshold_value: null
+    scope: "National guidance and technical policy support"
+    exemptions: []
+    context:
+      - "Dutch guidance values and scientific framing often propagate into wider EU policy discussion."
+    litigation_relevance: medium
+    jerk_signal: false
+
+  # ===========================================================================
+  # CANADA (3)
+  # ===========================================================================
+
+  - id: CAN_HC_DW_OBJECTIVE_001
+    assertion: "Health Canada established a drinking-water objective of 30 ng/L for the sum of 25 PFAS in August 2024 while guideline revision is ongoing."
+    type: regulatory_guidance
+    compound_class: PFAS_class
+    confidence: 0.95
+    status: guidance
+    dates:
+      proposed: "2023-02-07"
+      consultation_end: null
+      finalized: "2024-08-09"
+      effective: "2024-08-09"
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "Health Canada PFAS drinking-water objective technical document"
+        url: "https://www.canada.ca/en/health-canada/services/publications/healthy-living/objective-drinking-water-quality-per-polyfluoroalkyl-substances.html"
+        tier: primary
+        doi: null
+        year: 2024
+    regulatory_body: "Health Canada"
+    compounds_covered: 25
+    threshold_value: "30 ng/L sum of 25 PFAS"
+    scope: "Canadian drinking-water objective (interim while guidelines are revised)"
+    exemptions: []
+    context:
+      - "Objective replaced prior individual PFAS guidelines/screening values pending comprehensive update."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: CAN_PFOS_PROHIBITION_001
+    assertion: "PFOS remains subject to Canadian toxic-substances prohibition controls, with PCTSR 2025 replacing PCTSR 2012 when it enters into force on June 30, 2026."
+    type: regulatory_enacted
+    compound_class: PFOS
+    confidence: 0.93
+    status: finalized
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2025-01-01"
+      effective: "2026-06-30"
+      enforcement: "2026-06-30"
+      sunset: null
+    citations:
+      - source: "Canada PFOS prohibition summary under PCTSR 2025"
+        url: "https://www.canada.ca/en/environment-climate-change/services/management-toxic-substances/prohibition-certain-toxic-substances-regulations-2025/perfluorooctane-sulfonate.html"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "Environment and Climate Change Canada"
+    compounds_covered: 1
+    threshold_value: "Substance prohibition framework (details by regulation schedule and exemptions)"
+    scope: "Canadian toxic-substances controls"
+    exemptions: []
+    context:
+      - "Regulatory handoff to 2025 regulation is a concrete compliance date signal."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: CAN_PFAS_CLASS_APPROACH_001
+    assertion: "Canada's PFAS risk-management approach (excluding fluoropolymers) frames PFAS as a class-level toxicity and control issue under CEPA."
+    type: regulatory_pending
+    compound_class: PFAS_class
+    confidence: 0.90
+    status: consultation
+    dates:
+      proposed: "2025-03-08"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: null
+    citations:
+      - source: "Canada PFAS risk management approach (excluding fluoropolymers)"
+        url: "https://www.canada.ca/en/environment-climate-change/services/evaluating-existing-substances/risk-management-approach-per-polyfluoroalkyl-substances.html"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "Health Canada + ECCC"
+    compounds_covered: null
+    threshold_value: null
+    scope: "Class-based PFAS risk management under CEPA"
+    exemptions:
+      - "Fluoropolymers excluded in referenced class conclusion context."
+    context:
+      - "Class-level framing increases scope-expansion risk for downstream obligations."
+    litigation_relevance: high
+    jerk_signal: true
+
+  # ===========================================================================
+  # INTERNATIONAL (4)
+  # ===========================================================================
+
+  - id: INTL_STOCKHOLM_PFOA_001
+    assertion: "Stockholm Convention lists PFOA, its salts and related compounds in Annex A (decision adopted in 2019)."
+    type: regulatory_enacted
+    compound_class: PFOA
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2019-05-10"
+      effective: "2019-05-10"
+      enforcement: "2019-05-10"
+      sunset: null
+    citations:
+      - source: "Stockholm Convention 'The New POPs' page"
+        url: "https://chm.pops.int/theconvention/thepops/thenewpops/tabid/2511/default.aspx"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Stockholm Convention implementation overview (Industrial POPs)"
+        url: "https://chm.pops.int/Implementation/IndustrialPOPs/tabid/5360/Default.aspx"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "Stockholm Convention COP"
+    compounds_covered: 1
+    threshold_value: "Annex A listing (with convention-defined exemptions where applicable)"
+    scope: "International POPs convention"
+    exemptions: []
+    context:
+      - "Annex listings drive national transposition momentum in multiple jurisdictions."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: INTL_STOCKHOLM_PFOS_001
+    assertion: "Stockholm Convention lists PFOS, its salts and PFOSF under Annex B restrictions (adopted in 2009)."
+    type: regulatory_enacted
+    compound_class: PFOS
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2009-05-01"
+      effective: "2009-05-01"
+      enforcement: "2009-05-01"
+      sunset: null
+    citations:
+      - source: "Stockholm Convention implementation overview (Industrial POPs)"
+        url: "https://chm.pops.int/Implementation/IndustrialPOPs/tabid/5360/Default.aspx"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Stockholm Convention text and annexes page"
+        url: "https://chm.pops.int/Convention/ConventionText/tabid/2232/language/enGB/Default.aspx"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "Stockholm Convention COP"
+    compounds_covered: 1
+    threshold_value: "Annex B listing (restricted uses framework)"
+    scope: "International POPs convention"
+    exemptions: []
+    context:
+      - "PFOS convention status remains a global policy baseline."
+    litigation_relevance: high
+    jerk_signal: false
+
+  - id: INTL_STOCKHOLM_PFHXS_001
+    assertion: "Stockholm Convention added PFHxS, its salts and PFHxS-related compounds to Annex A at COP-10 in 2022."
+    type: regulatory_enacted
+    compound_class: PFHxS
+    confidence: 0.95
+    status: enforced
+    dates:
+      proposed: null
+      consultation_end: null
+      finalized: "2022-06-17"
+      effective: "2022-06-17"
+      enforcement: "2022-06-17"
+      sunset: null
+    citations:
+      - source: "Stockholm Convention 'The New POPs' page"
+        url: "https://chm.pops.int/theconvention/thepops/thenewpops/tabid/2511/default.aspx"
+        tier: primary
+        doi: null
+        year: 2025
+      - source: "Stockholm Convention text and annexes (revised 2023)"
+        url: "https://chm.pops.int/Convention/ConventionText/tabid/2232/language/enGB/Default.aspx"
+        tier: primary
+        doi: null
+        year: 2025
+    regulatory_body: "Stockholm Convention COP"
+    compounds_covered: 1
+    threshold_value: "Annex A listing"
+    scope: "International POPs convention"
+    exemptions: []
+    context:
+      - "PFHxS listing has strong cascade implications for national inventory and control updates."
+    litigation_relevance: high
+    jerk_signal: true
+
+  - id: INTL_WHO_OECD_PFAS_001
+    assertion: "WHO and OECD continue active PFAS coordination/guidance programs, with WHO requesting PFAS data in February 2026 and progressing toward normative values in 2027."
+    type: regulatory_guidance
+    compound_class: PFAS_class
+    confidence: 0.88
+    status: guidance
+    dates:
+      proposed: "2026-02-06"
+      consultation_end: null
+      finalized: null
+      effective: null
+      enforcement: null
+      sunset: "2027-12-31"
+    citations:
+      - source: "WHO PFAS call for data (Feb 6, 2026)"
+        url: "https://www.who.int/news-room/articles-detail/request-for-data-on-pfas"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "WHO PFAS drinking-water advisory page"
+        url: "https://www.who.int/teams/environment-climate-change-and-health/water-sanitation-and-health/chemical-hazards-in-drinking-water/per-and-polyfluoroalkyl-substances"
+        tier: primary
+        doi: null
+        year: 2026
+      - source: "OECD PFAS topic portal"
+        url: "https://www.oecd.org/en/topics/sub-issues/risk-management-risk-reduction-and-sustainable-chemistry/per-and-poly-fluorinated-chemicals.html"
+        tier: primary
+        doi: null
+        year: 2026
+    regulatory_body: "WHO / OECD"
+    compounds_covered: null
+    threshold_value: null
+    scope: "International guidance and policy coordination"
+    exemptions: []
+    context:
+      - "Not directly binding law, but high-value early signal channel for upcoming national policy shifts."
+    litigation_relevance: medium
+    jerk_signal: true
+
+
+# =============================================================================
+# REGULATORY TRAJECTORY BY JURISDICTION GROUP
+# =============================================================================
+
+regulatory_trajectory:
+  us_federal:
+    current_status: "DISCONTINUITY — 2024 NPDWR finalized; 2025 partial reconsideration announced"
+    momentum: high
+    next_milestone: "EPA rulemaking sequence around compliance timeline and reconsidered PFAS set"
+    litigation_risk_for_manufacturers: critical
+    fluoropolymer_exposure: "High via GenX/HFPO-DA status uncertainty and Superfund liability architecture"
+
+  us_states:
+    current_status: "ACTIVE PATCHWORK — CA advisory thresholds updated; NC consent-order enforcement ongoing"
+    momentum: high
+    next_milestone: "Further state-level threshold tightening and general-order expansion"
+    litigation_risk_for_manufacturers: high
+    fluoropolymer_exposure: "Indirect but material through product, warning, and site-liability vectors"
+
+  european_union:
+    current_status: "RESTRICTION EVALUATION PHASE — RAC/SEAC opinion path progressing"
+    momentum: high
+    next_milestone: "RAC/SEAC opinion milestones and subsequent Commission decision process"
+    litigation_risk_for_manufacturers: critical
+    fluoropolymer_exposure: "Critical due to universal PFAS scope and derogation design uncertainty"
+
+  united_kingdom:
+    current_status: "UK REACH maintained; policy divergence watch"
+    momentum: medium
+    next_milestone: "Additional UK-specific PFAS policy decisions"
+    litigation_risk_for_manufacturers: medium
+    fluoropolymer_exposure: "Moderate; depends on divergence from EU trajectory"
+
+  nordics:
+    current_status: "HIGH INFLUENCE BLOCK — active technical and policy pressure"
+    momentum: high
+    next_milestone: "National follow-on controls and continued dossier influence"
+    litigation_risk_for_manufacturers: high
+    fluoropolymer_exposure: "High in food-contact and product-use contexts"
+
+  canada:
+    current_status: "CLASS-BASED MANAGEMENT TREND with interim 30 ng/L drinking-water objective"
+    momentum: medium_high
+    next_milestone: "Guideline revision completion and PCTSR 2025 in-force date"
+    litigation_risk_for_manufacturers: high
+    fluoropolymer_exposure: "Medium-high via class framing (excluding fluoropolymers in current risk approach)"
+
+  international:
+    current_status: "CONVENTION BASELINE + GUIDANCE ACCELERATION"
+    momentum: medium_high
+    next_milestone: "WHO normative-value development and COP-driven national transposition"
+    litigation_risk_for_manufacturers: medium_high
+    fluoropolymer_exposure: "Indirect but broad through global policy harmonization pressure"

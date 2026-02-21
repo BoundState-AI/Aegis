@@ -42,6 +42,8 @@ from boundstate_aegis.api.routes import (
     tier2_route,
     sentinel_route,
     eol_certificate_route,
+    monitor_route,
+    resolver_route,
 )
 from boundstate_aegis import __version__
 
@@ -105,9 +107,19 @@ def create_app(
         # Allow Vercel previews and any boundstate.ai subdomain (HTTPS only)
         allow_origin_regex=r"https://.*\.(vercel\.app|boundstate\.ai)",
         allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "Authorization", "X-AEGIS-API-Key", "Accept"],
     )
+
+    @app.middleware("http")
+    async def security_headers(request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["X-XSS-Protection"] = "0"
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        return response
 
     # Include routers
     app.include_router(
@@ -176,6 +188,16 @@ def create_app(
         eol_certificate_route.router,
         prefix="/api/v1/eol",
         tags=["EOL Proof Certificate"],
+    )
+    app.include_router(
+        monitor_route.router,
+        prefix="/api/v1/monitor",
+        tags=["Regulatory Monitor Intelligence"],
+    )
+    app.include_router(
+        resolver_route.router,
+        prefix="/api/v1/resolver",
+        tags=["Recursive Regulatory Resolver"],
     )
 
     @app.get("/health")

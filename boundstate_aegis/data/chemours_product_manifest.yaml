@@ -1,0 +1,65 @@
+manifest_version: "1.0.0"
+manufacturer: "Chemours"
+products:
+  - product_name: "Opteon YF (HFO-1234yf)"
+    aliases: ["Opteon 1234yf", "HFO-1234yf", "R-1234yf"]
+    cas: "754-12-1"
+    smiles: "FC(F)=CF"
+    inchi_key: "JEQKQGWVZLJUSV-UHFFFAOYSA-N"
+    compound_classes: ["HFO", "fluorinated_olefin"]
+    pfas_class: true
+    segments: ["Thermal & Specialized Solutions"]
+    revenue_exposure: "$1.2B"
+
+  - product_name: "Opteon XP10 (R-513A)"
+    aliases: ["R-513A", "Opteon XP10"]
+    cas: null
+    smiles: null
+    inchi_key: null
+    compound_classes: ["HFO_blend"]
+    pfas_class: true
+    segments: ["Thermal & Specialized Solutions"]
+    revenue_exposure: "included in TSS segment"
+    components:
+      - cas: "754-12-1"
+      - cas: "811-97-2"
+
+  - product_name: "Nafion"
+    aliases: ["Nafion membrane"]
+    cas: "31175-20-9"
+    smiles: null
+    inchi_key: null
+    compound_classes: ["PFSA", "fluoropolymer"]
+    pfas_class: true
+    segments: ["Advanced Performance Materials"]
+    revenue_exposure: "$1.6B fluoropolymer segment"
+
+  - product_name: "GenX (HFPO-DA)"
+    aliases: ["GenX", "HFPO-DA"]
+    cas: "13252-13-6"
+    smiles: "OC(=O)C(F)(F)OC(F)(F)C(F)(F)F"
+    inchi_key: null
+    compound_classes: ["HFPO-DA", "GenX", "fluoroether"]
+    pfas_class: true
+    segments: ["legacy liability"]
+    revenue_exposure: "litigation"
+
+  - product_name: "Teflon PTFE"
+    aliases: ["Teflon", "PTFE"]
+    cas: "9002-84-0"
+    smiles: null
+    inchi_key: null
+    compound_classes: ["PTFE", "fluoropolymer"]
+    pfas_class: true
+    segments: ["Advanced Performance Materials"]
+    revenue_exposure: "$1.6B fluoropolymer segment"
+
+  - product_name: "Viton"
+    aliases: ["Viton fluoroelastomer"]
+    cas: null
+    smiles: null
+    inchi_key: null
+    compound_classes: ["FKM", "fluoroelastomer"]
+    pfas_class: true
+    segments: ["Advanced Performance Materials"]
+    revenue_exposure: "$1.6B fluoropolymer segment"

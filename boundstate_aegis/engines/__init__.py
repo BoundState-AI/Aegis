@@ -23,12 +23,20 @@ Oracle 3: Grok 4.0 <noreply@x.ai>
 from boundstate_aegis.engines.pfas_risk_engine import PFASRiskEngine
 from boundstate_aegis.engines.scoring_engine import ScoreResult, calculate_pathway_score
 from boundstate_aegis.engines.regulation_checker import check_regulatory_status
+from boundstate_aegis.engines.recursive_resolver import (
+    CompoundIdentity,
+    UnresolvableCompound,
+    resolve,
+)
 
 __all__ = [
     "PFASRiskEngine",
     "ScoreResult",
     "calculate_pathway_score",
     "check_regulatory_status",
+    "CompoundIdentity",
+    "UnresolvableCompound",
+    "resolve",
 ]
 
 # Tier 1 engine is imported lazily due to RDKit dependency.

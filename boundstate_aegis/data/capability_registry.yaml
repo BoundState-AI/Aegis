@@ -1,0 +1,32 @@
+registry_version: "1.0.0"
+capabilities:
+  - technology: "HALT (Hydrothermal Alkaline Treatment)"
+    provider: "Aquagga"
+    trl: 6
+    effective_compounds: ["TFA", "PFOA", "PFOS", "short-chain PFCAs"]
+    evidence:
+      - source: "Aquagga technical brief 2024"
+        doi: null
+    client_status:
+      chemours: "not_owned"
+    notes: "Candidate license pathway; not currently owned or licensed."
+
+  - technology: "Electrochemical oxidation"
+    provider: "Various"
+    trl: 4
+    effective_compounds: ["PFOA", "PFOS"]
+    evidence:
+      - source: "Peer-reviewed electrochemical PFAS studies"
+        doi: null
+    client_status:
+      chemours: "not_owned"
+
+  - technology: "Supercritical water oxidation"
+    provider: "374Water"
+    trl: 7
+    effective_compounds: ["PFOA", "PFOS", "GenX"]
+    evidence:
+      - source: "Vendor pilot reports"
+        doi: null
+    client_status:
+      chemours: "not_owned"
