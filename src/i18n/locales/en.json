@@ -772,7 +772,11 @@
       "unclassified": "Unclassified",
       "unknownSource": "Unknown source",
       "noSummary": "No summary available",
-      "empty": "No signals available."
+      "empty": "No signals available.",
+      "actions": {
+        "seedDemo": "Seed Demo",
+        "clearDemo": "Clear Seeds"
+      }
     },
     "resolver": {
       "title": "Recursive Regulatory Resolver",
@@ -815,7 +819,15 @@
       "queueUpdatedTitle": "Queue updated",
       "queueUpdatedDescription": "Updated {{id}} with action {{action}}.",
       "gateActionFailedTitle": "Gate action failed",
-      "gateActionFailedDescription": "Could not apply {{action}} to {{id}}."
+      "gateActionFailedDescription": "Could not apply {{action}} to {{id}}.",
+      "seedDemoSuccessTitle": "Demo signals seeded",
+      "seedDemoSuccessDescription": "Inserted {{inserted}}, skipped {{skipped}}.",
+      "seedDemoFailedTitle": "Demo seeding failed",
+      "seedDemoFailedDescription": "Could not seed demo monitor signals.",
+      "clearDemoSuccessTitle": "Demo seeds cleared",
+      "clearDemoSuccessDescription": "Deleted {{deleted}} seeded demo signals.",
+      "clearDemoFailedTitle": "Clear seeds failed",
+      "clearDemoFailedDescription": "Could not clear seeded demo signals."
     }
   }
 }

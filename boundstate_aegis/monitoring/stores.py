@@ -225,6 +225,16 @@ class _SQLiteMonitorDB:
             except Exception:
                 return None
 
+    def delete_signals_by_id_prefix(self, prefix: str) -> int:
+        if not prefix:
+            return 0
+        with self._connect() as conn:
+            cur = conn.execute(
+                "DELETE FROM monitor_signals WHERE signal_id LIKE ?",
+                (f"{prefix}%",),
+            )
+            return int(cur.rowcount or 0)
+
     def count_signals(self) -> int:
         with self._connect() as conn:
             cur = conn.execute("SELECT COUNT(*) AS c FROM monitor_signals")
@@ -368,6 +378,16 @@ class _PostgresMonitorDB:
             except Exception:
                 return None
 
+    def delete_signals_by_id_prefix(self, prefix: str) -> int:
+        if not prefix:
+            return 0
+        with self._connect() as conn, conn.cursor() as cur:
+            cur.execute(
+                "DELETE FROM monitor_signals WHERE signal_id LIKE %s",
+                (f"{prefix}%",),
+            )
+            return int(cur.rowcount or 0)
+
     def count_signals(self) -> int:
         with self._connect() as conn, conn.cursor() as cur:
             cur.execute("SELECT COUNT(*) FROM monitor_signals")
@@ -469,6 +489,9 @@ class SignalStore:
 
     def get(self, signal_id: str) -> Optional[Dict[str, Any]]:
         return self.db.get_signal(signal_id=signal_id)
+
+    def delete_by_signal_id_prefix(self, prefix: str) -> int:
+        return int(self.db.delete_signals_by_id_prefix(prefix=prefix))
 
 
 class RunLockStore:

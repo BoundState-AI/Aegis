@@ -125,3 +125,25 @@ def test_monitor_seed_demo_dry_run(monkeypatch) -> None:
     payload = response.json()
     assert payload["dry_run"] is True
     assert len(payload.get("signal_ids", [])) >= 4
+
+
+def test_monitor_seed_and_clear_demo_signals(monkeypatch, tmp_path) -> None:
+    monkeypatch.setenv("AEGIS_MONITOR_API_AUTH_ENABLED", "true")
+    monkeypatch.setenv("AEGIS_MONITOR_API_KEYS", "operator-token:operator")
+    monkeypatch.setenv("AEGIS_MONITOR_DB_URL", "")
+    monkeypatch.setenv("AEGIS_MONITOR_SQLITE_PATH", str(tmp_path / "monitor_test.db"))
+
+    client = _app()
+    seed_resp = client.post(
+        "/api/v1/monitor/seed-demo",
+        headers={"X-AEGIS-API-Key": "operator-token"},
+    )
+    assert seed_resp.status_code == 200
+    assert seed_resp.json()["inserted"] >= 4
+
+    clear_resp = client.post(
+        "/api/v1/monitor/seed-demo/clear",
+        headers={"X-AEGIS-API-Key": "operator-token"},
+    )
+    assert clear_resp.status_code == 200
+    assert clear_resp.json()["deleted"] >= 4

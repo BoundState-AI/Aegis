@@ -741,7 +741,11 @@
       "unclassified": "未分類",
       "unknownSource": "ソース不明",
       "noSummary": "要約なし",
-      "empty": "シグナルはありません。"
+      "empty": "シグナルはありません。",
+      "actions": {
+        "seedDemo": "デモ投入",
+        "clearDemo": "デモ削除"
+      }
     },
     "resolver": {
       "title": "再帰的規制リゾルバー",
@@ -784,7 +788,15 @@
       "queueUpdatedTitle": "キュー更新",
       "queueUpdatedDescription": "{{id}} にアクション {{action}} を適用しました。",
       "gateActionFailedTitle": "ゲート操作失敗",
-      "gateActionFailedDescription": "{{id}} への {{action}} を適用できませんでした。"
+      "gateActionFailedDescription": "{{id}} への {{action}} を適用できませんでした。",
+      "seedDemoSuccessTitle": "デモシグナル投入完了",
+      "seedDemoSuccessDescription": "追加 {{inserted}}、スキップ {{skipped}}。",
+      "seedDemoFailedTitle": "デモ投入失敗",
+      "seedDemoFailedDescription": "デモ用シグナルを投入できませんでした。",
+      "clearDemoSuccessTitle": "デモシード削除完了",
+      "clearDemoSuccessDescription": "デモシグナル {{deleted}} 件を削除しました。",
+      "clearDemoFailedTitle": "デモ削除失敗",
+      "clearDemoFailedDescription": "デモ用シードシグナルを削除できませんでした。"
     }
   }
 }

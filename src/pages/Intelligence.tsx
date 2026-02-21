@@ -71,6 +71,7 @@ const Intelligence = ({
   const [loadingSignals, setLoadingSignals] = useState(false);
   const [loadingPending, setLoadingPending] = useState(false);
   const [resolving, setResolving] = useState(false);
+  const [seedAction, setSeedAction] = useState<"seed" | "clear" | null>(null);
   const [compound, setCompound] = useState("Opteon 1234yf");
   const [resolverResult, setResolverResult] = useState<ResolveResponse | null>(null);
   const [justificationById, setJustificationById] = useState<Record<string, string>>({});
@@ -160,6 +161,61 @@ const Intelligence = ({
       });
     } finally {
       setResolving(false);
+    }
+  };
+
+  const runSeedDemoSignals = async () => {
+    setSeedAction("seed");
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/monitor/seed-demo`, {
+        method: "POST",
+        headers,
+      });
+      if (!res.ok) throw new Error(`seed ${res.status}`);
+      const data = await res.json();
+      toast({
+        title: t("intelligence.toasts.seedDemoSuccessTitle"),
+        description: t("intelligence.toasts.seedDemoSuccessDescription", {
+          inserted: data?.inserted ?? 0,
+          skipped: data?.skipped ?? 0,
+        }),
+      });
+      void loadSignals();
+    } catch {
+      toast({
+        title: t("intelligence.toasts.seedDemoFailedTitle"),
+        description: t("intelligence.toasts.seedDemoFailedDescription"),
+        variant: "destructive",
+      });
+    } finally {
+      setSeedAction(null);
+    }
+  };
+
+  const runClearDemoSignals = async () => {
+    setSeedAction("clear");
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/monitor/seed-demo/clear`, {
+        method: "POST",
+        headers,
+      });
+      if (!res.ok) throw new Error(`clear ${res.status}`);
+      const data = await res.json();
+      toast({
+        title: t("intelligence.toasts.clearDemoSuccessTitle"),
+        description: t("intelligence.toasts.clearDemoSuccessDescription", {
+          deleted: data?.deleted ?? 0,
+        }),
+      });
+      void loadSignals();
+    } catch {
+      toast({
+        title: t("intelligence.toasts.clearDemoFailedTitle"),
+        description: t("intelligence.toasts.clearDemoFailedDescription"),
+        variant: "destructive",
+      });
+    } finally {
+      setSeedAction(null);
     }
   };
 
@@ -265,9 +321,19 @@ const Intelligence = ({
                     <CardTitle>{t("intelligence.signals.title")}</CardTitle>
                     <CardDescription>{t("intelligence.signals.description")}</CardDescription>
                   </div>
-                  <Button variant="outline" onClick={() => void loadSignals()} disabled={loadingSignals}>
-                    {loadingSignals ? <Loader2 className="h-4 w-4 animate-spin" /> : t("intelligence.refresh")}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm" onClick={() => void runSeedDemoSignals()} disabled={seedAction !== null}>
+                      {seedAction === "seed" ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+                      {t("intelligence.signals.actions.seedDemo")}
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => void runClearDemoSignals()} disabled={seedAction !== null}>
+                      {seedAction === "clear" ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+                      {t("intelligence.signals.actions.clearDemo")}
+                    </Button>
+                    <Button variant="outline" onClick={() => void loadSignals()} disabled={loadingSignals}>
+                      {loadingSignals ? <Loader2 className="h-4 w-4 animate-spin" /> : t("intelligence.refresh")}
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">

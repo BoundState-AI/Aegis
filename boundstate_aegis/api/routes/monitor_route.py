@@ -95,6 +95,11 @@ class SeedDemoResponse(BaseModel):
     dry_run: bool = False
 
 
+class ClearDemoResponse(BaseModel):
+    deleted: int
+    prefix: str
+
+
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -429,6 +434,16 @@ async def seed_demo_signals(
         signal_ids=inserted_ids,
         dry_run=False,
     )
+
+
+@router.post("/seed-demo/clear", response_model=ClearDemoResponse)
+async def clear_demo_signals(
+    _auth: Dict[str, str] = Depends(require_operator),
+) -> ClearDemoResponse:
+    store = SignalStore()
+    prefix = "SEED_DEMO_"
+    deleted = store.delete_by_signal_id_prefix(prefix=prefix)
+    return ClearDemoResponse(deleted=deleted, prefix=prefix)
 
 
 @router.get("/digest/weekly")
