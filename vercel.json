@@ -4,6 +4,10 @@
       "source": "/api/:path*",
       "destination": "https://aegis-production-8019.up.railway.app/api/:path*"
     },
+    {
+      "source": "/health",
+      "destination": "https://aegis-production-8019.up.railway.app/health"
+    },
     { "source": "/((?!api/).*)", "destination": "/" }
   ],
   "headers": [

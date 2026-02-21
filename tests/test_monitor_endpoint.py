@@ -76,3 +76,34 @@ def test_monitor_run_disabled_when_manual_flag_off(monkeypatch) -> None:
         headers={"X-AEGIS-API-Key": "operator-token"},
     )
     assert response.status_code == 403
+
+
+def test_monitor_signals_accepts_shorthand_single_key(monkeypatch) -> None:
+    monkeypatch.setenv("AEGIS_MONITOR_API_AUTH_ENABLED", "true")
+    monkeypatch.setenv("AEGIS_MONITOR_API_KEYS", "single-token")
+    monkeypatch.delenv("AEGIS_MONITOR_API_KEY", raising=False)
+
+    client = _app()
+    response = client.get(
+        "/api/v1/monitor/signals?limit=25",
+        headers={"X-AEGIS-API-Key": "single-token"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert "signals" in payload
+
+
+def test_monitor_signals_accepts_legacy_single_key_env(monkeypatch) -> None:
+    monkeypatch.setenv("AEGIS_MONITOR_API_AUTH_ENABLED", "true")
+    monkeypatch.setenv("AEGIS_MONITOR_API_KEYS", "")
+    monkeypatch.setenv("AEGIS_MONITOR_API_KEY", "legacy-token")
+    monkeypatch.setenv("AEGIS_MONITOR_API_KEY_ROLE", "viewer")
+
+    client = _app()
+    response = client.get(
+        "/api/v1/monitor/signals?limit=25",
+        headers={"X-AEGIS-API-Key": "legacy-token"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert "signals" in payload

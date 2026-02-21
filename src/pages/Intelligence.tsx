@@ -44,7 +44,7 @@ type ResolveResponse = {
   };
 };
 
-const API_KEY = import.meta.env.VITE_AEGIS_API_KEY || "";
+const API_KEY = import.meta.env.VITE_AEGIS_API_KEY || import.meta.env.VITE_AEGIS_MONITOR_API_KEY || "";
 
 const Intelligence = () => {
   const { t } = useTranslation();
@@ -63,7 +63,7 @@ const Intelligence = () => {
 
   const headers = useMemo(
     () => ({
-      ...(API_KEY ? { "X-AEGIS-API-Key": API_KEY } : {}),
+      ...(API_KEY ? { "X-AEGIS-API-Key": API_KEY, Authorization: `Bearer ${API_KEY}` } : {}),
       "Content-Type": "application/json",
     }),
     [],

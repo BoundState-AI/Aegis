@@ -95,13 +95,25 @@ def _parse_api_key_map(raw: str) -> Dict[str, str]:
     key_map: Dict[str, str] = {}
     for chunk in (raw or "").split(","):
         part = chunk.strip()
-        if not part or ":" not in part:
+        if not part:
             continue
-        key, role = part.split(":", 1)
-        norm_key = key.strip()
-        norm_role = role.strip().lower()
+        # Preferred format: "token:role" pairs.
+        if ":" in part:
+            key, role = part.split(":", 1)
+            norm_key = key.strip()
+            norm_role = role.strip().lower()
+        else:
+            # Backward-compatible shorthand: "token" -> admin role.
+            norm_key = part
+            norm_role = os.getenv("AEGIS_MONITOR_API_DEFAULT_ROLE", "admin").strip().lower() or "admin"
         if norm_key and norm_role:
             key_map[norm_key] = norm_role
+    # Additional compatibility path for single-key setups.
+    if not key_map:
+        single_key = os.getenv("AEGIS_MONITOR_API_KEY", "").strip()
+        if single_key:
+            single_role = os.getenv("AEGIS_MONITOR_API_KEY_ROLE", "admin").strip().lower() or "admin"
+            key_map[single_key] = single_role
     return key_map
 
 
