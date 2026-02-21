@@ -107,3 +107,21 @@ def test_monitor_signals_accepts_legacy_single_key_env(monkeypatch) -> None:
     assert response.status_code == 200
     payload = response.json()
     assert "signals" in payload
+
+
+def test_monitor_seed_demo_dry_run(monkeypatch) -> None:
+    monkeypatch.setenv("AEGIS_MONITOR_API_AUTH_ENABLED", "true")
+    monkeypatch.setenv(
+        "AEGIS_MONITOR_API_KEYS",
+        "operator-token:operator,approver-token:approver,viewer-token:viewer",
+    )
+
+    client = _app()
+    response = client.post(
+        "/api/v1/monitor/seed-demo?dry_run=true",
+        headers={"X-AEGIS-API-Key": "operator-token"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["dry_run"] is True
+    assert len(payload.get("signal_ids", [])) >= 4

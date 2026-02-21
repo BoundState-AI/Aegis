@@ -28,6 +28,7 @@ from boundstate_aegis.config import (
 )
 from boundstate_aegis.monitoring.alerts import build_weekly_digest
 from boundstate_aegis.monitoring.assertions import AssertionStore
+from boundstate_aegis.monitoring.seeds import build_seed_signals, seed_signal_store
 from boundstate_aegis.monitoring.source_policy import (
     MISSING_PRIORITY_SOURCES,
     RunProfile,
@@ -85,6 +86,13 @@ class SignalListResponse(BaseModel):
 
 class PendingActionRequest(BaseModel):
     reason: Optional[str] = None
+
+
+class SeedDemoResponse(BaseModel):
+    inserted: int
+    skipped: int
+    signal_ids: List[str]
+    dry_run: bool = False
 
 
 def _now_iso() -> str:
@@ -398,6 +406,29 @@ async def get_signal(
     if not signal:
         raise HTTPException(status_code=404, detail="Signal not found")
     return signal
+
+
+@router.post("/seed-demo", response_model=SeedDemoResponse)
+async def seed_demo_signals(
+    dry_run: bool = Query(False, description="Return demo payload without writing to SignalStore."),
+    _auth: Dict[str, str] = Depends(require_operator),
+) -> SeedDemoResponse:
+    if dry_run:
+        rows = build_seed_signals()
+        return SeedDemoResponse(
+            inserted=0,
+            skipped=0,
+            signal_ids=[str(r.get("signal_id")) for r in rows if r.get("signal_id")],
+            dry_run=True,
+        )
+
+    inserted, skipped, inserted_ids = seed_signal_store()
+    return SeedDemoResponse(
+        inserted=inserted,
+        skipped=skipped,
+        signal_ids=inserted_ids,
+        dry_run=False,
+    )
 
 
 @router.get("/digest/weekly")
