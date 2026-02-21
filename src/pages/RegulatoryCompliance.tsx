@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,11 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe } from "lucide-react";
+import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe, Zap } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { API_BASE } from "@/config/api";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
+import Intelligence, { type IntelligenceTabKey } from "./Intelligence";
 
 interface RegulatoryStatus {
   framework: string;
@@ -19,6 +21,21 @@ interface RegulatoryStatus {
   limit_ppb: number | null;
   effective_date: string | null;
   notes: string;
+}
+
+interface APACAssertionSummary {
+  id: string;
+  assertion: string;
+  country: string;
+  status: string;
+  normalized_status: string;
+  confidence: number;
+  effective_date: string | null;
+  threshold_value: string | null;
+  jerk_signal: boolean;
+  litigation_relevance: string;
+  compound_class: string;
+  citation_tier: string;
 }
 
 interface RegulatoryCheck {
@@ -33,6 +50,9 @@ interface RegulatoryCheck {
   non_compliant: RegulatoryStatus[];
   warnings: RegulatoryStatus[];
   overall_risk: string;
+  apac_assertions?: APACAssertionSummary[];
+  apac_jurisdiction_count?: number;
+  fluoropolymer_exposure?: string | null;
 }
 
 interface CascadePrediction {
@@ -49,10 +69,21 @@ interface CascadeResponse {
   recommendation: string;
 }
 
+type RegulatorySubview = "landscape" | "signals" | "resolver" | "queue";
+
+const mapViewParam = (value: string | null): RegulatorySubview => {
+  if (value === "signals" || value === "resolver" || value === "queue") {
+    return value;
+  }
+  return "landscape";
+};
+
 const RegulatoryCompliance = () => {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const [subview, setSubview] = useState<RegulatorySubview>(() => mapViewParam(searchParams.get("view")));
   const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [includeDegradation, setIncludeDegradation] = useState(true);
@@ -64,6 +95,24 @@ const RegulatoryCompliance = () => {
   useEffect(() => {
     handleCheck();
   }, []);
+
+  useEffect(() => {
+    const fromUrl = mapViewParam(searchParams.get("view"));
+    if (fromUrl !== subview) {
+      setSubview(fromUrl);
+    }
+  }, [searchParams, subview]);
+
+  const selectSubview = (next: RegulatorySubview) => {
+    setSubview(next);
+    const params = new URLSearchParams(searchParams);
+    if (next === "landscape") {
+      params.delete("view");
+    } else {
+      params.set("view", next);
+    }
+    setSearchParams(params, { replace: true });
+  };
 
   const handleCheck = async () => {
     setIsLoading(true);
@@ -137,11 +186,60 @@ const RegulatoryCompliance = () => {
     }
   };
 
+  const isApacJurisdiction = (framework: string) =>
+    /japan|korea|south korea|china|australia|singapore|taiwan|india|apac/i.test(framework);
+
+  const getApacConfidenceBadgeClass = (confidence: number) => {
+    if (confidence >= 0.9) return "bg-green-100 text-green-700 border-green-300";
+    if (confidence >= 0.7) return "bg-yellow-100 text-yellow-700 border-yellow-300";
+    return "bg-red-100 text-red-700 border-red-300";
+  };
+
+  const intelligenceTabBySubview: Record<Exclude<RegulatorySubview, "landscape">, IntelligenceTabKey> = {
+    signals: "signals",
+    resolver: "resolver",
+    queue: "queue",
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <ChemoursHeader title={t('regulatory.title')} subtitle={t('regulatory.subtitle')} helpContent={helpContent.regulatory} />
 
       <main className="container mx-auto px-4 py-8">
+        <div className="mb-6 flex flex-wrap gap-2">
+          <Button
+            size="sm"
+            variant={subview === "landscape" ? "default" : "outline"}
+            onClick={() => selectSubview("landscape")}
+          >
+            {t("regulatory.subviews.landscape", "Landscape")}
+          </Button>
+          <Button
+            size="sm"
+            variant={subview === "signals" ? "default" : "outline"}
+            onClick={() => selectSubview("signals")}
+          >
+            {t("intelligence.tabs.signals")}
+          </Button>
+          <Button
+            size="sm"
+            variant={subview === "resolver" ? "default" : "outline"}
+            onClick={() => selectSubview("resolver")}
+          >
+            {t("intelligence.tabs.resolver")}
+          </Button>
+          <Button
+            size="sm"
+            variant={subview === "queue" ? "default" : "outline"}
+            onClick={() => selectSubview("queue")}
+          >
+            {t("intelligence.tabs.reviewQueue")}
+          </Button>
+        </div>
+
+        {subview !== "landscape" ? (
+          <Intelligence embedded singleTab={intelligenceTabBySubview[subview]} hideSummaryCards />
+        ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
@@ -269,6 +367,11 @@ const RegulatoryCompliance = () => {
                               {getStatusIcon(reg.status)}
                               <div>
                                 <p className="font-medium text-chemours-dark">{reg.framework}</p>
+                                {isApacJurisdiction(reg.framework) && (
+                                  <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
+                                    APAC
+                                  </Badge>
+                                )}
                                 <p className="text-sm text-gray-500">{reg.notes}</p>
                               </div>
                             </div>
@@ -294,6 +397,11 @@ const RegulatoryCompliance = () => {
                               {getStatusIcon(reg.status)}
                               <div>
                                 <p className="font-medium text-chemours-dark">{reg.framework}</p>
+                                {isApacJurisdiction(reg.framework) && (
+                                  <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
+                                    APAC
+                                  </Badge>
+                                )}
                                 <p className="text-sm text-gray-500">{reg.notes}</p>
                                 {reg.limit_ppb && <p className="text-xs text-yellow-600">Limit: {reg.limit_ppb} ppb</p>}
                               </div>
@@ -302,6 +410,54 @@ const RegulatoryCompliance = () => {
                           </div>
                         ))}
                       </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {(checkResult.apac_assertions?.length ?? 0) > 0 && (
+                  <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-amber-500">
+                    <CardHeader>
+                      <CardTitle className="text-amber-700 flex items-center gap-2">
+                        <Globe className="h-5 w-5" />
+                        APAC Regulatory Intelligence
+                      </CardTitle>
+                      <CardDescription>
+                        {checkResult.apac_assertions?.length} assertions across {checkResult.apac_jurisdiction_count ?? 0} APAC jurisdictions
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {checkResult.fluoropolymer_exposure && (
+                        <div className="p-3 rounded-lg border border-amber-200 bg-amber-50 text-sm text-amber-900">
+                          <span className="font-semibold">Fluoropolymer exposure:</span> {checkResult.fluoropolymer_exposure}
+                        </div>
+                      )}
+                      {(checkResult.apac_assertions ?? []).slice(0, 10).map((item) => (
+                        <div key={item.id} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className="font-semibold text-chemours-dark">{item.country}</span>
+                            <Badge variant="outline" className="text-xs border-gray-300">{item.status.toUpperCase()}</Badge>
+                            <Badge variant="outline" className={`text-xs ${getApacConfidenceBadgeClass(item.confidence)}`}>
+                              {item.confidence.toFixed(2)}
+                            </Badge>
+                            {item.jerk_signal && (
+                              <Badge variant="outline" className="text-xs bg-orange-100 text-orange-700 border-orange-300">
+                                <Zap className="h-3 w-3 mr-1" /> Jerk
+                              </Badge>
+                            )}
+                            {item.confidence < 0.7 && (
+                              <Badge variant="outline" className="text-xs bg-red-100 text-red-700 border-red-300">
+                                Verification Needed
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-700">{item.assertion}</p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            Class: {item.compound_class} | Litigation relevance: {item.litigation_relevance}
+                            {item.effective_date ? ` | Effective: ${item.effective_date}` : ""}
+                            {item.threshold_value ? ` | Threshold: ${item.threshold_value}` : ""}
+                          </p>
+                        </div>
+                      ))}
                     </CardContent>
                   </Card>
                 )}
@@ -352,13 +508,14 @@ const RegulatoryCompliance = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('regulatory.title')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    Check materials and their degradation products against EPA MCL, EU REACH, CA Prop 65, and Stockholm Convention.
+                    Check materials and their degradation products against EPA MCL, EU REACH, CA Prop 65, Stockholm Convention, and APAC frameworks.
                   </p>
                 </CardContent>
               </Card>
             )}
           </div>
         </div>
+        )}
       </main>
     </div>
   );

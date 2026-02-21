@@ -44,12 +44,27 @@ type ResolveResponse = {
   };
 };
 
+export type IntelligenceTabKey = "signals" | "resolver" | "queue";
+
+interface IntelligenceProps {
+  embedded?: boolean;
+  initialTab?: IntelligenceTabKey;
+  singleTab?: IntelligenceTabKey;
+  hideSummaryCards?: boolean;
+}
+
 const API_KEY = import.meta.env.VITE_AEGIS_API_KEY || import.meta.env.VITE_AEGIS_MONITOR_API_KEY || "";
 
-const Intelligence = () => {
+const Intelligence = ({
+  embedded = false,
+  initialTab = "signals",
+  singleTab,
+  hideSummaryCards = false,
+}: IntelligenceProps) => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const [activeTab, setActiveTab] = useState<IntelligenceTabKey>(singleTab || initialTab);
 
   const [signals, setSignals] = useState<SignalRow[]>([]);
   const [pending, setPending] = useState<PendingItem[]>([]);
@@ -110,6 +125,12 @@ const Intelligence = () => {
     void loadPending();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (singleTab) {
+      setActiveTab(singleTab);
+    }
+  }, [singleTab]);
 
   const runResolve = async () => {
     if (!compound.trim()) return;
@@ -193,15 +214,9 @@ const Intelligence = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader
-        title={t("intelligence.title")}
-        subtitle={t("intelligence.subtitle")}
-        helpContent={helpContent.intelligence}
-      />
-
-      <main className="container mx-auto px-4 py-8 space-y-6">
+  const content = (
+    <div className="space-y-6">
+      {!hideSummaryCards && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="pb-2">
@@ -231,13 +246,16 @@ const Intelligence = () => {
             </CardHeader>
           </Card>
         </div>
+      )}
 
-        <Tabs defaultValue="signals" className="space-y-4">
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as IntelligenceTabKey)} className="space-y-4">
+        {!singleTab && (
           <TabsList>
             <TabsTrigger value="signals">{t("intelligence.tabs.signals")}</TabsTrigger>
             <TabsTrigger value="resolver">{t("intelligence.tabs.resolver")}</TabsTrigger>
             <TabsTrigger value="queue">{t("intelligence.tabs.reviewQueue")}</TabsTrigger>
           </TabsList>
+        )}
 
           <TabsContent value="signals">
             <Card>
@@ -408,8 +426,22 @@ const Intelligence = () => {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
-      </main>
+      </Tabs>
+    </div>
+  );
+
+  if (embedded) {
+    return content;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <ChemoursHeader
+        title={t("intelligence.title")}
+        subtitle={t("intelligence.subtitle")}
+        helpContent={helpContent.intelligence}
+      />
+      <main className="container mx-auto px-4 py-8">{content}</main>
     </div>
   );
 };

@@ -1,8 +1,9 @@
+import { useEffect, useMemo, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import NotFound from "./pages/NotFound";
 import PFASAnalysis from "./pages/PFASAnalysis";
@@ -13,20 +14,20 @@ import PortfolioAssessment from "./pages/PortfolioAssessment";
 import ExecutiveReports from "./pages/ExecutiveReports";
 import EvidenceChain from "./pages/EvidenceChain";
 import StructuralSimilarity from "./pages/StructuralSimilarity";
-import Intelligence from "./pages/Intelligence";
 // import Ensurance from "./pages/Ensurance";
-import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint, Radar } from "lucide-react";
+import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
 import { Analytics } from "@vercel/analytics/react";
+import { API_BASE } from "./config/api";
 
 const queryClient = new QueryClient();
+const NAV_API_KEY = import.meta.env.VITE_AEGIS_API_KEY || import.meta.env.VITE_AEGIS_MONITOR_API_KEY || "";
 
 const navItems = [
   { path: "/", labelKey: "nav.fateExplorer", icon: Network },
   { path: "/litigation", labelKey: "nav.sentinel", icon: Scale },
-  { path: "/intelligence", labelKey: "nav.intelligence", icon: Radar },
   { path: "/regulatory", labelKey: "nav.regulatory", icon: Globe },
   { path: "/portfolio", labelKey: "nav.portfolio", icon: Package },
   { path: "/reports", labelKey: "nav.reports", icon: FileText },
@@ -52,6 +53,46 @@ const Disclaimer = () => {
 const Navigation = () => {
   const location = useLocation();
   const { t } = useTranslation();
+  const [pendingReviewCount, setPendingReviewCount] = useState(0);
+  const authHeaders = useMemo(
+    () => ({
+      ...(NAV_API_KEY ? { "X-AEGIS-API-Key": NAV_API_KEY, Authorization: `Bearer ${NAV_API_KEY}` } : {}),
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadPending = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/v1/resolver/pending?limit=100`, { headers: authHeaders });
+        if (!res.ok) return;
+        const payload = await res.json();
+        const items = Array.isArray(payload?.items) ? payload.items : [];
+        const pending = items.filter(
+          (row: { gate_status?: string }) => row.gate_status === "PENDING_REVIEW" || row.gate_status === "PENDING_APPROVAL",
+        ).length;
+        if (!cancelled) {
+          setPendingReviewCount(pending);
+        }
+      } catch {
+        if (!cancelled) {
+          setPendingReviewCount(0);
+        }
+      }
+    };
+
+    void loadPending();
+    const timer = window.setInterval(() => {
+      void loadPending();
+    }, 60000);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [authHeaders]);
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
@@ -69,12 +110,17 @@ const Navigation = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex flex-col items-center px-3 py-2 rounded-lg transition-colors ${
+                  className={`relative flex flex-col items-center px-3 py-2 rounded-lg transition-colors ${
                     isActive
                       ? "bg-gradient-to-r from-chemours-red/10 to-chemours-orange/10 text-chemours-red"
                       : "text-gray-500 hover:text-chemours-red hover:bg-gray-100"
                   }`}
                 >
+                  {item.path === "/regulatory" && pendingReviewCount > 0 && (
+                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[10px] leading-[18px] text-center font-semibold">
+                      {pendingReviewCount > 99 ? "99+" : pendingReviewCount}
+                    </span>
+                  )}
                   <Icon className="h-5 w-5" />
                   <span className="text-xs mt-1">{t(item.labelKey)}</span>
                 </Link>
@@ -101,7 +147,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<FateExplorer />} />
         <Route path="/litigation" element={<LitigationRisk />} />
-        <Route path="/intelligence" element={<Intelligence />} />
+        <Route path="/intelligence" element={<Navigate to="/regulatory?view=signals" replace />} />
         <Route path="/regulatory" element={<RegulatoryCompliance />} />
         <Route path="/portfolio" element={<PortfolioAssessment />} />
         <Route path="/reports" element={<ExecutiveReports />} />
