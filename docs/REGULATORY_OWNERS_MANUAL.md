@@ -7,6 +7,8 @@ This manual explains every control, status, and flag in the unified `Regulatory`
 - `Resolver`
 - `Review Queue`
 
+For full platform coverage across all modules, see `docs/AEGIS_OWNERS_MANUAL.md`.
+
 ## Top-Level Indicators
 - `Regulatory nav red badge`: Number of items in HITL queue still in `PENDING_REVIEW` or `PENDING_APPROVAL`.
 - `Human review required`: The item cannot be distributed without analyst action.
