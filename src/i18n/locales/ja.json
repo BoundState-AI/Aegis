@@ -493,6 +493,8 @@
     "howToUse": "使い方",
     "useCases": "使用例",
     "tips": "ヒント",
+    "flagsAndStatuses": "フラグとステータス",
+    "actionsAndButtons": "ボタンと操作",
     "relatedPages": "関連ページ"
   },
   "help": {
@@ -572,6 +574,86 @@
         "'審査中'の化合物には制限が提案されている可能性あり — EPA PFASロードマップを確認",
         "州レベルの制限（例：ミシガン州、ニュージャージー州）は連邦MCLより厳しいことが多い",
         "分解生成物が規制対象かどうかを確認するためにFate Explorerと併用"
+      ],
+      "flagsAndStatuses": [
+        {
+          "label": "Regulatory タブの赤い数字バッジ",
+          "meaning": "レビューまたは承認待ちのHITL項目数を示します。"
+        },
+        {
+          "label": "PENDING_REVIEW",
+          "meaning": "第1ゲート状態。アナリストが確認・エスカレーション・却下のいずれかを実行する必要があります。"
+        },
+        {
+          "label": "PENDING_APPROVAL",
+          "meaning": "第2ゲート状態。レビュー済みで最終の承認/保留判断を待っています。"
+        },
+        {
+          "label": "Human review required",
+          "meaning": "重大フラグ、クラス一致のみ、または低信頼経路の場合に自動付与されます。"
+        },
+        {
+          "label": "Critical flags: N",
+          "meaning": "その項目で検出されたCRITICAL脅威フラグ数です。"
+        },
+        {
+          "label": "ENACTED / FINAL PENDING / PROPOSED / UNDER CONSIDERATION / MONITORING",
+          "meaning": "Landscape予測で使う規制成熟度ステージです。"
+        },
+        {
+          "label": "シグナル重大度バッジ（critical/high/medium/low）",
+          "meaning": "L3/L4のトリアージと影響スコアに基づく優先度です。"
+        }
+      ],
+      "actionsAndButtons": [
+        {
+          "action": "Landscape",
+          "effect": "ガバナンス済みアサーションに基づく規制ベースラインを表示します。"
+        },
+        {
+          "action": "Signals",
+          "effect": "検出された規制変更とその意味をライブ表示します。"
+        },
+        {
+          "action": "Resolver",
+          "effect": "製品/化合物の直接・継承エクスポージャー解析を実行します。"
+        },
+        {
+          "action": "Review Queue",
+          "effect": "保留中リゾルバー結果に対するHITL操作を処理します。"
+        },
+        {
+          "action": "Check Compliance",
+          "effect": "指定材料の規制チェックを実行し、予測カードを更新します。"
+        },
+        {
+          "action": "Include Degradation Products",
+          "effect": "オンの場合、分解生成物もコンプライアンス判定に含めます。"
+        },
+        {
+          "action": "Seed Demo / Clear Seeds",
+          "effect": "デモ用シグナルを投入/削除します。デモ時の空画面回避に使用します。"
+        },
+        {
+          "action": "Confirm",
+          "effect": "PENDING_REVIEW を PENDING_APPROVAL に進めます。"
+        },
+        {
+          "action": "Escalate",
+          "effect": "法務/規制へのエスカレーション対象として残します。"
+        },
+        {
+          "action": "Dismiss",
+          "effect": "必須の理由付きで項目をクローズします（監査ログ記録）。"
+        },
+        {
+          "action": "Approve",
+          "effect": "PENDING_APPROVAL を最終承認し、保留キューから外します。"
+        },
+        {
+          "action": "Hold",
+          "effect": "追加エビデンス確認のため保留状態を維持します。"
+        }
       ]
     },
     "portfolio": {
@@ -718,6 +800,34 @@
         "重大フラグは必ず法務/規制チームへエスカレーションしてください",
         "クラス一致のみの結果は製品適用性を人手で確認してください",
         "resolver_id でゲート状態と監査履歴を追跡してください"
+      ],
+      "flagsAndStatuses": [
+        {
+          "label": "critical/high/medium/low",
+          "meaning": "トリアージとChemours影響スコアによるシグナル重大度です。"
+        },
+        {
+          "label": "PENDING_REVIEW / PENDING_APPROVAL",
+          "meaning": "リゾルバー出力に対するHITLゲート状態です。"
+        },
+        {
+          "label": "Human review required",
+          "meaning": "配信前にアナリスト判断が必須であることを示します。"
+        }
+      ],
+      "actionsAndButtons": [
+        {
+          "action": "Refresh",
+          "effect": "シグナルとレビューキューをAPIから再読込します。"
+        },
+        {
+          "action": "Run Resolver",
+          "effect": "リゾルバーを実行し、ゲート状態付きのキュー項目を作成します。"
+        },
+        {
+          "action": "Confirm / Escalate / Dismiss / Approve / Hold",
+          "effect": "監査ログ付きでHITLアクションを適用し、状態を遷移させます。"
+        }
       ]
     }
   },

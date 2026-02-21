@@ -107,6 +107,46 @@ const PageHelp = ({ content }: PageHelpProps) => {
             </section>
           )}
 
+          {/* Flags and Statuses (optional) */}
+          {content.flagsAndStatuses && content.flagsAndStatuses.length > 0 && (
+            <section>
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                {t('pageHelp.flagsAndStatuses', 'Flags and Statuses')}
+              </h3>
+              <div className="space-y-2">
+                {content.flagsAndStatuses.map((item, i) => (
+                  <div
+                    key={i}
+                    className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm"
+                  >
+                    <div className="font-medium text-gray-800">{item.label}</div>
+                    <div className="text-gray-600">{item.meaning}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Actions and Buttons (optional) */}
+          {content.actionsAndButtons && content.actionsAndButtons.length > 0 && (
+            <section>
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                {t('pageHelp.actionsAndButtons', 'Buttons and Actions')}
+              </h3>
+              <div className="space-y-2">
+                {content.actionsAndButtons.map((item, i) => (
+                  <div
+                    key={i}
+                    className="rounded-md border border-blue-100 bg-blue-50 px-3 py-2 text-sm"
+                  >
+                    <div className="font-medium text-gray-800">{item.action}</div>
+                    <div className="text-gray-600">{item.effect}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Related Pages (optional) */}
           {content.relatedPages && content.relatedPages.length > 0 && (
             <section>

@@ -12,6 +12,16 @@ export interface RelatedPage {
   path: string;
 }
 
+export interface HelpLegendItem {
+  label: string;
+  meaning: string;
+}
+
+export interface HelpActionItem {
+  action: string;
+  effect: string;
+}
+
 export interface HelpContent {
   title: string;
   description: string;
@@ -19,6 +29,8 @@ export interface HelpContent {
   howToUse: string[];
   useCases: string[];
   tips?: string[];
+  flagsAndStatuses?: HelpLegendItem[];
+  actionsAndButtons?: HelpActionItem[];
   relatedPages?: RelatedPage[];
   apiEndpoint?: string;
 }
@@ -121,6 +133,29 @@ export const useHelpContent = () => {
         "State-level limits (e.g., Michigan, New Jersey) are often stricter than federal MCLs",
         "Use alongside Fate Explorer to check if degradation products are regulated",
       ]}) as string[],
+      flagsAndStatuses: t('help.regulatory.flagsAndStatuses', { returnObjects: true, defaultValue: [
+        { label: "Regulatory nav badge (red number)", meaning: "Count of HITL items still pending review or approval." },
+        { label: "PENDING_REVIEW", meaning: "First gate state. Analyst must confirm/escalate/dismiss before briefing approval." },
+        { label: "PENDING_APPROVAL", meaning: "Second gate state. Item has been reviewed and awaits final approve/hold decision." },
+        { label: "Human review required", meaning: "Set automatically for critical flags, class-only matches, or low-confidence pathways." },
+        { label: "Critical flags: N", meaning: "Number of CRITICAL threat flags from resolver output for that item." },
+        { label: "ENACTED / FINAL PENDING / PROPOSED / UNDER CONSIDERATION / MONITORING", meaning: "Regulatory maturity stages used in the Landscape forecast." },
+        { label: "Signal severity badges (critical/high/medium/low)", meaning: "Signal priority from L3/L4 triage and impact scoring." },
+      ]}) as HelpLegendItem[],
+      actionsAndButtons: t('help.regulatory.actionsAndButtons', { returnObjects: true, defaultValue: [
+        { action: "Landscape", effect: "Jurisdiction/regulation baseline from governed assertions." },
+        { action: "Signals", effect: "Live monitor feed of detected regulatory changes and why they matter." },
+        { action: "Resolver", effect: "Run compound/product exposure analysis, including inherited liability." },
+        { action: "Review Queue", effect: "Process analyst HITL gate actions for pending resolver outputs." },
+        { action: "Check Compliance", effect: "Runs regulatory screening for the selected material and refreshes forecast cards." },
+        { action: "Include Degradation Products", effect: "When enabled, includes downstream products in compliance evaluation." },
+        { action: "Seed Demo / Clear Seeds", effect: "Insert or remove demo monitor signals for non-empty workflows and demos." },
+        { action: "Confirm", effect: "Advance a PENDING_REVIEW item to PENDING_APPROVAL." },
+        { action: "Escalate", effect: "Mark item for legal/regulatory escalation while retaining it in queue." },
+        { action: "Dismiss", effect: "Close item with required written justification (captured in audit trail)." },
+        { action: "Approve", effect: "Finalize a PENDING_APPROVAL item and remove it from pending queue." },
+        { action: "Hold", effect: "Keep item in pending approval state for follow-up evidence/review." },
+      ]}) as HelpActionItem[],
       relatedPages: [
         { name: t('nav.fateExplorer', 'Fate Explorer'), path: "/" },
         { name: t('nav.portfolio', 'Portfolio'), path: "/portfolio" },
@@ -271,6 +306,16 @@ export const useHelpContent = () => {
         "Class-level matches require analyst confirmation of product applicability",
         "Use resolver IDs to track decisions across gate states and audit logs",
       ]}) as string[],
+      flagsAndStatuses: t('help.intelligence.flagsAndStatuses', { returnObjects: true, defaultValue: [
+        { label: "critical/high/medium/low", meaning: "Signal severity from triage and Chemours impact scoring." },
+        { label: "PENDING_REVIEW / PENDING_APPROVAL", meaning: "HITL gate states for resolver outputs." },
+        { label: "Human review required", meaning: "Analyst intervention is mandatory before distribution." },
+      ]}) as HelpLegendItem[],
+      actionsAndButtons: t('help.intelligence.actionsAndButtons', { returnObjects: true, defaultValue: [
+        { action: "Refresh", effect: "Reload live signals and pending queue data from API." },
+        { action: "Run Resolver", effect: "Submit a resolver job and create a queue item with gate status." },
+        { action: "Confirm / Escalate / Dismiss / Approve / Hold", effect: "Apply HITL actions with audit logging and state transitions." },
+      ]}) as HelpActionItem[],
       relatedPages: [
         { name: t('nav.regulatory', 'Regulatory'), path: "/regulatory" },
         { name: t('nav.tier1', 'Tier 1'), path: "/tier1" },
@@ -420,6 +465,29 @@ const helpContent: Record<string, HelpContent> = {
       "APAC regulations are accelerating; monitor finalized-to-binding transitions by jurisdiction",
       "State-level limits (e.g., Michigan, New Jersey) are often stricter than federal MCLs",
       "Use alongside Fate Explorer to check if degradation products are regulated",
+    ],
+    flagsAndStatuses: [
+      { label: "Regulatory nav badge (red number)", meaning: "Count of HITL items still pending review or approval." },
+      { label: "PENDING_REVIEW", meaning: "First gate state. Analyst must confirm/escalate/dismiss before briefing approval." },
+      { label: "PENDING_APPROVAL", meaning: "Second gate state. Item has been reviewed and awaits final approve/hold decision." },
+      { label: "Human review required", meaning: "Set automatically for critical flags, class-only matches, or low-confidence pathways." },
+      { label: "Critical flags: N", meaning: "Number of CRITICAL threat flags from resolver output for that item." },
+      { label: "ENACTED / FINAL PENDING / PROPOSED / UNDER CONSIDERATION / MONITORING", meaning: "Regulatory maturity stages used in the Landscape forecast." },
+      { label: "Signal severity badges (critical/high/medium/low)", meaning: "Signal priority from L3/L4 triage and impact scoring." },
+    ],
+    actionsAndButtons: [
+      { action: "Landscape", effect: "Jurisdiction/regulation baseline from governed assertions." },
+      { action: "Signals", effect: "Live monitor feed of detected regulatory changes and why they matter." },
+      { action: "Resolver", effect: "Run compound/product exposure analysis, including inherited liability." },
+      { action: "Review Queue", effect: "Process analyst HITL gate actions for pending resolver outputs." },
+      { action: "Check Compliance", effect: "Runs regulatory screening for the selected material and refreshes forecast cards." },
+      { action: "Include Degradation Products", effect: "When enabled, includes downstream products in compliance evaluation." },
+      { action: "Seed Demo / Clear Seeds", effect: "Insert or remove demo monitor signals for non-empty workflows and demos." },
+      { action: "Confirm", effect: "Advance a PENDING_REVIEW item to PENDING_APPROVAL." },
+      { action: "Escalate", effect: "Mark item for legal/regulatory escalation while retaining it in queue." },
+      { action: "Dismiss", effect: "Close item with required written justification (captured in audit trail)." },
+      { action: "Approve", effect: "Finalize a PENDING_APPROVAL item and remove it from pending queue." },
+      { action: "Hold", effect: "Keep item in pending approval state for follow-up evidence/review." },
     ],
     relatedPages: [
       { name: "Fate Explorer", path: "/" },
@@ -574,6 +642,16 @@ const helpContent: Record<string, HelpContent> = {
       "Critical flags should always be escalated for legal/regulatory review",
       "Class-level matches require analyst confirmation of product applicability",
       "Use resolver IDs to track decisions across gate states and audit logs",
+    ],
+    flagsAndStatuses: [
+      { label: "critical/high/medium/low", meaning: "Signal severity from triage and Chemours impact scoring." },
+      { label: "PENDING_REVIEW / PENDING_APPROVAL", meaning: "HITL gate states for resolver outputs." },
+      { label: "Human review required", meaning: "Analyst intervention is mandatory before distribution." },
+    ],
+    actionsAndButtons: [
+      { action: "Refresh", effect: "Reload live signals and pending queue data from API." },
+      { action: "Run Resolver", effect: "Submit a resolver job and create a queue item with gate status." },
+      { action: "Confirm / Escalate / Dismiss / Approve / Hold", effect: "Apply HITL actions with audit logging and state transitions." },
     ],
     relatedPages: [
       { name: "Regulatory", path: "/regulatory" },
