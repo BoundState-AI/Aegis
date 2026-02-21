@@ -62,6 +62,7 @@
   "nav": {
     "fateExplorer": "Fate Explorer",
     "sentinel": "SENTINEL",
+    "intelligence": "Intelligence",
     "regulatory": "Regulatory",
     "portfolio": "Portfolio",
     "reports": "Reports",
@@ -191,7 +192,7 @@
   },
   "regulatory": {
     "title": "Regulatory Compliance Checker",
-    "subtitle": "EPA, EU REACH, CA Prop 65, Stockholm Convention",
+    "subtitle": "EPA, EU REACH, CA Prop 65, Stockholm Convention + APAC (Japan, Korea, China, Australia, Singapore, Taiwan, India)",
     "checkCompliance": "Check Compliance",
     "enterMaterial": "Enter material to check regulatory status",
     "includeDegradationProducts": "Include Degradation Products",
@@ -216,7 +217,7 @@
       "underConsideration": "UNDER CONSIDERATION",
       "monitoring": "MONITORING"
     },
-    "description": "Check materials and their degradation products against EPA MCL, EU REACH, CA Prop 65, and Stockholm Convention.",
+    "description": "Check materials and their degradation products against EPA MCL, EU REACH, CA Prop 65, Stockholm Convention, and APAC frameworks.",
     "riskAcross": "{{material}}: {{risk}} risk across {{count}} frameworks"
   },
   "portfolio": {
@@ -548,12 +549,12 @@
     },
     "regulatory": {
       "title": "Regulatory Compliance",
-      "description": "Check compounds against EPA, EU REACH, Stockholm Convention, and state-level regulatory frameworks. Covers MCLs, health advisories, and emerging standards.",
+      "description": "Check compounds against EPA, EU REACH, Stockholm Convention, APAC jurisdictions, and state-level regulatory frameworks. Covers MCLs, health advisories, and emerging standards.",
       "whatItDoes": [
         "Screens compounds against multi-jurisdictional regulatory databases",
         "Shows MCL (Maximum Contaminant Level) values where established",
         "Identifies health advisories, action levels, and notification thresholds",
-        "Flags compounds on the EPA PFAS Action Plan or Stockholm Convention annexes"
+        "Flags compounds on the EPA PFAS Action Plan, Stockholm Convention annexes, and APAC frameworks (Japan CSCL, K-REACH, China MEE, Australia NHMRC, Singapore NEA, Taiwan MOENV, India FSSAI)"
       ],
       "howToUse": [
         "Enter a compound name or CAS number in the search field",
@@ -563,11 +564,11 @@
       ],
       "useCases": [
         "Verify whether a degradation product triggers regulatory obligations",
-        "Compare regulatory status across EPA, EU, and state frameworks",
+        "Compare regulatory status across EPA, EU, APAC, and state frameworks",
         "Build the regulatory section of an environmental impact assessment"
       ],
       "tips": [
-        "Compounds 'under review' may have limits proposed — check the EPA PFAS Roadmap",
+        "APAC regulations are accelerating; monitor finalized-to-binding transitions by jurisdiction",
         "State-level limits (e.g., Michigan, New Jersey) are often stricter than federal MCLs",
         "Use alongside Fate Explorer to check if degradation products are regulated"
       ]
@@ -691,6 +692,32 @@
         "The coverage report shows resolution rate — low coverage means rules are based on fewer compounds",
         "All evidence is DOI-linked — click any citation to verify the source paper"
       ]
+    },
+    "intelligence": {
+      "title": "Regulatory Intelligence",
+      "description": "Monitor live regulatory signals, run recursive exposure resolution, and manage human-in-the-loop approvals.",
+      "whatItDoes": [
+        "Aggregates monitored regulatory signals with severity and classification",
+        "Runs recursive compound-to-product exposure analysis through degradation pathways",
+        "Queues resolver outputs for analyst review before approval and distribution",
+        "Maintains a single operational view of monitoring + resolver + approvals"
+      ],
+      "howToUse": [
+        "Use Signals to review latest detected changes and severity",
+        "Run Resolver on a product, compound, CAS, or SMILES to generate exposure outputs",
+        "Process pending items in the Review Queue using confirm/escalate/dismiss/approve actions",
+        "Add justifications for dismissals and other analyst decisions"
+      ],
+      "useCases": [
+        "Triage a newly detected EPA/ECHA signal and assess Chemours exposure impact",
+        "Run inherited-liability checks for fluoropolymer products",
+        "Operationalize analyst sign-off before executive distribution"
+      ],
+      "tips": [
+        "Critical flags should always be escalated for legal/regulatory review",
+        "Class-level matches require analyst confirmation of product applicability",
+        "Use resolver IDs to track decisions across gate states and audit logs"
+      ]
     }
   },
   "tooltips": {
@@ -723,6 +750,72 @@
     },
     "temperature": {
       "explanation": "Temperatures at which degradation was observed in laboratory studies. Shown in degrees Celsius."
+    }
+  },
+  "intelligence": {
+    "title": "Regulatory Intelligence",
+    "subtitle": "Live signals, recursive resolver, and HITL review queue",
+    "refresh": "Refresh",
+    "cards": {
+      "recentSignals": "Recent Signals",
+      "pendingReview": "Pending Review",
+      "pendingApproval": "Pending Approval"
+    },
+    "tabs": {
+      "signals": "Signals",
+      "resolver": "Resolver",
+      "reviewQueue": "Review Queue"
+    },
+    "signals": {
+      "title": "Recent Regulatory Signals",
+      "description": "Latest classified regulatory changes across monitored sources.",
+      "unclassified": "Unclassified",
+      "unknownSource": "Unknown source",
+      "noSummary": "No summary available",
+      "empty": "No signals available."
+    },
+    "resolver": {
+      "title": "Recursive Regulatory Resolver",
+      "description": "Resolve direct and inherited exposure for a compound or product.",
+      "inputPlaceholder": "Enter product name, compound name, CAS, or SMILES",
+      "run": "Run Resolver",
+      "compound": "Compound",
+      "assertions": "Assertions",
+      "trajectory": "Trajectory",
+      "noCas": "No CAS",
+      "flag": "Flag"
+    },
+    "queue": {
+      "title": "HITL Review Queue",
+      "description": "Analyst workflow for resolver outputs awaiting review/approval.",
+      "reviewRequired": "Human review required",
+      "unknownCompound": "Unknown compound",
+      "criticalFlags": "Critical flags",
+      "justificationPlaceholder": "Justification (required for dismiss)",
+      "empty": "No items pending review.",
+      "actions": {
+        "confirm": "Confirm",
+        "escalate": "Escalate",
+        "dismiss": "Dismiss",
+        "approve": "Approve",
+        "hold": "Hold"
+      }
+    },
+    "toasts": {
+      "signalsUnavailableTitle": "Signals unavailable",
+      "signalsUnavailableDescription": "Could not load monitor signals.",
+      "queueUnavailableTitle": "Queue unavailable",
+      "queueUnavailableDescription": "Could not load pending resolver items.",
+      "resolverQueuedTitle": "Resolver submitted",
+      "resolverQueuedDescription": "Resolution {{id}} queued with status {{status}}.",
+      "resolverFailedTitle": "Resolver failed",
+      "resolverFailedDescription": "Could not run resolver for this input.",
+      "justificationRequiredTitle": "Justification required",
+      "justificationRequiredDescription": "Provide justification before dismissing.",
+      "queueUpdatedTitle": "Queue updated",
+      "queueUpdatedDescription": "Updated {{id}} with action {{action}}.",
+      "gateActionFailedTitle": "Gate action failed",
+      "gateActionFailedDescription": "Could not apply {{action}} to {{id}}."
     }
   }
 }

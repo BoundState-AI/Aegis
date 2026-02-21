@@ -98,12 +98,12 @@ export const useHelpContent = () => {
     regulatory: {
       title: t('help.regulatory.title', 'Regulatory Compliance'),
       description: t('help.regulatory.description',
-        'Check compounds against EPA, EU REACH, Stockholm Convention, and state-level regulatory frameworks. Covers MCLs, health advisories, and emerging standards.'),
+        'Check compounds against EPA, EU REACH, Stockholm Convention, APAC jurisdictions, and state-level regulatory frameworks. Covers MCLs, health advisories, and emerging standards.'),
       whatItDoes: t('help.regulatory.whatItDoes', { returnObjects: true, defaultValue: [
         "Screens compounds against multi-jurisdictional regulatory databases",
         "Shows MCL (Maximum Contaminant Level) values where established",
         "Identifies health advisories, action levels, and notification thresholds",
-        "Flags compounds on the EPA PFAS Action Plan or Stockholm Convention annexes",
+        "Flags compounds on the EPA PFAS Action Plan, Stockholm Convention annexes, and APAC frameworks (Japan CSCL, K-REACH, China MEE, Australia NHMRC, Singapore NEA, Taiwan MOENV, India FSSAI)",
       ]}) as string[],
       howToUse: t('help.regulatory.howToUse', { returnObjects: true, defaultValue: [
         "Enter a compound name or CAS number in the search field",
@@ -113,11 +113,11 @@ export const useHelpContent = () => {
       ]}) as string[],
       useCases: t('help.regulatory.useCases', { returnObjects: true, defaultValue: [
         "Verify whether a degradation product triggers regulatory obligations",
-        "Compare regulatory status across EPA, EU, and state frameworks",
+        "Compare regulatory status across EPA, EU, APAC, and state frameworks",
         "Build the regulatory section of an environmental impact assessment",
       ]}) as string[],
       tips: t('help.regulatory.tips', { returnObjects: true, defaultValue: [
-        "Compounds 'under review' may have limits proposed — check the EPA PFAS Roadmap",
+        "APAC regulations are accelerating; monitor finalized-to-binding transitions by jurisdiction",
         "State-level limits (e.g., Michigan, New Jersey) are often stricter than federal MCLs",
         "Use alongside Fate Explorer to check if degradation products are regulated",
       ]}) as string[],
@@ -245,6 +245,40 @@ export const useHelpContent = () => {
       apiEndpoint: "/api/v1/analysis",
     },
 
+    intelligence: {
+      title: t('help.intelligence.title', 'Regulatory Intelligence'),
+      description: t('help.intelligence.description',
+        'Monitor live regulatory signals, run recursive exposure resolution, and manage human-in-the-loop approvals.'),
+      whatItDoes: t('help.intelligence.whatItDoes', { returnObjects: true, defaultValue: [
+        "Aggregates monitored regulatory signals with severity and classification",
+        "Runs recursive compound-to-product exposure analysis through degradation pathways",
+        "Queues resolver outputs for analyst review before approval and distribution",
+        "Maintains a single operational view of monitoring + resolver + approvals",
+      ]}) as string[],
+      howToUse: t('help.intelligence.howToUse', { returnObjects: true, defaultValue: [
+        "Use Signals to review latest detected changes and severity",
+        "Run Resolver on a product, compound, CAS, or SMILES to generate exposure outputs",
+        "Process pending items in the Review Queue using confirm/escalate/dismiss/approve actions",
+        "Add justifications for dismissals and other analyst decisions",
+      ]}) as string[],
+      useCases: t('help.intelligence.useCases', { returnObjects: true, defaultValue: [
+        "Triage a newly detected EPA/ECHA signal and assess Chemours exposure impact",
+        "Run inherited-liability checks for fluoropolymer products",
+        "Operationalize analyst sign-off before executive distribution",
+      ]}) as string[],
+      tips: t('help.intelligence.tips', { returnObjects: true, defaultValue: [
+        "Critical flags should always be escalated for legal/regulatory review",
+        "Class-level matches require analyst confirmation of product applicability",
+        "Use resolver IDs to track decisions across gate states and audit logs",
+      ]}) as string[],
+      relatedPages: [
+        { name: t('nav.regulatory', 'Regulatory'), path: "/regulatory" },
+        { name: t('nav.tier1', 'Tier 1'), path: "/tier1" },
+        { name: t('nav.evidence', 'Evidence Chain'), path: "/evidence" },
+      ],
+      apiEndpoint: "/api/v1/resolver/resolve",
+    },
+
     tier1: {
       title: t('help.tier1.title', 'Structural Intelligence (Tier 1 + Tier 2)'),
       description: t('help.tier1.description',
@@ -369,7 +403,7 @@ const helpContent: Record<string, HelpContent> = {
       "Screens compounds against multi-jurisdictional regulatory databases",
       "Shows MCL (Maximum Contaminant Level) values where established",
       "Identifies health advisories, action levels, and notification thresholds",
-      "Flags compounds on the EPA PFAS Action Plan or Stockholm Convention annexes",
+      "Flags compounds on the EPA PFAS Action Plan, Stockholm Convention annexes, and APAC frameworks (Japan CSCL, K-REACH, China MEE, Australia NHMRC, Singapore NEA, Taiwan MOENV, India FSSAI)",
     ],
     howToUse: [
       "Enter a compound name or CAS number in the search field",
@@ -379,11 +413,11 @@ const helpContent: Record<string, HelpContent> = {
     ],
     useCases: [
       "Verify whether a degradation product triggers regulatory obligations",
-      "Compare regulatory status across EPA, EU, and state frameworks",
+      "Compare regulatory status across EPA, EU, APAC, and state frameworks",
       "Build the regulatory section of an environmental impact assessment",
     ],
     tips: [
-      "Compounds 'under review' may have limits proposed — check the EPA PFAS Roadmap",
+      "APAC regulations are accelerating; monitor finalized-to-binding transitions by jurisdiction",
       "State-level limits (e.g., Michigan, New Jersey) are often stricter than federal MCLs",
       "Use alongside Fate Explorer to check if degradation products are regulated",
     ],
@@ -513,6 +547,40 @@ const helpContent: Record<string, HelpContent> = {
       { name: "Evidence Chain", path: "/evidence" },
     ],
     apiEndpoint: "/api/v1/analysis",
+  },
+
+  intelligence: {
+    title: "Regulatory Intelligence",
+    description:
+      "Monitor live regulatory signals, run recursive exposure resolution, and manage human-in-the-loop approvals.",
+    whatItDoes: [
+      "Aggregates monitored regulatory signals with severity and classification",
+      "Runs recursive compound-to-product exposure analysis through degradation pathways",
+      "Queues resolver outputs for analyst review before approval and distribution",
+      "Maintains a single operational view of monitoring + resolver + approvals",
+    ],
+    howToUse: [
+      "Use Signals to review latest detected changes and severity",
+      "Run Resolver on a product, compound, CAS, or SMILES to generate exposure outputs",
+      "Process pending items in the Review Queue using confirm/escalate/dismiss/approve actions",
+      "Add justifications for dismissals and other analyst decisions",
+    ],
+    useCases: [
+      "Triage a newly detected EPA/ECHA signal and assess Chemours exposure impact",
+      "Run inherited-liability checks for fluoropolymer products",
+      "Operationalize analyst sign-off before executive distribution",
+    ],
+    tips: [
+      "Critical flags should always be escalated for legal/regulatory review",
+      "Class-level matches require analyst confirmation of product applicability",
+      "Use resolver IDs to track decisions across gate states and audit logs",
+    ],
+    relatedPages: [
+      { name: "Regulatory", path: "/regulatory" },
+      { name: "Tier 1", path: "/tier1" },
+      { name: "Evidence Chain", path: "/evidence" },
+    ],
+    apiEndpoint: "/api/v1/resolver/resolve",
   },
 
   tier1: {

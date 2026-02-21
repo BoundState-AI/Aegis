@@ -62,6 +62,7 @@
   "nav": {
     "fateExplorer": "環境動態",
     "sentinel": "SENTINEL",
+    "intelligence": "インテリジェンス",
     "regulatory": "規制",
     "portfolio": "ポートフォリオ",
     "reports": "レポート",
@@ -692,6 +693,98 @@
         "カバレッジレポートは解決率を示す — 低いカバレッジはルールがより少ない化合物に基づいていることを意味",
         "すべてのエビデンスはDOIリンク済み — 任意の引用をクリックしてソース論文を検証"
       ]
+    },
+    "intelligence": {
+      "title": "規制インテリジェンス",
+      "description": "ライブ規制シグナルの監視、再帰的エクスポージャー解決、HITL承認を一体運用します。",
+      "whatItDoes": [
+        "重大度と分類付きで規制シグナルを集約します",
+        "分解経路を通じて化合物から生成物までの再帰的エクスポージャーを解析します",
+        "承認前にリゾルバー結果をアナリストレビューキューに投入します",
+        "監視・リゾルバー・承認を単一画面で運用します"
+      ],
+      "howToUse": [
+        "Signals で最新の検出変更と重大度を確認します",
+        "Resolver で製品名/化合物名/CAS/SMILESから解析を実行します",
+        "Review Queue で confirm/escalate/dismiss/approve を処理します",
+        "却下や再分類などの判断には理由を記録します"
+      ],
+      "useCases": [
+        "EPA/ECHAの新規シグナルをトリアージし、Chemours影響を評価する",
+        "フルオロポリマー製品の継承責任リスクを検証する",
+        "経営向け配信前にアナリスト承認を必須化する"
+      ],
+      "tips": [
+        "重大フラグは必ず法務/規制チームへエスカレーションしてください",
+        "クラス一致のみの結果は製品適用性を人手で確認してください",
+        "resolver_id でゲート状態と監査履歴を追跡してください"
+      ]
+    }
+  },
+  "intelligence": {
+    "title": "規制インテリジェンス",
+    "subtitle": "ライブシグナル、再帰リゾルバー、HITLレビューキュー",
+    "refresh": "更新",
+    "cards": {
+      "recentSignals": "最新シグナル",
+      "pendingReview": "レビュー待ち",
+      "pendingApproval": "承認待ち"
+    },
+    "tabs": {
+      "signals": "シグナル",
+      "resolver": "リゾルバー",
+      "reviewQueue": "レビューキュー"
+    },
+    "signals": {
+      "title": "最新の規制シグナル",
+      "description": "監視ソース全体の最新の分類済み規制変更。",
+      "unclassified": "未分類",
+      "unknownSource": "ソース不明",
+      "noSummary": "要約なし",
+      "empty": "シグナルはありません。"
+    },
+    "resolver": {
+      "title": "再帰的規制リゾルバー",
+      "description": "化合物または製品の直接・継承エクスポージャーを解決します。",
+      "inputPlaceholder": "製品名、化合物名、CAS、またはSMILESを入力",
+      "run": "リゾルバー実行",
+      "compound": "化合物",
+      "assertions": "アサーション数",
+      "trajectory": "トラジェクトリ",
+      "noCas": "CASなし",
+      "flag": "フラグ"
+    },
+    "queue": {
+      "title": "HITLレビューキュー",
+      "description": "レビュー/承認待ちのリゾルバー出力に対するアナリストワークフロー。",
+      "reviewRequired": "人手レビューが必要",
+      "unknownCompound": "不明な化合物",
+      "criticalFlags": "重大フラグ",
+      "justificationPlaceholder": "理由を入力（却下時は必須）",
+      "empty": "レビュー待ち項目はありません。",
+      "actions": {
+        "confirm": "確認",
+        "escalate": "エスカレーション",
+        "dismiss": "却下",
+        "approve": "承認",
+        "hold": "保留"
+      }
+    },
+    "toasts": {
+      "signalsUnavailableTitle": "シグナル取得不可",
+      "signalsUnavailableDescription": "監視シグナルを読み込めませんでした。",
+      "queueUnavailableTitle": "キュー取得不可",
+      "queueUnavailableDescription": "保留中のリゾルバー項目を読み込めませんでした。",
+      "resolverQueuedTitle": "リゾルバーを送信しました",
+      "resolverQueuedDescription": "解決 {{id}} をステータス {{status}} でキュー登録しました。",
+      "resolverFailedTitle": "リゾルバー失敗",
+      "resolverFailedDescription": "この入力でリゾルバーを実行できませんでした。",
+      "justificationRequiredTitle": "理由が必要です",
+      "justificationRequiredDescription": "却下する前に理由を入力してください。",
+      "queueUpdatedTitle": "キュー更新",
+      "queueUpdatedDescription": "{{id}} にアクション {{action}} を適用しました。",
+      "gateActionFailedTitle": "ゲート操作失敗",
+      "gateActionFailedDescription": "{{id}} への {{action}} を適用できませんでした。"
     }
   }
 }

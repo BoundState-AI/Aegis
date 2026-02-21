@@ -13,8 +13,9 @@ import PortfolioAssessment from "./pages/PortfolioAssessment";
 import ExecutiveReports from "./pages/ExecutiveReports";
 import EvidenceChain from "./pages/EvidenceChain";
 import StructuralSimilarity from "./pages/StructuralSimilarity";
+import Intelligence from "./pages/Intelligence";
 // import Ensurance from "./pages/Ensurance";
-import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
+import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint, Radar } from "lucide-react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
@@ -25,6 +26,7 @@ const queryClient = new QueryClient();
 const navItems = [
   { path: "/", labelKey: "nav.fateExplorer", icon: Network },
   { path: "/litigation", labelKey: "nav.sentinel", icon: Scale },
+  { path: "/intelligence", labelKey: "nav.intelligence", icon: Radar },
   { path: "/regulatory", labelKey: "nav.regulatory", icon: Globe },
   { path: "/portfolio", labelKey: "nav.portfolio", icon: Package },
   { path: "/reports", labelKey: "nav.reports", icon: FileText },
@@ -99,6 +101,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<FateExplorer />} />
         <Route path="/litigation" element={<LitigationRisk />} />
+        <Route path="/intelligence" element={<Intelligence />} />
         <Route path="/regulatory" element={<RegulatoryCompliance />} />
         <Route path="/portfolio" element={<PortfolioAssessment />} />
         <Route path="/reports" element={<ExecutiveReports />} />
