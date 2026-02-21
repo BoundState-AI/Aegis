@@ -9,6 +9,8 @@ It covers:
 - Authentication requirements
 - Demo seeding and queue handling
 
+For production operations (env vars, RBAC matrix, runbooks, backup/restore, release checks), use `docs/AEGIS_PRODUCTION_OWNERS_MANUAL.md`.
+
 For a deeper Regulatory-only reference, see `docs/REGULATORY_OWNERS_MANUAL.md`.
 
 ## Primary Navigation (bottom bar)
