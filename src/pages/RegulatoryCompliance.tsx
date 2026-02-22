@@ -135,12 +135,16 @@ const RegulatoryCompliance = () => {
 
       toast({
         title: t('common.complianceCheckComplete'),
-        description: `${data.material}: ${data.overall_risk} risk across ${data.frameworks_checked} frameworks`,
+        description: t("regulatory.riskAcross", {
+          material: data.material,
+          risk: getRiskLabel(data.overall_risk),
+          count: data.frameworks_checked,
+        }),
       });
     } catch (error) {
       toast({
         title: t('common.checkFailed'),
-        description: "Could not connect to AEGIS API",
+        description: t("common.couldNotConnect"),
         variant: "destructive",
       });
     } finally {
@@ -177,13 +181,42 @@ const RegulatoryCompliance = () => {
 
   const getRegulatoryStageLabel = (stage: string) => {
     switch (stage) {
-      case "enacted": return "ENACTED";
-      case "final_pending": return "FINAL PENDING";
-      case "proposed": return "PROPOSED";
-      case "under_consideration": return "UNDER CONSIDERATION";
-      case "monitoring": return "MONITORING";
+      case "enacted": return t("regulatory.regulatoryStages.enacted");
+      case "final_pending": return t("regulatory.regulatoryStages.finalPending");
+      case "proposed": return t("regulatory.regulatoryStages.proposed");
+      case "under_consideration": return t("regulatory.regulatoryStages.underConsideration");
+      case "monitoring": return t("regulatory.regulatoryStages.monitoring");
       default: return stage.toUpperCase();
     }
+  };
+
+  const getRiskLabel = (risk: string) => {
+    switch (risk.toUpperCase()) {
+      case "HIGH": return t("regulatory.riskLabels.high");
+      case "MEDIUM": return t("regulatory.riskLabels.medium");
+      case "LOW": return t("regulatory.riskLabels.low");
+      case "COMPLIANT": return t("regulatory.riskLabels.compliant");
+      default: return risk;
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    const normalized = status.trim().toLowerCase();
+    const labels: Record<string, string> = {
+      banned: t("regulatory.statusLabels.banned"),
+      pop: t("regulatory.statusLabels.pop"),
+      regulated: t("regulatory.statusLabels.regulated"),
+      restricted: t("regulatory.statusLabels.restricted"),
+      enforceable: t("regulatory.statusLabels.enforceable"),
+      advisory: t("regulatory.statusLabels.advisory"),
+      monitored: t("regulatory.statusLabels.monitored"),
+      monitoring: t("regulatory.statusLabels.monitoring"),
+      proposed: t("regulatory.statusLabels.proposed"),
+      consultation: t("regulatory.statusLabels.consultation"),
+      enacted: t("regulatory.statusLabels.enacted"),
+      compliant: t("regulatory.statusLabels.compliant"),
+    };
+    return labels[normalized] || status.toUpperCase();
   };
 
   const isApacJurisdiction = (framework: string) =>
@@ -212,7 +245,7 @@ const RegulatoryCompliance = () => {
             variant={subview === "landscape" ? "default" : "outline"}
             onClick={() => selectSubview("landscape")}
           >
-            {t("regulatory.subviews.landscape", "Landscape")}
+            {t("regulatory.subviews.landscape")}
           </Button>
           <Button
             size="sm"
@@ -253,7 +286,7 @@ const RegulatoryCompliance = () => {
                 <Input
                   value={material}
                   onChange={(e) => setMaterial(e.target.value.toUpperCase())}
-                  placeholder="e.g., PTFE, FEP, PFOA"
+                  placeholder={t("regulatory.materialPlaceholder")}
                   className="bg-white border-gray-300"
                 />
               </div>
@@ -298,10 +331,10 @@ const RegulatoryCompliance = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-chemours-dark">{checkResult.material} {t('regulatory.complianceStatus')}</CardTitle>
-                      <Badge className={getRiskColor(checkResult.overall_risk)}>{checkResult.overall_risk}</Badge>
+                      <Badge className={getRiskColor(checkResult.overall_risk)}>{getRiskLabel(checkResult.overall_risk)}</Badge>
                     </div>
                     <CardDescription>
-                      Screened against {checkResult.frameworks_checked} reference frameworks
+                      {t("regulatory.screenedAgainst", { count: checkResult.frameworks_checked })}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -309,11 +342,14 @@ const RegulatoryCompliance = () => {
                       <div className="mb-4">
                         <div className="flex items-center gap-2 mb-2">
                           <TermWithTooltip explanationKey="tooltips.degradationProducts" className="text-sm text-gray-500">
-                              Degradation Products:
-                            </TermWithTooltip>
+                            {t("regulatory.degradationProducts")}
+                          </TermWithTooltip>
                           {checkResult.degradation_pathway_count > 0 && (
                             <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
-                              {checkResult.degradation_pathway_count} pathways from {checkResult.degradation_paper_count} papers
+                              {t("regulatory.pathwaysFromPapers", {
+                                pathways: checkResult.degradation_pathway_count,
+                                papers: checkResult.degradation_paper_count,
+                              })}
                             </span>
                           )}
                         </div>
@@ -323,11 +359,11 @@ const RegulatoryCompliance = () => {
                           ))}
                         </div>
                         {checkResult.degradation_source && (
-                          <p className="text-xs text-gray-400 mt-2 italic">Source: {checkResult.degradation_source}</p>
+                          <p className="text-xs text-gray-400 mt-2 italic">{t("regulatory.source")} {checkResult.degradation_source}</p>
                         )}
                         {checkResult.degradation_sample_dois.length > 0 && (
                           <p className="text-xs text-blue-500 mt-1">
-                            Sample DOIs: {checkResult.degradation_sample_dois.slice(0, 2).join(", ")}
+                            {t("regulatory.sampleDOIs")} {checkResult.degradation_sample_dois.slice(0, 2).join(", ")}
                           </p>
                         )}
                       </div>
@@ -357,7 +393,7 @@ const RegulatoryCompliance = () => {
                 {checkResult.non_compliant.length > 0 && (
                   <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-red-500">
                     <CardHeader>
-                      <CardTitle className="text-red-600">Non-Compliant Regulations</CardTitle>
+                      <CardTitle className="text-red-600">{t("regulatory.nonCompliantRegulations")}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
@@ -369,13 +405,13 @@ const RegulatoryCompliance = () => {
                                 <p className="font-medium text-chemours-dark">{reg.framework}</p>
                                 {isApacJurisdiction(reg.framework) && (
                                   <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
-                                    APAC
+                                    {t("regulatory.apac")}
                                   </Badge>
                                 )}
                                 <p className="text-sm text-gray-500">{reg.notes}</p>
                               </div>
                             </div>
-                            <Badge className="bg-red-600">{reg.status.toUpperCase()}</Badge>
+                            <Badge className="bg-red-600">{getStatusLabel(reg.status)}</Badge>
                           </div>
                         ))}
                       </div>
@@ -387,7 +423,7 @@ const RegulatoryCompliance = () => {
                 {checkResult.warnings.length > 0 && (
                   <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-yellow-500">
                     <CardHeader>
-                      <CardTitle className="text-yellow-600">Regulatory Warnings</CardTitle>
+                      <CardTitle className="text-yellow-600">{t("regulatory.regulatoryWarnings")}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
@@ -399,14 +435,14 @@ const RegulatoryCompliance = () => {
                                 <p className="font-medium text-chemours-dark">{reg.framework}</p>
                                 {isApacJurisdiction(reg.framework) && (
                                   <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
-                                    APAC
+                                    {t("regulatory.apac")}
                                   </Badge>
                                 )}
                                 <p className="text-sm text-gray-500">{reg.notes}</p>
-                                {reg.limit_ppb && <p className="text-xs text-yellow-600">Limit: {reg.limit_ppb} ppb</p>}
+                                {reg.limit_ppb && <p className="text-xs text-yellow-600">{t("regulatory.limit")} {reg.limit_ppb} ppb</p>}
                               </div>
                             </div>
-                            <Badge className="bg-yellow-600">{reg.status.toUpperCase()}</Badge>
+                            <Badge className="bg-yellow-600">{getStatusLabel(reg.status)}</Badge>
                           </div>
                         ))}
                       </div>
@@ -419,42 +455,45 @@ const RegulatoryCompliance = () => {
                     <CardHeader>
                       <CardTitle className="text-amber-700 flex items-center gap-2">
                         <Globe className="h-5 w-5" />
-                        APAC Regulatory Intelligence
+                        {t("regulatory.apacTitle")}
                       </CardTitle>
                       <CardDescription>
-                        {checkResult.apac_assertions?.length} assertions across {checkResult.apac_jurisdiction_count ?? 0} APAC jurisdictions
+                        {t("regulatory.apacAssertionsAcross", {
+                          count: checkResult.apac_assertions?.length ?? 0,
+                          jurisdictions: checkResult.apac_jurisdiction_count ?? 0,
+                        })}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {checkResult.fluoropolymer_exposure && (
                         <div className="p-3 rounded-lg border border-amber-200 bg-amber-50 text-sm text-amber-900">
-                          <span className="font-semibold">Fluoropolymer exposure:</span> {checkResult.fluoropolymer_exposure}
+                          <span className="font-semibold">{t("regulatory.fluoropolymerExposure")}</span> {checkResult.fluoropolymer_exposure}
                         </div>
                       )}
                       {(checkResult.apac_assertions ?? []).slice(0, 10).map((item) => (
                         <div key={item.id} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
                             <span className="font-semibold text-chemours-dark">{item.country}</span>
-                            <Badge variant="outline" className="text-xs border-gray-300">{item.status.toUpperCase()}</Badge>
+                            <Badge variant="outline" className="text-xs border-gray-300">{getStatusLabel(item.status)}</Badge>
                             <Badge variant="outline" className={`text-xs ${getApacConfidenceBadgeClass(item.confidence)}`}>
                               {item.confidence.toFixed(2)}
                             </Badge>
                             {item.jerk_signal && (
                               <Badge variant="outline" className="text-xs bg-orange-100 text-orange-700 border-orange-300">
-                                <Zap className="h-3 w-3 mr-1" /> Jerk
+                                <Zap className="h-3 w-3 mr-1" /> {t("regulatory.jerk")}
                               </Badge>
                             )}
                             {item.confidence < 0.7 && (
                               <Badge variant="outline" className="text-xs bg-red-100 text-red-700 border-red-300">
-                                Verification Needed
+                                {t("regulatory.verificationNeeded")}
                               </Badge>
                             )}
                           </div>
                           <p className="text-sm text-gray-700">{item.assertion}</p>
                           <p className="text-xs text-gray-500 mt-1">
-                            Class: {item.compound_class} | Litigation relevance: {item.litigation_relevance}
-                            {item.effective_date ? ` | Effective: ${item.effective_date}` : ""}
-                            {item.threshold_value ? ` | Threshold: ${item.threshold_value}` : ""}
+                            {t("regulatory.class")}: {item.compound_class} | {t("regulatory.litigationRelevance")}: {item.litigation_relevance}
+                            {item.effective_date ? ` | ${t("regulatory.effective")}: ${item.effective_date}` : ""}
+                            {item.threshold_value ? ` | ${t("regulatory.threshold")}: ${item.threshold_value}` : ""}
                           </p>
                         </div>
                       ))}
@@ -468,7 +507,7 @@ const RegulatoryCompliance = () => {
                     <CardHeader>
                       <CardTitle className="text-chemours-dark flex items-center gap-2">
                         <Calendar className="h-5 w-5 text-chemours-orange" />
-                        {cascade.forecast_year} Regulatory Forecast
+                        {cascade.forecast_year} {t("regulatory.regulatoryForecast")}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -483,7 +522,7 @@ const RegulatoryCompliance = () => {
                             </div>
                             <p className="text-sm text-gray-500">{pred.status}</p>
                             {pred.source && (
-                              <p className="text-xs text-gray-400 mt-1 italic">Source: {pred.source}</p>
+                              <p className="text-xs text-gray-400 mt-1 italic">{t("regulatory.source")} {pred.source}</p>
                             )}
                             {pred.affected_products.length > 0 && (
                               <div className="flex gap-1 mt-2">
@@ -508,7 +547,7 @@ const RegulatoryCompliance = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('regulatory.title')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    Check materials and their degradation products against EPA MCL, EU REACH, CA Prop 65, Stockholm Convention, and APAC frameworks.
+                    {t("regulatory.description")}
                   </p>
                 </CardContent>
               </Card>

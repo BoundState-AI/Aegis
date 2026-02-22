@@ -61,14 +61,14 @@
   },
   "nav": {
     "fateExplorer": "環境動態",
-    "sentinel": "SENTINEL",
+    "sentinel": "センチネル",
     "intelligence": "インテリジェンス",
     "regulatory": "規制",
     "portfolio": "ポートフォリオ",
     "reports": "レポート",
     "evidence": "エビデンス",
     "analysis": "分析",
-    "tier1": "Tier 1",
+    "tier1": "ティア1",
     "disclaimer": "AEGIS — BoundState PFASインテリジェンスプラットフォーム。すべての分析には専門家によるレビューが必要です。"
   },
   "fateExplorer": {
@@ -192,9 +192,13 @@
   },
   "regulatory": {
     "title": "規制コンプライアンスチェッカー",
-    "subtitle": "EPA、EU REACH、CA Prop 65、ストックホルム条約",
+    "subtitle": "EPA、EU REACH、CA Prop 65、ストックホルム条約 + APAC（日本、韓国、中国、オーストラリア、シンガポール、台湾、インド）",
+    "subviews": {
+      "landscape": "ランドスケープ"
+    },
     "checkCompliance": "コンプライアンスを確認",
     "enterMaterial": "規制状況を確認する材料を入力",
+    "materialPlaceholder": "例: PTFE, FEP, PFOA",
     "includeDegradationProducts": "分解生成物を含める",
     "forecastYear": "予測年",
     "complianceStatus": "コンプライアンス状況",
@@ -209,7 +213,37 @@
     "nonCompliantRegulations": "非準拠規制",
     "regulatoryWarnings": "規制警告",
     "limit": "制限値：",
+    "apac": "APAC",
+    "apacTitle": "APAC 規制インテリジェンス",
+    "apacAssertionsAcross": "{{jurisdictions}}のAPAC管轄にまたがる{{count}}件のアサーション",
+    "fluoropolymerExposure": "フルオロポリマー曝露：",
+    "verificationNeeded": "検証が必要",
+    "class": "クラス",
+    "litigationRelevance": "訴訟関連性",
+    "effective": "施行日",
+    "threshold": "閾値",
+    "jerk": "ジャーク",
     "regulatoryForecast": "規制予測",
+    "riskLabels": {
+      "high": "高",
+      "medium": "中",
+      "low": "低",
+      "compliant": "準拠"
+    },
+    "statusLabels": {
+      "banned": "禁止",
+      "pop": "POP",
+      "regulated": "規制対象",
+      "restricted": "制限",
+      "enforceable": "施行可能",
+      "advisory": "勧告",
+      "monitored": "監視中",
+      "monitoring": "監視中",
+      "proposed": "提案中",
+      "consultation": "意見募集",
+      "enacted": "施行済み",
+      "compliant": "準拠"
+    },
     "regulatoryStages": {
       "enacted": "施行済み",
       "finalPending": "最終審議中",

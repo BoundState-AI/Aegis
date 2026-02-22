@@ -193,8 +193,12 @@
   "regulatory": {
     "title": "Regulatory Compliance Checker",
     "subtitle": "EPA, EU REACH, CA Prop 65, Stockholm Convention + APAC (Japan, Korea, China, Australia, Singapore, Taiwan, India)",
+    "subviews": {
+      "landscape": "Landscape"
+    },
     "checkCompliance": "Check Compliance",
     "enterMaterial": "Enter material to check regulatory status",
+    "materialPlaceholder": "e.g., PTFE, FEP, PFOA",
     "includeDegradationProducts": "Include Degradation Products",
     "forecastYear": "Forecast Year",
     "complianceStatus": "Compliance Status",
@@ -209,7 +213,37 @@
     "nonCompliantRegulations": "Non-Compliant Regulations",
     "regulatoryWarnings": "Regulatory Warnings",
     "limit": "Limit:",
+    "apac": "APAC",
+    "apacTitle": "APAC Regulatory Intelligence",
+    "apacAssertionsAcross": "{{count}} assertions across {{jurisdictions}} APAC jurisdictions",
+    "fluoropolymerExposure": "Fluoropolymer exposure:",
+    "verificationNeeded": "Verification Needed",
+    "class": "Class",
+    "litigationRelevance": "Litigation relevance",
+    "effective": "Effective",
+    "threshold": "Threshold",
+    "jerk": "Jerk",
     "regulatoryForecast": "Regulatory Forecast",
+    "riskLabels": {
+      "high": "HIGH",
+      "medium": "MEDIUM",
+      "low": "LOW",
+      "compliant": "COMPLIANT"
+    },
+    "statusLabels": {
+      "banned": "BANNED",
+      "pop": "POP",
+      "regulated": "REGULATED",
+      "restricted": "RESTRICTED",
+      "enforceable": "ENFORCEABLE",
+      "advisory": "ADVISORY",
+      "monitored": "MONITORED",
+      "monitoring": "MONITORING",
+      "proposed": "PROPOSED",
+      "consultation": "CONSULTATION",
+      "enacted": "ENACTED",
+      "compliant": "COMPLIANT"
+    },
     "regulatoryStages": {
       "enacted": "ENACTED",
       "finalPending": "FINAL PENDING",
