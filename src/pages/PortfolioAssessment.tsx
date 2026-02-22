@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,7 +17,8 @@ import {
 } from "@/components/ui/tooltip";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
+import { apiPost } from "@/lib/apiClient";
+import { portfolioResponseSchema, type PortfolioResponse } from "@/lib/apiSchemas";
 
 interface PortfolioItem {
   material: string;
@@ -32,13 +34,8 @@ interface PortfolioResult {
   litigation_probability: number;
 }
 
-interface PortfolioResponse {
-  total_materials: number;
-  high_risk_count: number;
-  total_exposure_usd: number;
+interface PortfolioViewResponse extends PortfolioResponse {
   results: PortfolioResult[];
-  executive_summary: string;
-  methodology_note?: string;
 }
 
 const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
@@ -68,18 +65,38 @@ const PortfolioAssessment = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
-  const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<PortfolioItem[]>([
     { material: "PTFE", volume_lbs: 100000 },
     { material: "FEP", volume_lbs: 50000 },
   ]);
   const [newMaterial, setNewMaterial] = useState("");
   const [newVolume, setNewVolume] = useState(10000);
-  const [assessment, setAssessment] = useState<PortfolioResponse | null>(null);
+  const [assessment, setAssessment] = useState<PortfolioViewResponse | null>(null);
+
+  const assessMutation = useMutation({
+    mutationFn: () => apiPost("/api/v1/portfolio/assess", portfolioResponseSchema, { items }),
+    onSuccess: (data) => {
+      const typed = data as PortfolioViewResponse;
+      setAssessment(typed);
+      toast({
+        title: t('common.assessmentComplete'),
+        description: `Analyzed ${typed.total_materials} materials - ${typed.high_risk_count} high risk`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: t('common.assessmentFailed'),
+        description: "Could not connect to AEGIS API",
+        variant: "destructive",
+      });
+    },
+  });
 
   // Auto-assess pre-populated portfolio on mount
   useEffect(() => {
-    handleAssess();
+    void handleAssess();
+    // Intentionally run once on mount to pre-populate default portfolio assessment.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addItem = () => {
@@ -103,32 +120,7 @@ const PortfolioAssessment = () => {
       return;
     }
 
-    setIsLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/portfolio/assess`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
-      });
-
-      if (!res.ok) throw new Error("Assessment failed");
-
-      const data: PortfolioResponse = await res.json();
-      setAssessment(data);
-
-      toast({
-        title: t('common.assessmentComplete'),
-        description: `Analyzed ${data.total_materials} materials - ${data.high_risk_count} high risk`,
-      });
-    } catch (error) {
-      toast({
-        title: t('common.assessmentFailed'),
-        description: "Could not connect to AEGIS API",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    await assessMutation.mutateAsync();
   };
 
   const getRiskColor = (category: string) => {
@@ -139,6 +131,8 @@ const PortfolioAssessment = () => {
       default: return "bg-gray-500";
     }
   };
+
+  const isLoading = assessMutation.isPending;
 
   return (
     <div className="min-h-screen bg-gray-50">

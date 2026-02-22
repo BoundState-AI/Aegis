@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,68 +11,53 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, FileText, Download, Lock, ChevronRight } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
+import { apiGet } from "@/lib/apiClient";
+import { executiveReportSchema, type ExecutiveReport } from "@/lib/apiSchemas";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
-
-interface ReportSection {
-  title: string;
-  content: string;
-  data?: Record<string, any>;
-  flags?: string[];
-  similar_cases?: string[];
-}
-
-interface ExecutiveReport {
-  title: string;
-  generated: string;
-  classification: string;
-  material: string;
-  sections: ReportSection[];
-}
 
 const ExecutiveReports = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
-  const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [includeLitigation, setIncludeLitigation] = useState(true);
   const [includeRegulatory, setIncludeRegulatory] = useState(true);
   const [report, setReport] = useState<ExecutiveReport | null>(null);
 
-  // Auto-generate PTFE report on mount
-  useEffect(() => {
-    handleGenerate();
-  }, []);
-
-  const handleGenerate = async () => {
-    setIsLoading(true);
-    try {
+  const generateMutation = useMutation({
+    mutationFn: async () => {
       const params = new URLSearchParams({
         material,
         include_litigation: includeLitigation.toString(),
         include_regulatory: includeRegulatory.toString(),
       });
-
-      const res = await fetch(`${API_BASE}/api/v1/reports/executive?${params}`);
-      if (!res.ok) throw new Error("Report generation failed");
-
-      const data: ExecutiveReport = await res.json();
+      return apiGet(`/api/v1/reports/executive?${params.toString()}`, executiveReportSchema);
+    },
+    onSuccess: (data) => {
       setReport(data);
-
       toast({
         title: t('common.reportGenerated'),
         description: `Executive report for ${data.material} ready`,
       });
-    } catch (error) {
+    },
+    onError: () => {
       toast({
         title: t('common.reportFailed'),
         description: "Could not generate report",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  // Auto-generate PTFE report on mount
+  useEffect(() => {
+    void handleGenerate();
+    // Intentionally run once on mount to pre-populate default report.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleGenerate = async () => {
+    await generateMutation.mutateAsync();
   };
 
   const handleDownload = () => {
@@ -113,6 +99,8 @@ const ExecutiveReports = () => {
       description: "Executive report saved to downloads",
     });
   };
+
+  const isLoading = generateMutation.isPending;
 
   return (
     <div className="min-h-screen bg-gray-50">

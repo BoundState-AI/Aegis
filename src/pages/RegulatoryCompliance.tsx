@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,63 +12,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe, Zap } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import Intelligence, { type IntelligenceTabKey } from "./Intelligence";
-
-interface RegulatoryStatus {
-  framework: string;
-  status: string;
-  limit_ppb: number | null;
-  effective_date: string | null;
-  notes: string;
-}
-
-interface APACAssertionSummary {
-  id: string;
-  assertion: string;
-  country: string;
-  status: string;
-  normalized_status: string;
-  confidence: number;
-  effective_date: string | null;
-  threshold_value: string | null;
-  jerk_signal: boolean;
-  litigation_relevance: string;
-  compound_class: string;
-  citation_tier: string;
-}
-
-interface RegulatoryCheck {
-  material: string;
-  degradation_products: string[];
-  degradation_pathway_count: number;
-  degradation_paper_count: number;
-  degradation_sample_dois: string[];
-  degradation_source: string;
-  frameworks_checked: number;
-  compliant: RegulatoryStatus[];
-  non_compliant: RegulatoryStatus[];
-  warnings: RegulatoryStatus[];
-  overall_risk: string;
-  apac_assertions?: APACAssertionSummary[];
-  apac_jurisdiction_count?: number;
-  fluoropolymer_exposure?: string | null;
-}
-
-interface CascadePrediction {
-  status: string;
-  regulatory_stage: string;  // "enacted", "final_pending", "proposed", "under_consideration", "monitoring"
-  source?: string;
-  affected_products: string[];
-}
-
-interface CascadeResponse {
-  material: string;
-  forecast_year: number;
-  predictions: Record<string, CascadePrediction>;
-  recommendation: string;
-}
+import { apiGet } from "@/lib/apiClient";
+import { cascadeSchema, regulatoryCheckSchema, type CascadeResponse, type RegulatoryCheck } from "@/lib/apiSchemas";
 
 type RegulatorySubview = "landscape" | "signals" | "resolver" | "queue";
 
@@ -84,7 +32,6 @@ const RegulatoryCompliance = () => {
   const { toast } = useToast();
   const helpContent = useHelpContent();
   const [subview, setSubview] = useState<RegulatorySubview>(() => mapViewParam(searchParams.get("view")));
-  const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [includeDegradation, setIncludeDegradation] = useState(true);
   const [checkResult, setCheckResult] = useState<RegulatoryCheck | null>(null);
@@ -93,7 +40,9 @@ const RegulatoryCompliance = () => {
 
   // Auto-load PTFE compliance on mount
   useEffect(() => {
-    handleCheck();
+    void handleCheck();
+    // Intentionally run once on mount to pre-populate default compliance view.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -114,42 +63,45 @@ const RegulatoryCompliance = () => {
     setSearchParams(params, { replace: true });
   };
 
-  const handleCheck = async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(
-        `${API_BASE}/api/v1/regulatory/check?material=${material}&include_degradation=${includeDegradation}`
+  const checkMutation = useMutation({
+    mutationFn: async (params: { material: string; includeDegradation: boolean; forecastYear: number }) => {
+      const check = await apiGet(
+        `/api/v1/regulatory/check?material=${encodeURIComponent(params.material)}&include_degradation=${params.includeDegradation}`,
+        regulatoryCheckSchema,
       );
-      if (!res.ok) throw new Error("Check failed");
-
-      const data: RegulatoryCheck = await res.json();
-      setCheckResult(data);
-
-      // Also get cascade
-      const cascadeRes = await fetch(
-        `${API_BASE}/api/v1/regulatory/cascade?material=${material}&forecast_year=${forecastYear}`
+      const forecast = await apiGet(
+        `/api/v1/regulatory/cascade?material=${encodeURIComponent(params.material)}&forecast_year=${params.forecastYear}`,
+        cascadeSchema,
       );
-      if (cascadeRes.ok) {
-        setCascade(await cascadeRes.json());
-      }
-
+      return { check, forecast };
+    },
+    onSuccess: ({ check, forecast }) => {
+      setCheckResult(check);
+      setCascade(forecast);
       toast({
-        title: t('common.complianceCheckComplete'),
+        title: t("common.complianceCheckComplete"),
         description: t("regulatory.riskAcross", {
-          material: data.material,
-          risk: getRiskLabel(data.overall_risk),
-          count: data.frameworks_checked,
+          material: check.material,
+          risk: getRiskLabel(check.overall_risk),
+          count: check.frameworks_checked,
         }),
       });
-    } catch (error) {
+    },
+    onError: () => {
       toast({
-        title: t('common.checkFailed'),
+        title: t("common.checkFailed"),
         description: t("common.couldNotConnect"),
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  const handleCheck = async () => {
+    await checkMutation.mutateAsync({
+      material,
+      includeDegradation,
+      forecastYear,
+    });
   };
 
   const getRiskColor = (risk: string) => {
@@ -308,12 +260,12 @@ const RegulatoryCompliance = () => {
                 />
               </div>
 
-              <Button
-                onClick={handleCheck}
-                disabled={isLoading || !material}
-                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
-              >
-                {isLoading ? (
+                <Button
+                  onClick={handleCheck}
+                  disabled={checkMutation.isPending || !material}
+                  className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                >
+                {checkMutation.isPending ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.checking')}</>
                 ) : (
                   <><Shield className="mr-2 h-4 w-4" /> {t('regulatory.checkCompliance')}</>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,9 +15,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Search, AlertTriangle, FileText, ChevronsUpDown, Check } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import { ProductLabel } from "@/components/pfas/ProductLabel";
+import { apiGet } from "@/lib/apiClient";
+import { fateQuerySchema, graphSummarySchema, parentsSchema, type FateQueryResponse, type GraphSummary } from "@/lib/apiSchemas";
 
 interface Transformation {
   parent: string;
@@ -32,20 +34,8 @@ interface Transformation {
   citations: string[];
 }
 
-interface FateQueryResponse {
-  query: string;
-  total_transformations: number;
+interface FateExplorerResponse extends FateQueryResponse {
   transformations: Transformation[];
-  compounds_involved: string[];
-  compound_found: boolean;
-}
-
-interface GraphSummary {
-  total_nodes: number;
-  total_edges: number;
-  parent_compounds: number;
-  endpoint_compounds: number;
-  haiku_records: number;
 }
 
 const PARENT_COMPOUNDS = [
@@ -57,10 +47,7 @@ const FateExplorer = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
-  const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState<FateQueryResponse | null>(null);
-  const [summary, setSummary] = useState<GraphSummary | null>(null);
-  const [parents, setParents] = useState<string[]>([]);
+  const [results, setResults] = useState<FateExplorerResponse | null>(null);
 
   const [parentOpen, setParentOpen] = useState(false);
 
@@ -73,68 +60,70 @@ const FateExplorer = () => {
   });
 
   // Load summary, parent list, and run initial search on mount
-  useEffect(() => {
-    loadSummary();
-    loadParents();
-    // Auto-load PTFE results on page load
-    handleSearch();
-  }, []);
+  const summaryQuery = useQuery({
+    queryKey: ["fateSummary"],
+    queryFn: () => apiGet("/api/v1/pfas/summary", graphSummarySchema),
+    staleTime: 60_000,
+    retry: 1,
+  });
 
-  const loadSummary = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/pfas/summary`);
-      if (res.ok) {
-        setSummary(await res.json());
-      }
-    } catch {
-      // Silently handle - summary is optional enhancement
-    }
-  };
+  const parentsQuery = useQuery({
+    queryKey: ["fateParents"],
+    queryFn: () => apiGet("/api/v1/pfas/parents", parentsSchema),
+    staleTime: 60_000,
+    retry: 1,
+  });
 
-  const loadParents = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/pfas/parents`);
-      if (res.ok) {
-        const data = await res.json();
-        setParents(data.parents || []);
-      }
-    } catch {
-      // Silently handle - parents list is optional enhancement
-    }
-  };
-
-  const handleSearch = async () => {
-    setIsLoading(true);
-    try {
+  const searchMutation = useMutation({
+    mutationFn: async (payload: {
+      parent: string;
+      tempMin: number;
+      tempMax: number;
+      minObservations: number;
+      atmosphere: string;
+    }) => {
       const params = new URLSearchParams({
-        parent: formData.parent,
-        temp_min: formData.tempMin.toString(),
-        temp_max: formData.tempMax.toString(),
-        min_observations: formData.minObservations.toString(),
+        parent: payload.parent,
+        temp_min: payload.tempMin.toString(),
+        temp_max: payload.tempMax.toString(),
+        min_observations: payload.minObservations.toString(),
       });
-      if (formData.atmosphere && formData.atmosphere !== "any") {
-        params.append("atmosphere", formData.atmosphere);
+      if (payload.atmosphere && payload.atmosphere !== "any") {
+        params.append("atmosphere", payload.atmosphere);
       }
-
-      const res = await fetch(`${API_BASE}/api/v1/pfas/fate?${params}`);
-      if (!res.ok) throw new Error("Query failed");
-
-      const data: FateQueryResponse = await res.json();
-      setResults(data);
-
+      return apiGet(`/api/v1/pfas/fate?${params.toString()}`, fateQuerySchema);
+    },
+    onSuccess: (data) => {
+      const typedData = data as FateExplorerResponse;
+      setResults(typedData);
       toast({
         title: t('common.queryComplete'),
-        description: t('fateExplorer.foundPathways', { count: data.total_transformations, compound: formData.parent }),
+        description: t('fateExplorer.foundPathways', { count: typedData.total_transformations, compound: formData.parent }),
       });
-    } catch (error) {
+    },
+    onError: () => {
       toast({
         title: t('common.queryFailed'),
         description: t('common.couldNotConnect'),
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  useEffect(() => {
+    // Auto-load PTFE results on page load
+    void handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSearch = async () => {
+    await searchMutation.mutateAsync({
+      parent: formData.parent,
+      tempMin: formData.tempMin,
+      tempMax: formData.tempMax,
+      minObservations: formData.minObservations,
+      atmosphere: formData.atmosphere,
+    });
   };
 
   const getHazardColor = (level: string | null) => {
@@ -146,6 +135,10 @@ const FateExplorer = () => {
       default: return "bg-gray-400";
     }
   };
+
+  const summary: GraphSummary | null = summaryQuery.data ?? null;
+  const parents = parentsQuery.data?.parents || [];
+  const isLoading = searchMutation.isPending;
 
   return (
     <div className="min-h-screen bg-gray-50">

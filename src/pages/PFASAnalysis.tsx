@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,11 +10,11 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangle, ExternalLink } from "lucide-react";
-import { AnalyzeResponse } from "@/types/pfas";
 import AnalysisResults from "@/components/pfas/AnalysisResults";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
+import { apiPost, apiPostBlob } from "@/lib/apiClient";
+import { analyzeResponseSchema, type AnalyzeResponse } from "@/lib/apiSchemas";
 
 const COMMON_MATERIALS = [
   "FEP",
@@ -29,7 +30,6 @@ const PFASAnalysis = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<AnalyzeResponse | null>(null);
 
   const [formData, setFormData] = useState({
@@ -39,9 +39,37 @@ const PFASAnalysis = () => {
     time: 6
   });
 
+  const analyzeMutation = useMutation({
+    mutationFn: () =>
+      apiPost("/api/pfas/evaluate", analyzeResponseSchema, {
+        source_compound: formData.material,
+        context: {
+          incident_temp_c: formData.temperature,
+          atmosphere: formData.atmosphere,
+          residence_time_s: formData.time * 3600,
+        },
+      }),
+    onSuccess: (data) => {
+      setResults(data);
+      toast({
+        title: t('common.analysisComplete'),
+        description: t('analysis.evaluatedPathways', { compound: data.compound_evaluated, count: data.pfas_findings.length }),
+      });
+    },
+    onError: () => {
+      toast({
+        title: t('common.analysisFailed'),
+        description: t('analysis.connectionFailed'),
+        variant: "destructive",
+      });
+    },
+  });
+
   // Auto-analyze PTFE on mount
   useEffect(() => {
-    handleAnalyze();
+    void handleAnalyze();
+    // Intentionally run once on mount to pre-populate default analysis.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAnalyze = async () => {
@@ -54,59 +82,19 @@ const PFASAnalysis = () => {
       return;
     }
 
-    setIsAnalyzing(true);
-    try {
-      const response = await fetch(`${API_BASE}/api/pfas/evaluate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          source_compound: formData.material,
-          context: {
-            incident_temp_c: formData.temperature,
-            atmosphere: formData.atmosphere,
-            residence_time_s: formData.time * 3600
-          }
-        })
-      });
-
-      if (!response.ok) throw new Error("Analysis failed");
-
-      const data: AnalyzeResponse = await response.json();
-      setResults(data);
-
-      toast({
-        title: t('common.analysisComplete'),
-        description: t('analysis.evaluatedPathways', { compound: data.compound_evaluated, count: data.pfas_findings.length })
-      });
-    } catch (error) {
-      toast({
-        title: t('common.analysisFailed'),
-        description: t('analysis.connectionFailed'),
-        variant: "destructive"
-      });
-    } finally {
-      setIsAnalyzing(false);
-    }
+    await analyzeMutation.mutateAsync();
   };
 
   const handleDownloadPDF = async () => {
     try {
-      const response = await fetch(`${API_BASE}/api/pfas/analyze/pdf`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          material: formData.material,
-          conditions: {
-            temperature: formData.temperature,
-            atmosphere: formData.atmosphere,
-            time_hours: formData.time
-          }
-        })
+      const blob = await apiPostBlob("/api/pfas/analyze/pdf", {
+        material: formData.material,
+        conditions: {
+          temperature: formData.temperature,
+          atmosphere: formData.atmosphere,
+          time_hours: formData.time,
+        },
       });
-
-      if (!response.ok) throw new Error("PDF generation failed");
-
-      const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -118,7 +106,7 @@ const PFASAnalysis = () => {
         title: t('common.reportDownloaded'),
         description: t('common.pdfGeneratedSuccessfully')
       });
-    } catch (error) {
+    } catch {
       toast({
         title: t('common.downloadFailed'),
         description: t('common.couldNotGeneratePdf'),
@@ -126,6 +114,8 @@ const PFASAnalysis = () => {
       });
     }
   };
+
+  const isAnalyzing = analyzeMutation.isPending;
 
   const getTempColor = (temp: number) => {
     if (temp >= 400) return "text-red-400";

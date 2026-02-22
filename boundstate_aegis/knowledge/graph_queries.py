@@ -193,20 +193,11 @@ def get_downstream_products(
     if compound not in graph.graph:
         return []
 
-    reachable = set()
-    for node in graph.graph.nodes():
-        if node == compound:
-            continue
-        if nx.has_path(graph.graph, compound, node):
-            # Check if path is within depth limit
-            try:
-                path_length = nx.shortest_path_length(graph.graph, compound, node)
-                if path_length <= max_depth:
-                    reachable.add(node)
-            except nx.NetworkXNoPath:
-                pass
-
-    return list(reachable)
+    # Single BFS traversal with cutoff avoids O(V^2)-style repeated path checks.
+    path_lengths = nx.single_source_shortest_path_length(
+        graph.graph, compound, cutoff=max_depth
+    )
+    return [node for node in path_lengths if node != compound]
 
 
 def get_upstream_sources(
@@ -233,17 +224,7 @@ def get_upstream_sources(
 
     # Use reverse graph to find upstream
     reverse_graph = graph.graph.reverse()
-    reachable = set()
-
-    for node in graph.graph.nodes():
-        if node == compound:
-            continue
-        if nx.has_path(reverse_graph, compound, node):
-            try:
-                path_length = nx.shortest_path_length(reverse_graph, compound, node)
-                if path_length <= max_depth:
-                    reachable.add(node)
-            except nx.NetworkXNoPath:
-                pass
-
-    return list(reachable)
+    path_lengths = nx.single_source_shortest_path_length(
+        reverse_graph, compound, cutoff=max_depth
+    )
+    return [node for node in path_lengths if node != compound]

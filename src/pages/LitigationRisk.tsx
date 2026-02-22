@@ -18,7 +18,13 @@ import {
   ResponsiveContainer, ReferenceLine, Cell, ComposedChart, Line,
   Area,
 } from "recharts";
-import { API_BASE } from "@/config/api";
+import { apiGet, apiPost } from "@/lib/apiClient";
+import {
+  litigationBacktestSchema,
+  litigationBacktestsSchema,
+  litigationForecastSchema,
+  litigationPapersSchema,
+} from "@/lib/apiSchemas";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -342,16 +348,14 @@ const LitigationRisk = () => {
   const loadAvailableBacktests = async () => {
     setIsLoadingBacktests(true);
     try {
-      const res = await fetch(`${API_BASE}/api/sentinel/backtests`);
-      if (res.ok) {
-        const data = await res.json();
-        setAvailableBacktests(data.available_backtests || []);
-        // Default to PFOA if available
-        if (data.available_backtests?.some((b: BacktestSummary) => b.compound_id === "pfoa")) {
-          setSelectedCompound("pfoa");
-        } else if (data.available_backtests?.length > 0) {
-          setSelectedCompound(data.available_backtests[0].compound_id);
-        }
+      const data = await apiGet("/api/sentinel/backtests", litigationBacktestsSchema);
+      const backtests = (data.available_backtests || []) as BacktestSummary[];
+      setAvailableBacktests(backtests);
+      // Default to PFOA if available
+      if (backtests.some((b) => b.compound_id === "pfoa")) {
+        setSelectedCompound("pfoa");
+      } else if (backtests.length > 0) {
+        setSelectedCompound(backtests[0].compound_id);
       }
     } catch {
       // Fallback to default compound on error
@@ -365,13 +369,13 @@ const LitigationRisk = () => {
     setIsLoadingBacktest(true);
     try {
       // Try new sentinel endpoint first
-      let res = await fetch(`${API_BASE}/api/sentinel/backtest/${compoundId}`);
-      if (!res.ok) {
+      try {
+        const data = await apiGet(`/api/sentinel/backtest/${compoundId}`, litigationBacktestSchema);
+        setBacktest(data as BacktestData);
+      } catch {
         // Fallback to legacy litigation endpoint for genx
-        res = await fetch(`${API_BASE}/api/v1/litigation/backtest/${compoundId}`);
-      }
-      if (res.ok) {
-        setBacktest(await res.json());
+        const data = await apiGet(`/api/v1/litigation/backtest/${compoundId}`, litigationBacktestSchema);
+        setBacktest(data as BacktestData);
       }
     } catch {
       // Silently handle - UI will show empty state
@@ -384,11 +388,11 @@ const LitigationRisk = () => {
     if (!selectedCompound) return;
     setIsLoadingPapers(true);
     try {
-      const res = await fetch(`${API_BASE}/api/sentinel/backtest/${selectedCompound}/papers/${year}`);
-      if (res.ok) {
-        const data: PapersResponse = await res.json();
-        setPaperDrilldown(data);
-      }
+      const data = await apiGet(
+        `/api/sentinel/backtest/${selectedCompound}/papers/${year}`,
+        litigationPapersSchema,
+      );
+      setPaperDrilldown(data as PapersResponse);
     } catch {
       // Silently handle
     } finally {
@@ -419,26 +423,18 @@ const LitigationRisk = () => {
   const handleForecast = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/v1/litigation/forecast`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          compound: formData.compound,
-          production_volume_lbs: formData.volume,
-          exposure_pathways: formData.pathways,
-        }),
+      const data = await apiPost("/api/v1/litigation/forecast", litigationForecastSchema, {
+        compound: formData.compound,
+        production_volume_lbs: formData.volume,
+        exposure_pathways: formData.pathways,
       });
-
-      if (!res.ok) throw new Error("Forecast failed");
-
-      const data: LitigationForecast = await res.json();
       setForecast(data);
 
       toast({
         title: t('common.forecastComplete'),
         description: `${data.compound}: ${data.risk_level} risk (${(data.probability_24_months * 100).toFixed(1)}% in 24mo)`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: t('common.forecastFailed'),
         description: t('common.couldNotConnect'),

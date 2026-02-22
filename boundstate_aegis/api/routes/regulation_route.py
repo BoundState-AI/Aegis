@@ -67,9 +67,9 @@ async def get_compound_regulatory_status(compound: str) -> RegulatoryStatusRespo
             summary=get_regulatory_summary(status),
         )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Error checking regulatory status")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Regulatory status check failed")
 
 
 class DisclaimerResponse(BaseModel):

@@ -91,9 +91,9 @@ async def trace_compound_pathways(
             total_found=len(pathways),
         )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Error tracing pathways")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Pathway tracing failed")
 
 
 class CompoundListResponse(BaseModel):
@@ -121,9 +121,9 @@ async def get_downstream(
             count=len(products),
         )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Error getting downstream products")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Downstream query failed")
 
 
 @router.get("/upstream/{compound}")
@@ -143,6 +143,6 @@ async def get_upstream(
             count=len(sources),
         )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Error getting upstream sources")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Upstream query failed")

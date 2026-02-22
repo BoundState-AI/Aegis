@@ -99,9 +99,9 @@ async def generate_certificate(request: GenerateCertificateRequest):
             target_product=request.target_product,
         )
         return cert
-    except Exception as e:
+    except Exception:
         logger.exception("Failed to generate EOL certificate for %s", request.precursor)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to generate EOL certificate")
 
 
 @router.get("/technologies", response_model=List[TechnologySummary])

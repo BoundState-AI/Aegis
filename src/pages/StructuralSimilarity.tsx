@@ -14,7 +14,14 @@ import {
 } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
+import { apiGet, apiPost } from "@/lib/apiClient";
+import {
+  tier1ResultSchema,
+  tier1SummarySchema,
+  tier2CoverageSchema,
+  tier2ResultSchema,
+  tier2RulesSchema,
+} from "@/lib/apiSchemas";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -187,18 +194,18 @@ const StructuralSimilarity = () => {
   const [isLoadingRules, setIsLoadingRules] = useState(false);
 
   useEffect(() => {
-    loadSummary();
-    loadTier2Coverage();
+    void loadSummary();
+    void loadTier2Coverage();
     // Auto-query on mount
-    handleQuery();
+    void handleQuery();
+    // Intentionally run once on mount to pre-populate default query/coverage.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadSummary = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/v1/tier1/summary`);
-      if (res.ok) {
-        setSummary(await res.json());
-      }
+      const data = await apiGet("/api/v1/tier1/summary", tier1SummarySchema);
+      setSummary(data as Tier1Summary);
     } catch {
       // Engine not loaded yet — will init on first query
     }
@@ -206,10 +213,8 @@ const StructuralSimilarity = () => {
 
   const loadTier2Coverage = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/v1/tier2/coverage`);
-      if (res.ok) {
-        setTier2Coverage(await res.json());
-      }
+      const data = await apiGet("/api/v1/tier2/coverage", tier2CoverageSchema);
+      setTier2Coverage(data as Tier2Coverage);
     } catch {
       // Tier 2 engine not loaded yet
     }
@@ -219,12 +224,9 @@ const StructuralSimilarity = () => {
     if (tier2Rules.length > 0) return; // Already loaded
     setIsLoadingRules(true);
     try {
-      const res = await fetch(`${API_BASE}/api/v1/tier2/rules?limit=200`);
-      if (res.ok) {
-        const data = await res.json();
-        setTier2Rules(data.rules);
-        setTier2RulesTotal(data.total);
-      }
+      const data = await apiGet("/api/v1/tier2/rules?limit=200", tier2RulesSchema);
+      setTier2Rules(data.rules as Tier2Rule[]);
+      setTier2RulesTotal(data.total);
     } catch {
       // Tier 2 engine not available
     } finally {
@@ -249,34 +251,23 @@ const StructuralSimilarity = () => {
     try {
       // Fire Tier 1 and Tier 2 queries in parallel
       const [tier1Res, tier2Res] = await Promise.all([
-        fetch(`${API_BASE}/api/v1/tier1/query`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            smiles: smiles.trim(),
-            compound_name: compoundName.trim() || undefined,
-            top_k: 10,
-            min_similarity: 0.4,
-          }),
+        apiPost("/api/v1/tier1/query", tier1ResultSchema, {
+          smiles: smiles.trim(),
+          compound_name: compoundName.trim() || undefined,
+          top_k: 10,
+          min_similarity: 0.4,
         }),
-        fetch(`${API_BASE}/api/v1/tier2/predict`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ smiles: smiles.trim() }),
+        apiPost("/api/v1/tier2/predict", tier2ResultSchema, {
+          smiles: smiles.trim(),
         }).catch(() => null), // Tier 2 failure is non-fatal
       ]);
 
-      if (!tier1Res.ok) {
-        const err = await tier1Res.json().catch(() => ({ detail: "Unknown error" }));
-        throw new Error(err.detail || `HTTP ${tier1Res.status}`);
-      }
-
-      const data: Tier1Result = await tier1Res.json();
+      const data = tier1Res as Tier1Result;
       setResult(data);
 
       // Parse Tier 2 if available
-      if (tier2Res && tier2Res.ok) {
-        const t2data: Tier2Result = await tier2Res.json();
+      if (tier2Res) {
+        const t2data = tier2Res as Tier2Result;
         setTier2Result(t2data);
       }
 
@@ -288,7 +279,7 @@ const StructuralSimilarity = () => {
         title: t('common.analysisComplete'),
         description: `${data.query_name}: ${data.risk_signal} risk signal (${data.n_neighbors_with_pathways} neighbors with pathway data)`,
       });
-    } catch (error: any) {
+    } catch {
       toast({
         title: t('common.queryFailed'),
         description: t('tier1.couldNotConnect'),

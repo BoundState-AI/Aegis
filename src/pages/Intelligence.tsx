@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Activity, CheckCircle2, Clock3, Eye, Loader2, ShieldAlert, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { Badge } from "@/components/ui/badge";
@@ -9,40 +10,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { API_BASE } from "@/config/api";
 import { useHelpContent } from "@/config/helpContent";
-
-type SignalRow = {
-  signal_id: string;
-  detected_at?: string;
-  source_label?: string;
-  country?: string;
-  classification?: string;
-  severity?: string;
-  summary?: string;
-};
-
-type PendingItem = {
-  resolution_id: string;
-  gate_status: "PENDING_REVIEW" | "PENDING_APPROVAL" | "APPROVED" | "DISMISSED";
-  human_review_required?: boolean;
-  warnings?: string[];
-  summary?: {
-    compound?: string;
-    critical_flags?: number;
-  };
-};
-
-type ResolveResponse = {
-  resolution_id: string;
-  gate_status: string;
-  warnings?: string[];
-  result: {
-    query_compound?: { preferred_name?: string; cas?: string };
-    total_exposure?: { assertions_triggered?: number; trajectory?: string };
-    threat_flags?: Array<{ flag_type?: string; severity?: string }>;
-  };
-};
+import { apiGet, apiPost } from "@/lib/apiClient";
+import {
+  clearDemoSchema,
+  gateActionSchema,
+  pendingListSchema,
+  resolveResponseSchema,
+  seedDemoSchema,
+  signalListSchema,
+  type PendingItem,
+  type ResolveResponse,
+  type SignalRow,
+} from "@/lib/apiSchemas";
 
 export type IntelligenceTabKey = "signals" | "resolver" | "queue";
 
@@ -53,7 +33,8 @@ interface IntelligenceProps {
   hideSummaryCards?: boolean;
 }
 
-const API_KEY = import.meta.env.VITE_AEGIS_API_KEY || import.meta.env.VITE_AEGIS_MONITOR_API_KEY || "";
+const QUERY_KEY_SIGNALS = ["monitorSignals"] as const;
+const QUERY_KEY_PENDING = ["resolverPending"] as const;
 
 const Intelligence = ({
   embedded = false,
@@ -64,86 +45,39 @@ const Intelligence = ({
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<IntelligenceTabKey>(singleTab || initialTab);
 
-  const [signals, setSignals] = useState<SignalRow[]>([]);
-  const [pending, setPending] = useState<PendingItem[]>([]);
-  const [loadingSignals, setLoadingSignals] = useState(false);
-  const [loadingPending, setLoadingPending] = useState(false);
-  const [resolving, setResolving] = useState(false);
-  const [seedAction, setSeedAction] = useState<"seed" | "clear" | null>(null);
   const [compound, setCompound] = useState("Opteon 1234yf");
   const [resolverResult, setResolverResult] = useState<ResolveResponse | null>(null);
   const [justificationById, setJustificationById] = useState<Record<string, string>>({});
   const [actingId, setActingId] = useState<string | null>(null);
+  const [seedAction, setSeedAction] = useState<"seed" | "clear" | null>(null);
 
-  const headers = useMemo(
-    () => ({
-      ...(API_KEY ? { "X-AEGIS-API-Key": API_KEY, Authorization: `Bearer ${API_KEY}` } : {}),
-      "Content-Type": "application/json",
-    }),
-    [],
-  );
+  const signalsQuery = useQuery({
+    queryKey: QUERY_KEY_SIGNALS,
+    queryFn: async () => {
+      const data = await apiGet("/api/v1/monitor/signals?limit=25", signalListSchema);
+      return data.signals;
+    },
+    staleTime: 30_000,
+    retry: 1,
+  });
 
-  const loadSignals = async () => {
-    setLoadingSignals(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/monitor/signals?limit=25`, { headers });
-      if (!res.ok) throw new Error(`signals ${res.status}`);
-      const data = await res.json();
-      setSignals((data?.signals || []) as SignalRow[]);
-    } catch {
-      toast({
-        title: t("intelligence.toasts.signalsUnavailableTitle"),
-        description: t("intelligence.toasts.signalsUnavailableDescription"),
-        variant: "destructive",
-      });
-    } finally {
-      setLoadingSignals(false);
-    }
-  };
+  const pendingQuery = useQuery({
+    queryKey: QUERY_KEY_PENDING,
+    queryFn: async () => {
+      const data = await apiGet("/api/v1/resolver/pending?limit=100", pendingListSchema);
+      return data.items;
+    },
+    staleTime: 15_000,
+    retry: 1,
+  });
 
-  const loadPending = async () => {
-    setLoadingPending(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/resolver/pending?limit=100`, { headers });
-      if (!res.ok) throw new Error(`pending ${res.status}`);
-      const data = await res.json();
-      setPending((data?.items || []) as PendingItem[]);
-    } catch {
-      toast({
-        title: t("intelligence.toasts.queueUnavailableTitle"),
-        description: t("intelligence.toasts.queueUnavailableDescription"),
-        variant: "destructive",
-      });
-    } finally {
-      setLoadingPending(false);
-    }
-  };
-
-  useEffect(() => {
-    void loadSignals();
-    void loadPending();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (singleTab) {
-      setActiveTab(singleTab);
-    }
-  }, [singleTab]);
-
-  const runResolve = async () => {
-    if (!compound.trim()) return;
-    setResolving(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/resolver/resolve`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ compound: compound.trim() }),
-      });
-      if (!res.ok) throw new Error(`resolve ${res.status}`);
-      const data = (await res.json()) as ResolveResponse;
+  const resolveMutation = useMutation({
+    mutationFn: async (rawCompound: string) =>
+      apiPost("/api/v1/resolver/resolve", resolveResponseSchema, { compound: rawCompound }),
+    onSuccess: (data) => {
       setResolverResult(data);
       toast({
         title: t("intelligence.toasts.resolverQueuedTitle"),
@@ -152,71 +86,155 @@ const Intelligence = ({
           status: data.gate_status,
         }),
       });
-      void loadPending();
-    } catch {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY_PENDING });
+    },
+    onError: () => {
       toast({
         title: t("intelligence.toasts.resolverFailedTitle"),
         description: t("intelligence.toasts.resolverFailedDescription"),
         variant: "destructive",
       });
-    } finally {
-      setResolving(false);
-    }
-  };
+    },
+  });
 
-  const runSeedDemoSignals = async () => {
-    setSeedAction("seed");
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/monitor/seed-demo`, {
-        method: "POST",
-        headers,
-      });
-      if (!res.ok) throw new Error(`seed ${res.status}`);
-      const data = await res.json();
+  const seedDemoMutation = useMutation({
+    mutationFn: () => apiPost("/api/v1/monitor/seed-demo", seedDemoSchema, {}),
+    onSuccess: (data) => {
       toast({
         title: t("intelligence.toasts.seedDemoSuccessTitle"),
         description: t("intelligence.toasts.seedDemoSuccessDescription", {
-          inserted: data?.inserted ?? 0,
-          skipped: data?.skipped ?? 0,
+          inserted: data.inserted,
+          skipped: data.skipped,
         }),
       });
-      void loadSignals();
-    } catch {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY_SIGNALS });
+    },
+    onError: () => {
       toast({
         title: t("intelligence.toasts.seedDemoFailedTitle"),
         description: t("intelligence.toasts.seedDemoFailedDescription"),
         variant: "destructive",
       });
-    } finally {
+    },
+    onSettled: () => {
       setSeedAction(null);
-    }
-  };
+    },
+  });
 
-  const runClearDemoSignals = async () => {
-    setSeedAction("clear");
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/monitor/seed-demo/clear`, {
-        method: "POST",
-        headers,
-      });
-      if (!res.ok) throw new Error(`clear ${res.status}`);
-      const data = await res.json();
+  const clearDemoMutation = useMutation({
+    mutationFn: () => apiPost("/api/v1/monitor/seed-demo/clear", clearDemoSchema, {}),
+    onSuccess: (data) => {
       toast({
         title: t("intelligence.toasts.clearDemoSuccessTitle"),
         description: t("intelligence.toasts.clearDemoSuccessDescription", {
-          deleted: data?.deleted ?? 0,
+          deleted: data.deleted,
         }),
       });
-      void loadSignals();
-    } catch {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY_SIGNALS });
+    },
+    onError: () => {
       toast({
         title: t("intelligence.toasts.clearDemoFailedTitle"),
         description: t("intelligence.toasts.clearDemoFailedDescription"),
         variant: "destructive",
       });
-    } finally {
+    },
+    onSettled: () => {
       setSeedAction(null);
+    },
+  });
+
+  const gateActionMutation = useMutation({
+    mutationFn: async ({
+      endpoint,
+      resolutionId,
+      action,
+      justification,
+    }: {
+      endpoint: "/api/v1/resolver/review" | "/api/v1/resolver/approve";
+      resolutionId: string;
+      action: "confirm" | "dismiss" | "escalate" | "approve" | "hold";
+      justification: string;
+    }) =>
+      apiPost(endpoint, gateActionSchema, {
+        resolution_id: resolutionId,
+        action,
+        justification,
+      }),
+    onSuccess: (_data, vars) => {
+      toast({
+        title: t("intelligence.toasts.queueUpdatedTitle"),
+        description: t("intelligence.toasts.queueUpdatedDescription", {
+          id: vars.resolutionId,
+          action: vars.action,
+        }),
+      });
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEY_PENDING });
+    },
+    onError: (_error, vars) => {
+      toast({
+        title: t("intelligence.toasts.gateActionFailedTitle"),
+        description: t("intelligence.toasts.gateActionFailedDescription", {
+          id: vars.resolutionId,
+          action: vars.action,
+        }),
+        variant: "destructive",
+      });
+    },
+    onSettled: () => {
+      setActingId(null);
+    },
+  });
+
+  useEffect(() => {
+    if (signalsQuery.isError) {
+      toast({
+        title: t("intelligence.toasts.signalsUnavailableTitle"),
+        description: t("intelligence.toasts.signalsUnavailableDescription"),
+        variant: "destructive",
+      });
     }
+    // Intentionally driven by React Query state transition.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [signalsQuery.errorUpdatedAt, signalsQuery.isError]);
+
+  useEffect(() => {
+    if (pendingQuery.isError) {
+      toast({
+        title: t("intelligence.toasts.queueUnavailableTitle"),
+        description: t("intelligence.toasts.queueUnavailableDescription"),
+        variant: "destructive",
+      });
+    }
+    // Intentionally driven by React Query state transition.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingQuery.errorUpdatedAt, pendingQuery.isError]);
+
+  useEffect(() => {
+    if (singleTab) {
+      setActiveTab(singleTab);
+    }
+  }, [singleTab]);
+
+  const signals: SignalRow[] = signalsQuery.data ?? [];
+  const pending: PendingItem[] = pendingQuery.data ?? [];
+  const loadingSignals = signalsQuery.isFetching;
+  const loadingPending = pendingQuery.isFetching;
+
+  const runResolve = async () => {
+    const normalized = compound.trim();
+    if (!normalized) return;
+    await resolveMutation.mutateAsync(normalized);
+  };
+
+  const runSeedDemoSignals = async () => {
+    setSeedAction("seed");
+    await seedDemoMutation.mutateAsync();
+  };
+
+  const runClearDemoSignals = async () => {
+    setSeedAction("clear");
+    await clearDemoMutation.mutateAsync();
   };
 
   const actOnResolution = async (
@@ -225,8 +243,7 @@ const Intelligence = ({
   ) => {
     const justification = (justificationById[item.resolution_id] || "").trim();
     const isReview = item.gate_status === "PENDING_REVIEW";
-    const needsJustification = action === "dismiss";
-    if (needsJustification && !justification) {
+    if (action === "dismiss" && !justification) {
       toast({
         title: t("intelligence.toasts.justificationRequiredTitle"),
         description: t("intelligence.toasts.justificationRequiredDescription"),
@@ -236,38 +253,12 @@ const Intelligence = ({
     }
 
     setActingId(item.resolution_id);
-    try {
-      const endpoint = isReview ? "/api/v1/resolver/review" : "/api/v1/resolver/approve";
-      const res = await fetch(`${API_BASE}${endpoint}`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          resolution_id: item.resolution_id,
-          action,
-          justification,
-        }),
-      });
-      if (!res.ok) throw new Error(`gate ${res.status}`);
-      toast({
-        title: t("intelligence.toasts.queueUpdatedTitle"),
-        description: t("intelligence.toasts.queueUpdatedDescription", {
-          id: item.resolution_id,
-          action,
-        }),
-      });
-      void loadPending();
-    } catch {
-      toast({
-        title: t("intelligence.toasts.gateActionFailedTitle"),
-        description: t("intelligence.toasts.gateActionFailedDescription", {
-          id: item.resolution_id,
-          action,
-        }),
-        variant: "destructive",
-      });
-    } finally {
-      setActingId(null);
-    }
+    await gateActionMutation.mutateAsync({
+      endpoint: isReview ? "/api/v1/resolver/review" : "/api/v1/resolver/approve",
+      resolutionId: item.resolution_id,
+      action,
+      justification,
+    });
   };
 
   const content = (
@@ -313,185 +304,185 @@ const Intelligence = ({
           </TabsList>
         )}
 
-          <TabsContent value="signals">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>{t("intelligence.signals.title")}</CardTitle>
-                    <CardDescription>{t("intelligence.signals.description")}</CardDescription>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={() => void runSeedDemoSignals()} disabled={seedAction !== null}>
-                      {seedAction === "seed" ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
-                      {t("intelligence.signals.actions.seedDemo")}
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => void runClearDemoSignals()} disabled={seedAction !== null}>
-                      {seedAction === "clear" ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
-                      {t("intelligence.signals.actions.clearDemo")}
-                    </Button>
-                    <Button variant="outline" onClick={() => void loadSignals()} disabled={loadingSignals}>
-                      {loadingSignals ? <Loader2 className="h-4 w-4 animate-spin" /> : t("intelligence.refresh")}
-                    </Button>
-                  </div>
+        <TabsContent value="signals">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>{t("intelligence.signals.title")}</CardTitle>
+                  <CardDescription>{t("intelligence.signals.description")}</CardDescription>
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {signals.map((s) => (
-                  <div key={s.signal_id} className="border rounded-md p-3 bg-white">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <Badge variant="outline">{s.severity || t("common.unknown")}</Badge>
-                      <Badge variant="secondary">{s.classification || t("intelligence.signals.unclassified")}</Badge>
-                      <span className="text-xs text-gray-500">{s.country || t("common.notAvailable")}</span>
-                    </div>
-                    <div className="text-sm font-medium text-chemours-dark">
-                      {s.source_label || t("intelligence.signals.unknownSource")}
-                    </div>
-                    <div className="text-sm text-gray-600">{s.summary || t("intelligence.signals.noSummary")}</div>
-                    <div className="text-xs text-gray-500 mt-1">{s.detected_at || ""}</div>
-                  </div>
-                ))}
-                {!loadingSignals && signals.length === 0 && (
-                  <div className="text-sm text-gray-500">{t("intelligence.signals.empty")}</div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="resolver">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("intelligence.resolver.title")}</CardTitle>
-                <CardDescription>{t("intelligence.resolver.description")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex gap-3">
-                  <Input
-                    value={compound}
-                    onChange={(e) => setCompound(e.target.value)}
-                    placeholder={t("intelligence.resolver.inputPlaceholder")}
-                  />
-                  <Button onClick={runResolve} disabled={resolving}>
-                    {resolving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Sparkles className="h-4 w-4 mr-2" />}
-                    {t("intelligence.resolver.run")}
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={() => void runSeedDemoSignals()} disabled={seedAction !== null}>
+                    {seedAction === "seed" ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+                    {t("intelligence.signals.actions.seedDemo")}
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => void runClearDemoSignals()} disabled={seedAction !== null}>
+                    {seedAction === "clear" ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+                    {t("intelligence.signals.actions.clearDemo")}
+                  </Button>
+                  <Button variant="outline" onClick={() => void signalsQuery.refetch()} disabled={loadingSignals}>
+                    {loadingSignals ? <Loader2 className="h-4 w-4 animate-spin" /> : t("intelligence.refresh")}
                   </Button>
                 </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {signals.map((s) => (
+                <div key={s.signal_id} className="border rounded-md p-3 bg-white">
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <Badge variant="outline">{s.severity || t("common.unknown")}</Badge>
+                    <Badge variant="secondary">{s.classification || t("intelligence.signals.unclassified")}</Badge>
+                    <span className="text-xs text-gray-500">{s.country || t("common.notAvailable")}</span>
+                  </div>
+                  <div className="text-sm font-medium text-chemours-dark">
+                    {s.source_label || t("intelligence.signals.unknownSource")}
+                  </div>
+                  <div className="text-sm text-gray-600">{s.summary || t("intelligence.signals.noSummary")}</div>
+                  <div className="text-xs text-gray-500 mt-1">{s.detected_at || ""}</div>
+                </div>
+              ))}
+              {!loadingSignals && signals.length === 0 && (
+                <div className="text-sm text-gray-500">{t("intelligence.signals.empty")}</div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-                {resolverResult && (
-                  <div className="border rounded-md p-4 bg-white space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge>{resolverResult.gate_status}</Badge>
-                      <span className="text-xs text-gray-500">{resolverResult.resolution_id}</span>
+        <TabsContent value="resolver">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("intelligence.resolver.title")}</CardTitle>
+              <CardDescription>{t("intelligence.resolver.description")}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex gap-3">
+                <Input
+                  value={compound}
+                  onChange={(e) => setCompound(e.target.value)}
+                  placeholder={t("intelligence.resolver.inputPlaceholder")}
+                />
+                <Button onClick={() => void runResolve()} disabled={resolveMutation.isPending}>
+                  {resolveMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Sparkles className="h-4 w-4 mr-2" />}
+                  {t("intelligence.resolver.run")}
+                </Button>
+              </div>
+
+              {resolverResult && (
+                <div className="border rounded-md p-4 bg-white space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Badge>{resolverResult.gate_status}</Badge>
+                    <span className="text-xs text-gray-500">{resolverResult.resolution_id}</span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-medium">{t("intelligence.resolver.compound")}:</span>{" "}
+                    {resolverResult.result?.query_compound?.preferred_name || t("common.notAvailable")} ({resolverResult.result?.query_compound?.cas || t("intelligence.resolver.noCas")})
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-medium">{t("intelligence.resolver.assertions")}:</span>{" "}
+                    {resolverResult.result?.total_exposure?.assertions_triggered ?? 0}
+                    {" · "}
+                    <span className="font-medium">{t("intelligence.resolver.trajectory")}:</span>{" "}
+                    {resolverResult.result?.total_exposure?.trajectory || t("common.notAvailable")}
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {(resolverResult.result?.threat_flags || []).map((f, i) => (
+                      <Badge key={`${f.flag_type || "flag"}-${i}`} variant="outline">
+                        {f.flag_type || t("intelligence.resolver.flag")}:{f.severity || t("common.unknown")}
+                      </Badge>
+                    ))}
+                  </div>
+                  {(resolverResult.warnings || []).length > 0 && (
+                    <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+                      {(resolverResult.warnings || []).join(" | ")}
                     </div>
-                    <div className="text-sm">
-                      <span className="font-medium">{t("intelligence.resolver.compound")}:</span>{" "}
-                      {resolverResult.result?.query_compound?.preferred_name || t("common.notAvailable")} ({resolverResult.result?.query_compound?.cas || t("intelligence.resolver.noCas")})
-                    </div>
-                    <div className="text-sm">
-                      <span className="font-medium">{t("intelligence.resolver.assertions")}:</span>{" "}
-                      {resolverResult.result?.total_exposure?.assertions_triggered ?? 0}
-                      {" · "}
-                      <span className="font-medium">{t("intelligence.resolver.trajectory")}:</span>{" "}
-                      {resolverResult.result?.total_exposure?.trajectory || t("common.notAvailable")}
-                    </div>
-                    <div className="flex gap-2 flex-wrap">
-                      {(resolverResult.result?.threat_flags || []).map((f, i) => (
-                        <Badge key={`${f.flag_type || "flag"}-${i}`} variant="outline">
-                          {f.flag_type || t("intelligence.resolver.flag")}:{f.severity || t("common.unknown")}
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="queue">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>{t("intelligence.queue.title")}</CardTitle>
+                  <CardDescription>{t("intelligence.queue.description")}</CardDescription>
+                </div>
+                <Button variant="outline" onClick={() => void pendingQuery.refetch()} disabled={loadingPending}>
+                  {loadingPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t("intelligence.refresh")}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {pending.map((item) => {
+                const isReview = item.gate_status === "PENDING_REVIEW";
+                const busy = actingId === item.resolution_id || gateActionMutation.isPending;
+                return (
+                  <div key={item.resolution_id} className="border rounded-md p-3 bg-white space-y-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Badge>{item.gate_status}</Badge>
+                      {item.human_review_required && (
+                        <Badge variant="destructive" className="flex items-center gap-1">
+                          <ShieldAlert className="h-3 w-3" /> {t("intelligence.queue.reviewRequired")}
                         </Badge>
-                      ))}
+                      )}
+                      <span className="text-xs text-gray-500">{item.resolution_id}</span>
                     </div>
-                    {(resolverResult.warnings || []).length > 0 && (
+                    <div className="text-sm text-gray-700">
+                      {(item.summary?.compound || t("intelligence.queue.unknownCompound"))} · {t("intelligence.queue.criticalFlags")}:{" "}
+                      {item.summary?.critical_flags ?? 0}
+                    </div>
+                    {(item.warnings || []).length > 0 && (
                       <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
-                        {(resolverResult.warnings || []).join(" | ")}
+                        {(item.warnings || []).join(" | ")}
                       </div>
                     )}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="queue">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>{t("intelligence.queue.title")}</CardTitle>
-                    <CardDescription>{t("intelligence.queue.description")}</CardDescription>
-                  </div>
-                  <Button variant="outline" onClick={() => void loadPending()} disabled={loadingPending}>
-                    {loadingPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t("intelligence.refresh")}
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {pending.map((item) => {
-                  const isReview = item.gate_status === "PENDING_REVIEW";
-                  const busy = actingId === item.resolution_id;
-                  return (
-                    <div key={item.resolution_id} className="border rounded-md p-3 bg-white space-y-2">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <Badge>{item.gate_status}</Badge>
-                        {item.human_review_required && (
-                          <Badge variant="destructive" className="flex items-center gap-1">
-                            <ShieldAlert className="h-3 w-3" /> {t("intelligence.queue.reviewRequired")}
-                          </Badge>
-                        )}
-                        <span className="text-xs text-gray-500">{item.resolution_id}</span>
-                      </div>
-                      <div className="text-sm text-gray-700">
-                        {(item.summary?.compound || t("intelligence.queue.unknownCompound"))} · {t("intelligence.queue.criticalFlags")}:{" "}
-                        {item.summary?.critical_flags ?? 0}
-                      </div>
-                      {(item.warnings || []).length > 0 && (
-                        <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
-                          {(item.warnings || []).join(" | ")}
-                        </div>
+                    <Input
+                      value={justificationById[item.resolution_id] || ""}
+                      onChange={(e) =>
+                        setJustificationById((prev) => ({
+                          ...prev,
+                          [item.resolution_id]: e.target.value,
+                        }))
+                      }
+                      placeholder={t("intelligence.queue.justificationPlaceholder")}
+                    />
+                    <div className="flex gap-2 flex-wrap">
+                      {isReview ? (
+                        <>
+                          <Button size="sm" onClick={() => void actOnResolution(item, "confirm")} disabled={busy}>
+                            <CheckCircle2 className="h-4 w-4 mr-1" /> {t("intelligence.queue.actions.confirm")}
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => void actOnResolution(item, "escalate")} disabled={busy}>
+                            {t("intelligence.queue.actions.escalate")}
+                          </Button>
+                          <Button size="sm" variant="destructive" onClick={() => void actOnResolution(item, "dismiss")} disabled={busy}>
+                            {t("intelligence.queue.actions.dismiss")}
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button size="sm" onClick={() => void actOnResolution(item, "approve")} disabled={busy}>
+                            <CheckCircle2 className="h-4 w-4 mr-1" /> {t("intelligence.queue.actions.approve")}
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => void actOnResolution(item, "hold")} disabled={busy}>
+                            {t("intelligence.queue.actions.hold")}
+                          </Button>
+                        </>
                       )}
-                      <Input
-                        value={justificationById[item.resolution_id] || ""}
-                        onChange={(e) =>
-                          setJustificationById((prev) => ({
-                            ...prev,
-                            [item.resolution_id]: e.target.value,
-                          }))
-                        }
-                        placeholder={t("intelligence.queue.justificationPlaceholder")}
-                      />
-                      <div className="flex gap-2 flex-wrap">
-                        {isReview ? (
-                          <>
-                            <Button size="sm" onClick={() => void actOnResolution(item, "confirm")} disabled={busy}>
-                              <CheckCircle2 className="h-4 w-4 mr-1" /> {t("intelligence.queue.actions.confirm")}
-                            </Button>
-                            <Button size="sm" variant="outline" onClick={() => void actOnResolution(item, "escalate")} disabled={busy}>
-                              {t("intelligence.queue.actions.escalate")}
-                            </Button>
-                            <Button size="sm" variant="destructive" onClick={() => void actOnResolution(item, "dismiss")} disabled={busy}>
-                              {t("intelligence.queue.actions.dismiss")}
-                            </Button>
-                          </>
-                        ) : (
-                          <>
-                            <Button size="sm" onClick={() => void actOnResolution(item, "approve")} disabled={busy}>
-                              <CheckCircle2 className="h-4 w-4 mr-1" /> {t("intelligence.queue.actions.approve")}
-                            </Button>
-                            <Button size="sm" variant="outline" onClick={() => void actOnResolution(item, "hold")} disabled={busy}>
-                              {t("intelligence.queue.actions.hold")}
-                            </Button>
-                          </>
-                        )}
-                      </div>
                     </div>
-                  );
-                })}
-                {!loadingPending && pending.length === 0 && (
-                  <div className="text-sm text-gray-500">{t("intelligence.queue.empty")}</div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  </div>
+                );
+              })}
+              {!loadingPending && pending.length === 0 && (
+                <div className="text-sm text-gray-500">{t("intelligence.queue.empty")}</div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
     </div>
   );

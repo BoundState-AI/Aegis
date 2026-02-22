@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, BookOpen, Link2, ExternalLink, Database, FileText } from "lucide-react";
 import ChemoursHeader from "@/components/layout/ChemoursHeader";
 import { useHelpContent } from "@/config/helpContent";
-import { API_BASE } from "@/config/api";
+import { apiGet } from "@/lib/apiClient";
+import {
+  evidenceChainSchema,
+  evidenceSourceStatsSchema,
+  type EvidenceChainResponse,
+  type EvidenceSourceStats,
+} from "@/lib/apiSchemas";
 
 interface EvidenceItem {
   source: string;
@@ -21,76 +28,62 @@ interface EvidenceItem {
   compound: string;
 }
 
-interface EvidenceChainResponse {
-  material: string;
-  total_citations: number;
+interface EvidenceViewResponse extends EvidenceChainResponse {
   evidence_chain: EvidenceItem[];
-  confidence_score: number;
 }
 
-interface SourceStats {
-  total_papers: number;
-  extraction_method: string;
-  sources: Array<{ type: string; count: number }>;
-  coverage: {
-    fluoropolymers: number;
-    pfas_endpoints: number;
-    transformations: number;
-  };
-}
+interface SourceStats extends EvidenceSourceStats {}
 
 const EvidenceChain = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
-  const [isLoading, setIsLoading] = useState(false);
   const [material, setMaterial] = useState("PTFE");
   const [maxCitations, setMaxCitations] = useState(20);
-  const [evidence, setEvidence] = useState<EvidenceChainResponse | null>(null);
-  const [sourceStats, setSourceStats] = useState<SourceStats | null>(null);
+  const [evidence, setEvidence] = useState<EvidenceViewResponse | null>(null);
 
-  useEffect(() => {
-    loadSourceStats();
-    // Auto-load PTFE evidence on mount
-    handleSearch();
-  }, []);
+  const sourceStatsQuery = useQuery({
+    queryKey: ["evidenceSourceStats"],
+    queryFn: () => apiGet("/api/v1/evidence/sources", evidenceSourceStatsSchema),
+    staleTime: 60_000,
+    retry: 1,
+  });
 
-  const loadSourceStats = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/evidence/sources`);
-      if (res.ok) {
-        setSourceStats(await res.json());
-      }
-    } catch {
-      // Silently handle - stats are optional enhancement
-    }
-  };
-
-  const handleSearch = async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(
-        `${API_BASE}/api/v1/evidence/chain?material=${material}&max_citations=${maxCitations}`
-      );
-      if (!res.ok) throw new Error("Search failed");
-
-      const data: EvidenceChainResponse = await res.json();
-      setEvidence(data);
-
+  const evidenceMutation = useMutation({
+    mutationFn: () =>
+      apiGet(
+        `/api/v1/evidence/chain?material=${encodeURIComponent(material)}&max_citations=${maxCitations}`,
+        evidenceChainSchema,
+      ),
+    onSuccess: (data) => {
+      const typed = data as EvidenceViewResponse;
+      setEvidence(typed);
       toast({
         title: t('common.evidenceRetrieved'),
-        description: `Found ${data.total_citations} citations for ${data.material}`,
+        description: `Found ${typed.total_citations} citations for ${typed.material}`,
       });
-    } catch (error) {
+    },
+    onError: () => {
       toast({
         title: t('common.searchFailed'),
         description: "Could not retrieve evidence",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
-    }
+    },
+  });
+
+  useEffect(() => {
+    // Auto-load PTFE evidence on mount
+    void handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSearch = async () => {
+    await evidenceMutation.mutateAsync();
   };
+
+  const sourceStats: SourceStats | null = sourceStatsQuery.data ?? null;
+  const isLoading = evidenceMutation.isPending;
 
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 0.9) return "text-green-400";

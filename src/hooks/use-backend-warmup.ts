@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { API_BASE } from '@/config/api';
+import { apiGet } from '@/lib/apiClient';
+import { healthSchema } from '@/lib/apiSchemas';
 
 // Railway idles after ~5 minutes of inactivity, so ping every 4 minutes
 const WARMUP_INTERVAL_MS = 4 * 60 * 1000;
@@ -14,7 +15,7 @@ export function useBackendWarmup() {
   useEffect(() => {
     const ping = async () => {
       try {
-        await fetch(`${API_BASE}/health`, { method: 'GET' });
+        await apiGet('/health', healthSchema);
       } catch {
         // Silently ignore - warmup is best-effort
       }

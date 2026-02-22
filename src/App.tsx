@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import NotFound from "./pages/NotFound";
@@ -20,11 +20,10 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
 import { Analytics } from "@vercel/analytics/react";
-import { API_BASE } from "./config/api";
+import { apiGet } from "./lib/apiClient";
+import { pendingListSchema } from "./lib/apiSchemas";
 
 const queryClient = new QueryClient();
-const NAV_API_KEY = import.meta.env.VITE_AEGIS_API_KEY || import.meta.env.VITE_AEGIS_MONITOR_API_KEY || "";
-
 const navItems = [
   { path: "/", labelKey: "nav.fateExplorer", icon: Network },
   { path: "/litigation", labelKey: "nav.sentinel", icon: Scale },
@@ -53,46 +52,20 @@ const Disclaimer = () => {
 const Navigation = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const [pendingReviewCount, setPendingReviewCount] = useState(0);
-  const authHeaders = useMemo(
-    () => ({
-      ...(NAV_API_KEY ? { "X-AEGIS-API-Key": NAV_API_KEY, Authorization: `Bearer ${NAV_API_KEY}` } : {}),
-    }),
-    [],
-  );
+  const pendingQuery = useQuery({
+    queryKey: ["resolverPendingNav"],
+    queryFn: () => apiGet("/api/v1/resolver/pending?limit=100", pendingListSchema),
+    staleTime: 30_000,
+    refetchInterval: 60_000,
+    retry: 1,
+  });
 
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadPending = async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/v1/resolver/pending?limit=100`, { headers: authHeaders });
-        if (!res.ok) return;
-        const payload = await res.json();
-        const items = Array.isArray(payload?.items) ? payload.items : [];
-        const pending = items.filter(
-          (row: { gate_status?: string }) => row.gate_status === "PENDING_REVIEW" || row.gate_status === "PENDING_APPROVAL",
-        ).length;
-        if (!cancelled) {
-          setPendingReviewCount(pending);
-        }
-      } catch {
-        if (!cancelled) {
-          setPendingReviewCount(0);
-        }
-      }
-    };
-
-    void loadPending();
-    const timer = window.setInterval(() => {
-      void loadPending();
-    }, 60000);
-
-    return () => {
-      cancelled = true;
-      window.clearInterval(timer);
-    };
-  }, [authHeaders]);
+  const pendingReviewCount = useMemo(() => {
+    const items = pendingQuery.data?.items || [];
+    return items.filter(
+      (row) => row.gate_status === "PENDING_REVIEW" || row.gate_status === "PENDING_APPROVAL",
+    ).length;
+  }, [pendingQuery.data]);
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
