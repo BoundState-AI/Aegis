@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import NotFound from "./pages/NotFound";
 import PFASAnalysis from "./pages/PFASAnalysis";
 import FateExplorer from "./pages/FateExplorer";
+import AegisLanding from "./pages/AegisLanding";
 import LitigationRisk from "./pages/LitigationRisk";
 import RegulatoryCompliance from "./pages/RegulatoryCompliance";
 import PortfolioAssessment from "./pages/PortfolioAssessment";
@@ -25,7 +26,7 @@ import { pendingListSchema } from "./lib/apiSchemas";
 
 const queryClient = new QueryClient();
 const navItems = [
-  { path: "/", labelKey: "nav.fateExplorer", icon: Network },
+  { path: "/fate-explorer", labelKey: "nav.fateExplorer", icon: Network },
   { path: "/litigation", labelKey: "nav.sentinel", icon: Scale },
   { path: "/regulatory", labelKey: "nav.regulatory", icon: Globe },
   { path: "/portfolio", labelKey: "nav.portfolio", icon: Package },
@@ -36,7 +37,7 @@ const navItems = [
 ];
 
 // Routes that should NOT show the platform navigation
-const standaloneRoutes: string[] = [];
+const standaloneRoutes: string[] = ["/"];
 
 const Disclaimer = () => {
   const { t } = useTranslation();
@@ -118,7 +119,8 @@ const AppContent = () => {
   return (
     <div className={isStandalone ? '' : 'pb-20'}>
       <Routes>
-        <Route path="/" element={<FateExplorer />} />
+        <Route path="/" element={<AegisLanding />} />
+        <Route path="/fate-explorer" element={<FateExplorer />} />
         <Route path="/litigation" element={<LitigationRisk />} />
         <Route path="/intelligence" element={<Navigate to="/regulatory?view=signals" replace />} />
         <Route path="/regulatory" element={<RegulatoryCompliance />} />
