@@ -1,11 +1,7 @@
 import { z, type ZodType } from "zod";
 
 import { API_BASE } from "@/config/api";
-
-const API_KEY =
-  import.meta.env.VITE_AEGIS_API_KEY ||
-  import.meta.env.VITE_AEGIS_MONITOR_API_KEY ||
-  "";
+import { getActiveApiKey } from "@/lib/auth";
 
 const DEFAULT_TIMEOUT_MS = 30_000;
 
@@ -48,10 +44,11 @@ type RequestOptions = {
 };
 
 function buildHeaders(extraHeaders?: Record<string, string>): Record<string, string> {
+  const apiKey = getActiveApiKey();
   const base: Record<string, string> = {};
-  if (API_KEY) {
-    base["X-AEGIS-API-Key"] = API_KEY;
-    base.Authorization = `Bearer ${API_KEY}`;
+  if (apiKey) {
+    base["X-AEGIS-API-Key"] = apiKey;
+    base.Authorization = `Bearer ${apiKey}`;
   }
   return { ...base, ...(extraHeaders || {}) };
 }

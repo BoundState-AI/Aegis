@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import NotFound from "./pages/NotFound";
 import PFASAnalysis from "./pages/PFASAnalysis";
@@ -15,14 +15,16 @@ import PortfolioAssessment from "./pages/PortfolioAssessment";
 import ExecutiveReports from "./pages/ExecutiveReports";
 import EvidenceChain from "./pages/EvidenceChain";
 import StructuralSimilarity from "./pages/StructuralSimilarity";
+import Login from "./pages/Login";
 // import Ensurance from "./pages/Ensurance";
-import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint } from "lucide-react";
+import { Scale, Globe, Package, FileText, BookOpen, FlaskConical, Network, Fingerprint, LogOut } from "lucide-react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { LanguageToggle } from "./components/ui/language-toggle";
 import { useBackendWarmup } from "./hooks/use-backend-warmup";
 import { Analytics } from "@vercel/analytics/react";
 import { apiGet } from "./lib/apiClient";
 import { pendingListSchema } from "./lib/apiSchemas";
+import { clearAuthSession, isAuthenticated } from "./lib/auth";
 
 const queryClient = new QueryClient();
 const navItems = [
@@ -36,22 +38,21 @@ const navItems = [
   { path: "/tier1", labelKey: "nav.tier1", icon: Fingerprint },
 ];
 
-// Routes that should NOT show the platform navigation
-const standaloneRoutes: string[] = ["/"];
+const standaloneRoutes = new Set(["/", "/login"]);
+const publicRoutes = new Set(["/login"]);
 
 const Disclaimer = () => {
   const { t } = useTranslation();
   return (
     <div className="container mx-auto px-4 py-2 text-left">
-      <p className="text-xs text-gray-400 italic">
-        {t('nav.disclaimer')}
-      </p>
+      <p className="text-xs text-gray-400 italic">{t("nav.disclaimer")}</p>
     </div>
   );
 };
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const pendingQuery = useQuery({
     queryKey: ["resolverPendingNav"],
@@ -69,11 +70,11 @@ const Navigation = () => {
   }, [pendingQuery.data]);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white shadow-lg">
       <Disclaimer />
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-2">
-          <div className="w-24 flex items-center">
+          <div className="flex w-24 items-center">
             <LanguageToggle />
           </div>
           <div className="flex items-center gap-1 overflow-x-auto">
@@ -84,24 +85,36 @@ const Navigation = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`relative flex flex-col items-center px-3 py-2 rounded-lg transition-colors ${
+                  className={`relative flex flex-col items-center rounded-lg px-3 py-2 transition-colors ${
                     isActive
                       ? "bg-gradient-to-r from-chemours-red/10 to-chemours-orange/10 text-chemours-red"
-                      : "text-gray-500 hover:text-chemours-red hover:bg-gray-100"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-chemours-red"
                   }`}
                 >
                   {item.path === "/regulatory" && pendingReviewCount > 0 && (
-                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[10px] leading-[18px] text-center font-semibold">
+                    <span className="absolute -right-1 -top-1 min-h-[18px] min-w-[18px] rounded-full bg-red-600 px-1 text-center text-[10px] font-semibold leading-[18px] text-white">
                       {pendingReviewCount > 99 ? "99+" : pendingReviewCount}
                     </span>
                   )}
                   <Icon className="h-5 w-5" />
-                  <span className="text-xs mt-1">{t(item.labelKey)}</span>
+                  <span className="mt-1 text-xs">{t(item.labelKey)}</span>
                 </Link>
               );
             })}
           </div>
-          <div className="flex-shrink-0 w-24">
+          <div className="flex w-24 flex-shrink-0 justify-end">
+            <button
+              type="button"
+              onClick={() => {
+                clearAuthSession();
+                queryClient.clear();
+                navigate("/login", { replace: true });
+              }}
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-chemours-red"
+            >
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </button>
           </div>
         </div>
       </div>
@@ -111,15 +124,28 @@ const Navigation = () => {
 
 const AppContent = () => {
   const location = useLocation();
-  const isStandalone = standaloneRoutes.includes(location.pathname);
 
   // Keep Railway backend warm to prevent cold start delays
   useBackendWarmup();
 
+  const isStandalone = standaloneRoutes.has(location.pathname);
+  const isPublicRoute = publicRoutes.has(location.pathname);
+  const authed = isAuthenticated();
+
+  if (location.pathname === "/login" && authed) {
+    return <Navigate to="/fate-explorer" replace />;
+  }
+
+  if (!isPublicRoute && !authed) {
+    const next = `${location.pathname}${location.search}${location.hash}`;
+    return <Navigate to={`/login?next=${encodeURIComponent(next)}`} replace />;
+  }
+
   return (
-    <div className={isStandalone ? '' : 'pb-20'}>
+    <div className={isStandalone ? "" : "pb-20"}>
       <Routes>
         <Route path="/" element={<AegisLanding />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/fate-explorer" element={<FateExplorer />} />
         <Route path="/litigation" element={<LitigationRisk />} />
         <Route path="/intelligence" element={<Navigate to="/regulatory?view=signals" replace />} />
