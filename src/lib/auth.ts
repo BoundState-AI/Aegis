@@ -1,4 +1,5 @@
 const AUTH_FLAG_KEY = "aegis.authenticated";
+const LOGIN_PASSWORD = "aegisboundstate2026";
 
 const ENV_API_KEY =
   import.meta.env.VITE_AEGIS_API_KEY ||
@@ -30,6 +31,10 @@ function clearStorageValue(key: string): void {
 
 export function getActiveApiKey(): string {
   return ENV_API_KEY;
+}
+
+export function isValidLoginPassword(value: string): boolean {
+  return value === LOGIN_PASSWORD;
 }
 
 export function isAuthenticated(): boolean {
