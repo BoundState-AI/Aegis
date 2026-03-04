@@ -87,6 +87,20 @@ export const pendingListSchema = z.object({
   items: z.array(pendingItemSchema),
 });
 
+export const accessRequestCreateSchema = z.object({
+  request_id: z.string(),
+  status: z.enum(["pending", "approved", "rejected"]),
+  email_sent: z.boolean(),
+  message: z.string().optional(),
+});
+
+export const accessRequestStatusSchema = z.object({
+  request_id: z.string(),
+  status: z.enum(["pending", "approved", "rejected"]),
+  created_at: z.string(),
+  decided_at: z.string().nullable().optional(),
+});
+
 export const resolveResponseSchema = z.object({
   resolution_id: z.string(),
   gate_status: z.string(),

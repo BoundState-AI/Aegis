@@ -31,6 +31,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from boundstate_aegis.api.routes import (
     assess_route,
+    access_route,
     pathway_route,
     regulation_route,
     fate_route,
@@ -205,6 +206,11 @@ def create_app(
         resolver_route.router,
         prefix="/api/v1/resolver",
         tags=["Recursive Regulatory Resolver"],
+    )
+    app.include_router(
+        access_route.router,
+        prefix="/api/v1/auth",
+        tags=["Access Control"],
     )
 
     @app.get("/health")
