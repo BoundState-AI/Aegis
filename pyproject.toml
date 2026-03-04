@@ -14,6 +14,7 @@ dependencies = [
     "fastapi>=0.100.0",
     "uvicorn>=0.20.0",
     "pydantic>=2.0",
+    "email-validator>=2.1.0",
     "boundstate-core",
     "rdkit>=2025.9.3",
     "fpdf2>=2.7.0",
