@@ -323,9 +323,9 @@ export const portfolioResponseSchema = z.object({
 const reportSectionSchema = z.object({
   title: z.string(),
   content: z.string(),
-  data: z.record(z.unknown()).optional(),
-  flags: z.array(z.string()).optional(),
-  similar_cases: z.array(z.string()).optional(),
+  data: z.record(z.unknown()).nullish(),
+  flags: z.array(z.string()).nullish(),
+  similar_cases: z.array(z.string()).nullish(),
 });
 
 export const executiveReportSchema = z.object({

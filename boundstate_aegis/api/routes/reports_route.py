@@ -213,7 +213,11 @@ class ExecutiveReport(BaseModel):
     data_sources: Dict[str, int]
 
 
-@router.get("/executive", response_model=ExecutiveReport)
+@router.get(
+    "/executive",
+    response_model=ExecutiveReport,
+    response_model_exclude_none=True,
+)
 async def generate_executive_report(
     material: str = Query(..., description="Material for report"),
     include_litigation: bool = Query(True, description="Include litigation analysis"),
