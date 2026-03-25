@@ -176,7 +176,7 @@ const RegulatoryCompliance = () => {
 
   const getApacConfidenceBadgeClass = (confidence: number) => {
     if (confidence >= 0.9) return "bg-green-100 text-green-700 border-green-300";
-    if (confidence >= 0.7) return "bg-yellow-100 text-yellow-700 border-yellow-300";
+    if (confidence >= 0.7) return "bg-daikin-blue/10 text-daikin-accent border-daikin-blue/30";
     return "bg-red-100 text-red-700 border-red-300";
   };
 
@@ -356,7 +356,7 @@ const RegulatoryCompliance = () => {
                               <div>
                                 <p className="font-medium text-daikin-dark">{reg.framework}</p>
                                 {isApacJurisdiction(reg.framework) && (
-                                  <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
+                                  <Badge variant="outline" className="mt-1 text-xs bg-daikin-blue/10 text-daikin-accent border-daikin-blue/30">
                                     {t("regulatory.apac")}
                                   </Badge>
                                 )}
@@ -386,7 +386,7 @@ const RegulatoryCompliance = () => {
                               <div>
                                 <p className="font-medium text-daikin-dark">{reg.framework}</p>
                                 {isApacJurisdiction(reg.framework) && (
-                                  <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
+                                  <Badge variant="outline" className="mt-1 text-xs bg-daikin-blue/10 text-daikin-accent border-daikin-blue/30">
                                     {t("regulatory.apac")}
                                   </Badge>
                                 )}
@@ -403,10 +403,10 @@ const RegulatoryCompliance = () => {
                 )}
 
                 {(checkResult.apac_assertions?.length ?? 0) > 0 && (
-                  <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-amber-500">
+                  <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-daikin-blue">
                     <CardHeader>
-                      <CardTitle className="text-amber-700 flex items-center gap-2">
-                        <Globe className="h-5 w-5" />
+                      <CardTitle className="text-daikin-dark flex items-center gap-2">
+                        <Globe className="h-5 w-5 text-daikin-blue" />
                         {t("regulatory.apacTitle")}
                       </CardTitle>
                       <CardDescription>
@@ -418,7 +418,7 @@ const RegulatoryCompliance = () => {
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {checkResult.fluoropolymer_exposure && (
-                        <div className="p-3 rounded-lg border border-amber-200 bg-amber-50 text-sm text-amber-900">
+                        <div className="p-3 rounded-lg border border-daikin-blue/20 bg-daikin-blue/5 text-sm text-daikin-dark">
                           <span className="font-semibold">{t("regulatory.fluoropolymerExposure")}</span> {checkResult.fluoropolymer_exposure}
                         </div>
                       )}
@@ -431,7 +431,7 @@ const RegulatoryCompliance = () => {
                               {item.confidence.toFixed(2)}
                             </Badge>
                             {item.jerk_signal && (
-                              <Badge variant="outline" className="text-xs bg-orange-100 text-orange-700 border-orange-300">
+                              <Badge variant="outline" className="text-xs bg-daikin-accent/10 text-daikin-accent border-daikin-accent/30">
                                 <Zap className="h-3 w-3 mr-1" /> {t("regulatory.jerk")}
                               </Badge>
                             )}

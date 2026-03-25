@@ -926,14 +926,14 @@ const StructuralSimilarity = () => {
             </Card>
 
             {/* Disclaimer */}
-            <Card className="bg-amber-50 border-amber-200 shadow-sm">
+            <Card className="bg-daikin-blue/5 border-daikin-blue/20 shadow-sm">
               <CardContent className="py-4">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-amber-900 space-y-1">
-                    <p>{result.disclaimer}</p>
+                  <AlertTriangle className="h-5 w-5 text-daikin-accent flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-daikin-dark space-y-1">
+                    <p>{t('tier1.disclaimerScreening')}</p>
                     {tier2Result && (
-                      <p>{tier2Result.disclaimer}</p>
+                      <p>{t('tier1.disclaimerCorrelation')}</p>
                     )}
                   </div>
                 </div>

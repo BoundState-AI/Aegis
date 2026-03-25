@@ -418,7 +418,9 @@
     "fateCompounds": "fate compounds",
     "resolvedPrecursors": "resolved precursors",
     "riskSignal": "{{name}}: {{signal}} risk signal ({{count}} neighbors with pathway data)",
-    "withPathways": "with pathways"
+    "withPathways": "with pathways",
+    "disclaimerScreening": "This is a screening tool based on structural similarity to compounds with documented degradation pathways in peer-reviewed literature. Results reflect literature patterns, not predictions. Independent verification required for regulatory decisions.",
+    "disclaimerCorrelation": "Pattern-based correlation from literature corpus (353 papers). Confidence is observed frequency among resolved precursors, not a physical or causal prediction. Validate experimentally."
   },
   "ensurance": {
     "newCategory": "A New Category in Chemical Intelligence",

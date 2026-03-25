@@ -278,7 +278,7 @@ const Intelligence = ({
             <CardHeader className="pb-2">
               <CardDescription>{t("intelligence.cards.pendingReview")}</CardDescription>
               <CardTitle className="flex items-center gap-2">
-                <Clock3 className="h-5 w-5 text-amber-500" />
+                <Clock3 className="h-5 w-5 text-daikin-accent" />
                 {pending.filter((x) => x.gate_status === "PENDING_REVIEW").length}
               </CardTitle>
             </CardHeader>
@@ -393,7 +393,7 @@ const Intelligence = ({
                     ))}
                   </div>
                   {(resolverResult.warnings || []).length > 0 && (
-                    <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+                    <div className="text-xs text-daikin-accent bg-daikin-blue/5 border border-daikin-blue/20 rounded p-2">
                       {(resolverResult.warnings || []).join(" | ")}
                     </div>
                   )}
@@ -436,7 +436,7 @@ const Intelligence = ({
                       {item.summary?.critical_flags ?? 0}
                     </div>
                     {(item.warnings || []).length > 0 && (
-                      <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+                      <div className="text-xs text-daikin-accent bg-daikin-blue/5 border border-daikin-blue/20 rounded p-2">
                         {(item.warnings || []).join(" | ")}
                       </div>
                     )}
