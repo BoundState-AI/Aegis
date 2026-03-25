@@ -59,6 +59,48 @@
     "previewMode": "",
     "previewModel": ""
   },
+  "landing": {
+    "tagline": "PFAS Degradation Intelligence",
+    "heroLine1": "Know what your compounds become.",
+    "heroLine2": "Before regulators tell you.",
+    "heroDescription": "AEGIS maps every known degradation pathway for fluorinated compounds from peer-reviewed literature — structured for regulatory response and litigation defense.",
+    "stats": {
+      "compounds": "Compounds Tracked",
+      "pathways": "Degradation Pathways",
+      "papers": "Papers Extracted"
+    },
+    "twoPaths": "Two paths into the data",
+    "regulatory": {
+      "title": "Regulatory Intelligence",
+      "subtitle": "Know what's forming. Know where it's restricted.",
+      "description": "Map degradation products from your fluorinated compounds against global regulatory frameworks. Build evidence-backed derogation responses before the 60-day clock starts.",
+      "features": [
+        "EU PFAS restriction tracking",
+        "Degradation product hazard classification",
+        "Evidence-backed regulatory responses"
+      ],
+      "cta": "Explore Regulatory"
+    },
+    "litigation": {
+      "title": "Litigation Defense",
+      "subtitle": "The science, structured for legal teams.",
+      "description": "Transform 328 peer-reviewed papers into structured intelligence your legal team can use. Every pathway cited, every mechanism documented, every claim traceable to source.",
+      "features": [
+        "Peer-reviewed evidence chains",
+        "Mechanism-specific pathway mapping",
+        "Source-traceable degradation data"
+      ],
+      "cta": "Explore Litigation"
+    },
+    "orGoStraight": "Or go straight to the data",
+    "openFateExplorer": "Open Fate Explorer",
+    "goToPlatform": "Go to Platform",
+    "trust1": "Peer-reviewed sources only",
+    "trust2": "Every pathway cited to source",
+    "trust3": "All analyses require expert review",
+    "footer": "AEGIS — BoundState PFAS Intelligence Platform",
+    "footerTagline": "Built by BoundState. Trained on your data."
+  },
   "nav": {
     "fateExplorer": "Fate Explorer",
     "sentinel": "SENTINEL",

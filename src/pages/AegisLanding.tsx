@@ -1,45 +1,5 @@
 import { useState, useEffect } from "react";
-
-const STATS = [
-  { value: "260", label: "Compounds Tracked", delay: 0 },
-  { value: "732", label: "Degradation Pathways", delay: 100 },
-  { value: "328", label: "Papers Extracted", delay: 200 },
-];
-
-const PATHS = [
-  {
-    id: "regulatory",
-    icon: "§",
-    title: "Regulatory Intelligence",
-    subtitle: "Know what's forming. Know where it's restricted.",
-    description:
-      "Map degradation products from your fluorinated compounds against global regulatory frameworks. Build evidence-backed derogation responses before the 60-day clock starts.",
-    features: [
-      "EU PFAS restriction tracking",
-      "Degradation product hazard classification",
-      "Evidence-backed regulatory responses",
-    ],
-    cta: "Explore Regulatory",
-    href: "/regulatory",
-    accent: "#D97706",
-  },
-  {
-    id: "litigation",
-    icon: "⚖",
-    title: "Litigation Defense",
-    subtitle: "The science, structured for legal teams.",
-    description:
-      "Transform 328 peer-reviewed papers into structured intelligence your legal team can use. Every pathway cited, every mechanism documented, every claim traceable to source.",
-    features: [
-      "Peer-reviewed evidence chains",
-      "Mechanism-specific pathway mapping",
-      "Source-traceable degradation data",
-    ],
-    cta: "Explore Litigation",
-    href: "/litigation",
-    accent: "#2563EB",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function Counter({ end, duration = 2000, delay = 0 }: { end: string; duration?: number; delay?: number }) {
   const [count, setCount] = useState(0);
@@ -71,8 +31,40 @@ function Counter({ end, duration = 2000, delay = 0 }: { end: string; duration?: 
 }
 
 export default function AegisLanding() {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+
+  const STATS = [
+    { value: "260", label: t('landing.stats.compounds'), delay: 0 },
+    { value: "732", label: t('landing.stats.pathways'), delay: 100 },
+    { value: "328", label: t('landing.stats.papers'), delay: 200 },
+  ];
+
+  const PATHS = [
+    {
+      id: "regulatory",
+      icon: "§",
+      title: t('landing.regulatory.title'),
+      subtitle: t('landing.regulatory.subtitle'),
+      description: t('landing.regulatory.description'),
+      features: t('landing.regulatory.features', { returnObjects: true }) as string[],
+      cta: t('landing.regulatory.cta'),
+      href: "/regulatory",
+      accent: "#0097e0",
+    },
+    {
+      id: "litigation",
+      icon: "⚖",
+      title: t('landing.litigation.title'),
+      subtitle: t('landing.litigation.subtitle'),
+      description: t('landing.litigation.description'),
+      features: t('landing.litigation.features', { returnObjects: true }) as string[],
+      cta: t('landing.litigation.cta'),
+      href: "/litigation",
+      accent: "#0099cc",
+    },
+  ];
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 100);
@@ -83,13 +75,13 @@ export default function AegisLanding() {
       style={{
         minHeight: "100vh",
         background: "#FAFAF8",
-        fontFamily: "'Newsreader', 'Georgia', serif",
+        fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
         color: "#1a1a1a",
         overflow: "hidden",
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=DM+Sans:wght@400;500;600&display=swap');
+        /* Daikin font stack: Helvetica/Arial/Meiryo — no external fonts needed */
 
         .aegis-landing * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -132,8 +124,8 @@ export default function AegisLanding() {
         .path-card:hover::before {
           transform: scaleX(1);
         }
-        .path-card.regulatory::before { background: #D97706; }
-        .path-card.litigation::before { background: #2563EB; }
+        .path-card.regulatory::before { background: #0097e0; }
+        .path-card.litigation::before { background: #0099cc; }
 
         .stat-item {
           text-align: center;
@@ -150,7 +142,7 @@ export default function AegisLanding() {
           padding: 0.75rem 1.5rem;
           border: none;
           border-radius: 2px;
-          font-family: 'DM Sans', sans-serif;
+          font-family: Helvetica, Arial, Meiryo, sans-serif;
           font-size: 0.85rem;
           font-weight: 500;
           letter-spacing: 0.03em;
@@ -169,11 +161,11 @@ export default function AegisLanding() {
           align-items: center;
           gap: 8px;
           padding: 1rem 2.5rem;
-          background: #1a1a1a;
+          background: #0097e0;
           color: white;
           border: none;
           border-radius: 2px;
-          font-family: 'DM Sans', sans-serif;
+          font-family: Helvetica, Arial, Meiryo, sans-serif;
           font-size: 0.95rem;
           font-weight: 500;
           letter-spacing: 0.04em;
@@ -182,7 +174,7 @@ export default function AegisLanding() {
           text-decoration: none;
         }
         .explore-all:hover {
-          background: #333;
+          background: #0099cc;
           box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
@@ -190,7 +182,7 @@ export default function AegisLanding() {
           display: flex;
           align-items: flex-start;
           gap: 10px;
-          font-family: 'DM Sans', sans-serif;
+          font-family: Helvetica, Arial, Meiryo, sans-serif;
           font-size: 0.85rem;
           color: #555;
           line-height: 1.5;
@@ -204,7 +196,7 @@ export default function AegisLanding() {
         }
 
         .trust-bar {
-          font-family: 'DM Sans', sans-serif;
+          font-family: Helvetica, Arial, Meiryo, sans-serif;
           font-size: 0.75rem;
           color: #999;
           letter-spacing: 0.08em;
@@ -236,7 +228,7 @@ export default function AegisLanding() {
         <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem" }}>
           <span
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
               fontWeight: 600,
               fontSize: "1.1rem",
               letterSpacing: "0.12em",
@@ -247,7 +239,7 @@ export default function AegisLanding() {
           </span>
           <span
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
               fontSize: "0.7rem",
               color: "#999",
               letterSpacing: "0.06em",
@@ -259,7 +251,7 @@ export default function AegisLanding() {
         <a
           href="/fate-explorer"
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
             fontSize: "0.8rem",
             color: "#666",
             textDecoration: "none",
@@ -271,7 +263,7 @@ export default function AegisLanding() {
           onMouseEnter={(e) => ((e.target as HTMLElement).style.borderBottomColor = "#999")}
           onMouseLeave={(e) => ((e.target as HTMLElement).style.borderBottomColor = "transparent")}
         >
-          Go to Platform →
+          {t('landing.goToPlatform')} →
         </a>
       </nav>
 
@@ -290,15 +282,15 @@ export default function AegisLanding() {
         >
           <p
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
               fontSize: "0.75rem",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              color: "#D97706",
+              color: "#0097e0",
               marginBottom: "1.5rem",
             }}
           >
-            PFAS Degradation Intelligence
+            {t('landing.tagline')}
           </p>
         </div>
 
@@ -314,17 +306,17 @@ export default function AegisLanding() {
             letterSpacing: "-0.01em",
           }}
         >
-          Know what your compounds become.
+          {t('landing.heroLine1')}
           <br />
           <span style={{ fontStyle: "italic", fontWeight: 300 }}>
-            Before regulators tell you.
+            {t('landing.heroLine2')}
           </span>
         </h1>
 
         <p
           className={`fade-up ${visible ? "visible" : ""}`}
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
             fontSize: "1.05rem",
             lineHeight: 1.7,
             color: "#666",
@@ -333,9 +325,7 @@ export default function AegisLanding() {
             transitionDelay: "0.35s",
           }}
         >
-          AEGIS maps every known degradation pathway for fluorinated compounds
-          from peer-reviewed literature — structured for regulatory response
-          and litigation defense.
+          {t('landing.heroDescription')}
         </p>
 
         {/* Stats */}
@@ -367,7 +357,7 @@ export default function AegisLanding() {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
                     fontSize: "0.75rem",
                     color: "#999",
                     letterSpacing: "0.06em",
@@ -403,7 +393,7 @@ export default function AegisLanding() {
         <p
           className={`fade-up ${visible ? "visible" : ""}`}
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
             fontSize: "0.75rem",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
@@ -413,7 +403,7 @@ export default function AegisLanding() {
             transitionDelay: "0.55s",
           }}
         >
-          Two paths into the data
+          {t('landing.twoPaths')}
         </p>
 
         <div
@@ -449,7 +439,7 @@ export default function AegisLanding() {
 
               <h3
                 style={{
-                  fontFamily: "'Newsreader', serif",
+                  fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
                   fontSize: "1.5rem",
                   fontWeight: 400,
                   marginBottom: "0.35rem",
@@ -460,7 +450,7 @@ export default function AegisLanding() {
 
               <p
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
                   fontSize: "0.85rem",
                   color: path.accent,
                   marginBottom: "1.25rem",
@@ -472,7 +462,7 @@ export default function AegisLanding() {
 
               <p
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
                   fontSize: "0.9rem",
                   color: "#666",
                   lineHeight: 1.7,
@@ -529,7 +519,7 @@ export default function AegisLanding() {
         >
           <p
             style={{
-              fontFamily: "'Newsreader', serif",
+              fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
               fontSize: "1.15rem",
               fontStyle: "italic",
               color: "#888",
@@ -537,10 +527,10 @@ export default function AegisLanding() {
               fontWeight: 300,
             }}
           >
-            Or go straight to the data
+            {t('landing.orGoStraight')}
           </p>
           <a href="/fate-explorer" className="explore-all">
-            Open Fate Explorer
+            {t('landing.openFateExplorer')}
             <span>→</span>
           </a>
         </div>
@@ -574,33 +564,33 @@ export default function AegisLanding() {
             marginBottom: "2rem",
           }}
         >
-          <span>Peer-reviewed sources only</span>
+          <span>{t('landing.trust1')}</span>
           <span style={{ color: "#ddd" }}>·</span>
-          <span>Every pathway cited to source</span>
+          <span>{t('landing.trust2')}</span>
           <span style={{ color: "#ddd" }}>·</span>
-          <span>All analyses require expert review</span>
+          <span>{t('landing.trust3')}</span>
         </div>
 
         <p
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
             fontSize: "0.7rem",
             color: "#bbb",
             letterSpacing: "0.04em",
           }}
         >
-          AEGIS — BoundState PFAS Intelligence Platform
+          {t('landing.footer')}
         </p>
         <p
           style={{
-            fontFamily: "'Newsreader', serif",
+            fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
             fontSize: "0.75rem",
             color: "#ccc",
             fontStyle: "italic",
             marginTop: "0.35rem",
           }}
         >
-          Built by BoundState. Trained on your data.
+          {t('landing.footerTagline')}
         </p>
       </section>
     </div>
