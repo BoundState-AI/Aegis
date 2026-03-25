@@ -277,10 +277,10 @@ const FateExplorer = () => {
               <>
                 {/* Case 1: Compound not found in database */}
                 {!results.compound_found && (
-                  <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-amber-500">
+                  <Card className="bg-white border-gray-200 shadow-sm border-l-4 border-l-daikin-blue">
                     <CardContent className="py-12 text-center">
-                      <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-amber-100 flex items-center justify-center">
-                        <AlertTriangle className="h-8 w-8 text-amber-600" />
+                      <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-daikin-blue/10 flex items-center justify-center">
+                        <AlertTriangle className="h-8 w-8 text-daikin-accent" />
                       </div>
                       <h3 className="text-xl font-semibold text-daikin-dark mb-2">
                         {t('fateExplorer.compoundNotInDatabase')}

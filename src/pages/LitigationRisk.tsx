@@ -843,8 +843,8 @@ const LitigationRisk = () => {
 
                     {/* Sentiment annotation */}
                     {chartView === "sentiment" && (
-                      <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                        <p className="text-xs text-amber-900 leading-relaxed">
+                      <div className="mt-4 p-3 bg-daikin-blue/5 border border-daikin-blue/20 rounded-lg">
+                        <p className="text-xs text-daikin-dark leading-relaxed">
                           <span className="font-semibold">{t('litigation.sentimentKeyFinding')}</span> {t('litigation.sentimentAnnotation')}
                         </p>
                       </div>

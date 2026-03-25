@@ -99,7 +99,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
               <ul className="space-y-1.5">
                 {content.tips.map((tip, i) => (
                   <li key={i} className="flex gap-2 text-sm text-gray-600">
-                    <Lightbulb className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="h-4 w-4 text-daikin-accent mt-0.5 flex-shrink-0" />
                     <span>{tip}</span>
                   </li>
                 ))}
