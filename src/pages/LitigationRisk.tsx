@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight, Info, ExternalLink, X } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -234,7 +234,7 @@ const BacktestTooltip = ({ active, payload, label, events }: any) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 max-w-xs">
       <div className="flex items-center justify-between mb-1">
-        <span className="font-bold text-chemours-dark">{label}</span>
+        <span className="font-bold text-daikin-dark">{label}</span>
         <Badge className={`${alertInfo.color} text-xs`}>{alertInfo.label}</Badge>
       </div>
       <div className="text-sm text-gray-600 space-y-0.5">
@@ -278,7 +278,7 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 max-w-xs">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-bold text-chemours-dark">{label}</span>
+        <span className="font-bold text-daikin-dark">{label}</span>
         <span className="text-xs text-gray-500">{total} papers</span>
       </div>
       <div className="space-y-1">
@@ -468,27 +468,27 @@ const LitigationRisk = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title={t('litigation.title')} subtitle={t('litigation.subtitle')} helpContent={helpContent.litigation}>
+      <DaikinHeader title={t('litigation.title')} subtitle={t('litigation.subtitle')} helpContent={helpContent.litigation}>
         {backtest && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{backtest.lead_time_years}</span>{t('litigation.yearLeadTime')}
+              <span className="text-daikin-blue font-bold">{backtest.lead_time_years}</span>{t('litigation.yearLeadTime')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{formatCurrency(backtest.settlement_total_usd)}</span> {t('litigation.inSettlements')}
+              <span className="text-daikin-blue font-bold">{formatCurrency(backtest.settlement_total_usd)}</span> {t('litigation.inSettlements')}
             </div>
           </>
         )}
-      </ChemoursHeader>
+      </DaikinHeader>
 
       <main className="container mx-auto px-4 py-8 space-y-8">
         <Tabs defaultValue="casestudy">
           <TabsList className="bg-white border border-gray-200 shadow-sm">
-            <TabsTrigger value="casestudy" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
+            <TabsTrigger value="casestudy" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-daikin-blue data-[state=active]:to-daikin-accent data-[state=active]:text-white">
               <Eye className="mr-2 h-4 w-4" />
               {t('litigation.validationCaseStudies')}
             </TabsTrigger>
-            <TabsTrigger value="forecast" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-chemours-red data-[state=active]:to-chemours-orange data-[state=active]:text-white">
+            <TabsTrigger value="forecast" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-daikin-blue data-[state=active]:to-daikin-accent data-[state=active]:text-white">
               <ShieldAlert className="mr-2 h-4 w-4" />
               {t('litigation.riskForecast')}
             </TabsTrigger>
@@ -501,7 +501,7 @@ const LitigationRisk = () => {
             {/* Compound Selector */}
             {isLoadingBacktests ? (
               <div className="flex items-center gap-2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                <Loader2 className="h-4 w-4 animate-spin text-chemours-red" />
+                <Loader2 className="h-4 w-4 animate-spin text-daikin-blue" />
                 <span className="text-sm text-gray-500">{t('litigation.loadingCaseStudies')}</span>
               </div>
             ) : availableBacktests.length > 0 && (
@@ -515,7 +515,7 @@ const LitigationRisk = () => {
                       size="sm"
                       disabled={isLoadingBacktest}
                       className={selectedCompound === bt.compound_id
-                        ? "bg-chemours-red hover:bg-chemours-red/90 text-white"
+                        ? "bg-daikin-blue hover:bg-daikin-blue/90 text-white"
                         : "border-gray-300"}
                       onClick={() => setSelectedCompound(bt.compound_id)}
                     >
@@ -544,7 +544,7 @@ const LitigationRisk = () => {
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
                       <p className="text-xs text-gray-500 uppercase tracking-wide">{t('litigation.publications')}</p>
-                      <p className="text-3xl font-bold text-chemours-dark">{backtest.total_publications}</p>
+                      <p className="text-3xl font-bold text-daikin-dark">{backtest.total_publications}</p>
                       <p className="text-xs text-gray-400">{t('litigation.pubmedPapers')}</p>
                     </CardContent>
                   </Card>
@@ -579,7 +579,7 @@ const LitigationRisk = () => {
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="p-4 text-center">
                       <p className="text-xs text-gray-500 uppercase tracking-wide">{t('litigation.totalSettlements')}</p>
-                      <p className="text-3xl font-bold text-chemours-red">{formatCurrency(backtest.settlement_total_usd)}</p>
+                      <p className="text-3xl font-bold text-daikin-blue">{formatCurrency(backtest.settlement_total_usd)}</p>
                       <p className="text-xs text-gray-400">{backtest.affected_population.toLocaleString()} {t('litigation.affected')}</p>
                     </CardContent>
                   </Card>
@@ -590,7 +590,7 @@ const LitigationRisk = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between flex-wrap gap-3">
                       <div>
-                        <CardTitle className="text-chemours-dark">
+                        <CardTitle className="text-daikin-dark">
                           {backtest.compound} {chartView === "signal" ? t('litigation.sentinelSignal') : chartView === "sentiment" ? t('litigation.sentimentLifecycle') : t('litigation.publicationTimeline')}
                         </CardTitle>
                         <CardDescription>
@@ -605,7 +605,7 @@ const LitigationRisk = () => {
                         <Button
                           variant={chartView === "publications" ? "default" : "outline"}
                           size="sm"
-                          className={chartView === "publications" ? "bg-chemours-dark text-white hover:bg-chemours-dark/90" : ""}
+                          className={chartView === "publications" ? "bg-daikin-dark text-white hover:bg-daikin-dark/90" : ""}
                           onClick={() => setChartView("publications")}
                         >
                           {t('litigation.publications')}
@@ -613,7 +613,7 @@ const LitigationRisk = () => {
                         <Button
                           variant={chartView === "signal" ? "default" : "outline"}
                           size="sm"
-                          className={chartView === "signal" ? "bg-chemours-dark text-white hover:bg-chemours-dark/90" : ""}
+                          className={chartView === "signal" ? "bg-daikin-dark text-white hover:bg-daikin-dark/90" : ""}
                           onClick={() => setChartView("signal")}
                         >
                           {t('litigation.sentinelSignal')}
@@ -621,7 +621,7 @@ const LitigationRisk = () => {
                         <Button
                           variant={chartView === "sentiment" ? "default" : "outline"}
                           size="sm"
-                          className={chartView === "sentiment" ? "bg-chemours-dark text-white hover:bg-chemours-dark/90" : ""}
+                          className={chartView === "sentiment" ? "bg-daikin-dark text-white hover:bg-daikin-dark/90" : ""}
                           onClick={() => setChartView("sentiment")}
                         >
                           Sentiment
@@ -855,7 +855,7 @@ const LitigationRisk = () => {
                       <div className="mt-4 border border-gray-200 rounded-lg overflow-hidden">
                         <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold text-sm text-chemours-dark">
+                            <span className="font-semibold text-sm text-daikin-dark">
                               {paperDrilldown ? `${paperDrilldown.year} Papers` : "Loading..."}
                             </span>
                             {paperDrilldown && (
@@ -873,7 +873,7 @@ const LitigationRisk = () => {
                         </div>
                         {isLoadingPapers ? (
                           <div className="p-6 text-center">
-                            <Loader2 className="h-5 w-5 mx-auto animate-spin text-chemours-red" />
+                            <Loader2 className="h-5 w-5 mx-auto animate-spin text-daikin-blue" />
                           </div>
                         ) : paperDrilldown?.papers && (
                           <div className="max-h-[320px] overflow-y-auto divide-y divide-gray-100">
@@ -928,7 +928,7 @@ const LitigationRisk = () => {
                 {backtest.industry_claims && backtest.industry_claims.length > 0 && (
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardHeader>
-                      <CardTitle className="text-chemours-dark flex items-center gap-2">
+                      <CardTitle className="text-daikin-dark flex items-center gap-2">
                         <Quote className="h-5 w-5 text-green-600" />
                         {t('litigation.claimsVsReality')}
                       </CardTitle>
@@ -1001,7 +1001,7 @@ const LitigationRisk = () => {
                 {/* Event Timeline */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">{t('litigation.eventTimeline')}</CardTitle>
+                    <CardTitle className="text-daikin-dark">{t('litigation.eventTimeline')}</CardTitle>
                     <CardDescription>{t('litigation.eventTimelineDescription')}</CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -1009,7 +1009,7 @@ const LitigationRisk = () => {
                       {backtest.key_events.map((event, i) => (
                         <div key={i} className="flex gap-3 items-start">
                           <div className="flex-shrink-0 w-12 text-right">
-                            <span className="text-sm font-bold text-chemours-dark">{event.year}</span>
+                            <span className="text-sm font-bold text-daikin-dark">{event.year}</span>
                           </div>
                           <div
                             className="flex-shrink-0 w-2 h-2 mt-1.5 rounded-full"
@@ -1033,7 +1033,7 @@ const LitigationRisk = () => {
             ) : (
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
-                  <Loader2 className="h-8 w-8 mx-auto mb-4 animate-spin text-chemours-red" />
+                  <Loader2 className="h-8 w-8 mx-auto mb-4 animate-spin text-daikin-blue" />
                   <p className="text-gray-500">{t('litigation.loadingCaseStudy', { compound: selectedCompound.toUpperCase() })}</p>
                 </CardContent>
               </Card>
@@ -1048,7 +1048,7 @@ const LitigationRisk = () => {
               {/* Input Panel */}
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-chemours-dark">{t('litigation.forecastParameters')}</CardTitle>
+                  <CardTitle className="text-daikin-dark">{t('litigation.forecastParameters')}</CardTitle>
                   <CardDescription>{t('litigation.configureRiskAssessment')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -1083,7 +1083,7 @@ const LitigationRisk = () => {
                         <Badge
                           key={p}
                           variant={formData.pathways.includes(p) ? "default" : "outline"}
-                          className={`cursor-pointer ${formData.pathways.includes(p) ? "bg-chemours-red text-white" : "border-gray-400 text-gray-600"}`}
+                          className={`cursor-pointer ${formData.pathways.includes(p) ? "bg-daikin-blue text-white" : "border-gray-400 text-gray-600"}`}
                           onClick={() => togglePathway(p)}
                         >
                           {p}
@@ -1095,7 +1095,7 @@ const LitigationRisk = () => {
                   <Button
                     onClick={handleForecast}
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                    className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
                   >
                     {isLoading ? (
                       <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.calculating')}</>
@@ -1114,7 +1114,7 @@ const LitigationRisk = () => {
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-chemours-dark">{forecast.compound} {t('litigation.litigationForecast')}</CardTitle>
+                          <CardTitle className="text-daikin-dark">{forecast.compound} {t('litigation.litigationForecast')}</CardTitle>
                           <Badge className={getRiskColor(forecast.risk_level)}>{forecast.risk_level} {t('litigation.risk')}</Badge>
                         </div>
                       </CardHeader>
@@ -1122,17 +1122,17 @@ const LitigationRisk = () => {
                         <div className="grid grid-cols-3 gap-4 mb-6">
                           <div className="text-center">
                             <p className="text-sm text-gray-500">{t('litigation.months12')}</p>
-                            <p className="text-2xl font-bold text-chemours-dark">{(forecast.probability_12_months * 100).toFixed(1)}%</p>
+                            <p className="text-2xl font-bold text-daikin-dark">{(forecast.probability_12_months * 100).toFixed(1)}%</p>
                             <Progress value={forecast.probability_12_months * 100} className="mt-2" />
                           </div>
                           <div className="text-center">
                             <p className="text-sm text-gray-500">{t('litigation.months24')}</p>
-                            <p className="text-2xl font-bold text-chemours-red">{(forecast.probability_24_months * 100).toFixed(1)}%</p>
+                            <p className="text-2xl font-bold text-daikin-blue">{(forecast.probability_24_months * 100).toFixed(1)}%</p>
                             <Progress value={forecast.probability_24_months * 100} className="mt-2" />
                           </div>
                           <div className="text-center">
                             <p className="text-sm text-gray-500">{t('litigation.months36')}</p>
-                            <p className="text-2xl font-bold text-chemours-dark">{(forecast.probability_36_months * 100).toFixed(1)}%</p>
+                            <p className="text-2xl font-bold text-daikin-dark">{(forecast.probability_36_months * 100).toFixed(1)}%</p>
                             <Progress value={forecast.probability_36_months * 100} className="mt-2" />
                           </div>
                         </div>
@@ -1154,8 +1154,8 @@ const LitigationRisk = () => {
                     {/* Key Drivers */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
-                        <CardTitle className="text-chemours-dark flex items-center gap-2">
-                          <AlertTriangle className="h-5 w-5 text-chemours-orange" />
+                        <CardTitle className="text-daikin-dark flex items-center gap-2">
+                          <AlertTriangle className="h-5 w-5 text-daikin-accent" />
                           {t('litigation.keyRiskDrivers')}
                         </CardTitle>
                       </CardHeader>
@@ -1163,7 +1163,7 @@ const LitigationRisk = () => {
                         <ul className="space-y-2">
                           {forecast.key_drivers.map((driver, i) => (
                             <li key={i} className="flex items-start gap-2 text-gray-600">
-                              <span className="text-chemours-orange">•</span>
+                              <span className="text-daikin-accent">•</span>
                               {driver}
                             </li>
                           ))}
@@ -1174,14 +1174,14 @@ const LitigationRisk = () => {
                     {/* Similar Cases */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
-                        <CardTitle className="text-chemours-dark">{t('litigation.similarCases')}</CardTitle>
+                        <CardTitle className="text-daikin-dark">{t('litigation.similarCases')}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-3">
                           {forecast.similar_cases.map((c, i) => (
                             <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                               <div>
-                                <p className="font-medium text-chemours-dark">{c.case}</p>
+                                <p className="font-medium text-daikin-dark">{c.case}</p>
                                 <p className="text-sm text-gray-500">{t('common.year')}: {c.year} | {t('litigation.relevance')}: {(c.relevance * 100).toFixed(0)}%</p>
                               </div>
                               <span className="text-lg font-bold text-green-600">{formatCurrency(c.settlement)}</span>
@@ -1194,10 +1194,10 @@ const LitigationRisk = () => {
                 ) : (
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="py-16 text-center">
-                      <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
+                      <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-daikin-blue to-daikin-accent flex items-center justify-center">
                         <Scale className="h-8 w-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('litigation.compoundRiskForecast')}</h3>
+                      <h3 className="text-xl font-semibold text-daikin-dark mb-2">{t('litigation.compoundRiskForecast')}</h3>
                       <p className="text-gray-500 max-w-md mx-auto">
                         {t('litigation.forecastDescription')}
                       </p>

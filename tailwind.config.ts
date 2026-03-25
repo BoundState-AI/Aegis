@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"Helvetica"', '"Arial"', '"Meiryo"', 'sans-serif'],
+        bold: ['"FrutigerLTW02-65Bold"', '"Helvetica"', '"Arial"', '"Meiryo"', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -63,21 +67,11 @@ export default {
           high: "hsl(var(--risk-high))",
           critical: "hsl(var(--risk-critical))",
         },
-        chemours: {
-          red: "#e53e30",
-          orange: "#f28b00",
-          magenta: "#c41d4a",
-          cream: "#fbc88e",
-          dark: "#303133",
-          white: "#FFFFFF",
-          // Brand-specific colors
-          opteon: "#005eb8",
-          krytox: "#005880",
-          nafion: "#ae2085",
-          viton: "#af141a",
-          freon: "#009b9e",
-          teflon: "#cf202e",
-          tipure: "#0092bc",
+        daikin: {
+          blue: "#0097e0",
+          accent: "#0099cc",
+          dark: "#000000",
+          text: "#666666",
         },
       },
       borderRadius: {

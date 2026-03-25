@@ -48,7 +48,7 @@ export default function Login() {
       <div className="mx-auto flex min-h-[80vh] w-full max-w-5xl items-center justify-center">
         <Card className="w-full max-w-md border-slate-200 shadow-xl shadow-slate-300/40">
           <CardHeader className="space-y-3">
-            <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-chemours-red/10 text-chemours-red">
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-daikin-blue/10 text-daikin-blue">
               <ShieldCheck className="h-5 w-5" />
             </div>
             <CardTitle className="text-2xl text-slate-900">AEGIS Login</CardTitle>
@@ -84,7 +84,7 @@ export default function Login() {
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 text-chemours-red focus:ring-chemours-red"
+                  className="h-4 w-4 rounded border-slate-300 text-daikin-blue focus:ring-daikin-blue"
                 />
                 Remember this device
               </label>
@@ -93,7 +93,7 @@ export default function Login() {
                 <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
               )}
 
-              <Button type="submit" className="w-full bg-chemours-red hover:bg-chemours-red/90">
+              <Button type="submit" className="w-full bg-daikin-blue hover:bg-daikin-blue/90">
                 Sign In
               </Button>
             </form>

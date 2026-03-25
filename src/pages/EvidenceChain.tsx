@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, BookOpen, Link2, ExternalLink, Database, FileText } from "lucide-react";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { apiGet } from "@/lib/apiClient";
 import {
@@ -93,25 +93,25 @@ const EvidenceChain = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title={t('evidence.title')} subtitle={t('evidence.subtitle')} helpContent={helpContent.evidence}>
+      <DaikinHeader title={t('evidence.title')} subtitle={t('evidence.subtitle')} helpContent={helpContent.evidence}>
         {sourceStats && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{sourceStats.total_papers}</span> papers
+              <span className="text-daikin-blue font-bold">{sourceStats.total_papers}</span> papers
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</span> {t('common.transformations').toLowerCase()}
+              <span className="text-daikin-blue font-bold">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</span> {t('common.transformations').toLowerCase()}
             </div>
           </>
         )}
-      </ChemoursHeader>
+      </DaikinHeader>
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">{t('evidence.searchEvidence')}</CardTitle>
+              <CardTitle className="text-daikin-dark">{t('evidence.searchEvidence')}</CardTitle>
               <CardDescription>{t('evidence.findCitations')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -140,7 +140,7 @@ const EvidenceChain = () => {
               <Button
                 onClick={handleSearch}
                 disabled={isLoading || !material}
-                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
               >
                 {isLoading ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.searching')}</>
@@ -177,8 +177,8 @@ const EvidenceChain = () => {
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-chemours-dark">{evidence.material} {t('evidence.evidenceChain')}</CardTitle>
-                      <Badge className="bg-gradient-to-r from-chemours-red to-chemours-orange text-white">{evidence.total_citations} Citations</Badge>
+                      <CardTitle className="text-daikin-dark">{evidence.material} {t('evidence.evidenceChain')}</CardTitle>
+                      <Badge className="bg-gradient-to-r from-daikin-blue to-daikin-accent text-white">{evidence.total_citations} Citations</Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -197,8 +197,8 @@ const EvidenceChain = () => {
                 {/* Evidence Items */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark flex items-center gap-2">
-                      <Link2 className="h-5 w-5 text-chemours-red" />
+                    <CardTitle className="text-daikin-dark flex items-center gap-2">
+                      <Link2 className="h-5 w-5 text-daikin-blue" />
                       {t('evidence.citationChain')}
                     </CardTitle>
                   </CardHeader>
@@ -207,12 +207,12 @@ const EvidenceChain = () => {
                       {evidence.evidence_chain.map((item, i) => (
                         <div
                           key={i}
-                          className="p-4 bg-gray-50 rounded-lg border-l-4 border-chemours-red"
+                          className="p-4 bg-gray-50 rounded-lg border-l-4 border-daikin-blue"
                         >
                           <div className="flex items-start justify-between mb-2">
                             <div className="flex items-center gap-2">
                               <FileText className="h-4 w-4 text-gray-500" />
-                              <span className="font-medium text-chemours-dark">{item.source}</span>
+                              <span className="font-medium text-daikin-dark">{item.source}</span>
                               <Badge variant="outline" className="text-xs border-gray-400">{item.year}</Badge>
                             </div>
                             <div className="flex items-center gap-2">
@@ -228,7 +228,7 @@ const EvidenceChain = () => {
                               href={`https://doi.org/${item.doi}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 mt-2 text-xs text-chemours-red hover:text-chemours-orange"
+                              className="inline-flex items-center gap-1 mt-2 text-xs text-daikin-blue hover:text-daikin-accent"
                             >
                               <ExternalLink className="h-3 w-3" />
                               DOI: {item.doi}
@@ -251,15 +251,15 @@ const EvidenceChain = () => {
                   {sourceStats && (
                     <div className="mt-6 flex justify-center gap-6">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-chemours-red">{sourceStats.coverage.fluoropolymers}</p>
+                        <p className="text-2xl font-bold text-daikin-blue">{sourceStats.coverage.fluoropolymers}</p>
                         <p className="text-sm text-gray-500">{t('evidence.fluoropolymers')}</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-chemours-red">{sourceStats.coverage.pfas_endpoints}</p>
+                        <p className="text-2xl font-bold text-daikin-blue">{sourceStats.coverage.pfas_endpoints}</p>
                         <p className="text-sm text-gray-500">{t('evidence.pfasEndpoints')}</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-chemours-red">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</p>
+                        <p className="text-2xl font-bold text-daikin-blue">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</p>
                         <p className="text-sm text-gray-500">{t('common.transformations')}</p>
                       </div>
                     </div>

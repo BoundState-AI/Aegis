@@ -15,7 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { apiPost } from "@/lib/apiClient";
 import { portfolioResponseSchema, type PortfolioResponse } from "@/lib/apiSchemas";
@@ -136,14 +136,14 @@ const PortfolioAssessment = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title={t('portfolio.title')} subtitle={t('portfolio.subtitle')} helpContent={helpContent.portfolio} />
+      <DaikinHeader title={t('portfolio.title')} subtitle={t('portfolio.subtitle')} helpContent={helpContent.portfolio} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">{t('portfolio.productPortfolio')}</CardTitle>
+              <CardTitle className="text-daikin-dark">{t('portfolio.productPortfolio')}</CardTitle>
               <CardDescription>{t('portfolio.addMaterialsToAssess')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -152,7 +152,7 @@ const PortfolioAssessment = () => {
                 {items.map((item, i) => (
                   <div key={i} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                     <div>
-                      <span className="text-chemours-dark font-medium">{item.material}</span>
+                      <span className="text-daikin-dark font-medium">{item.material}</span>
                       <span className="text-gray-500 text-sm ml-2">({item.volume_lbs.toLocaleString()} lbs)</span>
                     </div>
                     <Button variant="ghost" size="sm" onClick={() => removeItem(i)}>
@@ -179,7 +179,7 @@ const PortfolioAssessment = () => {
                     placeholder="Volume"
                     className="w-28 bg-white border-gray-300"
                   />
-                  <Button onClick={addItem} size="icon" className="bg-chemours-red hover:bg-chemours-red/90">
+                  <Button onClick={addItem} size="icon" className="bg-daikin-blue hover:bg-daikin-blue/90">
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
@@ -205,7 +205,7 @@ const PortfolioAssessment = () => {
               <Button
                 onClick={handleAssess}
                 disabled={isLoading || items.length === 0}
-                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
               >
                 {isLoading ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.assessing')}</>
@@ -224,8 +224,8 @@ const PortfolioAssessment = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardContent className="pt-6 text-center">
-                      <Package className="h-8 w-8 text-chemours-red mx-auto mb-2" />
-                      <p className="text-3xl font-bold text-chemours-dark">{assessment.total_materials}</p>
+                      <Package className="h-8 w-8 text-daikin-blue mx-auto mb-2" />
+                      <p className="text-3xl font-bold text-daikin-dark">{assessment.total_materials}</p>
                       <p className="text-sm text-gray-500">{t('portfolio.materials')}</p>
                     </CardContent>
                   </Card>
@@ -241,7 +241,7 @@ const PortfolioAssessment = () => {
                 {/* Results Table */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">{t('portfolio.assessmentResults')}</CardTitle>
+                    <CardTitle className="text-daikin-dark">{t('portfolio.assessmentResults')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     {/* Risk Category Legend */}
@@ -298,7 +298,7 @@ const PortfolioAssessment = () => {
                       <TableBody>
                         {assessment.results.map((r, i) => (
                           <TableRow key={i} className="border-gray-200">
-                            <TableCell className="font-medium text-chemours-dark">{r.material}</TableCell>
+                            <TableCell className="font-medium text-daikin-dark">{r.material}</TableCell>
                             <TableCell>
                               <Badge className={getRiskColor(r.risk_category)}>{r.risk_category}</Badge>
                             </TableCell>
@@ -315,7 +315,7 @@ const PortfolioAssessment = () => {
                 {/* Executive Summary */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">{t('portfolio.executiveSummary')}</CardTitle>
+                    <CardTitle className="text-daikin-dark">{t('portfolio.executiveSummary')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 whitespace-pre-wrap text-sm leading-relaxed">

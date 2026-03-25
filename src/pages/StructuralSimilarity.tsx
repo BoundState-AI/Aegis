@@ -12,7 +12,7 @@ import {
   AlertTriangle, CheckCircle, ShieldAlert, ChevronDown, ChevronUp,
   Atom, FileText, Beaker, Shapes, TrendingUp, Database, Info,
 } from "lucide-react";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { apiGet, apiPost } from "@/lib/apiClient";
 import {
@@ -297,7 +297,7 @@ const StructuralSimilarity = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader
+      <DaikinHeader
         title={t('tier1.title')}
         subtitle={t('tier1.subtitle')}
         helpContent={helpContent.tier1}
@@ -305,17 +305,17 @@ const StructuralSimilarity = () => {
         {summary && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompounds')}
+              <span className="text-daikin-blue font-bold">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompounds')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.pathways.toLocaleString()}</span> {t('common.pathways')}
+              <span className="text-daikin-blue font-bold">{summary.pathways.toLocaleString()}</span> {t('common.pathways')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.compounds_with_fingerprints}</span> {t('tier1.fingerprinted')}
+              <span className="text-daikin-blue font-bold">{summary.compounds_with_fingerprints}</span> {t('tier1.fingerprinted')}
             </div>
             {tier2Coverage && (
               <div className="text-gray-600">
-                <span className="text-chemours-red font-bold">
+                <span className="text-daikin-blue font-bold">
                   {tier2Coverage.resolved_precursors}/{tier2Coverage.resolvable_precursors}
                 </span>{" "}
                 {t('tier1.resolved')} ({(tier2Coverage.resolution_rate * 100).toFixed(0)}%)
@@ -323,14 +323,14 @@ const StructuralSimilarity = () => {
             )}
           </>
         )}
-      </ChemoursHeader>
+      </DaikinHeader>
 
       <main className="container mx-auto px-4 py-8 space-y-6">
         {/* Input Section */}
         <Card className="bg-white border-gray-200 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-chemours-dark flex items-center gap-2">
-              <Fingerprint className="h-5 w-5 text-chemours-red" />
+            <CardTitle className="text-daikin-dark flex items-center gap-2">
+              <Fingerprint className="h-5 w-5 text-daikin-blue" />
               {t('tier1.compoundQuery')}
             </CardTitle>
             <CardDescription>
@@ -367,8 +367,8 @@ const StructuralSimilarity = () => {
                     variant={smiles === c.smiles ? "default" : "outline"}
                     className={`cursor-pointer ${
                       smiles === c.smiles
-                        ? "bg-chemours-red text-white"
-                        : "border-gray-400 text-gray-600 hover:border-chemours-red hover:text-chemours-red"
+                        ? "bg-daikin-blue text-white"
+                        : "border-gray-400 text-gray-600 hover:border-daikin-blue hover:text-daikin-blue"
                     }`}
                     onClick={() => selectDemo(c)}
                   >
@@ -381,7 +381,7 @@ const StructuralSimilarity = () => {
             <Button
               onClick={handleQuery}
               disabled={isLoading || !smiles.trim()}
-              className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+              className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
             >
               {isLoading ? (
                 <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('tier1.analyzingStructure')}</>
@@ -404,17 +404,17 @@ const StructuralSimilarity = () => {
                       {result.risk_signal}
                     </Badge>
                     <div>
-                      <p className="text-lg font-bold text-chemours-dark">{result.query_name}</p>
+                      <p className="text-lg font-bold text-daikin-dark">{result.query_name}</p>
                       <p className="text-xs text-gray-400 font-mono truncate max-w-md">{result.query_smiles}</p>
                     </div>
                   </div>
                   <div className="flex gap-6 text-center">
                     <div>
-                      <p className="text-2xl font-bold text-chemours-dark">{result.n_neighbors_with_pathways}</p>
+                      <p className="text-2xl font-bold text-daikin-dark">{result.n_neighbors_with_pathways}</p>
                       <p className="text-xs text-gray-500">Neighbors with pathways</p>
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-chemours-dark">{(result.avg_similarity * 100).toFixed(0)}%</p>
+                      <p className="text-2xl font-bold text-daikin-dark">{(result.avg_similarity * 100).toFixed(0)}%</p>
                       <p className="text-xs text-gray-500">Avg similarity</p>
                     </div>
                   </div>
@@ -427,8 +427,8 @@ const StructuralSimilarity = () => {
               {/* Top Endpoints */}
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-chemours-dark flex items-center gap-2">
-                    <FlaskConical className="h-5 w-5 text-chemours-orange" />
+                  <CardTitle className="text-daikin-dark flex items-center gap-2">
+                    <FlaskConical className="h-5 w-5 text-daikin-accent" />
                     {t('tier1.degradationEndpoints')}
                   </CardTitle>
                   <CardDescription>
@@ -441,11 +441,11 @@ const StructuralSimilarity = () => {
                       {result.top_endpoints.map((ep, i) => (
                         <div key={i} className="flex items-center justify-between">
                           <div className="flex items-center gap-2 flex-1">
-                            <span className="text-sm font-medium text-chemours-dark w-32 truncate">{ep.endpoint}</span>
+                            <span className="text-sm font-medium text-daikin-dark w-32 truncate">{ep.endpoint}</span>
                             <Progress value={ep.fraction * 100} className="flex-1 h-2" />
                           </div>
                           <div className="text-right ml-3">
-                            <span className="text-sm font-bold text-chemours-dark">{ep.count}</span>
+                            <span className="text-sm font-bold text-daikin-dark">{ep.count}</span>
                             <span className="text-xs text-gray-400 ml-1">({(ep.fraction * 100).toFixed(0)}%)</span>
                           </div>
                         </div>
@@ -460,8 +460,8 @@ const StructuralSimilarity = () => {
               {/* Mechanisms */}
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-chemours-dark flex items-center gap-2">
-                    <Beaker className="h-5 w-5 text-chemours-orange" />
+                  <CardTitle className="text-daikin-dark flex items-center gap-2">
+                    <Beaker className="h-5 w-5 text-daikin-accent" />
                     {t('tier1.degradationMechanisms')}
                   </CardTitle>
                   <CardDescription>
@@ -477,7 +477,7 @@ const StructuralSimilarity = () => {
                           <Badge
                             key={mechanism}
                             variant="outline"
-                            className="border-chemours-dark/30 text-chemours-dark"
+                            className="border-daikin-dark/30 text-daikin-dark"
                           >
                             {mechanism.replace(/_/g, " ")} ({count})
                           </Badge>
@@ -494,8 +494,8 @@ const StructuralSimilarity = () => {
             {tier2Result && tier2Result.patterns_detected.length > 0 && (
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-chemours-dark flex items-center gap-2">
-                    <Shapes className="h-5 w-5 text-chemours-orange" />
+                  <CardTitle className="text-daikin-dark flex items-center gap-2">
+                    <Shapes className="h-5 w-5 text-daikin-accent" />
                     {t('tier1.substructureFingerprint')}
                   </CardTitle>
                   <CardDescription>
@@ -551,7 +551,7 @@ const StructuralSimilarity = () => {
                         { label: "PF Carbons", value: tier2Result.fluorine_metrics.perfluoro_carbon_count },
                       ].map((m, i) => (
                         <div key={i} className="bg-gray-50 rounded-lg p-2 text-center">
-                          <p className="text-lg font-bold text-chemours-dark">{m.value}{m.unit ? ` ${m.unit}` : ""}</p>
+                          <p className="text-lg font-bold text-daikin-dark">{m.value}{m.unit ? ` ${m.unit}` : ""}</p>
                           <p className="text-xs text-gray-500">{m.label}</p>
                         </div>
                       ))}
@@ -570,8 +570,8 @@ const StructuralSimilarity = () => {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <TrendingUp className="h-5 w-5 text-chemours-orange" />
-                      <CardTitle className="text-chemours-dark">
+                      <TrendingUp className="h-5 w-5 text-daikin-accent" />
+                      <CardTitle className="text-daikin-dark">
                         {t('tier1.patternBasedCorrelations')} ({tier2Result.endpoint_correlations.length})
                       </CardTitle>
                     </div>
@@ -595,11 +595,11 @@ const StructuralSimilarity = () => {
                       {tier2Result.endpoint_correlations.map((ec, i) => (
                         <div key={i} className="p-4 bg-gray-50 rounded-lg border border-gray-100">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-semibold text-chemours-dark">
+                            <span className="text-sm font-semibold text-daikin-dark">
                               {ec.endpoint_bucket.replace(/_/g, " ")}
                             </span>
                             <div className="text-right">
-                              <span className="text-lg font-bold text-chemours-dark">
+                              <span className="text-lg font-bold text-daikin-dark">
                                 {(ec.confidence * 100).toFixed(0)}%
                               </span>
                               <span className="text-xs text-gray-400 ml-1">
@@ -612,7 +612,7 @@ const StructuralSimilarity = () => {
                           <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden mb-2">
                             {/* CI range background */}
                             <div
-                              className="absolute h-full bg-chemours-orange/20 rounded-full"
+                              className="absolute h-full bg-daikin-accent/20 rounded-full"
                               style={{
                                 left: `${ec.ci_low * 100}%`,
                                 width: `${(ec.ci_high - ec.ci_low) * 100}%`,
@@ -620,7 +620,7 @@ const StructuralSimilarity = () => {
                             />
                             {/* Point estimate */}
                             <div
-                              className="absolute h-full bg-gradient-to-r from-chemours-red to-chemours-orange rounded-full"
+                              className="absolute h-full bg-gradient-to-r from-daikin-blue to-daikin-accent rounded-full"
                               style={{ width: `${ec.confidence * 100}%` }}
                             />
                           </div>
@@ -657,8 +657,8 @@ const StructuralSimilarity = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Atom className="h-5 w-5 text-chemours-orange" />
-                    <CardTitle className="text-chemours-dark">
+                    <Atom className="h-5 w-5 text-daikin-accent" />
+                    <CardTitle className="text-daikin-dark">
                       {t('tier1.structurallySimilarCompounds')} ({result.similar_in_epa.length} EPA + {result.similar_with_pathways.length} {t('tier1.withPathways')})
                     </CardTitle>
                   </div>
@@ -683,13 +683,13 @@ const StructuralSimilarity = () => {
                             }}
                           >
                             <div>
-                              <p className="font-medium text-chemours-dark">{n.name}</p>
+                              <p className="font-medium text-daikin-dark">{n.name}</p>
                               <p className="text-xs text-gray-500">
                                 {n.pathways_count} pathways | {n.evidence_count} citations
                               </p>
                             </div>
                             <div className="text-right">
-                              <p className="text-lg font-bold text-chemours-dark">{(n.similarity * 100).toFixed(0)}%</p>
+                              <p className="text-lg font-bold text-daikin-dark">{(n.similarity * 100).toFixed(0)}%</p>
                               <p className="text-xs text-gray-400">similarity</p>
                             </div>
                           </div>
@@ -716,9 +716,9 @@ const StructuralSimilarity = () => {
                           <tbody>
                             {result.similar_in_epa.map((n, i) => (
                               <tr key={i} className="border-b border-gray-100 hover:bg-gray-50">
-                                <td className="py-2 text-chemours-dark font-medium truncate max-w-[200px]">{n.name}</td>
+                                <td className="py-2 text-daikin-dark font-medium truncate max-w-[200px]">{n.name}</td>
                                 <td className="py-2 text-gray-500 font-mono text-xs">{n.cas || "—"}</td>
-                                <td className="py-2 text-right font-bold text-chemours-dark">{(n.similarity * 100).toFixed(1)}%</td>
+                                <td className="py-2 text-right font-bold text-daikin-dark">{(n.similarity * 100).toFixed(1)}%</td>
                                 <td className="py-2 text-right text-gray-600">{n.f_count}</td>
                                 <td className="py-2 text-right text-gray-600">{n.mw.toFixed(0)}</td>
                               </tr>
@@ -740,8 +740,8 @@ const StructuralSimilarity = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-chemours-orange" />
-                    <CardTitle className="text-chemours-dark">
+                    <FileText className="h-5 w-5 text-daikin-accent" />
+                    <CardTitle className="text-daikin-dark">
                       {t('tier1.evidenceCitations')} ({result.evidence_citations.length} DOIs)
                     </CardTitle>
                   </div>
@@ -756,7 +756,7 @@ const StructuralSimilarity = () => {
                         <div key={i} className="p-4 bg-gray-50 rounded-lg border border-gray-100">
                           <div className="flex items-start justify-between gap-3 mb-2">
                             <div className="flex items-center gap-2">
-                              <Badge variant="outline" className="text-xs border-chemours-dark/30">
+                              <Badge variant="outline" className="text-xs border-daikin-dark/30">
                                 {cite.precursor} &rarr; {cite.product}
                               </Badge>
                             </div>
@@ -773,7 +773,7 @@ const StructuralSimilarity = () => {
                             )}
                           </div>
                           {cite.quote && (
-                            <p className="text-sm text-gray-600 italic border-l-2 border-chemours-orange/30 pl-3">
+                            <p className="text-sm text-gray-600 italic border-l-2 border-daikin-accent/30 pl-3">
                               "{cite.quote}"
                             </p>
                           )}
@@ -802,8 +802,8 @@ const StructuralSimilarity = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Database className="h-5 w-5 text-chemours-orange" />
-                    <CardTitle className="text-chemours-dark">
+                    <Database className="h-5 w-5 text-daikin-accent" />
+                    <CardTitle className="text-daikin-dark">
                       {t('tier1.corpusRulesExplorer')}
                       {tier2Coverage && (
                         <span className="text-sm font-normal text-gray-500 ml-2">
@@ -825,7 +825,7 @@ const StructuralSimilarity = () => {
                 <CardContent>
                   {isLoadingRules ? (
                     <div className="flex items-center justify-center py-8">
-                      <Loader2 className="h-6 w-6 animate-spin text-chemours-red" />
+                      <Loader2 className="h-6 w-6 animate-spin text-daikin-blue" />
                       <span className="ml-2 text-gray-500">Loading rules...</span>
                     </div>
                   ) : (
@@ -898,13 +898,13 @@ const StructuralSimilarity = () => {
                               <tbody>
                                 {tier2Rules.map((rule, i) => (
                                   <tr key={i} className="border-b border-gray-100 hover:bg-gray-50">
-                                    <td className="py-2 text-chemours-dark font-medium">
+                                    <td className="py-2 text-daikin-dark font-medium">
                                       {rule.pattern_name.replace(/_/g, " ")}
                                     </td>
                                     <td className="py-2 text-gray-600">
                                       {rule.endpoint_bucket.replace(/_/g, " ")}
                                     </td>
-                                    <td className="py-2 text-right font-bold text-chemours-dark">
+                                    <td className="py-2 text-right font-bold text-daikin-dark">
                                       {(rule.confidence * 100).toFixed(0)}%
                                     </td>
                                     <td className="py-2 text-right text-gray-400 text-xs">
@@ -946,27 +946,27 @@ const StructuralSimilarity = () => {
         {!result && !isLoading && (
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardContent className="py-16 text-center">
-              <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
+              <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-daikin-blue to-daikin-accent flex items-center justify-center">
                 <Fingerprint className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('tier1.structuralSimilaritySearch')}</h3>
+              <h3 className="text-xl font-semibold text-daikin-dark mb-2">{t('tier1.structuralSimilaritySearch')}</h3>
               <p className="text-gray-500 max-w-lg mx-auto">
                 {t('tier1.searchDescription')}
               </p>
               {summary && (
                 <div className="flex justify-center gap-8 mt-6 text-sm text-gray-500 flex-wrap">
                   <div>
-                    <span className="font-bold text-chemours-dark">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompoundsLower')}
+                    <span className="font-bold text-daikin-dark">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompoundsLower')}
                   </div>
                   <div>
-                    <span className="font-bold text-chemours-dark">{summary.pathways.toLocaleString()}</span> {t('common.pathwaysLower')}
+                    <span className="font-bold text-daikin-dark">{summary.pathways.toLocaleString()}</span> {t('common.pathwaysLower')}
                   </div>
                   <div>
-                    <span className="font-bold text-chemours-dark">{summary.fate_compounds.toLocaleString()}</span> {t('tier1.fateCompounds')}
+                    <span className="font-bold text-daikin-dark">{summary.fate_compounds.toLocaleString()}</span> {t('tier1.fateCompounds')}
                   </div>
                   {tier2Coverage && (
                     <div>
-                      <span className="font-bold text-chemours-dark">
+                      <span className="font-bold text-daikin-dark">
                         {tier2Coverage.resolved_precursors}/{tier2Coverage.resolvable_precursors}
                       </span> {t('tier1.resolvedPrecursors')}
                     </div>

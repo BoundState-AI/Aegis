@@ -13,7 +13,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Search, AlertTriangle, FileText, ChevronsUpDown, Check } from "lucide-react";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import { ProductLabel } from "@/components/pfas/ProductLabel";
@@ -143,28 +143,28 @@ const FateExplorer = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <ChemoursHeader title={t('fateExplorer.title')} subtitle={t('fateExplorer.subtitle')} helpContent={helpContent.fateExplorer}>
+      <DaikinHeader title={t('fateExplorer.title')} subtitle={t('fateExplorer.subtitle')} helpContent={helpContent.fateExplorer}>
         {summary && (
           <>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.total_nodes}</span> {t('common.compounds')}
+              <span className="text-daikin-blue font-bold">{summary.total_nodes}</span> {t('common.compounds')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.total_edges.toLocaleString()}</span> {t('common.transformations')}
+              <span className="text-daikin-blue font-bold">{summary.total_edges.toLocaleString()}</span> {t('common.transformations')}
             </div>
             <div className="text-gray-600">
-              <span className="text-chemours-red font-bold">{summary.haiku_records}</span> {t('common.papersExtracted')}
+              <span className="text-daikin-blue font-bold">{summary.haiku_records}</span> {t('common.papersExtracted')}
             </div>
           </>
         )}
-      </ChemoursHeader>
+      </DaikinHeader>
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Query Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">{t('fateExplorer.queryParameters')}</CardTitle>
+              <CardTitle className="text-daikin-dark">{t('fateExplorer.queryParameters')}</CardTitle>
               <CardDescription>{t('fateExplorer.searchDegradationPathways')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -260,7 +260,7 @@ const FateExplorer = () => {
               <Button
                 onClick={handleSearch}
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
               >
                 {isLoading ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.searching')}</>
@@ -282,7 +282,7 @@ const FateExplorer = () => {
                       <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-amber-100 flex items-center justify-center">
                         <AlertTriangle className="h-8 w-8 text-amber-600" />
                       </div>
-                      <h3 className="text-xl font-semibold text-chemours-dark mb-2">
+                      <h3 className="text-xl font-semibold text-daikin-dark mb-2">
                         {t('fateExplorer.compoundNotInDatabase')}
                       </h3>
                       <p className="text-gray-500 max-w-md mx-auto mb-2">
@@ -299,8 +299,8 @@ const FateExplorer = () => {
                 {results.compound_found && results.total_transformations === 0 && (
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardHeader>
-                      <CardTitle className="text-chemours-dark flex items-center gap-2">
-                        <AlertTriangle className="h-5 w-5 text-chemours-orange" />
+                      <CardTitle className="text-daikin-dark flex items-center gap-2">
+                        <AlertTriangle className="h-5 w-5 text-daikin-accent" />
                         0 {t('fateExplorer.degradationPathwaysFound')}
                       </CardTitle>
                       <CardDescription>
@@ -324,8 +324,8 @@ const FateExplorer = () => {
                     {/* Summary Card */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
-                        <CardTitle className="text-chemours-dark flex items-center gap-2">
-                          <AlertTriangle className="h-5 w-5 text-chemours-orange" />
+                        <CardTitle className="text-daikin-dark flex items-center gap-2">
+                          <AlertTriangle className="h-5 w-5 text-daikin-accent" />
                           {results.total_transformations} {t('fateExplorer.degradationPathwaysFound')}
                         </CardTitle>
                         <CardDescription>
@@ -380,7 +380,7 @@ const FateExplorer = () => {
                           <TableBody>
                             {results.transformations.map((tr, i) => (
                               <TableRow key={i} className="border-gray-200 hover:bg-gray-50">
-                                <TableCell className="font-medium text-chemours-dark">
+                                <TableCell className="font-medium text-daikin-dark">
                                   <ProductLabel value={tr.child} />
                                 </TableCell>
                                 <TableCell>
@@ -407,7 +407,7 @@ const FateExplorer = () => {
                                 </TableCell>
                                 <TableCell>
                                   {tr.is_regulated ? (
-                                    <Badge className="bg-chemours-red">{t('common.regulated')}</Badge>
+                                    <Badge className="bg-daikin-blue">{t('common.regulated')}</Badge>
                                   ) : (
                                     <span className="text-gray-400">—</span>
                                   )}
@@ -416,14 +416,14 @@ const FateExplorer = () => {
                                   {tr.citations && tr.citations.length > 0 ? (
                                     <Popover>
                                       <PopoverTrigger asChild>
-                                        <Button variant="ghost" size="sm" className="h-auto p-1 text-gray-500 hover:text-chemours-red">
+                                        <Button variant="ghost" size="sm" className="h-auto p-1 text-gray-500 hover:text-daikin-blue">
                                           <FileText className="h-4 w-4 mr-1" />
                                           {tr.source_count}
                                         </Button>
                                       </PopoverTrigger>
                                       <PopoverContent className="w-80" align="end">
                                         <div className="space-y-2">
-                                          <h4 className="font-medium text-sm text-chemours-dark">{t('fateExplorer.sourceReferences')}</h4>
+                                          <h4 className="font-medium text-sm text-daikin-dark">{t('fateExplorer.sourceReferences')}</h4>
                                           <div className="space-y-1 max-h-48 overflow-y-auto">
                                             {tr.citations.map((doi, idx) => (
                                               <a
@@ -457,7 +457,7 @@ const FateExplorer = () => {
                     {/* Degradation Types Legend */}
                     <Card className="bg-white border-gray-200 shadow-sm">
                       <CardHeader>
-                        <CardTitle className="text-chemours-dark text-sm">{t('fateExplorer.degradationTypesInResults')}</CardTitle>
+                        <CardTitle className="text-daikin-dark text-sm">{t('fateExplorer.degradationTypesInResults')}</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="flex flex-wrap gap-2">
@@ -477,10 +477,10 @@ const FateExplorer = () => {
             {!results && (
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
-                  <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
+                  <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-daikin-blue to-daikin-accent flex items-center justify-center">
                     <Search className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('fateExplorer.pfasFateKnowledgeGraph')}</h3>
+                  <h3 className="text-xl font-semibold text-daikin-dark mb-2">{t('fateExplorer.pfasFateKnowledgeGraph')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
                     {summary
                       ? t('fateExplorer.queryDescription', { edges: summary.total_edges.toLocaleString(), parents: summary.parent_compounds, papers: summary.haiku_records })

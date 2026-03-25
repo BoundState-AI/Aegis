@@ -32,7 +32,7 @@ export const ProductLabel = ({ value }: ProductLabelProps) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <span className="inline-flex items-center gap-1 cursor-help">
-            <span className="font-semibold text-chemours-red">{productId}</span>
+            <span className="font-semibold text-daikin-blue">{productId}</span>
             <span className="text-gray-500">(M/Z={mzValue})</span>
             <Info className="h-3.5 w-3.5 text-muted-foreground" />
           </span>
@@ -57,7 +57,7 @@ export const ProductLabel = ({ value }: ProductLabelProps) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <span className="inline-flex items-center gap-1 cursor-help">
-            <span className="font-semibold text-chemours-red">{value}</span>
+            <span className="font-semibold text-daikin-blue">{value}</span>
             <Info className="h-3.5 w-3.5 text-muted-foreground" />
           </span>
         </TooltipTrigger>

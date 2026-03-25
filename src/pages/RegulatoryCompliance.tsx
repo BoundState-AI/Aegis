@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe, Zap } from "lucide-react";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import Intelligence, { type IntelligenceTabKey } from "./Intelligence";
@@ -188,7 +188,7 @@ const RegulatoryCompliance = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title={t('regulatory.title')} subtitle={t('regulatory.subtitle')} helpContent={helpContent.regulatory} />
+      <DaikinHeader title={t('regulatory.title')} subtitle={t('regulatory.subtitle')} helpContent={helpContent.regulatory} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-6 flex flex-wrap gap-2">
@@ -229,7 +229,7 @@ const RegulatoryCompliance = () => {
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">{t('regulatory.checkCompliance')}</CardTitle>
+              <CardTitle className="text-daikin-dark">{t('regulatory.checkCompliance')}</CardTitle>
               <CardDescription>{t('regulatory.enterMaterial')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -263,7 +263,7 @@ const RegulatoryCompliance = () => {
                 <Button
                   onClick={handleCheck}
                   disabled={checkMutation.isPending || !material}
-                  className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                  className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
                 >
                 {checkMutation.isPending ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.checking')}</>
@@ -282,7 +282,7 @@ const RegulatoryCompliance = () => {
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-chemours-dark">{checkResult.material} {t('regulatory.complianceStatus')}</CardTitle>
+                      <CardTitle className="text-daikin-dark">{checkResult.material} {t('regulatory.complianceStatus')}</CardTitle>
                       <Badge className={getRiskColor(checkResult.overall_risk)}>{getRiskLabel(checkResult.overall_risk)}</Badge>
                     </div>
                     <CardDescription>
@@ -354,7 +354,7 @@ const RegulatoryCompliance = () => {
                             <div className="flex items-center gap-3">
                               {getStatusIcon(reg.status)}
                               <div>
-                                <p className="font-medium text-chemours-dark">{reg.framework}</p>
+                                <p className="font-medium text-daikin-dark">{reg.framework}</p>
                                 {isApacJurisdiction(reg.framework) && (
                                   <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
                                     {t("regulatory.apac")}
@@ -384,7 +384,7 @@ const RegulatoryCompliance = () => {
                             <div className="flex items-center gap-3">
                               {getStatusIcon(reg.status)}
                               <div>
-                                <p className="font-medium text-chemours-dark">{reg.framework}</p>
+                                <p className="font-medium text-daikin-dark">{reg.framework}</p>
                                 {isApacJurisdiction(reg.framework) && (
                                   <Badge variant="outline" className="mt-1 text-xs bg-amber-50 text-amber-700 border-amber-200">
                                     {t("regulatory.apac")}
@@ -425,7 +425,7 @@ const RegulatoryCompliance = () => {
                       {(checkResult.apac_assertions ?? []).slice(0, 10).map((item) => (
                         <div key={item.id} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
-                            <span className="font-semibold text-chemours-dark">{item.country}</span>
+                            <span className="font-semibold text-daikin-dark">{item.country}</span>
                             <Badge variant="outline" className="text-xs border-gray-300">{getStatusLabel(item.status)}</Badge>
                             <Badge variant="outline" className={`text-xs ${getApacConfidenceBadgeClass(item.confidence)}`}>
                               {item.confidence.toFixed(2)}
@@ -457,8 +457,8 @@ const RegulatoryCompliance = () => {
                 {cascade && Object.keys(cascade.predictions).length > 0 && (
                   <Card className="bg-white border-gray-200 shadow-sm">
                     <CardHeader>
-                      <CardTitle className="text-chemours-dark flex items-center gap-2">
-                        <Calendar className="h-5 w-5 text-chemours-orange" />
+                      <CardTitle className="text-daikin-dark flex items-center gap-2">
+                        <Calendar className="h-5 w-5 text-daikin-accent" />
                         {cascade.forecast_year} {t("regulatory.regulatoryForecast")}
                       </CardTitle>
                     </CardHeader>
@@ -467,7 +467,7 @@ const RegulatoryCompliance = () => {
                         {Object.entries(cascade.predictions).map(([key, pred]) => (
                           <div key={key} className="p-3 bg-gray-50 rounded-lg">
                             <div className="flex items-center justify-between mb-2">
-                              <span className="font-medium text-chemours-dark">{key.replace(/_/g, " ")}</span>
+                              <span className="font-medium text-daikin-dark">{key.replace(/_/g, " ")}</span>
                               <Badge className={getRegulatoryStageStyle(pred.regulatory_stage)}>
                                 {getRegulatoryStageLabel(pred.regulatory_stage)}
                               </Badge>
@@ -486,7 +486,7 @@ const RegulatoryCompliance = () => {
                           </div>
                         ))}
                       </div>
-                      <p className="mt-4 text-sm text-chemours-red italic">{cascade.recommendation}</p>
+                      <p className="mt-4 text-sm text-daikin-blue italic">{cascade.recommendation}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -494,10 +494,10 @@ const RegulatoryCompliance = () => {
             ) : (
               <Card className="bg-white border-gray-200 shadow-sm">
                 <CardContent className="py-16 text-center">
-                  <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-chemours-red to-chemours-orange flex items-center justify-center">
+                  <div className="h-16 w-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-daikin-blue to-daikin-accent flex items-center justify-center">
                     <Globe className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-chemours-dark mb-2">{t('regulatory.title')}</h3>
+                  <h3 className="text-xl font-semibold text-daikin-dark mb-2">{t('regulatory.title')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
                     {t("regulatory.description")}
                   </p>

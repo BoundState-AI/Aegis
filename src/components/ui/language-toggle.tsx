@@ -15,7 +15,7 @@ export const LanguageToggle = () => {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="flex items-center gap-1.5 text-gray-600 hover:text-chemours-red hover:bg-gray-100"
+      className="flex items-center gap-1.5 text-gray-600 hover:text-daikin-blue hover:bg-gray-100"
     >
       <Languages className="h-4 w-4" />
       <span className="text-xs font-medium">

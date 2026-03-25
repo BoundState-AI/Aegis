@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangle, ExternalLink } from "lucide-react";
 import AnalysisResults from "@/components/pfas/AnalysisResults";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { apiPost, apiPostBlob } from "@/lib/apiClient";
 import { analyzeResponseSchema, type AnalyzeResponse } from "@/lib/apiSchemas";
@@ -126,14 +126,14 @@ const PFASAnalysis = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title={t('analysis.title')} subtitle={t('analysis.subtitle')} helpContent={helpContent.analysis} />
+      <DaikinHeader title={t('analysis.title')} subtitle={t('analysis.subtitle')} helpContent={helpContent.analysis} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">{t('analysis.analysisParameters')}</CardTitle>
+              <CardTitle className="text-daikin-dark">{t('analysis.analysisParameters')}</CardTitle>
               <CardDescription>{t('analysis.configureDegradationConditions')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -223,7 +223,7 @@ const PFASAnalysis = () => {
               <Button
                 onClick={handleAnalyze}
                 disabled={isAnalyzing || !formData.material}
-                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
               >
                 {isAnalyzing ? (
                   <>
@@ -259,23 +259,23 @@ const PFASAnalysis = () => {
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-chemours-dark">{results.compound_evaluated} {t('analysis.analysisResults')}</CardTitle>
-                      <Badge className="bg-gradient-to-r from-chemours-red to-chemours-orange text-white">{results.pfas_findings.length} Pathways</Badge>
+                      <CardTitle className="text-daikin-dark">{results.compound_evaluated} {t('analysis.analysisResults')}</CardTitle>
+                      <Badge className="bg-gradient-to-r from-daikin-blue to-daikin-accent text-white">{results.pfas_findings.length} Pathways</Badge>
                     </div>
                     <CardDescription>{results.summary}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <p className="text-2xl font-bold text-chemours-dark">{formData.temperature}°C</p>
+                        <p className="text-2xl font-bold text-daikin-dark">{formData.temperature}°C</p>
                         <p className="text-sm text-gray-500">{t('common.temperature')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <p className="text-2xl font-bold text-chemours-dark capitalize">{formData.atmosphere}</p>
+                        <p className="text-2xl font-bold text-daikin-dark capitalize">{formData.atmosphere}</p>
                         <p className="text-sm text-gray-500">{t('common.atmosphere')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <p className="text-2xl font-bold text-chemours-dark">{formData.time}h</p>
+                        <p className="text-2xl font-bold text-daikin-dark">{formData.time}h</p>
                         <p className="text-sm text-gray-500">{t('common.exposure')}</p>
                       </div>
                     </div>
@@ -285,15 +285,15 @@ const PFASAnalysis = () => {
                 {/* Detailed Results */}
                 <Card className="bg-white border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-chemours-dark">{t('analysis.pfasFindings')}</CardTitle>
+                    <CardTitle className="text-daikin-dark">{t('analysis.pfasFindings')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
                       {results.pfas_findings.map((finding, i) => (
-                        <div key={i} className="p-4 bg-gray-50 rounded-lg border-l-4 border-chemours-red">
+                        <div key={i} className="p-4 bg-gray-50 rounded-lg border-l-4 border-daikin-blue">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-chemours-dark text-lg">{finding.product}</span>
-                            <Badge variant="outline" className="border-chemours-red text-chemours-red">
+                            <span className="font-medium text-daikin-dark text-lg">{finding.product}</span>
+                            <Badge variant="outline" className="border-daikin-blue text-daikin-blue">
                               {(finding.overall_confidence * 100).toFixed(0)}% {t('common.confidence')}
                             </Badge>
                           </div>
@@ -342,7 +342,7 @@ const PFASAnalysis = () => {
                                   href={`https://doi.org/${doi}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-chemours-red/10 text-chemours-red hover:bg-chemours-red/20 transition-colors"
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-daikin-blue/10 text-daikin-blue hover:bg-daikin-blue/20 transition-colors"
                                 >
                                   <ExternalLink className="h-3 w-3" />
                                   <span className="font-mono text-xs">{doi}</span>
@@ -378,15 +378,15 @@ const PFASAnalysis = () => {
                   </p>
                   <div className="flex justify-center gap-6 mt-6">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-chemours-red">6,141</p>
+                      <p className="text-2xl font-bold text-daikin-blue">6,141</p>
                       <p className="text-sm text-gray-500">{t('analysis.transformations')}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-chemours-red">228</p>
+                      <p className="text-2xl font-bold text-daikin-blue">228</p>
                       <p className="text-sm text-gray-500">{t('analysis.papers')}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-chemours-red">216</p>
+                      <p className="text-2xl font-bold text-daikin-blue">216</p>
                       <p className="text-sm text-gray-500">{t('analysis.compounds')}</p>
                     </div>
                   </div>

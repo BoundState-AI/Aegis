@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, FileText, Download, Lock, ChevronRight } from "lucide-react";
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { apiGet } from "@/lib/apiClient";
 import { executiveReportSchema, type ExecutiveReport } from "@/lib/apiSchemas";
@@ -104,14 +104,14 @@ const ExecutiveReports = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader title={t('reports.title')} subtitle={t('reports.subtitle')} helpContent={helpContent.reports} />
+      <DaikinHeader title={t('reports.title')} subtitle={t('reports.subtitle')} helpContent={helpContent.reports} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Input Panel */}
           <Card className="bg-white border-gray-200 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-chemours-dark">{t('reports.reportConfiguration')}</CardTitle>
+              <CardTitle className="text-daikin-dark">{t('reports.reportConfiguration')}</CardTitle>
               <CardDescription>{t('reports.configureParameters')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -138,7 +138,7 @@ const ExecutiveReports = () => {
               <Button
                 onClick={handleGenerate}
                 disabled={isLoading || !material}
-                className="w-full bg-gradient-to-r from-chemours-red to-chemours-orange hover:opacity-90 text-white"
+                className="w-full bg-gradient-to-r from-daikin-blue to-daikin-accent hover:opacity-90 text-white"
               >
                 {isLoading ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t('common.generating')}</>
@@ -158,7 +158,7 @@ const ExecutiveReports = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-chemours-dark">{report.title}</CardTitle>
+                        <CardTitle className="text-daikin-dark">{report.title}</CardTitle>
                         <CardDescription>
                           {t('reports.generated')} {new Date(report.generated).toLocaleString()}
                         </CardDescription>
@@ -180,8 +180,8 @@ const ExecutiveReports = () => {
                 {report.sections.map((section, i) => (
                   <Card key={i} className="bg-white border-gray-200 shadow-sm">
                     <CardHeader>
-                      <CardTitle className="text-chemours-dark flex items-center gap-2">
-                        <ChevronRight className="h-5 w-5 text-chemours-orange" />
+                      <CardTitle className="text-daikin-dark flex items-center gap-2">
+                        <ChevronRight className="h-5 w-5 text-daikin-accent" />
                         {section.title}
                       </CardTitle>
                     </CardHeader>
@@ -197,7 +197,7 @@ const ExecutiveReports = () => {
                           </p>
                           <div className="flex flex-wrap gap-2">
                             {section.data.products.map((p: string) => (
-                              <Badge key={p} variant="outline" className="border-chemours-orange text-chemours-orange">{p}</Badge>
+                              <Badge key={p} variant="outline" className="border-daikin-accent text-daikin-accent">{p}</Badge>
                             ))}
                           </div>
                         </div>

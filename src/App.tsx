@@ -87,8 +87,8 @@ const Navigation = () => {
                   to={item.path}
                   className={`relative flex flex-col items-center rounded-lg px-3 py-2 transition-colors ${
                     isActive
-                      ? "bg-gradient-to-r from-chemours-red/10 to-chemours-orange/10 text-chemours-red"
-                      : "text-gray-500 hover:bg-gray-100 hover:text-chemours-red"
+                      ? "bg-gradient-to-r from-daikin-blue/10 to-daikin-accent/10 text-daikin-blue"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-daikin-blue"
                   }`}
                 >
                   {item.path === "/regulatory" && pendingReviewCount > 0 && (
@@ -110,7 +110,7 @@ const Navigation = () => {
                 queryClient.clear();
                 navigate("/login", { replace: true });
               }}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-chemours-red"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-daikin-blue"
             >
               <LogOut className="h-4 w-4" />
               Sign out

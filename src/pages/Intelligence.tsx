@@ -3,7 +3,7 @@ import { Activity, CheckCircle2, Clock3, Eye, Loader2, ShieldAlert, Sparkles } f
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import ChemoursHeader from "@/components/layout/ChemoursHeader";
+import DaikinHeader from "@/components/layout/DaikinHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -269,7 +269,7 @@ const Intelligence = ({
             <CardHeader className="pb-2">
               <CardDescription>{t("intelligence.cards.recentSignals")}</CardDescription>
               <CardTitle className="flex items-center gap-2">
-                <Activity className="h-5 w-5 text-chemours-red" />
+                <Activity className="h-5 w-5 text-daikin-blue" />
                 {signals.length}
               </CardTitle>
             </CardHeader>
@@ -335,7 +335,7 @@ const Intelligence = ({
                     <Badge variant="secondary">{s.classification || t("intelligence.signals.unclassified")}</Badge>
                     <span className="text-xs text-gray-500">{s.country || t("common.notAvailable")}</span>
                   </div>
-                  <div className="text-sm font-medium text-chemours-dark">
+                  <div className="text-sm font-medium text-daikin-dark">
                     {s.source_label || t("intelligence.signals.unknownSource")}
                   </div>
                   <div className="text-sm text-gray-600">{s.summary || t("intelligence.signals.noSummary")}</div>
@@ -493,7 +493,7 @@ const Intelligence = ({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ChemoursHeader
+      <DaikinHeader
         title={t("intelligence.title")}
         subtitle={t("intelligence.subtitle")}
         helpContent={helpContent.intelligence}

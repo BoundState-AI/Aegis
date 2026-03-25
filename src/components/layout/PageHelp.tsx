@@ -26,7 +26,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7 text-gray-400 hover:text-chemours-red"
+          className="h-7 w-7 text-gray-400 hover:text-daikin-blue"
           title={t('pageHelp.title', 'Page help')}
         >
           <HelpCircle className="h-4 w-4" />
@@ -64,7 +64,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
             <ol className="space-y-1.5">
               {content.howToUse.map((step, i) => (
                 <li key={i} className="flex gap-2 text-sm text-gray-600">
-                  <span className="flex-shrink-0 h-5 w-5 rounded-full bg-chemours-red/10 text-chemours-red text-xs font-medium flex items-center justify-center mt-0.5">
+                  <span className="flex-shrink-0 h-5 w-5 rounded-full bg-daikin-blue/10 text-daikin-blue text-xs font-medium flex items-center justify-center mt-0.5">
                     {i + 1}
                   </span>
                   <span>{step}</span>
@@ -158,7 +158,7 @@ const PageHelp = ({ content }: PageHelpProps) => {
                   <Link key={page.path} to={page.path}>
                     <Badge
                       variant="outline"
-                      className="cursor-pointer hover:bg-chemours-red/10 hover:text-chemours-red transition-colors"
+                      className="cursor-pointer hover:bg-daikin-blue/10 hover:text-daikin-blue transition-colors"
                     >
                       {page.name}
                       <ArrowRight className="h-3 w-3 ml-1" />
