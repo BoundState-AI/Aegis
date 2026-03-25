@@ -204,12 +204,12 @@ const ExecutiveReports = () => {
                       )}
 
                       {section.flags && section.flags.length > 0 && (
-                        <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                          <p className="text-sm text-yellow-700 mb-2 font-medium">{t('reports.regulatoryFlags')}</p>
+                        <div className="p-3 bg-daikin-blue/5 rounded-lg border border-daikin-blue/20">
+                          <p className="text-sm text-daikin-accent mb-2 font-medium">{t('reports.regulatoryFlags')}</p>
                           <ul className="space-y-1">
                             {section.flags.map((f, j) => (
                               <li key={j} className="text-gray-600 text-sm flex items-start gap-2">
-                                <span className="text-yellow-600">•</span>
+                                <span className="text-daikin-blue">•</span>
                                 {f}
                               </li>
                             ))}
