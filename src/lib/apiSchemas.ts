@@ -340,7 +340,7 @@ export const executiveReportSchema = z.object({
 const evidenceItemSchema = z.object({
   source: z.string(),
   doi: z.string().nullable(),
-  year: z.number(),
+  year: z.number().nullable(),
   confidence: z.number(),
   finding: z.string(),
   compound: z.string(),
@@ -363,9 +363,9 @@ export const evidenceSourceStatsSchema = z.object({
     }),
   ),
   coverage: z.object({
-    fluoropolymers: z.number(),
+    polymers: z.number(),
     pfas_endpoints: z.number(),
-    transformations: z.number(),
+    total_pathway_citations: z.number(),
   }),
 });
 

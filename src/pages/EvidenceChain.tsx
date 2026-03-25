@@ -100,7 +100,7 @@ const EvidenceChain = () => {
               <span className="text-daikin-blue font-bold">{sourceStats.total_papers}</span> papers
             </div>
             <div className="text-gray-600">
-              <span className="text-daikin-blue font-bold">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</span> {t('common.transformations').toLowerCase()}
+              <span className="text-daikin-blue font-bold">{(sourceStats.coverage?.total_pathway_citations ?? 0).toLocaleString()}</span> {t('common.transformations').toLowerCase()}
             </div>
           </>
         )}
@@ -251,7 +251,7 @@ const EvidenceChain = () => {
                   {sourceStats && (
                     <div className="mt-6 flex justify-center gap-6">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-daikin-blue">{sourceStats.coverage.fluoropolymers}</p>
+                        <p className="text-2xl font-bold text-daikin-blue">{sourceStats.coverage.polymers}</p>
                         <p className="text-sm text-gray-500">{t('evidence.fluoropolymers')}</p>
                       </div>
                       <div className="text-center">
@@ -259,7 +259,7 @@ const EvidenceChain = () => {
                         <p className="text-sm text-gray-500">{t('evidence.pfasEndpoints')}</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-daikin-blue">{(sourceStats.coverage?.transformations ?? 0).toLocaleString()}</p>
+                        <p className="text-2xl font-bold text-daikin-blue">{(sourceStats.coverage?.total_pathway_citations ?? 0).toLocaleString()}</p>
                         <p className="text-sm text-gray-500">{t('common.transformations')}</p>
                       </div>
                     </div>
