@@ -334,6 +334,7 @@ export const executiveReportSchema = z.object({
   classification: z.string(),
   material: z.string(),
   sections: z.array(reportSectionSchema),
+  data_sources: z.record(z.number()).optional(),
 });
 
 const evidenceItemSchema = z.object({
