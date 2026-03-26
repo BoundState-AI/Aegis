@@ -6,6 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SpicyTooltipBody } from "@/components/ui/spicy-tooltip-body";
 
 interface TermWithTooltipProps {
   /** i18n key for the tooltip explanation (e.g., "tooltips.confidence") */
@@ -41,7 +42,9 @@ export const TermWithTooltip = ({
         </span>
       </TooltipTrigger>
       <TooltipContent side={side} className="max-w-xs p-3">
-        <p className="text-sm">{explanation}</p>
+        <SpicyTooltipBody>
+          <p className="text-sm">{explanation}</p>
+        </SpicyTooltipBody>
       </TooltipContent>
     </Tooltip>
   );

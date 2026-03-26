@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SpicyTooltipBody } from "@/components/ui/spicy-tooltip-body";
 
 interface PathwayCardProps {
   pathway: PathwayResult;
@@ -82,10 +83,12 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
                   <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                 </TooltipTrigger>
                 <TooltipContent side="top" className="max-w-xs p-3">
-                  <p className="text-sm">
-                    Reflects agreement across peer-reviewed sources that this pathway occurs
-                    under specified conditions. <strong>Not a statistical probability.</strong>
-                  </p>
+                  <SpicyTooltipBody>
+                    <p className="text-sm">
+                      Reflects agreement across peer-reviewed sources that this pathway occurs
+                      under specified conditions. <strong>Not a statistical probability.</strong>
+                    </p>
+                  </SpicyTooltipBody>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

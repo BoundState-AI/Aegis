@@ -6,6 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SpicyTooltipBody } from "@/components/ui/spicy-tooltip-body";
 
 interface ProductLabelProps {
   /** The product value, e.g., "P1 (M/Z=384.9)" or "PFOA" */
@@ -38,14 +39,14 @@ export const ProductLabel = ({ value }: ProductLabelProps) => {
           </span>
         </TooltipTrigger>
         <TooltipContent side="top" className="max-w-sm p-3">
-          <div className="space-y-2">
+          <SpicyTooltipBody>
             <p className="text-sm">
               <strong>{productId}</strong>: {t('tooltips.productIntermediate.explanation')}
             </p>
             <p className="text-sm text-muted-foreground">
               <strong>M/Z={mzValue}</strong>: {t('tooltips.massToCharge.explanation')}
             </p>
-          </div>
+          </SpicyTooltipBody>
         </TooltipContent>
       </Tooltip>
     );
@@ -62,9 +63,11 @@ export const ProductLabel = ({ value }: ProductLabelProps) => {
           </span>
         </TooltipTrigger>
         <TooltipContent side="top" className="max-w-xs p-3">
-          <p className="text-sm">
-            <strong>{value}</strong>: {t('tooltips.productIntermediate.explanation')}
-          </p>
+          <SpicyTooltipBody>
+            <p className="text-sm">
+              <strong>{value}</strong>: {t('tooltips.productIntermediate.explanation')}
+            </p>
+          </SpicyTooltipBody>
         </TooltipContent>
       </Tooltip>
     );
@@ -82,9 +85,11 @@ export const ProductLabel = ({ value }: ProductLabelProps) => {
           </span>
         </TooltipTrigger>
         <TooltipContent side="top" className="max-w-xs p-3">
-          <p className="text-sm">
-            <strong>M/Z</strong>: {t('tooltips.massToCharge.explanation')}
-          </p>
+          <SpicyTooltipBody>
+            <p className="text-sm">
+              <strong>M/Z</strong>: {t('tooltips.massToCharge.explanation')}
+            </p>
+          </SpicyTooltipBody>
         </TooltipContent>
       </Tooltip>
     );

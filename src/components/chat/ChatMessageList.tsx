@@ -65,11 +65,6 @@ export function ChatMessageList({ messages }: ChatMessageListProps) {
                   Sources: {message.citations.join(", ")}
                 </p>
               )}
-              {message.providerUsed && (
-                <p className="mt-2 text-xs text-gray-500">
-                  Runtime: {message.providerUsed}{message.modelUsed ? ` / ${message.modelUsed}` : ""}
-                </p>
-              )}
               {message.fallbackReason && (
                 <p className="mt-2 text-xs text-gray-500">
                   Fallback: {message.fallbackReason}
