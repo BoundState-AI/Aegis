@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Download, FlaskConical, Thermometer, Wind, Clock, AlertTriangle, ExternalLink } from "lucide-react";
 import AnalysisResults from "@/components/pfas/AnalysisResults";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import { apiPost, apiPostBlob } from "@/lib/apiClient";
+import { createAnalysisAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import { analyzeResponseSchema, type AnalyzeResponse } from "@/lib/apiSchemas";
 
 const COMMON_MATERIALS = [
@@ -53,13 +55,13 @@ const PFASAnalysis = () => {
       setResults(data);
       toast({
         title: t('common.analysisComplete'),
-        description: t('analysis.evaluatedPathways', { compound: data.compound_evaluated, count: data.pfas_findings.length }),
+        description: t('analysis.evaluated', { compound: data.compound_evaluated, count: data.pfas_findings.length }),
       });
     },
     onError: () => {
       toast({
         title: t('common.analysisFailed'),
-        description: t('analysis.connectionFailed'),
+        description: t('common.couldNotConnect'),
         variant: "destructive",
       });
     },
@@ -75,8 +77,8 @@ const PFASAnalysis = () => {
   const handleAnalyze = async () => {
     if (!formData.material) {
       toast({
-        title: t('common.missingMaterial'),
-        description: t('common.pleaseSelectMaterial'),
+        title: t('analysis.missingMaterial'),
+        description: t('analysis.selectMaterialToAnalyze'),
         variant: "destructive"
       });
       return;
@@ -104,18 +106,32 @@ const PFASAnalysis = () => {
 
       toast({
         title: t('common.reportDownloaded'),
-        description: t('common.pdfGeneratedSuccessfully')
+        description: t('analysis.pdfGenerated')
       });
     } catch {
       toast({
         title: t('common.downloadFailed'),
-        description: t('common.couldNotGeneratePdf'),
+        description: t('analysis.pdfFailed'),
         variant: "destructive"
       });
     }
   };
 
   const isAnalyzing = analyzeMutation.isPending;
+  const chatSurfaceHint = useMemo(() => createAnalysisAnswerSurfaceHint({
+    material: formData.material,
+    temperatureC: formData.temperature,
+    atmosphere: formData.atmosphere,
+    timeHours: formData.time,
+    findingsCount: results?.pfas_findings.length ?? 0,
+    summary: results?.summary ?? null,
+    visibleFindings: (results?.pfas_findings || []).slice(0, 12).map((finding) => ({
+      product: finding.product,
+      screening_classification: finding.screening_classification,
+      regulatory_flags_count: finding.regulatory_flags.length,
+      evidence_strength: finding.evidence_strength ?? null,
+    })),
+  }), [formData, results]);
 
   const getTempColor = (temp: number) => {
     if (temp >= 400) return "text-red-400";
@@ -124,7 +140,18 @@ const PFASAnalysis = () => {
     return "text-green-400";
   };
 
+  const getAtmosphereLabel = (atmosphere: string) => {
+    const key = `analysis.atmosphereOptions.${atmosphere}`;
+    const translated = t(key);
+    return translated === key ? atmosphere : translated;
+  };
+
   return (
+    <PageChatProvider
+      pageId="analysis"
+      pageLabel={t("analysis.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader title={t('analysis.title')} subtitle={t('analysis.subtitle')} helpContent={helpContent.analysis} />
 
@@ -142,7 +169,7 @@ const PFASAnalysis = () => {
                 <Label className="text-gray-700">{t('common.material')}</Label>
                 <Select value={formData.material} onValueChange={(val) => setFormData({ ...formData, material: val })}>
                   <SelectTrigger className="mt-2 bg-white border-gray-300">
-                    <SelectValue placeholder="Select material" />
+                    <SelectValue placeholder={t('analysis.selectMaterial')} />
                   </SelectTrigger>
                   <SelectContent>
                     {COMMON_MATERIALS.map((mat) => (
@@ -195,10 +222,10 @@ const PFASAnalysis = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="air">Air (Oxidative)</SelectItem>
-                    <SelectItem value="inert">Inert</SelectItem>
-                    <SelectItem value="nitrogen">Nitrogen (N₂)</SelectItem>
-                    <SelectItem value="oxygen">Oxygen (O₂)</SelectItem>
+                    <SelectItem value="air">{t('analysis.atmosphereOptions.air')}</SelectItem>
+                    <SelectItem value="inert">{t('analysis.atmosphereOptions.inert')}</SelectItem>
+                    <SelectItem value="nitrogen">{t('analysis.atmosphereOptions.nitrogen')}</SelectItem>
+                    <SelectItem value="oxygen">{t('analysis.atmosphereOptions.oxygen')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -260,7 +287,7 @@ const PFASAnalysis = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-daikin-dark">{results.compound_evaluated} {t('analysis.analysisResults')}</CardTitle>
-                      <Badge className="bg-gradient-to-r from-daikin-blue to-daikin-accent text-white">{results.pfas_findings.length} Pathways</Badge>
+                      <Badge className="bg-gradient-to-r from-daikin-blue to-daikin-accent text-white">{results.pfas_findings.length} {t('common.pathways')}</Badge>
                     </div>
                     <CardDescription>{results.summary}</CardDescription>
                   </CardHeader>
@@ -271,7 +298,7 @@ const PFASAnalysis = () => {
                         <p className="text-sm text-gray-500">{t('common.temperature')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <p className="text-2xl font-bold text-daikin-dark capitalize">{formData.atmosphere}</p>
+                        <p className="text-2xl font-bold text-daikin-dark">{getAtmosphereLabel(formData.atmosphere)}</p>
                         <p className="text-sm text-gray-500">{t('common.atmosphere')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
@@ -300,7 +327,7 @@ const PFASAnalysis = () => {
 
                           {finding.pathway.length > 0 && (
                             <div className="flex items-center gap-2 mb-2 text-sm">
-                              <span className="text-gray-500">Pathway:</span>
+                              <span className="text-gray-500">{t('analysis.pathway')}</span>
                               <div className="flex items-center gap-1">
                                 {finding.pathway.map((step, j) => (
                                   <span key={j} className="flex items-center">
@@ -397,6 +424,7 @@ const PFASAnalysis = () => {
         </div>
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

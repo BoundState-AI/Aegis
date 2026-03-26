@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, FileText, Download, Lock, ChevronRight } from "lucide-react";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import { apiGet } from "@/lib/apiClient";
+import { createReportsAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import { executiveReportSchema, type ExecutiveReport } from "@/lib/apiSchemas";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 
@@ -23,6 +25,23 @@ const ExecutiveReports = () => {
   const [includeLitigation, setIncludeLitigation] = useState(true);
   const [includeRegulatory, setIncludeRegulatory] = useState(true);
   const [report, setReport] = useState<ExecutiveReport | null>(null);
+
+  const normalizeEnumKey = (value: string) => value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+
+  const getReportTitle = (reportValue: ExecutiveReport) =>
+    t("reports.aegisRiskAssessmentTitle", { material: reportValue.material });
+
+  const getReportClassificationLabel = (value: string) => {
+    const key = `reports.classificationLabels.${normalizeEnumKey(value)}`;
+    const translated = t(key);
+    return translated === key ? value : translated;
+  };
+
+  const getSectionTitle = (value: string) => {
+    const key = `reports.sectionTitles.${normalizeEnumKey(value)}`;
+    const translated = t(key);
+    return translated === key ? value : translated;
+  };
 
   const generateMutation = useMutation({
     mutationFn: async () => {
@@ -37,13 +56,13 @@ const ExecutiveReports = () => {
       setReport(data);
       toast({
         title: t('common.reportGenerated'),
-        description: `Executive report for ${data.material} ready`,
+        description: t('reports.reportReady', { material: data.material }),
       });
     },
     onError: () => {
       toast({
         title: t('common.reportFailed'),
-        description: "Could not generate report",
+        description: t('common.couldNotGenerate'),
         variant: "destructive",
       });
     },
@@ -64,23 +83,25 @@ const ExecutiveReports = () => {
     if (!report) return;
 
     // Create text content
-    let content = `${report.title}\n`;
-    content += `${"=".repeat(report.title.length)}\n\n`;
-    content += `Generated: ${new Date(report.generated).toLocaleString()}\n`;
-    content += `Classification: ${report.classification}\n\n`;
+    const reportTitle = getReportTitle(report);
+    let content = `${reportTitle}\n`;
+    content += `${"=".repeat(reportTitle.length)}\n\n`;
+    content += `${t('reports.generated')} ${new Date(report.generated).toLocaleString()}\n`;
+    content += `${t('reports.classification')}: ${getReportClassificationLabel(report.classification)}\n\n`;
 
     report.sections.forEach((section) => {
-      content += `\n${section.title}\n`;
-      content += `${"-".repeat(section.title.length)}\n`;
+      const sectionTitle = getSectionTitle(section.title);
+      content += `\n${sectionTitle}\n`;
+      content += `${"-".repeat(sectionTitle.length)}\n`;
       content += `${section.content}\n`;
 
       if (section.flags && section.flags.length > 0) {
-        content += `\nRegulatory Flags:\n`;
+        content += `\n${t('reports.regulatoryFlags')}\n`;
         section.flags.forEach((f) => (content += `  - ${f}\n`));
       }
 
       if (section.similar_cases && section.similar_cases.length > 0) {
-        content += `\nSimilar Cases:\n`;
+        content += `\n${t('reports.similarCases')}\n`;
         section.similar_cases.forEach((c) => (content += `  - ${c}\n`));
       }
     });
@@ -96,13 +117,31 @@ const ExecutiveReports = () => {
 
     toast({
       title: t('common.reportDownloaded'),
-      description: "Executive report saved to downloads",
+      description: t('reports.savedToDownloads'),
     });
   };
 
   const isLoading = generateMutation.isPending;
+  const chatSurfaceHint = useMemo(() => createReportsAnswerSurfaceHint({
+    material,
+    includeLitigation,
+    includeRegulatory,
+    generated: report?.generated ?? null,
+    classification: report?.classification ?? null,
+    visibleSections: (report?.sections || []).slice(0, 12).map((section) => ({
+      title: section.title,
+      flags_count: section.flags?.length ?? 0,
+      similar_cases_count: section.similar_cases?.length ?? 0,
+      product_count: Array.isArray(section.data?.products) ? section.data.products.length : 0,
+    })),
+  }), [includeLitigation, includeRegulatory, material, report]);
 
   return (
+    <PageChatProvider
+      pageId="reports"
+      pageLabel={t("reports.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader title={t('reports.title')} subtitle={t('reports.subtitle')} helpContent={helpContent.reports} />
 
@@ -120,7 +159,7 @@ const ExecutiveReports = () => {
                 <Input
                   value={material}
                   onChange={(e) => setMaterial(e.target.value.toUpperCase())}
-                  placeholder="e.g., PTFE, FEP"
+                  placeholder={t('common.exampleMaterials')}
                   className="bg-white border-gray-300"
                 />
               </div>
@@ -158,7 +197,7 @@ const ExecutiveReports = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-daikin-dark">{report.title}</CardTitle>
+                        <CardTitle className="text-daikin-dark">{getReportTitle(report)}</CardTitle>
                         <CardDescription>
                           {t('reports.generated')} {new Date(report.generated).toLocaleString()}
                         </CardDescription>
@@ -171,7 +210,7 @@ const ExecutiveReports = () => {
                   <CardContent>
                     <div className="flex items-center gap-2 p-3 bg-red-50 rounded-lg border border-red-200">
                       <Lock className="h-5 w-5 text-red-600" />
-                      <span className="text-red-600 font-medium">{report.classification}</span>
+                      <span className="text-red-600 font-medium">{getReportClassificationLabel(report.classification)}</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -182,7 +221,7 @@ const ExecutiveReports = () => {
                     <CardHeader>
                       <CardTitle className="text-daikin-dark flex items-center gap-2">
                         <ChevronRight className="h-5 w-5 text-daikin-accent" />
-                        {section.title}
+                        {getSectionTitle(section.title)}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -192,7 +231,7 @@ const ExecutiveReports = () => {
                         <div>
                           <p className="text-sm text-gray-500 mb-2">
                             <TermWithTooltip explanationKey="tooltips.degradationProducts">
-                              Degradation Products:
+                              {t('reports.degradationProducts')}
                             </TermWithTooltip>
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -246,6 +285,7 @@ const ExecutiveReports = () => {
         </div>
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

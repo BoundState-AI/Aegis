@@ -40,7 +40,7 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
         if (!active) return;
         setServiceHealthy(true);
         setLlmAvailable(runtime.llm_available);
-        setRuntimeLabel(runtime.detail ?? null);
+        setRuntimeLabel(runtime.llm_available ? null : (runtime.detail ?? null));
       })
       .catch(() => {
         if (!active) return;
@@ -123,9 +123,7 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
                 setRuntimeLabel(event.fallback_reason);
               } else if (event.provider_used) {
                 setLlmAvailable(true);
-                setRuntimeLabel(
-                  `Frontier reasoning available via ${event.provider_used}${event.model_used ? ` / ${event.model_used}` : ""}.`,
-                );
+                setRuntimeLabel(null);
               }
               return {
                 ...entry,
@@ -183,11 +181,11 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
     setOpen,
     messages,
     isSending,
-      error,
-      serviceHealthy,
-      llmAvailable,
-      runtimeLabel,
-      starterQuestions: surfaceHint.starter_questions ?? [],
-      sendMessage,
+    error,
+    serviceHealthy,
+    llmAvailable,
+    runtimeLabel,
+    starterQuestions: surfaceHint.starter_questions ?? [],
+    sendMessage,
   };
 }

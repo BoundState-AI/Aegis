@@ -25,13 +25,15 @@ from boundstate_aegis.models.chat_models import (
 
 LOGGER = logging.getLogger(__name__)
 
-_ANTHROPIC_MODEL_DEFAULT = "claude-sonnet-4-5-20250929"
+_ANTHROPIC_MODEL_DEFAULT = "claude-sonnet-4-20250514"
 _BEDROCK_MODEL_DEFAULT = "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 _BEDROCK_MODEL_DEFAULT_GOV = "us-gov.anthropic.claude-sonnet-4-5-20250929-v1:0"
 _OPENAI_COMPAT_MODEL_DEFAULT = "gpt-4.1"
+_ANTHROPIC_VERSION = "2023-06-01"
 _MAX_TOKENS = 900
 _TEMPERATURE = 0.1
 _TIMEOUT_S = 45
+_DEGRADED_RUNTIME_DETAIL = "Reasoning is degraded. Deterministic boundary responses are still available."
 
 
 @dataclass(frozen=True)
@@ -69,24 +71,57 @@ def resolve_chat_bedrock_region() -> str:
     return "us-east-1"
 
 
-def resolve_chat_model(provider: str | None = None) -> str:
-    explicit = os.environ.get("AEGIS_CHAT_LLM_MODEL", "").strip()
-    if explicit:
-        return explicit
+def _looks_like_bedrock_model(model: str) -> bool:
+    normalized = model.strip().lower()
+    return normalized.startswith(("us.", "us-gov.", "anthropic.")) or ":" in normalized
 
-    provider_name = (provider or resolve_chat_provider_name()).lower()
-    if provider_name == "anthropic":
-        return os.environ.get("LLM_SONNET_MODEL", "").strip() or _ANTHROPIC_MODEL_DEFAULT
-    if provider_name == "openai-compat":
-        return os.environ.get("LLM_SONNET_MODEL", "").strip() or _OPENAI_COMPAT_MODEL_DEFAULT
 
+def _provider_default_model(provider: str) -> str:
+    if provider == "anthropic":
+        return _ANTHROPIC_MODEL_DEFAULT
+    if provider == "openai-compat":
+        return _OPENAI_COMPAT_MODEL_DEFAULT
     region = resolve_chat_bedrock_region().lower()
-    env_model = os.environ.get("LLM_SONNET_MODEL", "").strip()
-    if env_model:
-        return env_model
     if region.startswith("us-gov-"):
         return _BEDROCK_MODEL_DEFAULT_GOV
     return _BEDROCK_MODEL_DEFAULT
+
+
+def _normalize_model_for_provider(provider: str, model: str) -> str:
+    cleaned = model.strip()
+    if not cleaned:
+        return _provider_default_model(provider)
+    if provider == "anthropic" and _looks_like_bedrock_model(cleaned):
+        LOGGER.warning("Ignoring Bedrock-style model '%s' for Anthropic chat provider", cleaned)
+        return _provider_default_model(provider)
+    if provider == "bedrock-converse" and cleaned.startswith("claude-") and ":" not in cleaned:
+        LOGGER.warning("Ignoring Anthropic direct model '%s' for Bedrock chat provider", cleaned)
+        return _provider_default_model(provider)
+    return cleaned
+
+
+def resolve_chat_model(provider: str | None = None) -> str:
+    explicit = os.environ.get("AEGIS_CHAT_LLM_MODEL", "").strip()
+
+    provider_name = (provider or resolve_chat_provider_name()).lower()
+    if explicit:
+        return _normalize_model_for_provider(provider_name, explicit)
+
+    if provider_name == "anthropic":
+        return _normalize_model_for_provider(
+            provider_name,
+            os.environ.get("LLM_SONNET_MODEL", "").strip() or _ANTHROPIC_MODEL_DEFAULT,
+        )
+    if provider_name == "openai-compat":
+        return _normalize_model_for_provider(
+            provider_name,
+            os.environ.get("LLM_SONNET_MODEL", "").strip() or _OPENAI_COMPAT_MODEL_DEFAULT,
+        )
+
+    env_model = os.environ.get("LLM_SONNET_MODEL", "").strip()
+    if env_model:
+        return _normalize_model_for_provider(provider_name, env_model)
+    return _provider_default_model(provider_name)
 
 
 def chat_llm_enabled() -> bool:
@@ -127,7 +162,7 @@ def chat_runtime_status() -> ChatPingResponse:
             deterministic_fallback_available=True,
             provider=provider,
             model=model,
-            detail="Frontier reasoning is available through Anthropic.",
+            detail=None,
         )
 
     if provider == "openai-compat":
@@ -149,7 +184,7 @@ def chat_runtime_status() -> ChatPingResponse:
             deterministic_fallback_available=True,
             provider=provider,
             model=model,
-            detail="Frontier reasoning is available through the configured OpenAI-compatible endpoint.",
+            detail=None,
         )
 
     if provider == "bedrock-converse":
@@ -184,7 +219,7 @@ def chat_runtime_status() -> ChatPingResponse:
             deterministic_fallback_available=True,
             provider=provider,
             model=model,
-            detail=f"Frontier reasoning is available through Bedrock in {resolve_chat_bedrock_region()}.",
+            detail=None,
         )
 
     return ChatPingResponse(
@@ -205,8 +240,24 @@ def _http_json_request(url: str, headers: dict[str, str], payload: dict[str, Any
         headers=headers,
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=_TIMEOUT_S) as response:
-        return json.loads(response.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(request, timeout=_TIMEOUT_S) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace").strip()
+        detail = body or exc.reason
+        if body:
+            try:
+                payload = json.loads(body)
+                if isinstance(payload, dict):
+                    detail = (
+                        str(payload.get("error", {}).get("message") or "").strip()
+                        or str(payload.get("message") or "").strip()
+                        or detail
+                    )
+            except json.JSONDecodeError:
+                detail = body
+        raise RuntimeError(f"HTTP {exc.code}: {detail}") from exc
 
 
 def _extract_anthropic_text(payload: dict[str, Any]) -> str:
@@ -252,7 +303,7 @@ def _call_anthropic(system_prompt: str, user_prompt: str, model: str) -> str:
         "https://api.anthropic.com/v1/messages",
         headers={
             "x-api-key": api_key,
-            "anthropic-version": "2024-10-22",
+            "anthropic-version": _ANTHROPIC_VERSION,
             "content-type": "application/json",
         },
         payload=payload,
@@ -364,7 +415,7 @@ async def maybe_generate_llm_response(
             provider=provider,
             model=model,
             attempted=True,
-            fallback_reason=f"Frontier reasoning unavailable: {exc}",
+            fallback_reason=_DEGRADED_RUNTIME_DETAIL,
         )
     except Exception as exc:  # pragma: no cover - runtime guard
         LOGGER.exception("Unexpected AegisChat LLM failure")
@@ -373,7 +424,7 @@ async def maybe_generate_llm_response(
             provider=provider,
             model=model,
             attempted=True,
-            fallback_reason=f"Frontier reasoning unavailable: {exc}",
+            fallback_reason=_DEGRADED_RUNTIME_DETAIL,
         )
 
     latency_ms = (time.monotonic() - t0) * 1000

@@ -40,6 +40,84 @@ def _regulatory_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
     )
 
 
+def _litigation_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    return ChatDecision(
+        status=ChatStatus.SUPPORTED,
+        question_type="help_capability",
+        response_text=(
+            "This page can explain the visible litigation forecast, key drivers, backtest context, and similar cases shown on screen. "
+            "It cannot provide legal advice or make off-screen settlement predictions."
+        ),
+        citations=["litigation_summary", "litigation_drivers", "litigation_cases"],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
+def _portfolio_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    return ChatDecision(
+        status=ChatStatus.SUPPORTED,
+        question_type="help_capability",
+        response_text=(
+            "This page can explain the visible portfolio summary, loaded materials, exposure totals, and material-level risk rows on screen. "
+            "It cannot provide legal advice or make unsupported regulatory conclusions."
+        ),
+        citations=["portfolio_summary", "portfolio_items", "portfolio_results"],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
+def _reports_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    return ChatDecision(
+        status=ChatStatus.SUPPORTED,
+        question_type="help_capability",
+        response_text=(
+            "This page can explain the visible report classification, included sections, and the state of the litigation and regulatory toggles. "
+            "It cannot create new analysis beyond the report content already on screen."
+        ),
+        citations=["report_summary", "report_sections"],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
+def _evidence_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    return ChatDecision(
+        status=ChatStatus.SUPPORTED,
+        question_type="help_capability",
+        response_text=(
+            "This page can explain the visible evidence rows, confidence score, citation count, and source coverage shown on screen. "
+            "It cannot infer off-screen evidence or make portfolio decisions."
+        ),
+        citations=["evidence_summary", "evidence_rows"],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
+def _analysis_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    return ChatDecision(
+        status=ChatStatus.SUPPORTED,
+        question_type="help_capability",
+        response_text=(
+            "This page can explain the visible PFAS analysis findings for the current material and conditions, including displayed products and classifications. "
+            "It cannot invent unshown pathways or give legal or enterprise advice."
+        ),
+        citations=["analysis_summary", "analysis_findings"],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
+def _tier1_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    return ChatDecision(
+        status=ChatStatus.SUPPORTED,
+        question_type="help_capability",
+        response_text=(
+            "This page can explain the visible structural risk signal, similar compounds, endpoint patterns, and Tier 2 coverage shown on screen. "
+            "It cannot infer hidden evidence or make unsupported compliance conclusions."
+        ),
+        citations=["tier1_summary", "tier1_endpoints", "tier1_neighbors"],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
 def _fate_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
     filters = evidence["filters"]
     visible_transformations = evidence["visible_transformations"]
@@ -241,6 +319,530 @@ def _regulatory_response(question_type: str, evidence: dict[str, Any], surface: 
     )
 
 
+def _litigation_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    summary = evidence["summary"]
+    matched = evidence["matched_items"]
+    visible_cases = evidence["visible_similar_cases"]
+    key_drivers = evidence["key_drivers"]
+
+    if question_type == "help_capability":
+        return _litigation_capability(surface)
+
+    if question_type == "page_summary":
+        driver_preview = ", ".join(key_drivers[:3]) if key_drivers else "No visible drivers are loaded."
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"Litigation Risk is currently focused on {summary['selected_compound']} with chart view '{summary['chart_view']}'. "
+                f"The visible forecast risk level is {summary['forecast_risk_level'] or 'UNKNOWN'} with 12/24/36 month probabilities "
+                f"of {summary['probability_12_months'] or 0:.2f}, {summary['probability_24_months'] or 0:.2f}, and {summary['probability_36_months'] or 0:.2f}. "
+                f"Estimated exposure shown on screen is ${summary['estimated_exposure_usd'] or 0:,.0f}. "
+                f"Backtest publications: {summary['backtest_publications'] or 0}; visible lead time: {summary['lead_time_years'] or 0} years. "
+                f"Top visible drivers: {driver_preview}"
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "filter_guidance":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"The current compound is {summary['selected_compound']} and the active chart view is '{summary['chart_view']}'. "
+                "Changing the selected compound or chart view changes which forecast, backtest, and case details remain visible on this page."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "compare_visible_results":
+        if len(matched) >= 2:
+            first, second = matched[0], matched[1]
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type=question_type,
+                response_text=(
+                    f"{first['case']} is shown with settlement ${first.get('settlement', 0):,.0f}, year {first.get('year', 0)}, and relevance {first.get('relevance', 0):.2f}, "
+                    f"while {second['case']} is shown with settlement ${second.get('settlement', 0):,.0f}, year {second.get('year', 0)}, and relevance {second.get('relevance', 0):.2f}."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type=question_type,
+            response_text="I can compare visible similar cases, but I need two displayed cases named explicitly in the question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which two visible similar cases do you want compared?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if matched:
+        item = matched[0]
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type="explain_visible_result",
+            response_text=(
+                f"{item['case']} is visible on this page with settlement ${item.get('settlement', 0):,.0f}, year {item.get('year', 0)}, "
+                f"and relevance {item.get('relevance', 0):.2f} to the active compound."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if visible_cases:
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type="explain_visible_result",
+            response_text=(
+                "I can explain visible similar cases on this page, but I could not match a specific displayed case from your question."
+            ),
+            citations=evidence["citations"],
+            clarification_questions=["Which visible similar case do you want explained?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    return ChatDecision(
+        status=ChatStatus.PARTIAL,
+        question_type="explain_visible_result",
+        response_text=(
+            f"The visible forecast risk level is {summary['forecast_risk_level'] or 'UNKNOWN'}, but no similar cases are currently loaded on screen."
+        ),
+        citations=evidence["citations"],
+        clarification_questions=["Ask about the visible forecast or backtest context on this page."],
+        handoff_targets=surface.handoff_targets,
+    )
+
+
+def _portfolio_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    summary = evidence["summary"]
+    matched = evidence["matched_items"]
+    results = evidence["top_results"]
+    items = evidence["items"]
+
+    if question_type == "help_capability":
+        return _portfolio_capability(surface)
+
+    if question_type == "page_summary":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"Portfolio Assessment currently shows {summary['total_materials'] or 0} material(s), "
+                f"{summary['high_risk_count'] or 0} high-risk item(s), and visible total exposure of ${summary['total_exposure_usd'] or 0:,.0f}. "
+                f"The current input list contains {len(items)} visible portfolio row(s)."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "filter_guidance":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                "This page reflects the materials and volumes currently loaded into the portfolio input list. "
+                "Adding, removing, or resizing those items changes the visible risk ranking and exposure totals."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "compare_visible_results":
+        if len(matched) >= 2:
+            first, second = matched[0], matched[1]
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type=question_type,
+                response_text=(
+                    f"{first['material']} is shown as {first['risk_category']} risk with score {first.get('risk_score', 0):.2f}, "
+                    f"while {second['material']} is shown as {second['risk_category']} risk with score {second.get('risk_score', 0):.2f}. "
+                    f"Visible PFAS counts are {first.get('pfas_count', 0)} versus {second.get('pfas_count', 0)}."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type=question_type,
+            response_text="I can compare visible portfolio rows, but I need two displayed materials named explicitly in the question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which two visible materials do you want compared?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if matched:
+        item = matched[0]
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type="explain_visible_result",
+            response_text=(
+                f"{item['material']} is visible on this page with {item.get('risk_category') or 'UNKNOWN'} risk, "
+                f"risk score {item.get('risk_score', 0):.2f}, {item.get('pfas_count', 0)} PFAS product(s), "
+                f"{item.get('regulatory_flags', 0)} regulatory flag(s), and litigation probability {item.get('litigation_probability', 0):.2f}."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if results:
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type="explain_visible_result",
+            response_text="I can explain visible portfolio rows, but I could not match a specific displayed material from your question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which visible material do you want explained?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    return clarification_response(surface)
+
+
+def _reports_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    summary = evidence["summary"]
+    matched = evidence["matched_items"]
+    sections = evidence["visible_sections"]
+
+    if question_type == "help_capability":
+        return _reports_capability(surface)
+
+    if question_type == "page_summary":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"Executive Reports is currently configured for {summary['material']} with classification "
+                f"{summary['classification'] or 'UNKNOWN'}. Litigation is {_human_bool(summary['include_litigation'])}, "
+                f"regulatory is {_human_bool(summary['include_regulatory'])}, and {len(sections)} visible section(s) are loaded."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "filter_guidance":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"The report is currently set to include litigation {_human_bool(summary['include_litigation'])} and regulatory {_human_bool(summary['include_regulatory'])}. "
+                "Changing those toggles changes which sections and flags are visible in the generated report."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "compare_visible_results":
+        if len(matched) >= 2:
+            first, second = matched[0], matched[1]
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type=question_type,
+                response_text=(
+                    f"{first['title']} shows {first.get('flags_count', 0)} flag(s), {first.get('similar_cases_count', 0)} similar case(s), and {first.get('product_count', 0)} product(s), "
+                    f"while {second['title']} shows {second.get('flags_count', 0)} flag(s), {second.get('similar_cases_count', 0)} similar case(s), and {second.get('product_count', 0)} product(s)."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type=question_type,
+            response_text="I can compare visible report sections, but I need two displayed section titles named explicitly in the question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which two visible report sections do you want compared?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if matched:
+        item = matched[0]
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type="explain_visible_result",
+            response_text=(
+                f"{item['title']} is visible on this report with {item.get('flags_count', 0)} regulatory flag(s), "
+                f"{item.get('similar_cases_count', 0)} similar case(s), and {item.get('product_count', 0)} product(s) shown."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if sections:
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type="explain_visible_result",
+            response_text="I can explain visible report sections, but I could not match a specific displayed section from your question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which visible section do you want explained?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    return clarification_response(surface)
+
+
+def _evidence_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    summary = evidence["summary"]
+    matched = evidence["matched_items"]
+    visible_evidence = evidence["visible_evidence"]
+
+    if question_type == "help_capability":
+        return _evidence_capability(surface)
+
+    if question_type == "page_summary":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"Evidence Chain is currently showing {summary['material']} with {summary['total_citations'] or 0} visible citation(s), "
+                f"confidence score {(summary['confidence_score'] or 0):.2f}, database coverage of {summary['database_total_papers'] or 0} papers, "
+                f"and {summary['total_pathway_citations'] or 0} total pathway citations."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "filter_guidance":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"The current material is {summary['material']} and the max citations setting is {summary['max_citations'] or 0}. "
+                "Changing those controls changes how many evidence rows remain visible on this page."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "compare_visible_results":
+        if len(matched) >= 2:
+            first, second = matched[0], matched[1]
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type=question_type,
+                response_text=(
+                    f"{first['source']} is shown with confidence {first.get('confidence', 0):.2f} and year {first.get('year') or 'n/a'}, "
+                    f"while {second['source']} is shown with confidence {second.get('confidence', 0):.2f} and year {second.get('year') or 'n/a'}."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type=question_type,
+            response_text="I can compare visible evidence rows, but I need two displayed sources named explicitly in the question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which two visible evidence sources do you want compared?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if matched:
+        item = matched[0]
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type="explain_visible_result",
+            response_text=(
+                f"{item['source']} is visible on this page for compound {item.get('compound') or 'UNKNOWN'} with confidence {item.get('confidence', 0):.2f} "
+                f"and year {item.get('year') or 'n/a'}."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if visible_evidence:
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type="explain_visible_result",
+            response_text="I can explain visible evidence rows, but I could not match a specific displayed source from your question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which visible evidence source do you want explained?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    return clarification_response(surface)
+
+
+def _analysis_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    summary = evidence["summary"]
+    matched = evidence["matched_items"]
+    visible_findings = evidence["visible_findings"]
+
+    if question_type == "help_capability":
+        return _analysis_capability(surface)
+
+    if question_type == "page_summary":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"PFAS Analysis is currently evaluating {summary['material']} at {summary['temperature_c'] or 0} C in atmosphere "
+                f"'{summary['atmosphere'] or 'n/a'}' for {summary['time_hours'] or 0} hour(s). "
+                f"The page shows {summary['findings_count'] or 0} visible finding(s). {summary['summary'] or ''}".strip()
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "filter_guidance":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"The current inputs are material {summary['material']}, temperature {summary['temperature_c'] or 0} C, "
+                f"atmosphere '{summary['atmosphere'] or 'n/a'}', and time {summary['time_hours'] or 0} hour(s). "
+                "Changing those inputs changes which visible findings remain on this page."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "compare_visible_results":
+        if len(matched) >= 2:
+            first, second = matched[0], matched[1]
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type=question_type,
+                response_text=(
+                    f"{first['product']} is shown as {first.get('screening_classification') or 'UNKNOWN'} with "
+                    f"{first.get('regulatory_flags_count', 0)} regulatory flag(s), while {second['product']} is shown as "
+                    f"{second.get('screening_classification') or 'UNKNOWN'} with {second.get('regulatory_flags_count', 0)} regulatory flag(s)."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type=question_type,
+            response_text="I can compare visible analysis findings, but I need two displayed products named explicitly in the question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which two visible products do you want compared?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if matched:
+        item = matched[0]
+        strength = item.get("evidence_strength")
+        strength_text = f" and evidence strength {strength:.2f}" if isinstance(strength, (int, float)) else ""
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type="explain_visible_result",
+            response_text=(
+                f"{item['product']} is visible on this page with classification {item.get('screening_classification') or 'UNKNOWN'}, "
+                f"{item.get('regulatory_flags_count', 0)} regulatory flag(s){strength_text}."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if visible_findings:
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type="explain_visible_result",
+            response_text="I can explain visible analysis findings, but I could not match a specific displayed product from your question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which visible product do you want explained?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    return clarification_response(surface)
+
+
+def _tier1_response(question_type: str, evidence: dict[str, Any], surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    summary = evidence["summary"]
+    matched = evidence["matched_items"]
+    neighbors = evidence["similar_compounds"]
+    endpoints = evidence["top_endpoints"]
+
+    if question_type == "help_capability":
+        return _tier1_capability(surface)
+
+    if question_type == "page_summary":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"Structural Similarity is currently showing {summary['compound_name'] or 'the active query'} with risk signal "
+                f"{summary['risk_signal'] or 'UNKNOWN'}, {summary['neighbors_with_pathways'] or 0} neighbor(s) with pathways, "
+                f"average similarity {(summary['avg_similarity'] or 0):.2f}, Tier 2 pattern count {summary['tier2_pattern_count'] or 0}, "
+                f"and Tier 2 rule total {summary['tier2_rule_total'] or 0}."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "filter_guidance":
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type=question_type,
+            response_text=(
+                f"The active structural query is {summary['compound_name'] or 'the current compound'} with the current SMILES loaded on screen. "
+                "Changing the query compound or SMILES changes the visible neighbors, endpoints, and risk signal."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if question_type == "compare_visible_results":
+        if len(matched) >= 2:
+            first, second = matched[0], matched[1]
+            first_label = first.get("name") or first.get("endpoint") or "first result"
+            second_label = second.get("name") or second.get("endpoint") or "second result"
+            first_metric = first.get("similarity", first.get("fraction", 0))
+            second_metric = second.get("similarity", second.get("fraction", 0))
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type=question_type,
+                response_text=(
+                    f"{first_label} is shown with metric {first_metric:.2f}, while {second_label} is shown with metric {second_metric:.2f}."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type=question_type,
+            response_text="I can compare visible similar compounds or endpoint rows, but I need two displayed labels named explicitly in the question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which two visible compounds or endpoints do you want compared?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if matched:
+        item = matched[0]
+        if item.get("name"):
+            return ChatDecision(
+                status=ChatStatus.SUPPORTED,
+                question_type="explain_visible_result",
+                response_text=(
+                    f"{item['name']} is visible on this page with similarity {item.get('similarity', 0):.2f} "
+                    f"and evidence count {item.get('evidence_count', 0)}."
+                ),
+                citations=evidence["citations"],
+                handoff_targets=surface.handoff_targets,
+            )
+        return ChatDecision(
+            status=ChatStatus.SUPPORTED,
+            question_type="explain_visible_result",
+            response_text=(
+                f"{item['endpoint']} is visible on this page with count {item.get('count', 0)} and fraction {item.get('fraction', 0):.2f}."
+            ),
+            citations=evidence["citations"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    if neighbors or endpoints:
+        return ChatDecision(
+            status=ChatStatus.PARTIAL,
+            question_type="explain_visible_result",
+            response_text="I can explain visible similar compounds or endpoint patterns, but I could not match a specific displayed label from your question.",
+            citations=evidence["citations"],
+            clarification_questions=["Which visible similar compound or endpoint do you want explained?"],
+            handoff_targets=surface.handoff_targets,
+        )
+
+    return clarification_response(surface)
+
+
 def handoff_response(surface: AuthoritativeAnswerSurface, target: str | None) -> ChatDecision:
     target_label = target or "another module"
     return ChatDecision(
@@ -295,4 +897,16 @@ def build_deterministic_response(
         return _fate_response(question_type, evidence, surface)
     if surface.page_id == "regulatory":
         return _regulatory_response(question_type, evidence, surface)
+    if surface.page_id == "litigation":
+        return _litigation_response(question_type, evidence, surface)
+    if surface.page_id == "portfolio":
+        return _portfolio_response(question_type, evidence, surface)
+    if surface.page_id == "reports":
+        return _reports_response(question_type, evidence, surface)
+    if surface.page_id == "evidence":
+        return _evidence_response(question_type, evidence, surface)
+    if surface.page_id == "analysis":
+        return _analysis_response(question_type, evidence, surface)
+    if surface.page_id == "tier1":
+        return _tier1_response(question_type, evidence, surface)
     return clarification_response(surface)

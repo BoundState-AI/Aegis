@@ -76,6 +76,48 @@ def _visible_labels(surface: AuthoritativeAnswerSurface) -> list[str]:
             for row in visible_state.get("sample_findings", [])
             if str(row.get("framework") or "").strip()
         ]
+    if surface.page_id == "litigation":
+        return [
+            str(row.get("case") or "").strip().lower()
+            for row in visible_state.get("visible_similar_cases", [])
+            if str(row.get("case") or "").strip()
+        ]
+    if surface.page_id == "portfolio":
+        return [
+            str(row.get("material") or "").strip().lower()
+            for row in visible_state.get("top_results", [])
+            if str(row.get("material") or "").strip()
+        ]
+    if surface.page_id == "reports":
+        return [
+            str(row.get("title") or "").strip().lower()
+            for row in visible_state.get("visible_sections", [])
+            if str(row.get("title") or "").strip()
+        ]
+    if surface.page_id == "evidence":
+        return [
+            str(row.get("source") or "").strip().lower()
+            for row in visible_state.get("visible_evidence", [])
+            if str(row.get("source") or "").strip()
+        ]
+    if surface.page_id == "analysis":
+        return [
+            str(row.get("product") or "").strip().lower()
+            for row in visible_state.get("visible_findings", [])
+            if str(row.get("product") or "").strip()
+        ]
+    if surface.page_id == "tier1":
+        labels = [
+            str(row.get("name") or "").strip().lower()
+            for row in visible_state.get("similar_compounds", [])
+            if str(row.get("name") or "").strip()
+        ]
+        labels.extend(
+            str(row.get("endpoint") or "").strip().lower()
+            for row in visible_state.get("top_endpoints", [])
+            if str(row.get("endpoint") or "").strip()
+        )
+        return labels
     return []
 
 
@@ -127,6 +169,24 @@ def classify_query(message: str, surface: AuthoritativeAnswerSurface) -> Bouncer
         return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
 
     if surface.page_id == "regulatory" and re.search(r"\b(?:risk|compliant|warning|non-?compliant|forecast|framework)\b", lowered):
+        return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
+
+    if surface.page_id == "litigation" and re.search(r"\b(?:risk|forecast|lawsuit|settlement|driver|case|backtest|exposure)\b", lowered):
+        return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
+
+    if surface.page_id == "portfolio" and re.search(r"\b(?:portfolio|material|risk|exposure|flags|litigation probability)\b", lowered):
+        return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
+
+    if surface.page_id == "reports" and re.search(r"\b(?:report|section|classification|generated|flag|similar case)\b", lowered):
+        return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
+
+    if surface.page_id == "evidence" and re.search(r"\b(?:evidence|citation|confidence|doi|source|paper|finding)\b", lowered):
+        return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
+
+    if surface.page_id == "analysis" and re.search(r"\b(?:analysis|finding|product|forms|temperature|atmosphere|time|screening|flag)\b", lowered):
+        return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
+
+    if surface.page_id == "tier1" and re.search(r"\b(?:similarity|neighbor|endpoint|pattern|coverage|rule|risk signal|tier 2)\b", lowered):
         return BouncerOutcome(ChatStatus.SUPPORTED, "explain_visible_result")
 
     if visible_labels:

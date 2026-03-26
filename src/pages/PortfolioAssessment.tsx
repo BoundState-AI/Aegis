@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SpicyTooltipBody } from "@/components/ui/spicy-tooltip-body";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import { apiPost } from "@/lib/apiClient";
+import { createPortfolioAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import { portfolioResponseSchema, type PortfolioResponse } from "@/lib/apiSchemas";
 
 interface PortfolioItem {
@@ -40,31 +43,30 @@ interface PortfolioViewResponse extends PortfolioResponse {
 
 const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
 
-const RISK_CATEGORY_DEFINITIONS = {
-  LOW: {
-    label: "Low",
-    color: "bg-green-500",
-    textColor: "text-green-600",
-    description: "Compound shows minimal regulatory activity and no documented litigation exposure. Limited degradation pathways to regulated endpoints.",
-  },
-  MEDIUM: {
-    label: "Medium",
-    color: "bg-yellow-500",
-    textColor: "text-yellow-600",
-    description: "Compound has documented degradation pathways and active regulatory attention in 2+ jurisdictions. Not yet subject to compound-specific litigation.",
-  },
-  HIGH: {
-    label: "High",
-    color: "bg-red-500",
-    textColor: "text-red-600",
-    description: "Compound has established regulatory limits, documented litigation history, or known degradation to heavily regulated endpoints (e.g., PFOA, PFOS).",
-  },
-} as const;
-
 const PortfolioAssessment = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const riskCategoryDefinitions = {
+    LOW: {
+      label: t("portfolio.riskCategories.LOW.label"),
+      color: "bg-green-500",
+      textColor: "text-green-600",
+      description: t("portfolio.riskCategories.LOW.description"),
+    },
+    MEDIUM: {
+      label: t("portfolio.riskCategories.MEDIUM.label"),
+      color: "bg-yellow-500",
+      textColor: "text-yellow-600",
+      description: t("portfolio.riskCategories.MEDIUM.description"),
+    },
+    HIGH: {
+      label: t("portfolio.riskCategories.HIGH.label"),
+      color: "bg-red-500",
+      textColor: "text-red-600",
+      description: t("portfolio.riskCategories.HIGH.description"),
+    },
+  } as const;
   const [items, setItems] = useState<PortfolioItem[]>([
     { material: "PTFE", volume_lbs: 100000 },
     { material: "FEP", volume_lbs: 50000 },
@@ -80,13 +82,13 @@ const PortfolioAssessment = () => {
       setAssessment(typed);
       toast({
         title: t('common.assessmentComplete'),
-        description: `Analyzed ${typed.total_materials} materials - ${typed.high_risk_count} high risk`,
+        description: t('portfolio.analyzed', { count: typed.total_materials, highRisk: typed.high_risk_count }),
       });
     },
     onError: () => {
       toast({
         title: t('common.assessmentFailed'),
-        description: "Could not connect to AEGIS API",
+        description: t('common.couldNotConnect'),
         variant: "destructive",
       });
     },
@@ -133,8 +135,30 @@ const PortfolioAssessment = () => {
   };
 
   const isLoading = assessMutation.isPending;
+  const chatSurfaceHint = useMemo(() => createPortfolioAnswerSurfaceHint({
+    items: items.slice(0, 12).map((item) => ({
+      material: item.material,
+      volume_lbs: item.volume_lbs,
+    })),
+    totalMaterials: assessment?.total_materials ?? items.length,
+    highRiskCount: assessment?.high_risk_count ?? 0,
+    totalExposureUsd: assessment?.total_exposure_usd ?? 0,
+    topResults: (assessment?.results || []).slice(0, 12).map((row) => ({
+      material: row.material,
+      risk_category: row.risk_category,
+      risk_score: row.risk_score,
+      pfas_count: row.pfas_count,
+      regulatory_flags: row.regulatory_flags,
+      litigation_probability: row.litigation_probability,
+    })),
+  }), [assessment, items]);
 
   return (
+    <PageChatProvider
+      pageId="portfolio"
+      pageLabel={t("portfolio.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader title={t('portfolio.title')} subtitle={t('portfolio.subtitle')} helpContent={helpContent.portfolio} />
 
@@ -169,14 +193,14 @@ const PortfolioAssessment = () => {
                   <Input
                     value={newMaterial}
                     onChange={(e) => setNewMaterial(e.target.value.toUpperCase())}
-                    placeholder="Material"
+                    placeholder={t('portfolio.materialPlaceholder')}
                     className="bg-white border-gray-300"
                   />
                   <Input
                     type="number"
                     value={newVolume}
                     onChange={(e) => setNewVolume(parseInt(e.target.value) || 0)}
-                    placeholder="Volume"
+                    placeholder={t('portfolio.volumePlaceholder')}
                     className="w-28 bg-white border-gray-300"
                   />
                   <Button onClick={addItem} size="icon" className="bg-daikin-blue hover:bg-daikin-blue/90">
@@ -246,20 +270,24 @@ const PortfolioAssessment = () => {
                   <CardContent>
                     {/* Risk Category Legend */}
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-4 pb-4 border-b border-gray-100">
-                      <span className="font-medium">Risk Categories:</span>
+                      <span className="font-medium">{t("portfolio.riskCategoriesLabel")}</span>
                       <TooltipProvider>
-                        {(Object.keys(RISK_CATEGORY_DEFINITIONS) as Array<keyof typeof RISK_CATEGORY_DEFINITIONS>).map((key) => {
-                          const cat = RISK_CATEGORY_DEFINITIONS[key];
+                        {(Object.keys(riskCategoryDefinitions) as Array<keyof typeof riskCategoryDefinitions>).map((key) => {
+                          const cat = riskCategoryDefinitions[key];
                           return (
                             <Tooltip key={key}>
                               <TooltipTrigger asChild>
                                 <div className="flex items-center gap-1.5 cursor-help">
-                                  <Badge className={`${cat.color} text-white text-xs`}>{key}</Badge>
+                                  <Badge className={`${cat.color} text-white text-xs`}>{cat.label}</Badge>
                                 </div>
                               </TooltipTrigger>
                               <TooltipContent side="bottom" className="max-w-xs p-3">
-                                <p className="font-semibold mb-1">{cat.label} Risk</p>
-                                <p className="text-sm text-muted-foreground">{cat.description}</p>
+                                <SpicyTooltipBody>
+                                  <p className="font-semibold">
+                                    {t("portfolio.riskCategoryTooltipTitle", { label: cat.label })}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">{cat.description}</p>
+                                </SpicyTooltipBody>
                               </TooltipContent>
                             </Tooltip>
                           );
@@ -279,12 +307,23 @@ const PortfolioAssessment = () => {
                                     <Info className="h-4 w-4 text-gray-400 cursor-help" />
                                   </TooltipTrigger>
                                   <TooltipContent side="bottom" className="max-w-sm p-3">
-                                    <p className="font-semibold mb-2">Risk Category Definitions</p>
-                                    <div className="space-y-2 text-sm">
-                                      <div><span className="font-medium text-green-600">LOW:</span> <span className="text-muted-foreground">{RISK_CATEGORY_DEFINITIONS.LOW.description}</span></div>
-                                      <div><span className="font-medium text-yellow-600">MEDIUM:</span> <span className="text-muted-foreground">{RISK_CATEGORY_DEFINITIONS.MEDIUM.description}</span></div>
-                                      <div><span className="font-medium text-red-600">HIGH:</span> <span className="text-muted-foreground">{RISK_CATEGORY_DEFINITIONS.HIGH.description}</span></div>
-                                    </div>
+                                    <SpicyTooltipBody>
+                                      <p className="font-semibold">{t("portfolio.riskCategoryDefinitionsTitle")}</p>
+                                      <div className="space-y-2 text-sm">
+                                        <div>
+                                          <span className="font-medium text-green-600">{riskCategoryDefinitions.LOW.label}:</span>{" "}
+                                          <span className="text-muted-foreground">{riskCategoryDefinitions.LOW.description}</span>
+                                        </div>
+                                        <div>
+                                          <span className="font-medium text-yellow-600">{riskCategoryDefinitions.MEDIUM.label}:</span>{" "}
+                                          <span className="text-muted-foreground">{riskCategoryDefinitions.MEDIUM.description}</span>
+                                        </div>
+                                        <div>
+                                          <span className="font-medium text-red-600">{riskCategoryDefinitions.HIGH.label}:</span>{" "}
+                                          <span className="text-muted-foreground">{riskCategoryDefinitions.HIGH.description}</span>
+                                        </div>
+                                      </div>
+                                    </SpicyTooltipBody>
                                   </TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
@@ -300,7 +339,9 @@ const PortfolioAssessment = () => {
                           <TableRow key={i} className="border-gray-200">
                             <TableCell className="font-medium text-daikin-dark">{r.material}</TableCell>
                             <TableCell>
-                              <Badge className={getRiskColor(r.risk_category)}>{r.risk_category}</Badge>
+                              <Badge className={getRiskColor(r.risk_category)}>
+                                {riskCategoryDefinitions[r.risk_category as keyof typeof riskCategoryDefinitions]?.label ?? r.risk_category}
+                              </Badge>
                             </TableCell>
                             <TableCell className="text-gray-600">{r.pfas_count}</TableCell>
                             <TableCell className="text-gray-600">{r.regulatory_flags}</TableCell>
@@ -326,7 +367,7 @@ const PortfolioAssessment = () => {
 
                 {/* Methodology Note */}
                 <p className="text-xs text-gray-400 text-center mt-4">
-                  {assessment.methodology_note || "Risk assessments incorporate regulatory status, compound characteristics, and historical patterns. Site-specific factors may affect actual values."}
+                  {assessment.methodology_note || t('portfolio.disclaimer')}
                 </p>
               </>
             ) : (
@@ -344,6 +385,7 @@ const PortfolioAssessment = () => {
         </div>
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

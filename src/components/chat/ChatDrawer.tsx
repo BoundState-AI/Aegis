@@ -51,9 +51,6 @@ export function ChatDrawer({
             <SheetDescription>
               Bounded page chat. It explains the active surface and hands off when the question belongs elsewhere.
             </SheetDescription>
-            {serviceHealthy && llmAvailable && runtimeLabel && (
-              <p className="text-xs text-emerald-700">{runtimeLabel}</p>
-            )}
             {serviceHealthy && !llmAvailable && (
               <p className="text-xs text-red-600">
                 {runtimeLabel || "Reasoning is degraded. Deterministic boundary responses are still available."}

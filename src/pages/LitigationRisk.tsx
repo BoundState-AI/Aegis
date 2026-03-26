@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, AlertTriangle, DollarSign, TrendingUp, Scale, Eye, ShieldAlert, Quote, ArrowRight, Info, ExternalLink, X } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -19,6 +21,7 @@ import {
   Area,
 } from "recharts";
 import { apiGet, apiPost } from "@/lib/apiClient";
+import { createLitigationAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import {
   litigationBacktestSchema,
   litigationBacktestsSchema,
@@ -173,13 +176,13 @@ const PHASE_COLORS: Record<string, string> = {
   reckoning: "#991b1b",
 };
 
-const ALERT_BADGES: Record<string, { color: string; label: string }> = {
-  DARK: { color: "bg-gray-400", label: "No Data" },
-  NOVEL: { color: "bg-yellow-500", label: "Novel Compound" },
-  WATCH: { color: "bg-blue-500", label: "Watching" },
-  ELEVATED: { color: "bg-orange-500", label: "Elevated" },
-  HIGH: { color: "bg-red-500", label: "High" },
-  CRITICAL: { color: "bg-red-700", label: "Critical" },
+const ALERT_BADGES: Record<string, { color: string; labelKey: string }> = {
+  DARK: { color: "bg-gray-400", labelKey: "litigation.alertLabels.dark" },
+  NOVEL: { color: "bg-yellow-500", labelKey: "litigation.alertLabels.novel" },
+  WATCH: { color: "bg-blue-500", labelKey: "litigation.alertLabels.watch" },
+  ELEVATED: { color: "bg-orange-500", labelKey: "litigation.alertLabels.elevated" },
+  HIGH: { color: "bg-red-500", labelKey: "litigation.alertLabels.high" },
+  CRITICAL: { color: "bg-red-700", labelKey: "litigation.alertLabels.critical" },
 };
 
 const EVENT_COLORS: Record<string, string> = {
@@ -210,20 +213,164 @@ const SENTIMENT_COLORS: Record<string, string> = {
   reckoning: "#991b1b",
 };
 
-const SENTIMENT_LABELS: Record<string, string> = {
-  celebration: "Celebration",
-  utility: "Methods & Utility",
-  detection: "Detection",
-  questioning: "Questioning",
-  alarm: "Alarm",
-  reckoning: "Reckoning",
+const getSentimentLabel = (t: TFunction, category: string) =>
+  t(`litigation.sentimentLabels.${category}`, { defaultValue: category });
+
+type BacktestLocalization = {
+  phases: Record<string, string>;
+  events: Record<string, { label: string; description: string }>;
+};
+
+const BACKTEST_JA_COPY: Record<string, BacktestLocalization> = {
+  genx: {
+    phases: {
+      celebrated: "解決策",
+      detected: "最初のシグナル",
+      alarmed: "公的発覚",
+      exploding: "研究の急増",
+      reckoning: "清算の段階",
+    },
+    events: {
+      "2006:industry": {
+        label: "PFOA自主削減プログラム",
+        description: "EPAが自主プログラムを開始。8社が2015年までにPFOAを廃止すると約束し、DuPontのCEOは『代替技術を開発中』と表明した。",
+      },
+      "2008:industry": {
+        label: "GenXのPMNをEPAへ提出",
+        description: "DuPontがTSCAの下でHFPO-DAとそのアンモニウム塩の製造前届出を提出し、『良好な毒性プロファイルと非常に速い生体排出』を主張した。",
+      },
+      "2009:regulatory": {
+        label: "EPA同意命令",
+        description: "EPAがTSCA同意命令を締結し、DuPontにGenX化合物の99%回収・破壊を要求。DuPontは顧客切替を開始した。",
+      },
+      "2010:industry": {
+        label: "GenX特許と販促資料",
+        description: "2010年にDuPontが特許と販促資料を公表し、『良好な毒性プロファイル』『非常に速い生体排出』『独自の環境暴露制御技術』を主張。Fayetteville WorksでPFOAをGenXへ置換すると説明した。",
+      },
+      "2012:detection": {
+        label: "初検出（未公表）",
+        description: "EPA研究者がFayetteville Works下流のCape Fear川でGenXを検出。結果は会議で共有されたが、まだ査読論文にはなっていなかった。",
+      },
+      "2013:detection": {
+        label: "飲料水で検出",
+        description: "浄水処理の前後でGenXが検出され、濃度は変わらず。標準的な処理では除去できず、DuPontはPFOAからGenXへの移行を完了した。",
+      },
+      "2015:publication": {
+        label: "最初の査読論文",
+        description: "StrynarらがCape Fear川でGenXと11種の新規PFECAを発見した論文を発表。ChemoursはDuPontから分社化され、GenXは中国とドイツの水系でも検出された。",
+      },
+      "2017:litigation": {
+        label: "報道と訴訟",
+        description: "Wilmington Star-Newsが30万人の飲料水中GenXを報道。CFPUAとNC DEQが提訴し、連邦大陪審の召喚状も発行された。",
+      },
+      "2019:regulatory": {
+        label: "同意命令",
+        description: "Chemours、NC DEQ、Cape Fear River Watchが浄化の同意命令に署名し、熱酸化装置が年末に設置された。",
+      },
+      "2020:regulatory": {
+        label: "EPA監察総監報告",
+        description: "EPA監察総監は、連絡不全により2009年同意命令違反のGenX排出が8年間続いたと指摘した。",
+      },
+      "2021:regulatory": {
+        label: "EPA毒性評価",
+        description: "EPAがHFPO-DAの最終ヒト健康毒性評価を公表し、NCDEQはChemoursと1300万ドルで和解した。",
+      },
+      "2022:settlement": {
+        label: "22億ドルのChemours和解",
+        description: "Chemoursが22億ドルの環境修復和解に同意した。",
+      },
+      "2023:settlement": {
+        label: "103億ドルの3M和解 + 集団認定",
+        description: "3Mが103億ドルのPFAS公共水道和解に合意し、連邦判事がノースカロライナ州のGenX住民10万人超の集団認定を許可した。",
+      },
+      "2024:regulatory": {
+        label: "EPA飲料水規則",
+        description: "EPAがHFPO-DA（GenX）に対する国家一次飲料水規則を最終化し、代替化学物質そのものが規制対象となった。",
+      },
+    },
+  },
+  pfoa: {
+    phases: {
+      industrial: "産業利用",
+      discovery: "発見",
+      investigation: "調査",
+      litigation: "訴訟",
+      regulation: "規制",
+    },
+    events: {
+      "1999:regulatory": {
+        label: "EPA調査開始",
+        description: "EPAがDuPontによるPFOA汚染データの取り扱いについて調査を開始した。",
+      },
+      "2001:litigation": {
+        label: "Tennant対DuPont",
+        description: "Wilbur Tennantが、PFOA汚染に関連する牛の死亡についてDuPontを提訴した。",
+      },
+      "2002:regulatory": {
+        label: "3MのPFOS撤退",
+        description: "3MがPFOS生産の自主的終了を発表し、業界がリスクを認識していたことを示した。",
+      },
+      "2004:settlement": {
+        label: "3.43億ドル集団訴訟",
+        description: "DuPontが3.43億ドルで集団訴訟を和解し、C8 Science Panelを設立した。",
+      },
+      "2005:regulatory": {
+        label: "EPA罰金1650万ドル",
+        description: "EPAがPFOAの健康リスク報告義務違反でDuPontに1650万ドルの罰金を科した。",
+      },
+      "2006:science": {
+        label: "C8 Science Panel",
+        description: "独立したC8 Science Panelが、7万人の曝露住民を対象とする7年間の研究を開始した。",
+      },
+      "2009:regulatory": {
+        label: "EPA健康勧告",
+        description: "EPAが飲料水中PFOAに対し400 pptの暫定健康勧告を発表した。",
+      },
+      "2012:science": {
+        label: "6つの疾病関連",
+        description: "C8 Panelが、腎臓がん、精巣がん、甲状腺疾患、潰瘍性大腸炎、高コレステロール、妊娠高血圧との関連を確認した。",
+      },
+      "2013:litigation": {
+        label: "MDL設立",
+        description: "MDL 2433が設立され、数千件の人身傷害請求が統合された。",
+      },
+      "2017:settlement": {
+        label: "6.707億ドル和解",
+        description: "DuPont/Chemoursが約3500件の人身傷害請求について6.707億ドルで和解した。",
+      },
+      "2019:regulatory": {
+        label: "ストックホルム条約",
+        description: "PFOAが残留性有機汚染物質に関するストックホルム条約に追加された。",
+      },
+      "2022:regulatory": {
+        label: "EPA健康勧告",
+        description: "EPAがPFOAに対し0.004 pptの暫定健康勧告を発表した。",
+      },
+      "2024:regulatory": {
+        label: "EPA MCL最終化",
+        description: "EPAが飲料水中PFOAの最大汚染物質基準4 pptを最終化した。",
+      },
+    },
+  },
+};
+
+const getLocalizedPhaseLabel = (language: string, compoundId: string, phase: PhaseInfo) => {
+  if (!language.startsWith("ja")) return phase.label;
+  return BACKTEST_JA_COPY[compoundId.toLowerCase()]?.phases?.[phase.id] ?? phase.label;
+};
+
+const getLocalizedEvent = (language: string, compoundId: string, event: KeyEvent): KeyEvent => {
+  if (!language.startsWith("ja")) return event;
+  const localized = BACKTEST_JA_COPY[compoundId.toLowerCase()]?.events?.[`${event.year}:${event.type}`];
+  return localized ? { ...event, ...localized } : event;
 };
 
 // ---------------------------------------------------------------------------
 // Custom chart tooltip
 // ---------------------------------------------------------------------------
 
-const BacktestTooltip = ({ active, payload, label, events }: any) => {
+const BacktestTooltip = ({ active, payload, label, events, compoundId, language }: any) => {
+  const { t } = useTranslation();
   if (!active || !payload?.length) return null;
   const entry = payload[0]?.payload as TimelineEntry | undefined;
   if (!entry) return null;
@@ -235,32 +382,35 @@ const BacktestTooltip = ({ active, payload, label, events }: any) => {
     <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 max-w-xs">
       <div className="flex items-center justify-between mb-1">
         <span className="font-bold text-daikin-dark">{label}</span>
-        <Badge className={`${alertInfo.color} text-xs`}>{alertInfo.label}</Badge>
+        <Badge className={`${alertInfo.color} text-xs`}>{t(alertInfo.labelKey)}</Badge>
       </div>
       <div className="text-sm text-gray-600 space-y-0.5">
-        <div><span className="font-medium">{entry.publications}</span> publications</div>
-        <div>Velocity: <span className="font-medium">{entry.velocity}</span> papers/yr</div>
+        <div>{t("litigation.publicationsCount", { count: entry.publications })}</div>
+        <div>{t("litigation.velocity")}: <span className="font-medium">{entry.velocity}</span> {t("litigation.papersPerYear")}</div>
         {entry.acceleration !== 0 && (
-          <div>Acceleration: <span className={`font-medium ${entry.acceleration > 0 ? "text-red-600" : "text-green-600"}`}>
+          <div>{t("litigation.acceleration")}: <span className={`font-medium ${entry.acceleration > 0 ? "text-red-600" : "text-green-600"}`}>
             {entry.acceleration > 0 ? "+" : ""}{entry.acceleration}
           </span></div>
         )}
         {entry.jerk !== 0 && (
-          <div>Jerk: <span className={`font-medium ${entry.jerk > 0 ? "text-orange-600" : "text-blue-600"}`}>
+          <div>{t("litigation.jerk")}: <span className={`font-medium ${entry.jerk > 0 ? "text-orange-600" : "text-blue-600"}`}>
             {entry.jerk > 0 ? "+" : ""}{entry.jerk}
-          </span> <span className="text-gray-400 text-xs">(inflection)</span></div>
+          </span> <span className="text-gray-400 text-xs">({t("litigation.inflection")})</span></div>
         )}
       </div>
       {yearEvents.length > 0 && (
         <div className="mt-2 pt-2 border-t border-gray-100">
-          {yearEvents.map((e: KeyEvent, i: number) => (
-            <div key={i} className="text-xs text-gray-500 mt-1">
-              <span className="font-medium" style={{ color: EVENT_COLORS[e.type] || "#666" }}>
-                {e.label}
-              </span>
-              <p className="text-gray-400 mt-0.5">{e.description}</p>
-            </div>
-          ))}
+          {yearEvents.map((e: KeyEvent, i: number) => {
+            const localizedEvent = getLocalizedEvent(language, compoundId, e);
+            return (
+              <div key={i} className="text-xs text-gray-500 mt-1">
+                <span className="font-medium" style={{ color: EVENT_COLORS[e.type] || "#666" }}>
+                  {localizedEvent.label}
+                </span>
+                <p className="text-gray-400 mt-0.5">{localizedEvent.description}</p>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -268,6 +418,7 @@ const BacktestTooltip = ({ active, payload, label, events }: any) => {
 };
 
 const SentimentTooltip = ({ active, payload, label }: any) => {
+  const { t } = useTranslation();
   if (!active || !payload?.length) return null;
   const entry = payload[0]?.payload as TimelineEntry | undefined;
   if (!entry?.sentiment) return null;
@@ -279,7 +430,7 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
     <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 max-w-xs">
       <div className="flex items-center justify-between mb-2">
         <span className="font-bold text-daikin-dark">{label}</span>
-        <span className="text-xs text-gray-500">{total} papers</span>
+        <span className="text-xs text-gray-500">{t("litigation.paperCount", { count: total })}</span>
       </div>
       <div className="space-y-1">
         {categories.map(c => {
@@ -289,7 +440,7 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
             <div key={c} className="flex items-center justify-between text-xs">
               <div className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: SENTIMENT_COLORS[c] }} />
-                <span className="text-gray-600">{SENTIMENT_LABELS[c]}</span>
+                <span className="text-gray-600">{getSentimentLabel(t, c)}</span>
               </div>
               <span className="font-medium text-gray-800">{count}</span>
             </div>
@@ -298,7 +449,7 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
       </div>
       {entry.normalized_sentiment != null && (
         <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
-          <span className="text-gray-500">Sentiment (3yr avg)</span>
+          <span className="text-gray-500">{t("litigation.sentimentThreeYearAverage")}</span>
           <span className={`font-bold ${entry.normalized_sentiment < 0 ? "text-red-600" : "text-green-600"}`}>
             {entry.normalized_sentiment > 0 ? "+" : ""}{entry.normalized_sentiment.toFixed(2)}
           </span>
@@ -313,9 +464,10 @@ const SentimentTooltip = ({ active, payload, label }: any) => {
 // ---------------------------------------------------------------------------
 
 const LitigationRisk = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language;
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingBacktest, setIsLoadingBacktest] = useState(false);
   const [isLoadingBacktests, setIsLoadingBacktests] = useState(true);
@@ -465,8 +617,35 @@ const LitigationRisk = () => {
   const litigationEvents = backtest?.key_events.filter(e => e.type === "litigation") || [];
   const settlementEvents = backtest?.key_events.filter(e => e.type === "settlement") || [];
   const industryEvents = backtest?.key_events.filter(e => e.type === "industry") || [];
+  const chatSurfaceHint = useMemo(() => createLitigationAnswerSurfaceHint({
+    selectedCompound: formData.compound,
+    chartView,
+    availableBacktests: availableBacktests.length,
+    forecastRiskLevel: forecast?.risk_level ?? null,
+    probability12Months: forecast?.probability_12_months ?? null,
+    probability24Months: forecast?.probability_24_months ?? null,
+    probability36Months: forecast?.probability_36_months ?? null,
+    estimatedExposureUsd: forecast?.estimated_exposure_usd ?? null,
+    keyDrivers: (forecast?.key_drivers || []).slice(0, 6),
+    visibleSimilarCases: (forecast?.similar_cases || []).slice(0, 6).map((item) => ({
+      case: item.case,
+      year: item.year,
+      settlement: item.settlement,
+      relevance: item.relevance,
+    })),
+    backtestPublications: backtest?.total_publications ?? null,
+    firstLawsuitYear: backtest?.first_lawsuit_year ?? null,
+    leadTimeYears: backtest?.lead_time_years ?? null,
+    paperDrilldownYear: paperDrilldown?.year ?? null,
+    paperDrilldownTotal: paperDrilldown?.total ?? null,
+  }), [availableBacktests.length, backtest, chartView, forecast, formData.compound, paperDrilldown]);
 
   return (
+    <PageChatProvider
+      pageId="litigation"
+      pageLabel={t("litigation.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader title={t('litigation.title')} subtitle={t('litigation.subtitle')} helpContent={helpContent.litigation}>
         {backtest && (
@@ -624,7 +803,7 @@ const LitigationRisk = () => {
                           className={chartView === "sentiment" ? "bg-daikin-dark text-white hover:bg-daikin-dark/90" : ""}
                           onClick={() => setChartView("sentiment")}
                         >
-                          Sentiment
+                          {t("litigation.sentiment")}
                         </Button>
                       </div>
                     </div>
@@ -644,16 +823,16 @@ const LitigationRisk = () => {
                               yAxisId="velocity"
                               tick={{ fontSize: 11, fill: "#6b7280" }}
                               tickLine={false}
-                              label={{ value: "Velocity (papers/yr)", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
+                              label={{ value: t("litigation.velocityPapersPerYear"), angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
                             />
                             <YAxis
                               yAxisId="acceleration"
                               orientation="right"
                               tick={{ fontSize: 11, fill: "#f97316" }}
                               tickLine={false}
-                              label={{ value: "Acceleration", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#f97316" } }}
+                              label={{ value: t("litigation.acceleration"), angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#f97316" } }}
                             />
-                            <Tooltip content={<BacktestTooltip events={backtest.key_events} />} />
+                            <Tooltip content={<BacktestTooltip events={backtest.key_events} compoundId={backtest.compound_id} language={currentLanguage} />} />
                             {litigationEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`lit-${e.year}`}
@@ -662,7 +841,7 @@ const LitigationRisk = () => {
                                 stroke="#ef4444"
                                 strokeWidth={2}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
+                                label={{ value: getLocalizedEvent(currentLanguage, backtest.compound_id, e).label, position: "top", fill: "#ef4444", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             <ReferenceLine
@@ -670,7 +849,7 @@ const LitigationRisk = () => {
                               yAxisId="velocity"
                               stroke="#eab308"
                               strokeWidth={2}
-                              label={{ value: "SENTINEL SIGNAL", position: "insideTopRight", fill: "#eab308", fontSize: 9, fontWeight: 700 }}
+                              label={{ value: t("litigation.sentinelSignal"), position: "insideTopRight", fill: "#eab308", fontSize: 9, fontWeight: 700 }}
                             />
                             <Bar yAxisId="velocity" dataKey="velocity" radius={[3, 3, 0, 0]}>
                               {backtest.timeline.map((entry, idx) => (
@@ -698,7 +877,7 @@ const LitigationRisk = () => {
                               yAxisId="papers"
                               tick={{ fontSize: 11, fill: "#6b7280" }}
                               tickLine={false}
-                              label={{ value: "Papers", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
+                              label={{ value: t("litigation.papersAxis"), angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
                             />
                             <YAxis
                               yAxisId="cumulative"
@@ -707,7 +886,7 @@ const LitigationRisk = () => {
                               tick={{ fontSize: 11, fill: "#ef4444" }}
                               tickLine={false}
                               tickFormatter={(v) => v.toFixed(1)}
-                              label={{ value: "Sentiment (3yr avg)", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
+                              label={{ value: t("litigation.sentimentThreeYearAverage"), angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#ef4444" } }}
                             />
                             <Tooltip content={<SentimentTooltip />} />
                             {industryEvents.map((e, idx) => (
@@ -718,7 +897,7 @@ const LitigationRisk = () => {
                                 stroke="#22c55e"
                                 strokeWidth={2}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#22c55e", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
+                                label={{ value: getLocalizedEvent(currentLanguage, backtest.compound_id, e).label, position: "top", fill: "#22c55e", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             {litigationEvents.map((e, idx) => (
@@ -729,7 +908,7 @@ const LitigationRisk = () => {
                                 stroke="#ef4444"
                                 strokeWidth={1.5}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 8, dy: (idx + industryEvents.length) % 2 === 0 ? -5 : -20 }}
+                                label={{ value: getLocalizedEvent(currentLanguage, backtest.compound_id, e).label, position: "top", fill: "#ef4444", fontSize: 8, dy: (idx + industryEvents.length) % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             <Area yAxisId="papers" type="monotone" dataKey="sentiment.reckoning" stackId="sentiment" fill={SENTIMENT_COLORS.reckoning} stroke={SENTIMENT_COLORS.reckoning} fillOpacity={0.85} />
@@ -759,9 +938,9 @@ const LitigationRisk = () => {
                             <YAxis
                               tick={{ fontSize: 11, fill: "#6b7280" }}
                               tickLine={false}
-                              label={{ value: "Publications", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
+                              label={{ value: t("litigation.publications"), angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#9ca3af" } }}
                             />
-                            <Tooltip content={<BacktestTooltip events={backtest.key_events} />} />
+                            <Tooltip content={<BacktestTooltip events={backtest.key_events} compoundId={backtest.compound_id} language={currentLanguage} />} />
                             {litigationEvents.map((e, idx) => (
                               <ReferenceLine
                                 key={`lit-${e.year}`}
@@ -769,7 +948,7 @@ const LitigationRisk = () => {
                                 stroke="#ef4444"
                                 strokeWidth={2}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#ef4444", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
+                                label={{ value: getLocalizedEvent(currentLanguage, backtest.compound_id, e).label, position: "top", fill: "#ef4444", fontSize: 8, fontWeight: 600, dy: idx % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             {settlementEvents.map((e, idx) => (
@@ -779,14 +958,14 @@ const LitigationRisk = () => {
                                 stroke="#991b1b"
                                 strokeWidth={1.5}
                                 strokeDasharray="4 4"
-                                label={{ value: e.label, position: "top", fill: "#991b1b", fontSize: 8, dy: (idx + litigationEvents.length) % 2 === 0 ? -5 : -20 }}
+                                label={{ value: getLocalizedEvent(currentLanguage, backtest.compound_id, e).label, position: "top", fill: "#991b1b", fontSize: 8, dy: (idx + litigationEvents.length) % 2 === 0 ? -5 : -20 }}
                               />
                             ))}
                             <ReferenceLine
                               x={backtest.first_publication_year}
                               stroke="#eab308"
                               strokeWidth={2}
-                              label={{ value: "SENTINEL SIGNAL", position: "insideTopRight", fill: "#eab308", fontSize: 9, fontWeight: 700 }}
+                              label={{ value: t("litigation.sentinelSignal"), position: "insideTopRight", fill: "#eab308", fontSize: 9, fontWeight: 700 }}
                             />
                             <Bar dataKey="publications" radius={[3, 3, 0, 0]}>
                               {backtest.timeline.map((entry, idx) => (
@@ -805,7 +984,7 @@ const LitigationRisk = () => {
                           {Object.entries(ALERT_BADGES).map(([key, info]) => (
                             <div key={key} className="flex items-center gap-1.5">
                               <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: ALERT_BAR_COLORS[key] }} />
-                              <span className="text-xs text-gray-600">{info.label}</span>
+                              <span className="text-xs text-gray-600">{t(info.labelKey)}</span>
                             </div>
                           ))}
                           <div className="flex items-center gap-1.5">
@@ -818,19 +997,19 @@ const LitigationRisk = () => {
                           {(["celebration", "utility", "detection", "questioning", "alarm", "reckoning"] as const).map(c => (
                             <div key={c} className="flex items-center gap-1.5">
                               <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: SENTIMENT_COLORS[c] }} />
-                              <span className="text-xs text-gray-600">{SENTIMENT_LABELS[c]}</span>
+                              <span className="text-xs text-gray-600">{getSentimentLabel(t, c)}</span>
                             </div>
                           ))}
                           <div className="flex items-center gap-1.5">
                             <div className="w-6 h-0.5 rounded" style={{ borderTop: "2px dashed #dc2626" }} />
-                            <span className="text-xs text-gray-600">Sentiment (3yr avg)</span>
+                            <span className="text-xs text-gray-600">{t("litigation.sentimentThreeYearAverage")}</span>
                           </div>
                         </>
                       ) : (
                         backtest.phases.map((p) => (
                           <div key={p.id} className="flex items-center gap-1.5">
                             <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: p.color }} />
-                            <span className="text-xs text-gray-600">{p.label} ({p.years[0]}-{p.years[1]})</span>
+                            <span className="text-xs text-gray-600">{getLocalizedPhaseLabel(currentLanguage, backtest.compound_id, p)} ({p.years[0]}-{p.years[1]})</span>
                           </div>
                         ))
                       )}
@@ -838,7 +1017,7 @@ const LitigationRisk = () => {
 
                     {/* Click hint for sentiment view */}
                     {chartView === "sentiment" && (
-                      <p className="text-center text-xs text-blue-400 mt-2">Click any year on the chart to explore its papers</p>
+                      <p className="text-center text-xs text-blue-400 mt-2">{t("litigation.clickYearToExplorePapers")}</p>
                     )}
 
                     {/* Sentiment annotation */}
@@ -856,10 +1035,12 @@ const LitigationRisk = () => {
                         <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-sm text-daikin-dark">
-                              {paperDrilldown ? `${paperDrilldown.year} Papers` : "Loading..."}
+                              {paperDrilldown ? t("litigation.yearPapers", { year: paperDrilldown.year }) : t("common.loading")}
                             </span>
                             {paperDrilldown && (
-                              <Badge variant="outline" className="text-xs">{paperDrilldown.total} papers</Badge>
+                              <Badge variant="outline" className="text-xs">
+                                {t("litigation.paperCount", { count: paperDrilldown.total })}
+                              </Badge>
                             )}
                           </div>
                           <Button
@@ -889,10 +1070,10 @@ const LitigationRisk = () => {
                                           color: ["celebration", "utility", "detection"].includes(paper.category.toLowerCase()) ? "#1f2937" : "#ffffff",
                                         }}
                                       >
-                                        {SENTIMENT_LABELS[paper.category.toLowerCase()] || paper.category}
+                                        {getSentimentLabel(t, paper.category.toLowerCase())}
                                       </Badge>
                                       {paper.confidence >= 0.8 && (
-                                        <span className="text-[10px] text-gray-400">High confidence</span>
+                                        <span className="text-[10px] text-gray-400">{t("litigation.highConfidence")}</span>
                                       )}
                                     </div>
                                     <p className="text-sm text-gray-800 leading-snug">{paper.title}</p>
@@ -909,7 +1090,7 @@ const LitigationRisk = () => {
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       className="flex-shrink-0 text-blue-500 hover:text-blue-700 transition-colors"
-                                      title="View on PubMed"
+                                      title={t("litigation.viewOnPubMed")}
                                     >
                                       <ExternalLink className="h-3.5 w-3.5" />
                                     </a>
@@ -1016,8 +1197,8 @@ const LitigationRisk = () => {
                             style={{ backgroundColor: EVENT_COLORS[event.type] || "#9ca3af" }}
                           />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-800">{event.label}</p>
-                            <p className="text-xs text-gray-500 mt-0.5">{event.description}</p>
+                            <p className="text-sm font-medium text-gray-800">{getLocalizedEvent(currentLanguage, backtest.compound_id, event).label}</p>
+                            <p className="text-xs text-gray-500 mt-0.5">{getLocalizedEvent(currentLanguage, backtest.compound_id, event).description}</p>
                           </div>
                         </div>
                       ))}
@@ -1210,6 +1391,7 @@ const LitigationRisk = () => {
         </Tabs>
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

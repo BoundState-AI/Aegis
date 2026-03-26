@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,8 +13,10 @@ import {
   Atom, FileText, Beaker, Shapes, TrendingUp, Database, Info,
 } from "lucide-react";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import { apiGet, apiPost } from "@/lib/apiClient";
+import { createSimilarityAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import {
   tier1ResultSchema,
   tier1SummarySchema,
@@ -193,6 +195,45 @@ const StructuralSimilarity = () => {
   const [showRulesExplorer, setShowRulesExplorer] = useState(false);
   const [isLoadingRules, setIsLoadingRules] = useState(false);
 
+  const getRiskSignalLabel = (signal: string) => {
+    const key = `common.riskLevels.${signal.toLowerCase()}`;
+    const translated = t(key);
+    return translated === key ? signal : translated;
+  };
+
+  const getPatternTypeLabel = (patternType: string) => {
+    const key = `tier1.patternTypes.${patternType}`;
+    const translated = t(key);
+    return translated === key ? patternType : translated;
+  };
+
+  const getFluorineMetricLabel = (metric: string) => {
+    const key = `tier1.fluorineMetrics.${metric}`;
+    const translated = t(key);
+    return translated === key ? metric : translated;
+  };
+
+  const chatSurfaceHint = useMemo(() => createSimilarityAnswerSurfaceHint({
+    compoundName,
+    querySmiles: smiles,
+    riskSignal: result?.risk_signal ?? null,
+    neighborsWithPathways: result?.n_neighbors_with_pathways ?? null,
+    avgSimilarity: result?.avg_similarity ?? null,
+    topEndpoints: (result?.top_endpoints || []).slice(0, 8).map((endpoint) => ({
+      endpoint: endpoint.endpoint,
+      count: endpoint.count,
+      fraction: endpoint.fraction,
+    })),
+    similarCompounds: (result?.similar_with_pathways || []).slice(0, 10).map((neighbor) => ({
+      name: neighbor.name,
+      similarity: neighbor.similarity,
+      evidence_count: neighbor.evidence_count,
+    })),
+    tier2PatternCount: tier2Result?.patterns_detected.length ?? 0,
+    tier2RuleTotal: tier2RulesTotal,
+    coverageResolutionRate: tier2Coverage?.resolution_rate ?? null,
+  }), [compoundName, result, smiles, tier2Coverage, tier2Result, tier2RulesTotal]);
+
   useEffect(() => {
     void loadSummary();
     void loadTier2Coverage();
@@ -238,7 +279,7 @@ const StructuralSimilarity = () => {
     if (!smiles.trim()) {
       toast({
         title: t('common.smilesRequired'),
-        description: t('tier1.enterSmilesOrSelect'),
+        description: t('common.enterSmilesOrDemo'),
         variant: "destructive",
       });
       return;
@@ -277,12 +318,16 @@ const StructuralSimilarity = () => {
 
       toast({
         title: t('common.analysisComplete'),
-        description: `${data.query_name}: ${data.risk_signal} risk signal (${data.n_neighbors_with_pathways} neighbors with pathway data)`,
+        description: t('tier1.riskSignal', {
+          name: data.query_name,
+          signal: getRiskSignalLabel(data.risk_signal),
+          count: data.n_neighbors_with_pathways,
+        }),
       });
     } catch {
       toast({
         title: t('common.queryFailed'),
-        description: t('tier1.couldNotConnect'),
+        description: t('common.couldNotConnect'),
         variant: "destructive",
       });
     } finally {
@@ -296,6 +341,11 @@ const StructuralSimilarity = () => {
   };
 
   return (
+    <PageChatProvider
+      pageId="tier1"
+      pageLabel={t("tier1.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader
         title={t('tier1.title')}
@@ -343,7 +393,7 @@ const StructuralSimilarity = () => {
               <Input
                 value={smiles}
                 onChange={(e) => setSmiles(e.target.value)}
-                placeholder="e.g. OC(=O)C(F)(OC(F)(F)C(F)(F)C(F)(F)F)C(F)(F)F"
+                placeholder={t('tier1.smilesPlaceholder')}
                 className="bg-white border-gray-300 font-mono text-sm"
               />
             </div>
@@ -353,7 +403,7 @@ const StructuralSimilarity = () => {
               <Input
                 value={compoundName}
                 onChange={(e) => setCompoundName(e.target.value)}
-                placeholder="e.g. GenX"
+                placeholder={t('tier1.compoundNamePlaceholder')}
                 className="bg-white border-gray-300"
               />
             </div>
@@ -401,7 +451,7 @@ const StructuralSimilarity = () => {
                 <div className="flex items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-4">
                     <Badge className={`${getRiskColor(result.risk_signal)} text-white text-lg px-4 py-1`}>
-                      {result.risk_signal}
+                      {getRiskSignalLabel(result.risk_signal)}
                     </Badge>
                     <div>
                       <p className="text-lg font-bold text-daikin-dark">{result.query_name}</p>
@@ -411,11 +461,11 @@ const StructuralSimilarity = () => {
                   <div className="flex gap-6 text-center">
                     <div>
                       <p className="text-2xl font-bold text-daikin-dark">{result.n_neighbors_with_pathways}</p>
-                      <p className="text-xs text-gray-500">Neighbors with pathways</p>
+                      <p className="text-xs text-gray-500">{t('tier1.neighborsWithPathways')}</p>
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-daikin-dark">{(result.avg_similarity * 100).toFixed(0)}%</p>
-                      <p className="text-xs text-gray-500">Avg similarity</p>
+                      <p className="text-xs text-gray-500">{t('tier1.avgSimilarity')}</p>
                     </div>
                   </div>
                 </div>
@@ -452,7 +502,7 @@ const StructuralSimilarity = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-500">No pathway endpoints found for structural neighbors.</p>
+                    <p className="text-sm text-gray-500">{t('tier1.noEndpointsFound')}</p>
                   )}
                 </CardContent>
               </Card>
@@ -484,7 +534,7 @@ const StructuralSimilarity = () => {
                         ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-500">No mechanism data available.</p>
+                    <p className="text-sm text-gray-500">{t('tier1.noMechanismData')}</p>
                   )}
                 </CardContent>
               </Card>
@@ -527,13 +577,13 @@ const StructuralSimilarity = () => {
                     </div>
                     <div className="flex gap-4 mt-2 text-xs text-gray-400">
                       <span className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-blue-400" /> SMARTS
+                        <span className="w-2 h-2 rounded-full bg-blue-400" /> {getPatternTypeLabel("smarts")}
                       </span>
                       <span className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400" /> Algorithmic
+                        <span className="w-2 h-2 rounded-full bg-emerald-400" /> {getPatternTypeLabel("algorithmic")}
                       </span>
                       <span className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-purple-400" /> Classification
+                        <span className="w-2 h-2 rounded-full bg-purple-400" /> {getPatternTypeLabel("classification")}
                       </span>
                     </div>
                   </div>
@@ -542,13 +592,13 @@ const StructuralSimilarity = () => {
                   {tier2Result.fluorine_metrics && (
                     <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
                       {[
-                        { label: "Chain", value: tier2Result.fluorine_metrics.perfluoro_chain_len_max, unit: "C" },
-                        { label: "F/C Ratio", value: typeof tier2Result.fluorine_metrics.f_to_c_ratio === "number" ? (tier2Result.fluorine_metrics.f_to_c_ratio as number).toFixed(2) : "—" },
-                        { label: "CF\u2082", value: tier2Result.fluorine_metrics.cf2_count },
-                        { label: "CF\u2083", value: tier2Result.fluorine_metrics.has_cf3_terminal ? "\u2713" : "\u2717" },
-                        { label: "F atoms", value: tier2Result.fluorine_metrics.f_count },
-                        { label: "C atoms", value: tier2Result.fluorine_metrics.c_count },
-                        { label: "PF Carbons", value: tier2Result.fluorine_metrics.perfluoro_carbon_count },
+                        { label: getFluorineMetricLabel("chain"), value: tier2Result.fluorine_metrics.perfluoro_chain_len_max, unit: "C" },
+                        { label: getFluorineMetricLabel("fcRatio"), value: typeof tier2Result.fluorine_metrics.f_to_c_ratio === "number" ? (tier2Result.fluorine_metrics.f_to_c_ratio as number).toFixed(2) : "—" },
+                        { label: getFluorineMetricLabel("cf2"), value: tier2Result.fluorine_metrics.cf2_count },
+                        { label: getFluorineMetricLabel("cf3"), value: tier2Result.fluorine_metrics.has_cf3_terminal ? "\u2713" : "\u2717" },
+                        { label: getFluorineMetricLabel("fAtoms"), value: tier2Result.fluorine_metrics.f_count },
+                        { label: getFluorineMetricLabel("cAtoms"), value: tier2Result.fluorine_metrics.c_count },
+                        { label: getFluorineMetricLabel("pfCarbons"), value: tier2Result.fluorine_metrics.perfluoro_carbon_count },
                       ].map((m, i) => (
                         <div key={i} className="bg-gray-50 rounded-lg p-2 text-center">
                           <p className="text-lg font-bold text-daikin-dark">{m.value}{m.unit ? ` ${m.unit}` : ""}</p>
@@ -584,7 +634,7 @@ const StructuralSimilarity = () => {
                     {t('tier1.correlationsDescription')}
                     {tier2Result.coverage_info.resolved_precursors != null && (
                       <span className="ml-1">
-                        Based on {tier2Result.coverage_info.resolved_precursors as number} resolved precursors.
+                        {t('tier1.basedOnPrecursors', { count: tier2Result.coverage_info.resolved_precursors as number })}
                       </span>
                     )}
                   </CardDescription>
@@ -633,12 +683,12 @@ const StructuralSimilarity = () => {
                                 </Badge>
                               ))}
                             </div>
-                            <span>n={ec.n_precursors}, k={ec.k_with_endpoint}</span>
+                            <span>{t("tier1.supportCounts", { n: ec.n_precursors, k: ec.k_with_endpoint })}</span>
                           </div>
 
                           {ec.example_products.length > 0 && (
                             <div className="mt-2 text-xs text-gray-400">
-                              Examples: {ec.example_products.join(", ")}
+                              {t('tier1.examples')} {ec.example_products.join(", ")}
                             </div>
                           )}
                         </div>
@@ -670,7 +720,7 @@ const StructuralSimilarity = () => {
                   {/* Pathway Neighbors */}
                   {result.similar_with_pathways.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-700 mb-3">Compounds with Known Degradation Pathways</h4>
+                      <h4 className="text-sm font-semibold text-gray-700 mb-3">{t('tier1.compoundsWithKnownPathways')}</h4>
                       <div className="space-y-2">
                         {result.similar_with_pathways.map((n, i) => (
                           <div
@@ -679,18 +729,24 @@ const StructuralSimilarity = () => {
                             onClick={() => {
                               // Resolve and query the neighbor
                               setCompoundName(n.name);
-                              toast({ title: "Hint", description: `To query ${n.name}, resolve its SMILES via the API first.` });
+                              toast({
+                                title: t("common.hint"),
+                                description: t("tier1.queryNeighborHint", { name: n.name }),
+                              });
                             }}
                           >
                             <div>
                               <p className="font-medium text-daikin-dark">{n.name}</p>
                               <p className="text-xs text-gray-500">
-                                {n.pathways_count} pathways | {n.evidence_count} citations
+                                {t("tier1.neighborStats", {
+                                  pathways: n.pathways_count,
+                                  citations: n.evidence_count,
+                                })}
                               </p>
                             </div>
                             <div className="text-right">
                               <p className="text-lg font-bold text-daikin-dark">{(n.similarity * 100).toFixed(0)}%</p>
-                              <p className="text-xs text-gray-400">similarity</p>
+                              <p className="text-xs text-gray-400">{t('common.similarity')}</p>
                             </div>
                           </div>
                         ))}
@@ -701,16 +757,16 @@ const StructuralSimilarity = () => {
                   {/* EPA Neighbors */}
                   {result.similar_in_epa.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-700 mb-3">EPA PFAS Database Neighbors</h4>
+                      <h4 className="text-sm font-semibold text-gray-700 mb-3">{t('tier1.epaNeighbors')}</h4>
                       <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                           <thead>
                             <tr className="border-b border-gray-200">
-                              <th className="text-left py-2 text-gray-600">Name</th>
-                              <th className="text-left py-2 text-gray-600">CAS</th>
-                              <th className="text-right py-2 text-gray-600">Similarity</th>
-                              <th className="text-right py-2 text-gray-600">F atoms</th>
-                              <th className="text-right py-2 text-gray-600">MW</th>
+                              <th className="text-left py-2 text-gray-600">{t('tier1.tableHeaders.name')}</th>
+                              <th className="text-left py-2 text-gray-600">{t('tier1.tableHeaders.cas')}</th>
+                              <th className="text-right py-2 text-gray-600">{t('tier1.tableHeaders.similarity')}</th>
+                              <th className="text-right py-2 text-gray-600">{t('tier1.tableHeaders.fAtoms')}</th>
+                              <th className="text-right py-2 text-gray-600">{t('tier1.tableHeaders.mw')}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -784,7 +840,7 @@ const StructuralSimilarity = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-500">No evidence citations found for structural neighbors.</p>
+                    <p className="text-sm text-gray-500">{t('tier1.noEvidenceCitations')}</p>
                   )}
                 </CardContent>
               )}
@@ -826,7 +882,7 @@ const StructuralSimilarity = () => {
                   {isLoadingRules ? (
                     <div className="flex items-center justify-center py-8">
                       <Loader2 className="h-6 w-6 animate-spin text-daikin-blue" />
-                      <span className="ml-2 text-gray-500">Loading rules...</span>
+                      <span className="ml-2 text-gray-500">{t('tier1.loadingRules')}</span>
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -837,16 +893,27 @@ const StructuralSimilarity = () => {
                             <Info className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
                             <div className="text-sm text-blue-900">
                               <p className="font-medium">
-                                Coverage: {tier2Coverage.resolved_precursors} of {tier2Coverage.resolvable_precursors} resolvable precursors resolved to SMILES ({(tier2Coverage.resolution_rate * 100).toFixed(1)}%)
+                                {t("tier1.coverageSummary", {
+                                  resolved: tier2Coverage.resolved_precursors,
+                                  resolvable: tier2Coverage.resolvable_precursors,
+                                  rate: (tier2Coverage.resolution_rate * 100).toFixed(1),
+                                })}
                               </p>
                               <p className="text-xs mt-1">
-                                {tier2Coverage.pathways_with_resolved_precursor} of {tier2Coverage.total_pathways} pathways have resolved precursors.
-                                {" "}{tier2Coverage.non_resolvable_count} non-resolvable terms filtered (class names, mixtures, substrates).
-                                {" "}Rules are derived only from resolved precursors.
+                                {t("tier1.coverageDetail", {
+                                  pathwaysWithResolved: tier2Coverage.pathways_with_resolved_precursor,
+                                  totalPathways: tier2Coverage.total_pathways,
+                                  nonResolvable: tier2Coverage.non_resolvable_count,
+                                })}
                               </p>
                               {tier2Coverage.unresolved_precursors.length > 0 && (
                                 <p className="text-xs mt-1 text-blue-700">
-                                  Top unresolved: {tier2Coverage.unresolved_precursors.slice(0, 5).map(u => `${u.name} (${u.pathway_count})`).join(", ")}
+                                  {t("tier1.topUnresolved", {
+                                    items: tier2Coverage.unresolved_precursors
+                                      .slice(0, 5)
+                                      .map((u) => `${u.name} (${u.pathway_count})`)
+                                      .join(", "),
+                                  })}
                                 </p>
                               )}
                             </div>
@@ -857,20 +924,20 @@ const StructuralSimilarity = () => {
                       {/* Pattern support summary */}
                       {tier2Coverage && Object.keys(tier2Coverage.patterns_with_support).length > 0 && (
                         <div>
-                          <h4 className="text-sm font-semibold text-gray-700 mb-2">Patterns with Support</h4>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2">{t('tier1.patternsWithSupport')}</h4>
                           <div className="flex flex-wrap gap-2">
                             {Object.entries(tier2Coverage.patterns_with_support)
                               .sort(([, a], [, b]) => b - a)
                               .map(([name, n]) => (
                                 <Badge key={name} variant="outline" className="border-emerald-400 text-emerald-700 bg-emerald-50">
-                                  {name.replace(/_/g, " ")} (n={n})
+                                  {name.replace(/_/g, " ")} ({t("tier1.rulesTableHeaders.n")}={n})
                                 </Badge>
                               ))}
                             {Object.entries(tier2Coverage.patterns_insufficient_support)
                               .sort(([, a], [, b]) => b - a)
                               .map(([name, n]) => (
                                 <Badge key={name} variant="outline" className="border-gray-300 text-gray-400">
-                                  {name.replace(/_/g, " ")} (n={n})
+                                  {name.replace(/_/g, " ")} ({t("tier1.rulesTableHeaders.n")}={n})
                                 </Badge>
                               ))}
                           </div>
@@ -881,18 +948,18 @@ const StructuralSimilarity = () => {
                       {tier2Rules.length > 0 && (
                         <div>
                           <h4 className="text-sm font-semibold text-gray-700 mb-2">
-                            All Rules ({tier2RulesTotal})
+                            {t('tier1.allRules')} ({tier2RulesTotal})
                           </h4>
                           <div className="overflow-x-auto">
                             <table className="w-full text-sm">
                               <thead>
                                 <tr className="border-b border-gray-200">
-                                  <th className="text-left py-2 text-gray-600">Pattern</th>
-                                  <th className="text-left py-2 text-gray-600">Endpoint</th>
-                                  <th className="text-right py-2 text-gray-600">Confidence</th>
-                                  <th className="text-right py-2 text-gray-600">CI</th>
-                                  <th className="text-right py-2 text-gray-600">n</th>
-                                  <th className="text-right py-2 text-gray-600">k</th>
+                                  <th className="text-left py-2 text-gray-600">{t('tier1.rulesTableHeaders.pattern')}</th>
+                                  <th className="text-left py-2 text-gray-600">{t('tier1.rulesTableHeaders.endpoint')}</th>
+                                  <th className="text-right py-2 text-gray-600">{t('tier1.rulesTableHeaders.confidence')}</th>
+                                  <th className="text-right py-2 text-gray-600">{t('tier1.rulesTableHeaders.ci')}</th>
+                                  <th className="text-right py-2 text-gray-600">{t('tier1.rulesTableHeaders.n')}</th>
+                                  <th className="text-right py-2 text-gray-600">{t('tier1.rulesTableHeaders.k')}</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -956,10 +1023,10 @@ const StructuralSimilarity = () => {
               {summary && (
                 <div className="flex justify-center gap-8 mt-6 text-sm text-gray-500 flex-wrap">
                   <div>
-                    <span className="font-bold text-daikin-dark">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompoundsLower')}
+                    <span className="font-bold text-daikin-dark">{summary.epa_compounds.toLocaleString()}</span> {t('tier1.epaCompounds')}
                   </div>
                   <div>
-                    <span className="font-bold text-daikin-dark">{summary.pathways.toLocaleString()}</span> {t('common.pathwaysLower')}
+                    <span className="font-bold text-daikin-dark">{summary.pathways.toLocaleString()}</span> {t('common.pathways')}
                   </div>
                   <div>
                     <span className="font-bold text-daikin-dark">{summary.fate_compounds.toLocaleString()}</span> {t('tier1.fateCompounds')}
@@ -978,6 +1045,7 @@ const StructuralSimilarity = () => {
         )}
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,10 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, BookOpen, Link2, ExternalLink, Database, FileText } from "lucide-react";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import { apiGet } from "@/lib/apiClient";
+import { createEvidenceAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import {
   evidenceChainSchema,
   evidenceSourceStatsSchema,
@@ -60,13 +62,13 @@ const EvidenceChain = () => {
       setEvidence(typed);
       toast({
         title: t('common.evidenceRetrieved'),
-        description: `Found ${typed.total_citations} citations for ${typed.material}`,
+        description: t('evidence.foundCitations', { count: typed.total_citations, material: typed.material }),
       });
     },
     onError: () => {
       toast({
         title: t('common.searchFailed'),
-        description: "Could not retrieve evidence",
+        description: t('common.couldNotConnect'),
         variant: "destructive",
       });
     },
@@ -84,6 +86,20 @@ const EvidenceChain = () => {
 
   const sourceStats: SourceStats | null = sourceStatsQuery.data ?? null;
   const isLoading = evidenceMutation.isPending;
+  const chatSurfaceHint = useMemo(() => createEvidenceAnswerSurfaceHint({
+    material,
+    maxCitations,
+    totalCitations: evidence?.total_citations ?? 0,
+    confidenceScore: evidence?.confidence_score ?? null,
+    databaseTotalPapers: sourceStats?.total_papers ?? 0,
+    totalPathwayCitations: sourceStats?.coverage?.total_pathway_citations ?? 0,
+    visibleEvidence: (evidence?.evidence_chain || []).slice(0, 12).map((item) => ({
+      source: item.source,
+      year: item.year,
+      confidence: item.confidence,
+      compound: item.compound,
+    })),
+  }), [evidence, material, maxCitations, sourceStats]);
 
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 0.9) return "text-green-400";
@@ -92,12 +108,17 @@ const EvidenceChain = () => {
   };
 
   return (
+    <PageChatProvider
+      pageId="evidence"
+      pageLabel={t("evidence.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader title={t('evidence.title')} subtitle={t('evidence.subtitle')} helpContent={helpContent.evidence}>
         {sourceStats && (
           <>
             <div className="text-gray-600">
-              <span className="text-daikin-blue font-bold">{sourceStats.total_papers}</span> papers
+              <span className="text-daikin-blue font-bold">{sourceStats.total_papers}</span> {t('common.papers')}
             </div>
             <div className="text-gray-600">
               <span className="text-daikin-blue font-bold">{(sourceStats.coverage?.total_pathway_citations ?? 0).toLocaleString()}</span> {t('common.transformations').toLowerCase()}
@@ -120,7 +141,7 @@ const EvidenceChain = () => {
                 <Input
                   value={material}
                   onChange={(e) => setMaterial(e.target.value.toUpperCase())}
-                  placeholder="e.g., PTFE, FEP"
+                  placeholder={t('common.exampleMaterials')}
                   className="bg-white border-gray-300"
                 />
               </div>
@@ -178,7 +199,7 @@ const EvidenceChain = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-daikin-dark">{evidence.material} {t('evidence.evidenceChain')}</CardTitle>
-                      <Badge className="bg-gradient-to-r from-daikin-blue to-daikin-accent text-white">{evidence.total_citations} Citations</Badge>
+                      <Badge className="bg-gradient-to-r from-daikin-blue to-daikin-accent text-white">{evidence.total_citations} {t('common.citations')}</Badge>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -231,7 +252,7 @@ const EvidenceChain = () => {
                               className="inline-flex items-center gap-1 mt-2 text-xs text-daikin-blue hover:text-daikin-accent"
                             >
                               <ExternalLink className="h-3 w-3" />
-                              DOI: {item.doi}
+                              {t('evidence.doi')} {item.doi}
                             </a>
                           )}
                         </div>
@@ -246,7 +267,7 @@ const EvidenceChain = () => {
                   <Database className="h-16 w-16 mx-auto mb-4 text-gray-400" />
                   <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('evidence.evidenceChain')}</h3>
                   <p className="text-gray-500 max-w-md mx-auto">
-                    Search for peer-reviewed citations supporting PFAS degradation pathways. All evidence is traceable to source publications.
+                    {t('evidence.description')}
                   </p>
                   {sourceStats && (
                     <div className="mt-6 flex justify-center gap-6">
@@ -271,6 +292,7 @@ const EvidenceChain = () => {
         </div>
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

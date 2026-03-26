@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from boundstate_aegis.api.routes.chat_route import router as chat_router
-from boundstate_aegis.engines.chat.llm_runtime import ChatLLMResult
+from boundstate_aegis.engines.chat.llm_runtime import ChatLLMResult, resolve_chat_model
 
 
 app = FastAPI()
@@ -113,6 +113,12 @@ def test_chat_ping_reports_deterministic_fallback():
     assert payload["status"] in {"ok", "degraded"}
 
 
+def test_resolve_chat_model_ignores_bedrock_model_for_anthropic(monkeypatch):
+    monkeypatch.delenv("AEGIS_CHAT_LLM_MODEL", raising=False)
+    monkeypatch.setenv("LLM_SONNET_MODEL", "us.anthropic.claude-sonnet-4-5-20250929-v1:0")
+    assert resolve_chat_model("anthropic") == "claude-sonnet-4-20250514"
+
+
 def test_chat_uses_llm_response_when_available(monkeypatch):
     async def fake_llm_response(**kwargs):
         return ChatLLMResult(
@@ -157,3 +163,44 @@ def test_chat_uses_llm_response_when_available(monkeypatch):
     assert "Bounded frontier answer." in body
     assert '"deterministic": false' in body.lower() or '"deterministic":false' in body.lower()
     assert '"provider_used": "anthropic"' in body
+
+
+def test_portfolio_chat_streams_supported_response():
+    response = client.post(
+        "/api/v1/chat/stream",
+        json=_stream_payload(
+            "What is PTFE risk on this page?",
+            "portfolio",
+            {
+                "items": [
+                    {"material": "PTFE", "volume_lbs": 100000},
+                    {"material": "FEP", "volume_lbs": 50000},
+                ],
+                "total_materials": 2,
+                "high_risk_count": 1,
+                "total_exposure_usd": 4200000,
+                "top_results": [
+                    {
+                        "material": "PTFE",
+                        "risk_category": "HIGH",
+                        "risk_score": 0.91,
+                        "pfas_count": 6,
+                        "regulatory_flags": 4,
+                        "litigation_probability": 0.73,
+                    },
+                    {
+                        "material": "FEP",
+                        "risk_category": "MEDIUM",
+                        "risk_score": 0.52,
+                        "pfas_count": 3,
+                        "regulatory_flags": 2,
+                        "litigation_probability": 0.31,
+                    },
+                ],
+            },
+        ),
+    )
+    assert response.status_code == 200
+    body = response.text
+    assert '"status": "SUPPORTED"' in body
+    assert "PTFE is visible on this page" in body

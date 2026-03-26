@@ -38,6 +38,60 @@ export function createFateAnswerSurfaceHint(args: {
   };
 }
 
+type LitigationVisibleCase = {
+  case: string;
+  year: number;
+  settlement: number;
+  relevance: number;
+};
+
+type PortfolioVisibleItem = {
+  material: string;
+  volume_lbs: number;
+};
+
+type PortfolioVisibleResult = {
+  material: string;
+  risk_category: string;
+  risk_score: number;
+  pfas_count: number;
+  regulatory_flags: number;
+  litigation_probability: number;
+};
+
+type ReportVisibleSection = {
+  title: string;
+  flags_count: number;
+  similar_cases_count: number;
+  product_count: number;
+};
+
+type EvidenceVisibleItem = {
+  source: string;
+  year: number | null;
+  confidence: number;
+  compound: string;
+};
+
+type AnalysisVisibleFinding = {
+  product: string;
+  screening_classification: string;
+  regulatory_flags_count: number;
+  evidence_strength: number | null;
+};
+
+type SimilarityVisibleEndpoint = {
+  endpoint: string;
+  count: number;
+  fraction: number;
+};
+
+type SimilarityVisibleNeighbor = {
+  name: string;
+  similarity: number;
+  evidence_count?: number;
+};
+
 export function createRegulatoryAnswerSurfaceHint(args: {
   material: string;
   includeDegradation: boolean;
@@ -70,6 +124,190 @@ export function createRegulatoryAnswerSurfaceHint(args: {
       "What is the current overall risk on this page?",
       "How does the include degradation toggle affect the current screen?",
       "What forecast stage is visible for the selected year?",
+    ],
+  };
+}
+
+export function createLitigationAnswerSurfaceHint(args: {
+  selectedCompound: string;
+  chartView: string;
+  availableBacktests: number;
+  forecastRiskLevel: string | null;
+  probability12Months: number | null;
+  probability24Months: number | null;
+  probability36Months: number | null;
+  estimatedExposureUsd: number | null;
+  keyDrivers: string[];
+  visibleSimilarCases: LitigationVisibleCase[];
+  backtestPublications: number | null;
+  firstLawsuitYear: number | null;
+  leadTimeYears: number | null;
+  paperDrilldownYear: number | null;
+  paperDrilldownTotal: number | null;
+}): AnswerSurfaceHint {
+  return {
+    page_id: "litigation",
+    visible_state: {
+      selected_compound: args.selectedCompound,
+      chart_view: args.chartView,
+      available_backtests: args.availableBacktests,
+      forecast_risk_level: args.forecastRiskLevel,
+      probability_12_months: args.probability12Months,
+      probability_24_months: args.probability24Months,
+      probability_36_months: args.probability36Months,
+      estimated_exposure_usd: args.estimatedExposureUsd,
+      key_drivers: args.keyDrivers,
+      visible_similar_cases: args.visibleSimilarCases,
+      backtest_publications: args.backtestPublications,
+      first_lawsuit_year: args.firstLawsuitYear,
+      lead_time_years: args.leadTimeYears,
+      paper_drilldown_year: args.paperDrilldownYear,
+      paper_drilldown_total: args.paperDrilldownTotal,
+    },
+    starter_questions: [
+      "What is the visible litigation risk forecast for this compound?",
+      "What does the current backtest show on this page?",
+      "Which similar cases are visible right now?",
+    ],
+  };
+}
+
+export function createPortfolioAnswerSurfaceHint(args: {
+  items: PortfolioVisibleItem[];
+  totalMaterials: number;
+  highRiskCount: number;
+  totalExposureUsd: number;
+  topResults: PortfolioVisibleResult[];
+}): AnswerSurfaceHint {
+  return {
+    page_id: "portfolio",
+    visible_state: {
+      items: args.items,
+      total_materials: args.totalMaterials,
+      high_risk_count: args.highRiskCount,
+      total_exposure_usd: args.totalExposureUsd,
+      top_results: args.topResults,
+    },
+    starter_questions: [
+      "What is the current portfolio summary on this page?",
+      "Which visible material is highest risk here?",
+      "How much exposure is shown on the current portfolio screen?",
+    ],
+  };
+}
+
+export function createReportsAnswerSurfaceHint(args: {
+  material: string;
+  includeLitigation: boolean;
+  includeRegulatory: boolean;
+  generated: string | null;
+  classification: string | null;
+  visibleSections: ReportVisibleSection[];
+}): AnswerSurfaceHint {
+  return {
+    page_id: "reports",
+    visible_state: {
+      material: args.material,
+      include_litigation: args.includeLitigation,
+      include_regulatory: args.includeRegulatory,
+      generated: args.generated,
+      classification: args.classification,
+      visible_sections: args.visibleSections,
+    },
+    starter_questions: [
+      "What sections are visible in the current report?",
+      "What is the current report classification?",
+      "How do the litigation and regulatory toggles affect this report?",
+    ],
+  };
+}
+
+export function createEvidenceAnswerSurfaceHint(args: {
+  material: string;
+  maxCitations: number;
+  totalCitations: number;
+  confidenceScore: number | null;
+  databaseTotalPapers: number;
+  totalPathwayCitations: number;
+  visibleEvidence: EvidenceVisibleItem[];
+}): AnswerSurfaceHint {
+  return {
+    page_id: "evidence",
+    visible_state: {
+      material: args.material,
+      max_citations: args.maxCitations,
+      total_citations: args.totalCitations,
+      confidence_score: args.confidenceScore,
+      database_total_papers: args.databaseTotalPapers,
+      total_pathway_citations: args.totalPathwayCitations,
+      visible_evidence: args.visibleEvidence,
+    },
+    starter_questions: [
+      "What evidence is visible for this material?",
+      "What is the current evidence confidence on this page?",
+      "Which source is shown with the strongest visible support?",
+    ],
+  };
+}
+
+export function createAnalysisAnswerSurfaceHint(args: {
+  material: string;
+  temperatureC: number;
+  atmosphere: string;
+  timeHours: number;
+  findingsCount: number;
+  summary: string | null;
+  visibleFindings: AnalysisVisibleFinding[];
+}): AnswerSurfaceHint {
+  return {
+    page_id: "analysis",
+    visible_state: {
+      material: args.material,
+      temperature_c: args.temperatureC,
+      atmosphere: args.atmosphere,
+      time_hours: args.timeHours,
+      findings_count: args.findingsCount,
+      summary: args.summary,
+      visible_findings: args.visibleFindings,
+    },
+    starter_questions: [
+      "What degradation findings are visible for these conditions?",
+      "How do the current analysis inputs affect this screen?",
+      "Which visible product has the strongest support here?",
+    ],
+  };
+}
+
+export function createSimilarityAnswerSurfaceHint(args: {
+  compoundName: string;
+  querySmiles: string;
+  riskSignal: string | null;
+  neighborsWithPathways: number | null;
+  avgSimilarity: number | null;
+  topEndpoints: SimilarityVisibleEndpoint[];
+  similarCompounds: SimilarityVisibleNeighbor[];
+  tier2PatternCount: number;
+  tier2RuleTotal: number;
+  coverageResolutionRate: number | null;
+}): AnswerSurfaceHint {
+  return {
+    page_id: "tier1",
+    visible_state: {
+      compound_name: args.compoundName,
+      query_smiles: args.querySmiles,
+      risk_signal: args.riskSignal,
+      neighbors_with_pathways: args.neighborsWithPathways,
+      avg_similarity: args.avgSimilarity,
+      top_endpoints: args.topEndpoints,
+      similar_compounds: args.similarCompounds,
+      tier2_pattern_count: args.tier2PatternCount,
+      tier2_rule_total: args.tier2RuleTotal,
+      coverage_resolution_rate: args.coverageResolutionRate,
+    },
+    starter_questions: [
+      "What structural risk signal is visible for this query?",
+      "Which similar compounds are currently shown?",
+      "What endpoint patterns are visible on this page?",
     ],
   };
 }
