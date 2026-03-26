@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 
 function Counter({ end, duration = 2000, delay = 0 }: { end: string; duration?: number; delay?: number }) {
   const [count, setCount] = useState(0);
@@ -248,23 +249,26 @@ export default function AegisLanding() {
             by BoundState
           </span>
         </div>
-        <a
-          href="/fate-explorer"
-          style={{
-            fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
-            fontSize: "0.8rem",
-            color: "#666",
-            textDecoration: "none",
-            letterSpacing: "0.04em",
-            borderBottom: "1px solid transparent",
-            paddingBottom: "2px",
-            transition: "border-color 0.3s",
-          }}
-          onMouseEnter={(e) => ((e.target as HTMLElement).style.borderBottomColor = "#999")}
-          onMouseLeave={(e) => ((e.target as HTMLElement).style.borderBottomColor = "transparent")}
-        >
-          {t('landing.goToPlatform')} →
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <LanguageToggle />
+          <a
+            href="/fate-explorer"
+            style={{
+              fontFamily: "Helvetica, Arial, Meiryo, sans-serif",
+              fontSize: "0.8rem",
+              color: "#666",
+              textDecoration: "none",
+              letterSpacing: "0.04em",
+              borderBottom: "1px solid transparent",
+              paddingBottom: "2px",
+              transition: "border-color 0.3s",
+            }}
+            onMouseEnter={(e) => ((e.target as HTMLElement).style.borderBottomColor = "#999")}
+            onMouseLeave={(e) => ((e.target as HTMLElement).style.borderBottomColor = "transparent")}
+          >
+            {t('landing.goToPlatform')} →
+          </a>
+        </div>
       </nav>
 
       {/* Hero */}
