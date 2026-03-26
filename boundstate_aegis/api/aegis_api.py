@@ -32,6 +32,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from boundstate_aegis.api.routes import (
     assess_route,
     access_route,
+    chat_route,
     pathway_route,
     regulation_route,
     fate_route,
@@ -211,6 +212,11 @@ def create_app(
         access_route.router,
         prefix="/api/v1/auth",
         tags=["Access Control"],
+    )
+    app.include_router(
+        chat_route.router,
+        prefix="/api/v1/chat",
+        tags=["Aegis Chat"],
     )
 
     @app.get("/health")

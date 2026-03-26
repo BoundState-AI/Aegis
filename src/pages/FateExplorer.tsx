@@ -17,7 +17,9 @@ import DaikinHeader from "@/components/layout/DaikinHeader";
 import { useHelpContent } from "@/config/helpContent";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import { ProductLabel } from "@/components/pfas/ProductLabel";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { apiGet } from "@/lib/apiClient";
+import { createFateAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import { fateQuerySchema, graphSummarySchema, parentsSchema, type FateQueryResponse, type GraphSummary } from "@/lib/apiSchemas";
 
 interface Transformation {
@@ -140,7 +142,50 @@ const FateExplorer = () => {
   const parents = parentsQuery.data?.parents || [];
   const isLoading = searchMutation.isPending;
 
+  const getAtmosphereLabel = (atmosphere: string) => {
+    const key = `fateExplorer.atmosphereOptions.${atmosphere}`;
+    const translated = t(key);
+    return translated === key ? atmosphere : translated;
+  };
+
+  const getHazardLabel = (level: string | null) => {
+    if (!level) return t("common.unknown");
+    const key = `common.riskLevels.${level.toLowerCase()}`;
+    const translated = t(key);
+    return translated === key ? level : translated;
+  };
+
+  const getDegradationTypeLabel = (value: string) => {
+    const normalized = value.trim().toLowerCase().replace(/\s+/g, "_");
+    const key = `fateExplorer.degradationTypeLabels.${normalized}`;
+    const translated = t(key);
+    return translated === key ? value.replace(/_/g, " ") : translated;
+  };
+
+  const chatSurfaceHint = useMemo(() => createFateAnswerSurfaceHint({
+    parent: formData.parent,
+    tempMin: formData.tempMin,
+    tempMax: formData.tempMax,
+    atmosphere: formData.atmosphere,
+    minObservations: formData.minObservations,
+    totalTransformations: results?.total_transformations ?? 0,
+    visibleTransformations: (results?.transformations || []).slice(0, 12).map((row) => ({
+      product: row.child,
+      hazard_level: row.hazard_level,
+      confidence: row.score,
+      source_count: row.source_count,
+      is_regulated: row.is_regulated,
+      temp_range: row.temp_range,
+      atmosphere: row.atmosphere,
+    })),
+  }), [formData, results]);
+
   return (
+    <PageChatProvider
+      pageId="fate-explorer"
+      pageLabel={t("fateExplorer.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <DaikinHeader title={t('fateExplorer.title')} subtitle={t('fateExplorer.subtitle')} helpContent={helpContent.fateExplorer}>
@@ -240,9 +285,9 @@ const FateExplorer = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="any">{t('common.any')}</SelectItem>
-                    <SelectItem value="oxidative">Oxidative</SelectItem>
-                    <SelectItem value="inert">Inert</SelectItem>
-                    <SelectItem value="aqueous">Aqueous</SelectItem>
+                    <SelectItem value="oxidative">{getAtmosphereLabel("oxidative")}</SelectItem>
+                    <SelectItem value="inert">{getAtmosphereLabel("inert")}</SelectItem>
+                    <SelectItem value="aqueous">{getAtmosphereLabel("aqueous")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -304,7 +349,7 @@ const FateExplorer = () => {
                         0 {t('fateExplorer.degradationPathwaysFound')}
                       </CardTitle>
                       <CardDescription>
-                        {t('fateExplorer.query')}: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
+                        {t('fateExplorer.query')}: {t('fateExplorer.querySummary', { compound: formData.parent, min: formData.tempMin, max: formData.tempMax })}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="text-center py-8">
@@ -329,7 +374,7 @@ const FateExplorer = () => {
                           {results.total_transformations} {t('fateExplorer.degradationPathwaysFound')}
                         </CardTitle>
                         <CardDescription>
-                          {t('fateExplorer.query')}: {formData.parent} at {formData.tempMin}-{formData.tempMax}°C
+                          {t('fateExplorer.query')}: {t('fateExplorer.querySummary', { compound: formData.parent, min: formData.tempMin, max: formData.tempMax })}
                         </CardDescription>
                       </CardHeader>
                     </Card>
@@ -397,12 +442,12 @@ const FateExplorer = () => {
                                 <TableCell className="text-gray-600">{tr.temp_range || t('common.notAvailable')}</TableCell>
                                 <TableCell>
                                   <span className="text-gray-600 text-xs capitalize">
-                                    {(tr.degradation_types?.[0] || t('common.unknown')).replace(/_/g, " ")}
+                                    {tr.degradation_types?.[0] ? getDegradationTypeLabel(tr.degradation_types[0]) : t('common.unknown')}
                                   </span>
                                 </TableCell>
                                 <TableCell>
                                   <Badge className={getHazardColor(tr.hazard_level)}>
-                                    {tr.hazard_level || t('common.unknown')}
+                                    {getHazardLabel(tr.hazard_level)}
                                   </Badge>
                                 </TableCell>
                                 <TableCell>
@@ -463,7 +508,7 @@ const FateExplorer = () => {
                         <div className="flex flex-wrap gap-2">
                           {Array.from(new Set(results.transformations.flatMap(tr => tr.degradation_types))).map((type) => (
                             <Badge key={type} variant="outline" className="border-gray-400 text-gray-600 capitalize">
-                              {type.replace(/_/g, " ")}
+                              {getDegradationTypeLabel(type)}
                             </Badge>
                           ))}
                         </div>
@@ -495,6 +540,7 @@ const FateExplorer = () => {
         </div>
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 

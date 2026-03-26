@@ -43,6 +43,10 @@ type RequestOptions = {
   signal?: AbortSignal;
 };
 
+type StreamOptions = Omit<RequestOptions, "method" | "body"> & {
+  onEvent: (payload: Record<string, unknown>) => void;
+};
+
 function buildHeaders(extraHeaders?: Record<string, string>): Record<string, string> {
   const apiKey = getActiveApiKey();
   const base: Record<string, string> = {};
@@ -174,4 +178,76 @@ export function apiPostBlob(
   options: Omit<RequestOptions, "method" | "body"> = {},
 ) {
   return apiRequestBlob(path, { ...options, method: "POST", body });
+}
+
+function dispatchSseEvents(buffer: string, onEvent: (payload: Record<string, unknown>) => void) {
+  let remainder = buffer;
+  let boundary = remainder.indexOf("\n\n");
+  while (boundary >= 0) {
+    const rawEvent = remainder.slice(0, boundary);
+    remainder = remainder.slice(boundary + 2);
+    const dataLines = rawEvent
+      .split(/\r?\n/)
+      .filter((line) => line.startsWith("data:"))
+      .map((line) => line.slice(5).trim());
+    if (dataLines.length > 0) {
+      const payload = JSON.parse(dataLines.join("\n")) as Record<string, unknown>;
+      onEvent(payload);
+    }
+    boundary = remainder.indexOf("\n\n");
+  }
+  return remainder;
+}
+
+export async function apiStream(path: string, body: unknown, options: StreamOptions) {
+  const url = `${API_BASE}${path}`;
+  const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const headers = buildHeaders({
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  });
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+    signal: withTimeout(options.signal, timeoutMs),
+  });
+
+  if (!response.ok) {
+    const payload = await parseJsonSafe(response);
+    const parsed = errorPayloadSchema.safeParse(payload);
+    const detail =
+      parsed.success
+        ? parsed.data.detail || parsed.data.message || parsed.data.error
+        : undefined;
+    throw new ApiError(detail || `Request failed with status ${response.status}`, response.status, parsed.success ? parsed.data : null);
+  }
+
+  if (!response.body) {
+    throw new ApiError("Streaming response body was not available", 502, null);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    buffer += decoder.decode(value || new Uint8Array(), { stream: !done });
+    buffer = dispatchSseEvents(buffer, options.onEvent);
+    if (done) break;
+  }
+
+  const trailing = buffer.trim();
+  if (trailing) {
+    const raw = trailing
+      .split(/\r?\n/)
+      .filter((line) => line.startsWith("data:"))
+      .map((line) => line.slice(5).trim())
+      .join("\n");
+    if (raw) {
+      options.onEvent(JSON.parse(raw) as Record<string, unknown>);
+    }
+  }
 }

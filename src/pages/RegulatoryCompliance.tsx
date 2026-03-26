@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -11,10 +11,12 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Shield, AlertTriangle, CheckCircle, XCircle, Calendar, Globe, Zap } from "lucide-react";
 import DaikinHeader from "@/components/layout/DaikinHeader";
+import { PageChatProvider } from "@/components/chat/PageChatProvider";
 import { useHelpContent } from "@/config/helpContent";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import Intelligence, { type IntelligenceTabKey } from "./Intelligence";
 import { apiGet } from "@/lib/apiClient";
+import { createRegulatoryAnswerSurfaceHint } from "@/lib/chat/surfaces";
 import { cascadeSchema, regulatoryCheckSchema, type CascadeResponse, type RegulatoryCheck } from "@/lib/apiSchemas";
 
 type RegulatorySubview = "landscape" | "signals" | "resolver" | "queue";
@@ -186,7 +188,43 @@ const RegulatoryCompliance = () => {
     queue: "queue",
   };
 
+  const chatSurfaceHint = useMemo(() => createRegulatoryAnswerSurfaceHint({
+    material,
+    includeDegradation,
+    forecastYear,
+    activeSubview: subview,
+    overallRisk: checkResult?.overall_risk ?? null,
+    frameworksChecked: checkResult?.frameworks_checked ?? 0,
+    compliantCount: checkResult?.compliant.length ?? 0,
+    warningCount: checkResult?.warnings.length ?? 0,
+    nonCompliantCount: checkResult?.non_compliant.length ?? 0,
+    sampleFindings: [
+      ...(checkResult?.non_compliant || []).slice(0, 4),
+      ...(checkResult?.warnings || []).slice(0, 3),
+      ...(checkResult?.compliant || []).slice(0, 3),
+    ].map((row) => ({
+      framework: row.framework,
+      status: row.status,
+      notes: row.notes,
+    })),
+    cascadePredictions: Object.fromEntries(
+      Object.entries(cascade?.predictions || {}).map(([key, value]) => [
+        key,
+        {
+          status: value.status,
+          regulatory_stage: value.regulatory_stage,
+          affected_products: value.affected_products,
+        },
+      ]),
+    ),
+  }), [material, includeDegradation, forecastYear, subview, checkResult, cascade]);
+
   return (
+    <PageChatProvider
+      pageId="regulatory"
+      pageLabel={t("regulatory.title")}
+      surfaceHint={chatSurfaceHint}
+    >
     <div className="min-h-screen bg-gray-50">
       <DaikinHeader title={t('regulatory.title')} subtitle={t('regulatory.subtitle')} helpContent={helpContent.regulatory} />
 
@@ -509,6 +547,7 @@ const RegulatoryCompliance = () => {
         )}
       </main>
     </div>
+    </PageChatProvider>
   );
 };
 
