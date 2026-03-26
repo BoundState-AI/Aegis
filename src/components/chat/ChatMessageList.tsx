@@ -42,7 +42,7 @@ export function ChatMessageList({ messages }: ChatMessageListProps) {
               }
             >
               {message.role === "assistant" && message.status && (
-                <div className="mb-2 flex flex-wrap items-center gap-2">
+                <div className="mb-3 flex flex-wrap items-center gap-2">
                   <Badge variant="outline" className={statusClass(message.status)}>
                     {message.status.replaceAll("_", " ")}
                   </Badge>
@@ -65,11 +65,6 @@ export function ChatMessageList({ messages }: ChatMessageListProps) {
                   Sources: {message.citations.join(", ")}
                 </p>
               )}
-              {message.fallbackReason && (
-                <p className="mt-2 text-xs text-gray-500">
-                  Fallback: {message.fallbackReason}
-                </p>
-              )}
               {message.handoffTargets.length > 0 && (
                 <p className="mt-2 text-xs text-gray-500">
                   Handoff: {message.handoffTargets.join(", ")}
@@ -83,6 +78,24 @@ export function ChatMessageList({ messages }: ChatMessageListProps) {
                     </p>
                   ))}
                 </div>
+              )}
+              {(message.providerUsed || message.modelUsed || message.fallbackReason) && (
+                <details className="mt-3 rounded-md bg-gray-50 px-3 py-2 text-xs text-gray-500">
+                  <summary className="cursor-pointer select-none font-medium text-gray-600">
+                    Response details
+                  </summary>
+                  <div className="mt-2 space-y-1">
+                    {(message.providerUsed || message.modelUsed) && (
+                      <p>
+                        Runtime: {message.providerUsed || "unknown"}
+                        {message.modelUsed ? ` / ${message.modelUsed}` : ""}
+                      </p>
+                    )}
+                    {message.fallbackReason && (
+                      <p>Fallback: {message.fallbackReason}</p>
+                    )}
+                  </div>
+                </details>
               )}
             </div>
           </div>
