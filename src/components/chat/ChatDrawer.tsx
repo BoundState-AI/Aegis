@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 import {
   Sheet,
   SheetContent,
@@ -37,28 +38,29 @@ export function ChatDrawer({
   starterQuestions,
   onSend,
 }: ChatDrawerProps) {
+  const { t } = useTranslation();
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full max-w-[460px] p-0 sm:max-w-[460px]">
         <div className="flex h-full flex-col bg-gray-50">
           <SheetHeader className="border-b border-gray-200 px-6 py-5">
             <div className="flex items-center gap-2">
-              <SheetTitle>AEGIS Chat</SheetTitle>
+              <SheetTitle>{t("chat.title")}</SheetTitle>
               <Badge variant="outline" className="border-daikin-blue/30 bg-daikin-blue/10 text-daikin-blue">
                 {pageLabel}
               </Badge>
             </div>
             <SheetDescription>
-              Bounded page chat. It explains the active surface and hands off when the question belongs elsewhere.
+              {t("chat.description")}
             </SheetDescription>
             {serviceHealthy && !llmAvailable && (
               <p className="text-xs text-red-600">
-                {runtimeLabel || "Reasoning is degraded. Deterministic boundary responses are still available."}
+                {runtimeLabel || t("chat.runtime.degraded")}
               </p>
             )}
             {!serviceHealthy && (
               <p className="text-xs text-red-600">
-                Chat runtime status is unavailable. Requests may still succeed, but health could not be confirmed.
+                {t("chat.runtime.healthUnavailable")}
               </p>
             )}
             {error && (

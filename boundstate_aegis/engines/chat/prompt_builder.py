@@ -24,6 +24,7 @@ def build_llm_prompts(
     evidence: dict[str, Any],
     deterministic_decision: ChatDecision,
 ) -> tuple[str, str]:
+    wants_japanese = surface.locale.lower().startswith("ja")
     relevant_history = [
         {"role": turn.role, "content": turn.content}
         for turn in history[-6:]
@@ -43,6 +44,7 @@ def build_llm_prompts(
         "7. Never copy raw JSON, snake_case field names, booleans, or key-value fragments into the answer.\n"
         "8. Convert machine fields into human-readable sentences. For example, say 'It is marked regulated on this page' instead of 'is_regulated: true'.\n"
         "9. Keep the answer concise and direct. Prefer a short paragraph. Use bullets only when they materially improve clarity. No markdown tables.\n"
+        + ("10. The active UI language is Japanese. Answer entirely in natural Japanese.\n" if wants_japanese else "")
     )
 
     user_prompt = (
@@ -73,6 +75,10 @@ def build_llm_prompts(
         f"{user_message.strip()}\n"
         "</user_question>\n\n"
         "Write the best bounded answer for the user. Stay inside the selected evidence and preserve the deterministic baseline stance. "
-        "Do not dump field names, JSON fragments, or raw booleans. Rewrite visible facts as plain English."
+        + (
+            "Do not dump field names, JSON fragments, or raw booleans. Rewrite visible facts as plain Japanese."
+            if wants_japanese
+            else "Do not dump field names, JSON fragments, or raw booleans. Rewrite visible facts as plain English."
+        )
     )
     return system_prompt, user_prompt

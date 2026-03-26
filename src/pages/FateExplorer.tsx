@@ -46,9 +46,10 @@ const PARENT_COMPOUNDS = [
 ];
 
 const FateExplorer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [results, setResults] = useState<FateExplorerResponse | null>(null);
 
   const [parentOpen, setParentOpen] = useState(false);
@@ -163,6 +164,12 @@ const FateExplorer = () => {
   };
 
   const chatSurfaceHint = useMemo(() => createFateAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.fate.products"),
+      t("chat.starters.fate.hazard"),
+      t("chat.starters.fate.filters"),
+    ],
     parent: formData.parent,
     tempMin: formData.tempMin,
     tempMax: formData.tempMax,
@@ -178,7 +185,7 @@ const FateExplorer = () => {
       temp_range: row.temp_range,
       atmosphere: row.atmosphere,
     })),
-  }), [formData, results]);
+  }), [currentLanguage, formData, results, t]);
 
   return (
     <PageChatProvider

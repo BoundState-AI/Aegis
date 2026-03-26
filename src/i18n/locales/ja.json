@@ -33,6 +33,14 @@
     "sources": "情報源",
     "year": "年",
     "similarity": "類似度",
+    "exampleMaterials": "例：PTFE、FEP",
+    "riskLevels": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "critical": "重大",
+      "compliant": "適合"
+    },
     "product": "生成物",
     "products": "生成物",
     "queryComplete": "クエリ完了",
@@ -58,6 +66,72 @@
     "hint": "ヒント",
     "previewMode": "",
     "previewModel": ""
+  },
+  "chat": {
+    "title": "AEGIS チャット",
+    "description": "境界付きのページチャットです。現在の画面で説明できる内容に限定し、別ページの担当事項は適切に案内します。",
+    "askAegis": "AEGIS に質問",
+    "placeholder": "現在のページについて質問してください...",
+    "send": "送信",
+    "sending": "送信中...",
+    "thinking": "考えています...",
+    "runtime": {
+      "degraded": "推論機能は低下していますが、決定論的な境界応答は引き続き利用できます。",
+      "unavailable": "現在 AEGIS Chat に接続できません。",
+      "healthUnavailable": "チャット実行環境の状態を確認できませんでした。リクエスト自体は成功する可能性があります。"
+    },
+    "starters": {
+      "fate": {
+        "products": "この親化合物で表示されている分解生成物は何ですか？",
+        "hazard": "表示中の生成物が高ハザードになっている理由は何ですか？",
+        "filters": "現在のフィルターは表示中の経路セットにどう影響していますか？"
+      },
+      "regulatory": {
+        "risk": "このページの現在の総合リスクは何ですか？",
+        "toggle": "「分解生成物を含める」トグルは現在の画面にどう影響していますか？",
+        "forecast": "選択中の年ではどの予測段階が表示されていますか？"
+      },
+      "litigation": {
+        "forecast": "この化合物の表示中の訴訟リスク予測はどうなっていますか？",
+        "backtest": "このページの現在のバックテストは何を示していますか？",
+        "cases": "今表示されている類似事例はどれですか？"
+      },
+      "portfolio": {
+        "summary": "このページの現在のポートフォリオ概要は何ですか？",
+        "highestRisk": "表示中の材料のうち最も高リスクなのはどれですか？",
+        "exposure": "現在のポートフォリオ画面ではどれくらいのエクスポージャーが表示されていますか？"
+      },
+      "reports": {
+        "sections": "現在のレポートにはどのセクションが表示されていますか？",
+        "classification": "現在のレポート分類は何ですか？",
+        "toggles": "訴訟トグルと規制トグルはこのレポートにどう影響しますか？"
+      },
+      "evidence": {
+        "visible": "この材料について、どのエビデンスが表示されていますか？",
+        "confidence": "このページの現在のエビデンス信頼度はどれくらいですか？",
+        "source": "表示中で最も強い支持を持つ情報源はどれですか？"
+      },
+      "analysis": {
+        "findings": "これらの条件で、どの分解結果が表示されていますか？",
+        "inputs": "現在の分析入力はこの画面にどう影響していますか？",
+        "support": "表示中の生成物のうち、最も支持が強いのはどれですか？"
+      },
+      "tier1": {
+        "signal": "このクエリで表示されている構造リスクシグナルは何ですか？",
+        "compounds": "現在表示されている類似化合物はどれですか？",
+        "endpoints": "このページではどのエンドポイント傾向が表示されていますか？"
+      }
+    }
+  },
+  "login": {
+    "title": "AEGIS ログイン",
+    "subtitle": "AEGIS にアクセスするにはプラットフォームパスワードを入力してください。",
+    "passwordLabel": "パスワード",
+    "passwordPlaceholder": "パスワードを入力",
+    "rememberDevice": "この端末を記憶する",
+    "incorrectPassword": "パスワードが正しくありません。",
+    "signIn": "サインイン",
+    "platformAccessContact": "プラットフォームへのアクセスが必要ですか？ AEGIS 管理者に連絡してください。"
   },
   "landing": {
     "tagline": "PFAS分解インテリジェンス",
@@ -126,6 +200,7 @@
     "maxTemp": "最高温度 (°C)",
     "minObservations": "最小観測数",
     "searchPathways": "経路を検索",
+    "querySummary": "{{compound}} を {{min}}-{{max}}°C で検索",
     "degradationPathwaysFound": "分解経路が見つかりました",
     "query": "クエリ",
     "tableHeaders": {
@@ -144,6 +219,22 @@
     "loadingKnowledgeGraph": "ナレッジグラフを読み込み中...",
     "foundPathways": "{{compound}}について{{count}}件の分解経路が見つかりました",
     "sourceReferences": "引用文献 (DOI)",
+    "atmosphereOptions": {
+      "oxidative": "酸化性",
+      "inert": "不活性",
+      "aqueous": "水系"
+    },
+    "degradationTypeLabels": {
+      "thermal": "熱分解",
+      "oxidative": "酸化分解",
+      "hydrolytic": "加水分解",
+      "aqueous": "水系",
+      "photolytic": "光分解",
+      "reductive": "還元分解",
+      "biotic": "生物的",
+      "biological": "生物学的",
+      "microbial": "微生物的"
+    },
     "compoundNotInDatabase": "この化合物はAEGISデータベースに存在しません。",
     "fateExplorerScope": "Fate Explorerはパーおよびポリフルオロアルキル物質を対象としています。",
     "trySuggestions": "PFOA、GenX、またはPTFEをお試しください。",
@@ -179,8 +270,15 @@
       "sentiment": "PubMedのタイトル+抄録からAIで分類した研究センチメント。積み上げ面は時系列での文献の傾向を示す。",
       "publications": "PubMedからの年間査読付き論文数。棒はフェーズで色分け。縦線は主要イベントを示す。"
     },
+    "sentiment": "センチメント",
     "acceleration": "加速度",
     "cumulativeSentiment": "累積センチメント",
+    "velocity": "速度",
+    "velocityPapersPerYear": "速度（論文/年）",
+    "papersPerYear": "論文/年",
+    "papersAxis": "論文",
+    "sentimentThreeYearAverage": "センチメント（3年平均）",
+    "inflection": "変曲点",
     "sentimentKeyFinding": "主要な発見：",
     "sentimentAnnotation": "GenXに関する独立した称賛論文は存在しない。最初の査読付き論文は検出と警告の研究だった。唯一の肯定的なナラティブは業界文献（2008-2010年）からのものだった。累積研究センチメントは即座にネガティブになり、回復しなかった。",
     "claimsVsReality": "規制タイムライン分析",
@@ -194,6 +292,12 @@
     "eventTimeline": "イベントタイムライン",
     "eventTimelineDescription": "EPA提出書類、裁判記録、公開情報からの主要イベント",
     "andMore": "他{{count}}件。",
+    "publicationsCount": "{{count}}本の論文",
+    "paperCount": "{{count}}本の論文",
+    "highConfidence": "高信頼",
+    "viewOnPubMed": "PubMedで表示",
+    "clickYearToExplorePapers": "グラフ上の年をクリックすると、その年の論文を表示します",
+    "yearPapers": "{{year}}年の論文",
     "loadingCaseStudy": "{{compound}}のケーススタディを読み込み中...",
     "loadingCaseStudies": "ケーススタディを読み込み中...",
     "forecastParameters": "予測パラメータ",
@@ -310,6 +414,23 @@
     "highRisk": "高リスク",
     "totalExposure": "総エクスポージャー",
     "assessmentResults": "評価結果",
+    "riskCategoriesLabel": "リスク区分：",
+    "riskCategoryDefinitionsTitle": "リスク区分の定義",
+    "riskCategoryTooltipTitle": "{{label}}リスク",
+    "riskCategories": {
+      "LOW": {
+        "label": "低",
+        "description": "規制上の動きが少なく、訴訟エクスポージャーの文書化もありません。規制対象エンドポイントへの分解経路も限定的です。"
+      },
+      "MEDIUM": {
+        "label": "中",
+        "description": "分解経路が文書化されており、2件以上の法域で規制上の注目があります。まだ化合物固有の訴訟対象ではありません。"
+      },
+      "HIGH": {
+        "label": "高",
+        "description": "規制値が既に設定されている、訴訟履歴がある、またはPFOA/PFOSのような強く規制されるエンドポイントへの既知の分解経路があります。"
+      }
+    },
     "tableHeaders": {
       "material": "材料",
       "riskScore": "リスクスコア",
@@ -321,7 +442,9 @@
     "executiveSummary": "エグゼクティブサマリー",
     "description": "ポートフォリオに材料を追加し、PFASカウント、規制フラグ、訴訟確率を含む包括的なリスク評価を取得。",
     "disclaimer": "リスクスコアは化合物固有の分解データ、規制上の曝露、訴訟履歴を組み込んでいます。サイト固有の要因は資格のある専門家によって評価されるべきです。",
-    "analyzed": "{{count}}件の材料を分析 - {{highRisk}}件が高リスク"
+    "analyzed": "{{count}}件の材料を分析 - {{highRisk}}件が高リスク",
+    "materialPlaceholder": "材料",
+    "volumePlaceholder": "数量"
   },
   "reports": {
     "title": "エグゼクティブレポート",
@@ -333,8 +456,20 @@
     "generateReport": "レポート生成",
     "generated": "生成日時：",
     "classification": "分類",
+    "classificationLabels": {
+      "confidential_attorney_client_privileged": "機密・秘匿特権対象"
+    },
+    "aegisRiskAssessmentTitle": "AEGIS リスク評価: {{material}}",
+    "sectionTitles": {
+      "executive_summary": "エグゼクティブサマリー",
+      "degradation_pathway_analysis": "分解経路分析",
+      "regulatory_status": "規制状況",
+      "litigation_risk_assessment": "訴訟リスク評価",
+      "recommendations": "推奨事項"
+    },
     "regulatoryFlags": "規制フラグ：",
     "similarCases": "類似ケース：",
+    "degradationProducts": "分解生成物：",
     "description": "分解分析、規制状況、訴訟リスク、推奨事項を含む包括的なPFASリスクレポートを生成。",
     "reportReady": "{{material}}のエグゼクティブレポートが完成しました",
     "savedToDownloads": "エグゼクティブレポートがダウンロードに保存されました"
@@ -366,8 +501,37 @@
     "exposureTime": "曝露時間（時間）",
     "runAnalysis": "分析を実行",
     "downloadPdfReport": "PDFレポートをダウンロード",
+    "analysisSummary": "分析サマリー",
+    "analysisCompleteReview": "分析が完了しました。以下の詳細結果を確認してください。",
+    "riskAssessment": "リスク評価",
+    "overallRiskScore": "総合リスクスコア",
+    "riskScoreDescription": "リスクスコアはPFAS生成確率、規制状況、曝露可能性に基づいています",
+    "pfasFormationProbability": "PFAS生成確率",
+    "regulatoryStatus": "規制状況",
+    "operationalMitigations": "運用上の緩和策",
+    "evidenceAndCitations": "エビデンスと引用",
     "highDegradationRisk": "分解リスク高",
+    "noPfasProductsDetected": "この条件ではPFAS生成物は検出されていません。",
+    "aboutEvidenceStrength": "エビデンス強度について",
+    "evidenceStrength": "エビデンス強度",
+    "evidenceStrengthTooltipPrimary": "は、査読付き情報源のあいだでどの程度一致しているかを示します。0.91のスコアは、この分解経路が指定条件下で生じることについて、複数の独立研究で強い一致があることを意味します。",
+    "evidenceStrengthTooltipSecondary": "公開文献で報告された観測に基づきます。",
+    "evidenceStrengthTooltipEmphasis": "生成確率を表す統計的確率ではありません。",
+    "literatureAgreementRange": "文献一致範囲: [{{low}}% – {{high}}%]",
+    "paperCountShort": "{{count}}本",
+    "evidenceScaleRange": "エビデンス尺度: 0% → 100%",
     "analysisResults": "分析結果",
+    "noSpecificMitigations": "この条件に対する特定の緩和策は推奨されていません。",
+    "noRegulatoryDataAvailable": "規制データがありません。",
+    "notListed": "未掲載",
+    "concern": "懸念",
+    "regulatoryTableHeaders": {
+      "pfasCompound": "PFAS化合物",
+      "california": "カリフォルニア",
+      "eu": "EU",
+      "epa": "EPA"
+    },
+    "noEvidenceCitationsAvailable": "利用可能なエビデンス引用がありません。",
     "pfasFindings": "PFAS所見",
     "pathway": "経路：",
     "litigationRisk": "訴訟リスク",
@@ -428,6 +592,7 @@
     "correlationsDescription": "これらの部分構造パターンを持つ化合物について文献コーパスが示す内容。",
     "basedOnPrecursors": "{{count}}件の解決済み前駆体に基づく。",
     "examples": "例：",
+    "neighborStats": "{{pathways}}件の経路 | {{citations}}件の引用",
     "structurallySimilarCompounds": "構造的に類似した化合物",
     "compoundsWithKnownPathways": "既知の分解経路を持つ化合物",
     "epaNeighbors": "EPA PFASデータベース隣接化合物",
@@ -447,6 +612,9 @@
     "browseAllRules": "文献コーパスからマイニングされたすべての部分構造-エンドポイント相関ルールを閲覧",
     "loadingRules": "ルールを読み込み中...",
     "coverage": "カバレッジ：",
+    "coverageSummary": "カバレッジ: {{resolved}} / {{resolvable}} の解決可能前駆体が SMILES に解決済み（{{rate}}%）",
+    "coverageDetail": "{{totalPathways}}件の経路のうち{{pathwaysWithResolved}}件で前駆体が解決済みです。{{nonResolvable}}件の解決不能語（クラス名、混合物、基材）を除外しました。ルールは解決済み前駆体のみから導出されています。",
+    "topUnresolved": "主な未解決項目: {{items}}",
     "patternsWithSupport": "サポートのあるパターン",
     "allRules": "すべてのルール",
     "rulesTableHeaders": {
@@ -462,6 +630,9 @@
     "fateCompounds": "環境動態化合物",
     "resolvedPrecursors": "解決済み前駆体",
     "riskSignal": "{{name}}：{{signal}}リスクシグナル（{{count}}件の経路データを持つ隣接化合物）",
+    "queryNeighborHint": "{{name}} を照会するには、まず API でその SMILES を解決してください。",
+    "supportCounts": "n={{n}}、k={{k}}",
+    "withPathways": "経路あり",
     "disclaimerScreening": "これは、査読済み文献に記録された分解経路を持つ化合物との構造類似性に基づくスクリーニングツールです。結果は文献パターンを反映しており、予測ではありません。規制上の判断には独立した検証が必要です。",
     "disclaimerCorrelation": "文献コーパス（353本の論文）からのパターンベース相関。信頼度は解決済み前駆体間の観察頻度であり、物理的または因果的予測ではありません。実験的に検証してください。"
   },
@@ -655,81 +826,81 @@
       ],
       "flagsAndStatuses": [
         {
-          "label": "Regulatory タブの赤い数字バッジ",
+          "label": "規制タブの赤い数字バッジ",
           "meaning": "レビューまたは承認待ちのHITL項目数を示します。"
         },
         {
-          "label": "PENDING_REVIEW",
+          "label": "レビュー待ち",
           "meaning": "第1ゲート状態。アナリストが確認・エスカレーション・却下のいずれかを実行する必要があります。"
         },
         {
-          "label": "PENDING_APPROVAL",
+          "label": "承認待ち",
           "meaning": "第2ゲート状態。レビュー済みで最終の承認/保留判断を待っています。"
         },
         {
-          "label": "Human review required",
+          "label": "人手レビューが必要",
           "meaning": "重大フラグ、クラス一致のみ、または低信頼経路の場合に自動付与されます。"
         },
         {
-          "label": "Critical flags: N",
+          "label": "重大フラグ: N",
           "meaning": "その項目で検出されたCRITICAL脅威フラグ数です。"
         },
         {
-          "label": "ENACTED / FINAL PENDING / PROPOSED / UNDER CONSIDERATION / MONITORING",
+          "label": "施行済み / 最終審議中 / 提案中 / 検討中 / 監視中",
           "meaning": "Landscape予測で使う規制成熟度ステージです。"
         },
         {
-          "label": "シグナル重大度バッジ（critical/high/medium/low）",
+          "label": "シグナル重大度バッジ（重大 / 高 / 中 / 低）",
           "meaning": "L3/L4のトリアージと影響スコアに基づく優先度です。"
         }
       ],
       "actionsAndButtons": [
         {
-          "action": "Landscape",
+          "action": "ランドスケープ",
           "effect": "ガバナンス済みアサーションに基づく規制ベースラインを表示します。"
         },
         {
-          "action": "Signals",
+          "action": "シグナル",
           "effect": "検出された規制変更とその意味をライブ表示します。"
         },
         {
-          "action": "Resolver",
+          "action": "リゾルバー",
           "effect": "製品/化合物の直接・継承エクスポージャー解析を実行します。"
         },
         {
-          "action": "Review Queue",
+          "action": "レビューキュー",
           "effect": "保留中リゾルバー結果に対するHITL操作を処理します。"
         },
         {
-          "action": "Check Compliance",
+          "action": "コンプライアンスを確認",
           "effect": "指定材料の規制チェックを実行し、予測カードを更新します。"
         },
         {
-          "action": "Include Degradation Products",
+          "action": "分解生成物を含める",
           "effect": "オンの場合、分解生成物もコンプライアンス判定に含めます。"
         },
         {
-          "action": "Seed Demo / Clear Seeds",
+          "action": "デモ投入 / デモ削除",
           "effect": "デモ用シグナルを投入/削除します。デモ時の空画面回避に使用します。"
         },
         {
-          "action": "Confirm",
-          "effect": "PENDING_REVIEW を PENDING_APPROVAL に進めます。"
+          "action": "確認",
+          "effect": "レビュー待ち項目を承認待ちに進めます。"
         },
         {
-          "action": "Escalate",
+          "action": "エスカレーション",
           "effect": "法務/規制へのエスカレーション対象として残します。"
         },
         {
-          "action": "Dismiss",
+          "action": "却下",
           "effect": "必須の理由付きで項目をクローズします（監査ログ記録）。"
         },
         {
-          "action": "Approve",
-          "effect": "PENDING_APPROVAL を最終承認し、保留キューから外します。"
+          "action": "承認",
+          "effect": "承認待ち項目を最終承認し、保留キューから外します。"
         },
         {
-          "action": "Hold",
+          "action": "保留",
           "effect": "追加エビデンス確認のため保留状態を維持します。"
         }
       ]
@@ -864,9 +1035,9 @@
         "監視・リゾルバー・承認を単一画面で運用します"
       ],
       "howToUse": [
-        "Signals で最新の検出変更と重大度を確認します",
-        "Resolver で製品名/化合物名/CAS/SMILESから解析を実行します",
-        "Review Queue で confirm/escalate/dismiss/approve を処理します",
+        "シグナルで最新の検出変更と重大度を確認します",
+        "リゾルバーで製品名/化合物名/CAS/SMILESから解析を実行します",
+        "レビューキューで確認・エスカレーション・却下・承認を処理します",
         "却下や再分類などの判断には理由を記録します"
       ],
       "useCases": [
@@ -881,32 +1052,64 @@
       ],
       "flagsAndStatuses": [
         {
-          "label": "critical/high/medium/low",
+          "label": "重大 / 高 / 中 / 低",
           "meaning": "トリアージとChemours影響スコアによるシグナル重大度です。"
         },
         {
-          "label": "PENDING_REVIEW / PENDING_APPROVAL",
+          "label": "レビュー待ち / 承認待ち",
           "meaning": "リゾルバー出力に対するHITLゲート状態です。"
         },
         {
-          "label": "Human review required",
+          "label": "人手レビューが必要",
           "meaning": "配信前にアナリスト判断が必須であることを示します。"
         }
       ],
       "actionsAndButtons": [
         {
-          "action": "Refresh",
+          "action": "更新",
           "effect": "シグナルとレビューキューをAPIから再読込します。"
         },
         {
-          "action": "Run Resolver",
+          "action": "リゾルバー実行",
           "effect": "リゾルバーを実行し、ゲート状態付きのキュー項目を作成します。"
         },
         {
-          "action": "Confirm / Escalate / Dismiss / Approve / Hold",
+          "action": "確認 / エスカレーション / 却下 / 承認 / 保留",
           "effect": "監査ログ付きでHITLアクションを適用し、状態を遷移させます。"
         }
       ]
+    }
+  },
+  "tooltips": {
+    "product": {
+      "explanation": "親材料が分解したときに生成される化学物質です。生成物には中間体（一時的）とエンドポイント（最終生成物）があります。"
+    },
+    "productIntermediate": {
+      "explanation": "分解過程で一時的に生成される化合物です。検出順に P1、P2 などと命名されます。多くはさらに別の生成物へ分解します。"
+    },
+    "massToCharge": {
+      "explanation": "質量分析で化学物質を識別するための指標です。各化合物は分子指紋のような固有の M/Z 値を持ちます。"
+    },
+    "confidence": {
+      "explanation": "この経路を科学文献がどれだけ強く支持しているかを示します。独立した論文数に基づきます。割合が高いほど文献数が多いことを意味します。統計的信頼区間ではありません。"
+    },
+    "mechanism": {
+      "explanation": "化合物がどのような化学過程で分解するかを示します。例: thermal（熱）、oxidative（酸化）、hydrolytic（水分解）。"
+    },
+    "hazard": {
+      "explanation": "健康または環境への潜在リスクです。毒性データと規制評価に基づきます。CRITICAL と HIGH は即時注意が必要です。"
+    },
+    "regulated": {
+      "explanation": "環境当局（EPA、EU、ストックホルム条約など）による規制対象かどうかを示します。規制対象とは法的制限が存在することを意味します。"
+    },
+    "degradationProducts": {
+      "explanation": "材料が熱、紫外線、その他の条件で分解したときに生じる化学物質です。元の材料より有害な場合があるため重要です。"
+    },
+    "sources": {
+      "explanation": "この経路を記録した査読付き論文数です。情報源が多いほど、その経路が実在するという信頼性が高まります。"
+    },
+    "temperature": {
+      "explanation": "実験室研究で分解が観測された温度です。摂氏で表示されます。"
     }
   },
   "intelligence": {
@@ -961,6 +1164,42 @@
         "approve": "承認",
         "hold": "保留"
       }
+    },
+    "severity": {
+      "critical": "重大",
+      "high": "高",
+      "medium": "中",
+      "low": "低",
+      "info": "情報",
+      "noise": "ノイズ"
+    },
+    "signalClassifications": {
+      "regulatory_action": "規制措置",
+      "enforcement": "執行",
+      "timeline_change": "スケジュール変更",
+      "guidance_update": "ガイダンス更新",
+      "consultation_opening": "意見募集開始",
+      "consultation_closing": "意見募集終了",
+      "data_update": "データ更新",
+      "organizational": "組織変更",
+      "noise": "ノイズ"
+    },
+    "gateStatuses": {
+      "pending_review": "レビュー待ち",
+      "pending_approval": "承認待ち",
+      "approved": "承認済み",
+      "dismissed": "却下済み"
+    },
+    "trajectoryStates": {
+      "stable": "安定",
+      "increasing": "増加中",
+      "accelerating": "加速中",
+      "converging": "収束中"
+    },
+    "flagTypes": {
+      "inherited_liability": "継承責任",
+      "destruction_tech_gap": "処理技術ギャップ",
+      "regulatory_acceleration": "規制加速"
     },
     "toasts": {
       "signalsUnavailableTitle": "シグナル取得不可",

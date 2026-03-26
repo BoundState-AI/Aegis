@@ -33,6 +33,14 @@
     "sources": "Sources",
     "year": "Year",
     "similarity": "similarity",
+    "exampleMaterials": "e.g., PTFE, FEP",
+    "riskLevels": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical",
+      "compliant": "Compliant"
+    },
     "product": "Product",
     "products": "Products",
     "queryComplete": "Query Complete",
@@ -58,6 +66,72 @@
     "hint": "Hint",
     "previewMode": "",
     "previewModel": ""
+  },
+  "chat": {
+    "title": "AEGIS Chat",
+    "description": "Bounded page chat. It explains the active surface and hands off when the question belongs elsewhere.",
+    "askAegis": "Ask AEGIS",
+    "placeholder": "Ask about the active page...",
+    "send": "Send",
+    "sending": "Sending...",
+    "thinking": "Thinking...",
+    "runtime": {
+      "degraded": "Reasoning is degraded. Deterministic boundary responses are still available.",
+      "unavailable": "Unable to reach AegisChat right now.",
+      "healthUnavailable": "Chat runtime status is unavailable. Requests may still succeed, but health could not be confirmed."
+    },
+    "starters": {
+      "fate": {
+        "products": "What degradation products are visible for this parent compound?",
+        "hazard": "Why is a visible product marked high hazard?",
+        "filters": "How are the current filters affecting the visible pathway set?"
+      },
+      "regulatory": {
+        "risk": "What is the current overall risk on this page?",
+        "toggle": "How does the include degradation toggle affect the current screen?",
+        "forecast": "What forecast stage is visible for the selected year?"
+      },
+      "litigation": {
+        "forecast": "What is the visible litigation risk forecast for this compound?",
+        "backtest": "What does the current backtest show on this page?",
+        "cases": "Which similar cases are visible right now?"
+      },
+      "portfolio": {
+        "summary": "What is the current portfolio summary on this page?",
+        "highestRisk": "Which visible material is highest risk here?",
+        "exposure": "How much exposure is shown on the current portfolio screen?"
+      },
+      "reports": {
+        "sections": "What sections are visible in the current report?",
+        "classification": "What is the current report classification?",
+        "toggles": "How do the litigation and regulatory toggles affect this report?"
+      },
+      "evidence": {
+        "visible": "What evidence is visible for this material?",
+        "confidence": "What is the current evidence confidence on this page?",
+        "source": "Which source is shown with the strongest visible support?"
+      },
+      "analysis": {
+        "findings": "What degradation findings are visible for these conditions?",
+        "inputs": "How do the current analysis inputs affect this screen?",
+        "support": "Which visible product has the strongest support here?"
+      },
+      "tier1": {
+        "signal": "What structural risk signal is visible for this query?",
+        "compounds": "Which similar compounds are currently shown?",
+        "endpoints": "What endpoint patterns are visible on this page?"
+      }
+    }
+  },
+  "login": {
+    "title": "AEGIS Login",
+    "subtitle": "Enter the platform password to access AEGIS.",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter password",
+    "rememberDevice": "Remember this device",
+    "incorrectPassword": "Incorrect password.",
+    "signIn": "Sign In",
+    "platformAccessContact": "Need platform access? Contact your AEGIS administrator."
   },
   "landing": {
     "tagline": "PFAS Degradation Intelligence",
@@ -126,6 +200,7 @@
     "maxTemp": "Max Temp (°C)",
     "minObservations": "Min Observations",
     "searchPathways": "Search Pathways",
+    "querySummary": "{{compound}} at {{min}}-{{max}}°C",
     "degradationPathwaysFound": "Degradation Pathways Found",
     "query": "Query",
     "tableHeaders": {
@@ -144,6 +219,22 @@
     "loadingKnowledgeGraph": "Loading knowledge graph...",
     "foundPathways": "Found {{count}} degradation pathways for {{compound}}",
     "sourceReferences": "Source References (DOI)",
+    "atmosphereOptions": {
+      "oxidative": "Oxidative",
+      "inert": "Inert",
+      "aqueous": "Aqueous"
+    },
+    "degradationTypeLabels": {
+      "thermal": "Thermal",
+      "oxidative": "Oxidative",
+      "hydrolytic": "Hydrolytic",
+      "aqueous": "Aqueous",
+      "photolytic": "Photolytic",
+      "reductive": "Reductive",
+      "biotic": "Biotic",
+      "biological": "Biological",
+      "microbial": "Microbial"
+    },
     "compoundNotInDatabase": "This compound is not in the AEGIS database.",
     "fateExplorerScope": "Fate Explorer covers per- and polyfluoroalkyl substances.",
     "trySuggestions": "Try PFOA, GenX, or PTFE.",
@@ -179,8 +270,15 @@
       "sentiment": "Research sentiment classified by AI from PubMed titles + abstracts. Stacked areas show the mood of the literature over time.",
       "publications": "Peer-reviewed publications per year from PubMed. Bars colored by phase. Vertical lines mark key events."
     },
+    "sentiment": "Sentiment",
     "acceleration": "Acceleration",
     "cumulativeSentiment": "Cumulative Sentiment",
+    "velocity": "Velocity",
+    "velocityPapersPerYear": "Velocity (papers/yr)",
+    "papersPerYear": "papers/yr",
+    "papersAxis": "Papers",
+    "sentimentThreeYearAverage": "Sentiment (3yr avg)",
+    "inflection": "inflection",
     "sentimentKeyFinding": "Key finding:",
     "sentimentAnnotation": "No independent celebration papers exist for GenX. The first peer-reviewed publications were detection and alarm studies. The only positive narrative was from industry literature (2008-2010). Cumulative research sentiment went negative immediately and never recovered.",
     "claimsVsReality": "Regulatory Timeline Analysis",
@@ -194,6 +292,12 @@
     "eventTimeline": "Event Timeline",
     "eventTimelineDescription": "Key events from EPA filings, court records, and public sources",
     "andMore": "and {{count}} more.",
+    "publicationsCount": "{{count}} publications",
+    "paperCount": "{{count}} papers",
+    "highConfidence": "High confidence",
+    "viewOnPubMed": "View on PubMed",
+    "clickYearToExplorePapers": "Click any year on the chart to explore its papers",
+    "yearPapers": "{{year}} Papers",
     "loadingCaseStudy": "Loading {{compound}} case study...",
     "loadingCaseStudies": "Loading case studies...",
     "forecastParameters": "Forecast Parameters",
@@ -309,6 +413,23 @@
     "materials": "Materials",
     "highRisk": "High Risk",
     "assessmentResults": "Assessment Results",
+    "riskCategoriesLabel": "Risk Categories:",
+    "riskCategoryDefinitionsTitle": "Risk Category Definitions",
+    "riskCategoryTooltipTitle": "{{label}} Risk",
+    "riskCategories": {
+      "LOW": {
+        "label": "Low",
+        "description": "Compound shows minimal regulatory activity and no documented litigation exposure. Limited degradation pathways to regulated endpoints."
+      },
+      "MEDIUM": {
+        "label": "Medium",
+        "description": "Compound has documented degradation pathways and active regulatory attention in 2+ jurisdictions. Not yet subject to compound-specific litigation."
+      },
+      "HIGH": {
+        "label": "High",
+        "description": "Compound has established regulatory limits, documented litigation history, or known degradation to heavily regulated endpoints (e.g., PFOA, PFOS)."
+      }
+    },
     "tableHeaders": {
       "material": "Material",
       "category": "Category",
@@ -320,6 +441,9 @@
     "description": "Add materials to your portfolio and get a comprehensive risk assessment with PFAS counts, regulatory flags, and litigation probability.",
     "disclaimer": "Risk scores incorporate compound-specific degradation data, regulatory exposure, and litigation history. Site-specific factors should be evaluated by qualified professionals.",
     "analyzed": "Analyzed {{count}} materials - {{highRisk}} high risk"
+    ,
+    "materialPlaceholder": "Material",
+    "volumePlaceholder": "Volume"
   },
   "reports": {
     "title": "Executive Reports",
@@ -331,8 +455,20 @@
     "generateReport": "Generate Report",
     "generated": "Generated:",
     "classification": "Classification",
+    "classificationLabels": {
+      "confidential_attorney_client_privileged": "CONFIDENTIAL - ATTORNEY-CLIENT PRIVILEGED"
+    },
+    "aegisRiskAssessmentTitle": "AEGIS Risk Assessment: {{material}}",
+    "sectionTitles": {
+      "executive_summary": "Executive Summary",
+      "degradation_pathway_analysis": "Degradation Pathway Analysis",
+      "regulatory_status": "Regulatory Status",
+      "litigation_risk_assessment": "Litigation Risk Assessment",
+      "recommendations": "Recommendations"
+    },
     "regulatoryFlags": "Regulatory Flags:",
     "similarCases": "Similar Cases:",
+    "degradationProducts": "Degradation Products:",
     "description": "Generate comprehensive PFAS risk reports with degradation analysis, regulatory status, litigation risk, and recommendations.",
     "reportReady": "Executive report for {{material}} ready",
     "savedToDownloads": "Executive report saved to downloads"
@@ -364,8 +500,37 @@
     "exposureTime": "Exposure Time (hours)",
     "runAnalysis": "Run Analysis",
     "downloadPdfReport": "Download PDF Report",
+    "analysisSummary": "Analysis Summary",
+    "analysisCompleteReview": "Analysis complete. Review detailed results below.",
+    "riskAssessment": "Risk Assessment",
+    "overallRiskScore": "Overall Risk Score",
+    "riskScoreDescription": "Risk score based on PFAS formation probability, regulatory status, and exposure potential",
+    "pfasFormationProbability": "PFAS Formation Probability",
+    "regulatoryStatus": "Regulatory Status",
+    "operationalMitigations": "Operational Mitigations",
+    "evidenceAndCitations": "Evidence & Citations",
     "highDegradationRisk": "High degradation risk",
+    "noPfasProductsDetected": "No PFAS products detected under these conditions.",
+    "aboutEvidenceStrength": "About Evidence Strength",
+    "evidenceStrength": "Evidence Strength",
+    "evidenceStrengthTooltipPrimary": "reflects agreement across peer-reviewed sources. A score of 0.91 indicates strong consensus across multiple independent studies that this degradation pathway occurs under specified conditions.",
+    "evidenceStrengthTooltipSecondary": "Based on observations from published literature.",
+    "evidenceStrengthTooltipEmphasis": "Not a statistical probability of formation.",
+    "literatureAgreementRange": "Literature Agreement Range: [{{low}}% – {{high}}%]",
+    "paperCountShort": "{{count}} papers",
+    "evidenceScaleRange": "Evidence Scale: 0% → 100%",
     "analysisResults": "Analysis Results",
+    "noSpecificMitigations": "No specific mitigations recommended for these conditions.",
+    "noRegulatoryDataAvailable": "No regulatory data available.",
+    "notListed": "Not Listed",
+    "concern": "Concern",
+    "regulatoryTableHeaders": {
+      "pfasCompound": "PFAS Compound",
+      "california": "California",
+      "eu": "EU",
+      "epa": "EPA"
+    },
+    "noEvidenceCitationsAvailable": "No evidence citations available.",
     "pfasFindings": "PFAS Findings",
     "pathway": "Pathway:",
     "litigationRisk": "Litigation Risk",
@@ -426,6 +591,7 @@
     "correlationsDescription": "What the literature corpus shows for compounds with these substructure patterns.",
     "basedOnPrecursors": "Based on {{count}} resolved precursors.",
     "examples": "Examples:",
+    "neighborStats": "{{pathways}} pathways | {{citations}} citations",
     "structurallySimilarCompounds": "Structurally Similar Compounds",
     "compoundsWithKnownPathways": "Compounds with Known Degradation Pathways",
     "epaNeighbors": "EPA PFAS Database Neighbors",
@@ -445,6 +611,9 @@
     "browseAllRules": "Browse all mined substructure-to-endpoint correlation rules from the literature corpus",
     "loadingRules": "Loading rules...",
     "coverage": "Coverage:",
+    "coverageSummary": "Coverage: {{resolved}} of {{resolvable}} resolvable precursors resolved to SMILES ({{rate}}%)",
+    "coverageDetail": "{{pathwaysWithResolved}} of {{totalPathways}} pathways have resolved precursors. {{nonResolvable}} non-resolvable terms filtered (class names, mixtures, substrates). Rules are derived only from resolved precursors.",
+    "topUnresolved": "Top unresolved: {{items}}",
     "patternsWithSupport": "Patterns with Support",
     "allRules": "All Rules",
     "rulesTableHeaders": {
@@ -460,6 +629,8 @@
     "fateCompounds": "fate compounds",
     "resolvedPrecursors": "resolved precursors",
     "riskSignal": "{{name}}: {{signal}} risk signal ({{count}} neighbors with pathway data)",
+    "queryNeighborHint": "To query {{name}}, resolve its SMILES via the API first.",
+    "supportCounts": "n={{n}}, k={{k}}",
     "withPathways": "with pathways",
     "disclaimerScreening": "This is a screening tool based on structural similarity to compounds with documented degradation pathways in peer-reviewed literature. Results reflect literature patterns, not predictions. Independent verification required for regulatory decisions.",
     "disclaimerCorrelation": "Pattern-based correlation from literature corpus (353 papers). Confidence is observed frequency among resolved precursors, not a physical or causal prediction. Validate experimentally."
@@ -992,6 +1163,42 @@
         "approve": "Approve",
         "hold": "Hold"
       }
+    },
+    "severity": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "info": "Info",
+      "noise": "Noise"
+    },
+    "signalClassifications": {
+      "regulatory_action": "Regulatory action",
+      "enforcement": "Enforcement",
+      "timeline_change": "Timeline change",
+      "guidance_update": "Guidance update",
+      "consultation_opening": "Consultation opening",
+      "consultation_closing": "Consultation closing",
+      "data_update": "Data update",
+      "organizational": "Organizational",
+      "noise": "Noise"
+    },
+    "gateStatuses": {
+      "pending_review": "Pending review",
+      "pending_approval": "Pending approval",
+      "approved": "Approved",
+      "dismissed": "Dismissed"
+    },
+    "trajectoryStates": {
+      "stable": "Stable",
+      "increasing": "Increasing",
+      "accelerating": "Accelerating",
+      "converging": "Converging"
+    },
+    "flagTypes": {
+      "inherited_liability": "Inherited liability",
+      "destruction_tech_gap": "Destruction tech gap",
+      "regulatory_acceleration": "Regulatory acceleration"
     },
     "toasts": {
       "signalsUnavailableTitle": "Signals unavailable",

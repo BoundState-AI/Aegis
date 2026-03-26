@@ -24,6 +24,7 @@ export interface EvidenceSourceHint {
 export interface AnswerSurfaceHint {
   page_id?: string;
   page_label?: string;
+  locale?: string;
   module_version?: string;
   supported_question_types?: string[];
   forbidden_question_types?: string[];

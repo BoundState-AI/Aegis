@@ -11,6 +11,8 @@ type FateVisibleTransformation = {
 };
 
 export function createFateAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   parent: string;
   tempMin: number;
   tempMax: number;
@@ -21,6 +23,7 @@ export function createFateAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "fate-explorer",
+    locale: args.locale,
     visible_state: {
       parent: args.parent,
       temp_min: args.tempMin,
@@ -30,7 +33,7 @@ export function createFateAnswerSurfaceHint(args: {
       total_transformations: args.totalTransformations,
       visible_transformations: args.visibleTransformations,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What degradation products are visible for this parent compound?",
       "Why is a visible product marked high hazard?",
       "How are the current filters affecting the visible pathway set?",
@@ -93,6 +96,8 @@ type SimilarityVisibleNeighbor = {
 };
 
 export function createRegulatoryAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   material: string;
   includeDegradation: boolean;
   forecastYear: number;
@@ -107,6 +112,7 @@ export function createRegulatoryAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "regulatory",
+    locale: args.locale,
     visible_state: {
       material: args.material,
       include_degradation: args.includeDegradation,
@@ -120,7 +126,7 @@ export function createRegulatoryAnswerSurfaceHint(args: {
       sample_findings: args.sampleFindings,
       cascade_predictions: args.cascadePredictions,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What is the current overall risk on this page?",
       "How does the include degradation toggle affect the current screen?",
       "What forecast stage is visible for the selected year?",
@@ -129,6 +135,8 @@ export function createRegulatoryAnswerSurfaceHint(args: {
 }
 
 export function createLitigationAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   selectedCompound: string;
   chartView: string;
   availableBacktests: number;
@@ -147,6 +155,7 @@ export function createLitigationAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "litigation",
+    locale: args.locale,
     visible_state: {
       selected_compound: args.selectedCompound,
       chart_view: args.chartView,
@@ -164,7 +173,7 @@ export function createLitigationAnswerSurfaceHint(args: {
       paper_drilldown_year: args.paperDrilldownYear,
       paper_drilldown_total: args.paperDrilldownTotal,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What is the visible litigation risk forecast for this compound?",
       "What does the current backtest show on this page?",
       "Which similar cases are visible right now?",
@@ -173,6 +182,8 @@ export function createLitigationAnswerSurfaceHint(args: {
 }
 
 export function createPortfolioAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   items: PortfolioVisibleItem[];
   totalMaterials: number;
   highRiskCount: number;
@@ -181,6 +192,7 @@ export function createPortfolioAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "portfolio",
+    locale: args.locale,
     visible_state: {
       items: args.items,
       total_materials: args.totalMaterials,
@@ -188,7 +200,7 @@ export function createPortfolioAnswerSurfaceHint(args: {
       total_exposure_usd: args.totalExposureUsd,
       top_results: args.topResults,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What is the current portfolio summary on this page?",
       "Which visible material is highest risk here?",
       "How much exposure is shown on the current portfolio screen?",
@@ -197,6 +209,8 @@ export function createPortfolioAnswerSurfaceHint(args: {
 }
 
 export function createReportsAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   material: string;
   includeLitigation: boolean;
   includeRegulatory: boolean;
@@ -206,6 +220,7 @@ export function createReportsAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "reports",
+    locale: args.locale,
     visible_state: {
       material: args.material,
       include_litigation: args.includeLitigation,
@@ -214,7 +229,7 @@ export function createReportsAnswerSurfaceHint(args: {
       classification: args.classification,
       visible_sections: args.visibleSections,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What sections are visible in the current report?",
       "What is the current report classification?",
       "How do the litigation and regulatory toggles affect this report?",
@@ -223,6 +238,8 @@ export function createReportsAnswerSurfaceHint(args: {
 }
 
 export function createEvidenceAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   material: string;
   maxCitations: number;
   totalCitations: number;
@@ -233,6 +250,7 @@ export function createEvidenceAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "evidence",
+    locale: args.locale,
     visible_state: {
       material: args.material,
       max_citations: args.maxCitations,
@@ -242,7 +260,7 @@ export function createEvidenceAnswerSurfaceHint(args: {
       total_pathway_citations: args.totalPathwayCitations,
       visible_evidence: args.visibleEvidence,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What evidence is visible for this material?",
       "What is the current evidence confidence on this page?",
       "Which source is shown with the strongest visible support?",
@@ -251,6 +269,8 @@ export function createEvidenceAnswerSurfaceHint(args: {
 }
 
 export function createAnalysisAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   material: string;
   temperatureC: number;
   atmosphere: string;
@@ -261,6 +281,7 @@ export function createAnalysisAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "analysis",
+    locale: args.locale,
     visible_state: {
       material: args.material,
       temperature_c: args.temperatureC,
@@ -270,7 +291,7 @@ export function createAnalysisAnswerSurfaceHint(args: {
       summary: args.summary,
       visible_findings: args.visibleFindings,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What degradation findings are visible for these conditions?",
       "How do the current analysis inputs affect this screen?",
       "Which visible product has the strongest support here?",
@@ -279,6 +300,8 @@ export function createAnalysisAnswerSurfaceHint(args: {
 }
 
 export function createSimilarityAnswerSurfaceHint(args: {
+  locale?: string;
+  starterQuestions?: string[];
   compoundName: string;
   querySmiles: string;
   riskSignal: string | null;
@@ -292,6 +315,7 @@ export function createSimilarityAnswerSurfaceHint(args: {
 }): AnswerSurfaceHint {
   return {
     page_id: "tier1",
+    locale: args.locale,
     visible_state: {
       compound_name: args.compoundName,
       query_smiles: args.querySmiles,
@@ -304,7 +328,7 @@ export function createSimilarityAnswerSurfaceHint(args: {
       tier2_rule_total: args.tier2RuleTotal,
       coverage_resolution_rate: args.coverageResolutionRate,
     },
-    starter_questions: [
+    starter_questions: args.starterQuestions ?? [
       "What structural risk signal is visible for this query?",
       "Which similar compounds are currently shown?",
       "What endpoint patterns are visible on this page?",

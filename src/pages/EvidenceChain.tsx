@@ -37,9 +37,10 @@ interface EvidenceViewResponse extends EvidenceChainResponse {
 interface SourceStats extends EvidenceSourceStats {}
 
 const EvidenceChain = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [material, setMaterial] = useState("PTFE");
   const [maxCitations, setMaxCitations] = useState(20);
   const [evidence, setEvidence] = useState<EvidenceViewResponse | null>(null);
@@ -87,6 +88,12 @@ const EvidenceChain = () => {
   const sourceStats: SourceStats | null = sourceStatsQuery.data ?? null;
   const isLoading = evidenceMutation.isPending;
   const chatSurfaceHint = useMemo(() => createEvidenceAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.evidence.visible"),
+      t("chat.starters.evidence.confidence"),
+      t("chat.starters.evidence.source"),
+    ],
     material,
     maxCitations,
     totalCitations: evidence?.total_citations ?? 0,
@@ -99,7 +106,7 @@ const EvidenceChain = () => {
       confidence: item.confidence,
       compound: item.compound,
     })),
-  }), [evidence, material, maxCitations, sourceStats]);
+  }), [currentLanguage, evidence, material, maxCitations, sourceStats, t]);
 
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 0.9) return "text-green-400";

@@ -17,6 +17,20 @@ import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 import Intelligence, { type IntelligenceTabKey } from "./Intelligence";
 import { apiGet } from "@/lib/apiClient";
 import { createRegulatoryAnswerSurfaceHint } from "@/lib/chat/surfaces";
+import {
+  localizeAffectedProducts,
+  localizeApacAssertionText,
+  localizeApacThreshold,
+  localizeCascadeRecommendation,
+  localizeCascadeSource,
+  localizeCascadeStatus,
+  localizeCompoundClass,
+  localizeDegradationSource,
+  localizeFluoropolymerExposure,
+  localizeLitigationRelevance,
+  localizeRegulatoryCountry,
+  localizeRegulatoryNote,
+} from "@/lib/regulatoryLocale";
 import { cascadeSchema, regulatoryCheckSchema, type CascadeResponse, type RegulatoryCheck } from "@/lib/apiSchemas";
 
 type RegulatorySubview = "landscape" | "signals" | "resolver" | "queue";
@@ -29,10 +43,11 @@ const mapViewParam = (value: string | null): RegulatorySubview => {
 };
 
 const RegulatoryCompliance = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [subview, setSubview] = useState<RegulatorySubview>(() => mapViewParam(searchParams.get("view")));
   const [material, setMaterial] = useState("PTFE");
   const [includeDegradation, setIncludeDegradation] = useState(true);
@@ -189,6 +204,12 @@ const RegulatoryCompliance = () => {
   };
 
   const chatSurfaceHint = useMemo(() => createRegulatoryAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.regulatory.risk"),
+      t("chat.starters.regulatory.toggle"),
+      t("chat.starters.regulatory.forecast"),
+    ],
     material,
     includeDegradation,
     forecastYear,
@@ -217,7 +238,7 @@ const RegulatoryCompliance = () => {
         },
       ]),
     ),
-  }), [material, includeDegradation, forecastYear, subview, checkResult, cascade]);
+  }), [material, includeDegradation, forecastYear, subview, checkResult, cascade, currentLanguage, t]);
 
   return (
     <PageChatProvider
@@ -349,7 +370,7 @@ const RegulatoryCompliance = () => {
                           ))}
                         </div>
                         {checkResult.degradation_source && (
-                          <p className="text-xs text-gray-400 mt-2 italic">{t("regulatory.source")} {checkResult.degradation_source}</p>
+                          <p className="text-xs text-gray-400 mt-2 italic">{t("regulatory.source")} {localizeDegradationSource(checkResult.degradation_source, currentLanguage)}</p>
                         )}
                         {checkResult.degradation_sample_dois.length > 0 && (
                           <p className="text-xs text-blue-500 mt-1">
@@ -398,7 +419,7 @@ const RegulatoryCompliance = () => {
                                     {t("regulatory.apac")}
                                   </Badge>
                                 )}
-                                <p className="text-sm text-gray-500">{reg.notes}</p>
+                                <p className="text-sm text-gray-500">{localizeRegulatoryNote(reg.notes, currentLanguage)}</p>
                               </div>
                             </div>
                             <Badge className="bg-red-600">{getStatusLabel(reg.status)}</Badge>
@@ -428,7 +449,7 @@ const RegulatoryCompliance = () => {
                                     {t("regulatory.apac")}
                                   </Badge>
                                 )}
-                                <p className="text-sm text-gray-500">{reg.notes}</p>
+                                <p className="text-sm text-gray-500">{localizeRegulatoryNote(reg.notes, currentLanguage)}</p>
                                 {reg.limit_ppb && <p className="text-xs text-yellow-600">{t("regulatory.limit")} {reg.limit_ppb} ppb</p>}
                               </div>
                             </div>
@@ -457,13 +478,13 @@ const RegulatoryCompliance = () => {
                     <CardContent className="space-y-3">
                       {checkResult.fluoropolymer_exposure && (
                         <div className="p-3 rounded-lg border border-daikin-blue/20 bg-daikin-blue/5 text-sm text-daikin-dark">
-                          <span className="font-semibold">{t("regulatory.fluoropolymerExposure")}</span> {checkResult.fluoropolymer_exposure}
+                          <span className="font-semibold">{t("regulatory.fluoropolymerExposure")}</span> {localizeFluoropolymerExposure(checkResult.fluoropolymer_exposure, currentLanguage)}
                         </div>
                       )}
                       {(checkResult.apac_assertions ?? []).slice(0, 10).map((item) => (
                         <div key={item.id} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
-                            <span className="font-semibold text-daikin-dark">{item.country}</span>
+                            <span className="font-semibold text-daikin-dark">{localizeRegulatoryCountry(item.country, currentLanguage)}</span>
                             <Badge variant="outline" className="text-xs border-gray-300">{getStatusLabel(item.status)}</Badge>
                             <Badge variant="outline" className={`text-xs ${getApacConfidenceBadgeClass(item.confidence)}`}>
                               {item.confidence.toFixed(2)}
@@ -479,11 +500,11 @@ const RegulatoryCompliance = () => {
                               </Badge>
                             )}
                           </div>
-                          <p className="text-sm text-gray-700">{item.assertion}</p>
+                          <p className="text-sm text-gray-700">{localizeApacAssertionText(item.id, item.assertion, currentLanguage)}</p>
                           <p className="text-xs text-gray-500 mt-1">
-                            {t("regulatory.class")}: {item.compound_class} | {t("regulatory.litigationRelevance")}: {item.litigation_relevance}
+                            {t("regulatory.class")}: {localizeCompoundClass(item.compound_class, currentLanguage)} | {t("regulatory.litigationRelevance")}: {localizeLitigationRelevance(item.litigation_relevance, currentLanguage)}
                             {item.effective_date ? ` | ${t("regulatory.effective")}: ${item.effective_date}` : ""}
-                            {item.threshold_value ? ` | ${t("regulatory.threshold")}: ${item.threshold_value}` : ""}
+                            {item.threshold_value ? ` | ${t("regulatory.threshold")}: ${localizeApacThreshold(item.id, item.threshold_value, currentLanguage)}` : ""}
                           </p>
                         </div>
                       ))}
@@ -510,13 +531,13 @@ const RegulatoryCompliance = () => {
                                 {getRegulatoryStageLabel(pred.regulatory_stage)}
                               </Badge>
                             </div>
-                            <p className="text-sm text-gray-500">{pred.status}</p>
+                            <p className="text-sm text-gray-500">{localizeCascadeStatus(key, pred.status, currentLanguage)}</p>
                             {pred.source && (
-                              <p className="text-xs text-gray-400 mt-1 italic">{t("regulatory.source")} {pred.source}</p>
+                              <p className="text-xs text-gray-400 mt-1 italic">{t("regulatory.source")} {localizeCascadeSource(key, pred.source, currentLanguage)}</p>
                             )}
                             {pred.affected_products.length > 0 && (
                               <div className="flex gap-1 mt-2">
-                                {pred.affected_products.map((p) => (
+                                {localizeAffectedProducts(pred.affected_products, currentLanguage).map((p) => (
                                   <Badge key={p} variant="outline" className="text-xs border-gray-400">{p}</Badge>
                                 ))}
                               </div>
@@ -524,7 +545,7 @@ const RegulatoryCompliance = () => {
                           </div>
                         ))}
                       </div>
-                      <p className="mt-4 text-sm text-daikin-blue italic">{cascade.recommendation}</p>
+                      <p className="mt-4 text-sm text-daikin-blue italic">{localizeCascadeRecommendation(cascade.recommendation, currentLanguage)}</p>
                     </CardContent>
                   </Card>
                 )}

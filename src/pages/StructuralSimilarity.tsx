@@ -175,9 +175,10 @@ const getRiskBorderColor = (signal: string) => {
 // ---------------------------------------------------------------------------
 
 const StructuralSimilarity = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [isLoading, setIsLoading] = useState(false);
   const [smiles, setSmiles] = useState(REFERENCE_COMPOUNDS[0].smiles); // Default to GenX
   const [compoundName, setCompoundName] = useState(REFERENCE_COMPOUNDS[0].name);
@@ -214,6 +215,12 @@ const StructuralSimilarity = () => {
   };
 
   const chatSurfaceHint = useMemo(() => createSimilarityAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.tier1.signal"),
+      t("chat.starters.tier1.compounds"),
+      t("chat.starters.tier1.endpoints"),
+    ],
     compoundName,
     querySmiles: smiles,
     riskSignal: result?.risk_signal ?? null,
@@ -232,7 +239,7 @@ const StructuralSimilarity = () => {
     tier2PatternCount: tier2Result?.patterns_detected.length ?? 0,
     tier2RuleTotal: tier2RulesTotal,
     coverageResolutionRate: tier2Coverage?.resolution_rate ?? null,
-  }), [compoundName, result, smiles, tier2Coverage, tier2Result, tier2RulesTotal]);
+  }), [compoundName, currentLanguage, result, smiles, t, tier2Coverage, tier2Result, tier2RulesTotal]);
 
   useEffect(() => {
     void loadSummary();

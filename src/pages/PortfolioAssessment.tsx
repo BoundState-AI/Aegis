@@ -44,9 +44,10 @@ interface PortfolioViewResponse extends PortfolioResponse {
 const SUGGESTED_MATERIALS = ["PTFE", "FEP", "PFA", "PVDF", "ETFE"];
 
 const PortfolioAssessment = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const riskCategoryDefinitions = {
     LOW: {
       label: t("portfolio.riskCategories.LOW.label"),
@@ -136,6 +137,12 @@ const PortfolioAssessment = () => {
 
   const isLoading = assessMutation.isPending;
   const chatSurfaceHint = useMemo(() => createPortfolioAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.portfolio.summary"),
+      t("chat.starters.portfolio.highestRisk"),
+      t("chat.starters.portfolio.exposure"),
+    ],
     items: items.slice(0, 12).map((item) => ({
       material: item.material,
       volume_lbs: item.volume_lbs,
@@ -151,7 +158,7 @@ const PortfolioAssessment = () => {
       regulatory_flags: row.regulatory_flags,
       litigation_probability: row.litigation_probability,
     })),
-  }), [assessment, items]);
+  }), [assessment, currentLanguage, items, t]);
 
   return (
     <PageChatProvider

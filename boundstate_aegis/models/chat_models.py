@@ -49,6 +49,7 @@ class AnswerSurfaceHint(BaseModel):
 
     page_id: Optional[str] = None
     page_label: Optional[str] = None
+    locale: Optional[str] = None
     module_version: Optional[str] = None
     supported_question_types: list[str] = Field(default_factory=list)
     forbidden_question_types: list[str] = Field(default_factory=list)
@@ -63,6 +64,7 @@ class AnswerSurfaceHint(BaseModel):
 class AuthoritativeAnswerSurface(BaseModel):
     page_id: str
     page_label: str
+    locale: str = "en"
     module_version: str = "1.0"
     supported_question_types: list[str] = Field(default_factory=list)
     forbidden_question_types: list[str] = Field(default_factory=list)

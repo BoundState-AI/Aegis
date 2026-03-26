@@ -29,9 +29,10 @@ const COMMON_MATERIALS = [
 ];
 
 const PFASAnalysis = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [results, setResults] = useState<AnalyzeResponse | null>(null);
 
   const [formData, setFormData] = useState({
@@ -119,6 +120,12 @@ const PFASAnalysis = () => {
 
   const isAnalyzing = analyzeMutation.isPending;
   const chatSurfaceHint = useMemo(() => createAnalysisAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.analysis.findings"),
+      t("chat.starters.analysis.inputs"),
+      t("chat.starters.analysis.support"),
+    ],
     material: formData.material,
     temperatureC: formData.temperature,
     atmosphere: formData.atmosphere,
@@ -131,7 +138,7 @@ const PFASAnalysis = () => {
       regulatory_flags_count: finding.regulatory_flags.length,
       evidence_strength: finding.evidence_strength ?? null,
     })),
-  }), [formData, results]);
+  }), [currentLanguage, formData, results, t]);
 
   const getTempColor = (temp: number) => {
     if (temp >= 400) return "text-red-400";

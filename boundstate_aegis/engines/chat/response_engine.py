@@ -10,109 +10,161 @@ from typing import Any
 from boundstate_aegis.models.chat_models import AuthoritativeAnswerSurface, ChatDecision, ChatStatus
 
 
+def _is_japanese(surface: AuthoritativeAnswerSurface) -> bool:
+    return surface.locale.lower().startswith("ja")
+
+
 def _human_bool(value: Any) -> str:
     return "on" if bool(value) else "off"
 
 
 def _fate_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中の分解経路、現在のフィルター、表示されている有害性ラベル、"
+        "および規制対象として表示されている生成物を説明できます。"
+        "一方で、全社ポートフォリオのリスク順位付けや訴訟アドバイスは扱えません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible degradation pathways, current filters, visible hazard labels, "
+        "and which displayed products are marked regulated. It cannot rank enterprise portfolio risk or give litigation advice."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible degradation pathways, current filters, visible hazard labels, "
-            "and which displayed products are marked regulated. It cannot rank enterprise portfolio risk or give litigation advice."
-        ),
+        response_text=response_text,
         citations=["active_filters", "visible_transformations"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _regulatory_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中の規制リスク概要、読み込まれているフレームワーク判定、現在の予測年、"
+        "および「分解生成物を含める」トグルの影響を説明できます。"
+        "一方で、法的助言やポートフォリオの優先順位付けは行えません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible regulatory risk summary, the loaded framework findings, the current "
+        "forecast year, and the effect of the include degradation toggle. It cannot provide legal advice or portfolio prioritization."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible regulatory risk summary, the loaded framework findings, the current "
-            "forecast year, and the effect of the include degradation toggle. It cannot provide legal advice or portfolio prioritization."
-        ),
+        response_text=response_text,
         citations=["regulatory_summary", "sample_findings", "cascade_predictions"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _litigation_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中の訴訟リスク予測、主要ドライバー、バックテスト文脈、"
+        "および画面上の類似事例を説明できます。"
+        "一方で、法的助言や画面外の和解予測は行えません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible litigation forecast, key drivers, backtest context, and similar cases shown on screen. "
+        "It cannot provide legal advice or make off-screen settlement predictions."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible litigation forecast, key drivers, backtest context, and similar cases shown on screen. "
-            "It cannot provide legal advice or make off-screen settlement predictions."
-        ),
+        response_text=response_text,
         citations=["litigation_summary", "litigation_drivers", "litigation_cases"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _portfolio_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中のポートフォリオ概要、読み込まれている材料、総エクスポージャー、"
+        "および画面上の材料別リスク行を説明できます。"
+        "一方で、法的助言や根拠のない規制結論は提供できません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible portfolio summary, loaded materials, exposure totals, and material-level risk rows on screen. "
+        "It cannot provide legal advice or make unsupported regulatory conclusions."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible portfolio summary, loaded materials, exposure totals, and material-level risk rows on screen. "
-            "It cannot provide legal advice or make unsupported regulatory conclusions."
-        ),
+        response_text=response_text,
         citations=["portfolio_summary", "portfolio_items", "portfolio_results"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _reports_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中のレポート分類、含まれているセクション、"
+        "および訴訟・規制トグルの状態を説明できます。"
+        "一方で、画面にない新しい分析を作成することはできません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible report classification, included sections, and the state of the litigation and regulatory toggles. "
+        "It cannot create new analysis beyond the report content already on screen."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible report classification, included sections, and the state of the litigation and regulatory toggles. "
-            "It cannot create new analysis beyond the report content already on screen."
-        ),
+        response_text=response_text,
         citations=["report_summary", "report_sections"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _evidence_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中のエビデンス行、信頼度スコア、引用件数、"
+        "および画面上の情報源カバレッジを説明できます。"
+        "一方で、画面外のエビデンス推論やポートフォリオ判断はできません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible evidence rows, confidence score, citation count, and source coverage shown on screen. "
+        "It cannot infer off-screen evidence or make portfolio decisions."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible evidence rows, confidence score, citation count, and source coverage shown on screen. "
-            "It cannot infer off-screen evidence or make portfolio decisions."
-        ),
+        response_text=response_text,
         citations=["evidence_summary", "evidence_rows"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _analysis_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、現在の材料と条件に対して表示中のPFAS分析結果を説明できます。"
+        "具体的には、表示されている生成物や分類が対象です。"
+        "一方で、表示されていない経路の創作や法務・全社判断はできません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible PFAS analysis findings for the current material and conditions, including displayed products and classifications. "
+        "It cannot invent unshown pathways or give legal or enterprise advice."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible PFAS analysis findings for the current material and conditions, including displayed products and classifications. "
-            "It cannot invent unshown pathways or give legal or enterprise advice."
-        ),
+        response_text=response_text,
         citations=["analysis_summary", "analysis_findings"],
         handoff_targets=surface.handoff_targets,
     )
 
 
 def _tier1_capability(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        "このページでは、表示中の構造リスクシグナル、類似化合物、エンドポイント傾向、"
+        "およびTier 2カバレッジを説明できます。"
+        "一方で、隠れたエビデンスの推論や根拠のないコンプライアンス結論はできません。"
+        if _is_japanese(surface)
+        else
+        "This page can explain the visible structural risk signal, similar compounds, endpoint patterns, and Tier 2 coverage shown on screen. "
+        "It cannot infer hidden evidence or make unsupported compliance conclusions."
+    )
     return ChatDecision(
         status=ChatStatus.SUPPORTED,
         question_type="help_capability",
-        response_text=(
-            "This page can explain the visible structural risk signal, similar compounds, endpoint patterns, and Tier 2 coverage shown on screen. "
-            "It cannot infer hidden evidence or make unsupported compliance conclusions."
-        ),
+        response_text=response_text,
         citations=["tier1_summary", "tier1_endpoints", "tier1_neighbors"],
         handoff_targets=surface.handoff_targets,
     )
@@ -845,44 +897,64 @@ def _tier1_response(question_type: str, evidence: dict[str, Any], surface: Autho
 
 def handoff_response(surface: AuthoritativeAnswerSurface, target: str | None) -> ChatDecision:
     target_label = target or "another module"
+    response_text = (
+        f"この質問は {target_label} が担当する領域です。{surface.page_label} ではこのページに表示されているエビデンスは説明できますが、"
+        "その判断面自体は所管していません。"
+        if _is_japanese(surface)
+        else
+        f"This question belongs in {target_label}. {surface.page_label} can explain the evidence visible on this page, "
+        f"but it does not own that decision surface."
+    )
     return ChatDecision(
         status=ChatStatus.HANDOFF_REQUIRED,
         question_type="handoff",
-        response_text=(
-            f"This question belongs in {target_label}. {surface.page_label} can explain the evidence visible on this page, "
-            f"but it does not own that decision surface."
-        ),
+        response_text=response_text,
         handoff_targets=[target_label],
     )
 
 
-def refused_response() -> ChatDecision:
+def refused_response(locale: str = "en") -> ChatDecision:
+    response_text = (
+        "指示上書きやインジェクション型の要求には従えません。代わりに、現在表示中のAEGISページについて質問してください。"
+        if locale.lower().startswith("ja")
+        else
+        "I cannot follow instruction-override or injection-style requests. Ask about the active AEGIS page instead."
+    )
     return ChatDecision(
         status=ChatStatus.REFUSED,
         question_type="prompt_injection",
-        response_text="I cannot follow instruction-override or injection-style requests. Ask about the active AEGIS page instead.",
+        response_text=response_text,
     )
 
 
 def out_of_scope_response(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        f"このチャットは {surface.page_label} と、その周辺のPFASワークフローに関する質問に限定されています。"
+        "個人的な相談、コーディング支援、一般的な雑談には対応できません。"
+        if _is_japanese(surface)
+        else
+        f"This chat is limited to {surface.page_label} and adjacent PFAS workflow questions. "
+        "It cannot help with unrelated personal, coding, or general-purpose requests."
+    )
     return ChatDecision(
         status=ChatStatus.OUT_OF_SCOPE,
         question_type="off_topic",
-        response_text=(
-            f"This chat is limited to {surface.page_label} and adjacent PFAS workflow questions. "
-            "It cannot help with unrelated personal, coding, or general-purpose requests."
-        ),
+        response_text=response_text,
         handoff_targets=surface.handoff_targets,
     )
 
 
 def clarification_response(surface: AuthoritativeAnswerSurface) -> ChatDecision:
+    response_text = (
+        f"もう少しこのページに即した質問が必要です。表示中の結果、現在のフィルター、または {surface.page_label} ページで説明できる内容について質問してください。"
+        if _is_japanese(surface)
+        else
+        f"I need a more page-specific question. Ask about a visible result, the active filters, or what this {surface.page_label} page can explain."
+    )
     return ChatDecision(
         status=ChatStatus.CLARIFICATION_REQUIRED,
         question_type="clarification",
-        response_text=(
-            f"I need a more page-specific question. Ask about a visible result, the active filters, or what this {surface.page_label} page can explain."
-        ),
+        response_text=response_text,
         clarification_questions=surface.starter_questions[:2],
         handoff_targets=surface.handoff_targets,
     )

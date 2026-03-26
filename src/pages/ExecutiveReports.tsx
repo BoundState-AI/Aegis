@@ -18,9 +18,10 @@ import { executiveReportSchema, type ExecutiveReport } from "@/lib/apiSchemas";
 import { TermWithTooltip } from "@/components/ui/term-with-tooltip";
 
 const ExecutiveReports = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const helpContent = useHelpContent();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [material, setMaterial] = useState("PTFE");
   const [includeLitigation, setIncludeLitigation] = useState(true);
   const [includeRegulatory, setIncludeRegulatory] = useState(true);
@@ -123,6 +124,12 @@ const ExecutiveReports = () => {
 
   const isLoading = generateMutation.isPending;
   const chatSurfaceHint = useMemo(() => createReportsAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.reports.sections"),
+      t("chat.starters.reports.classification"),
+      t("chat.starters.reports.toggles"),
+    ],
     material,
     includeLitigation,
     includeRegulatory,
@@ -134,7 +141,7 @@ const ExecutiveReports = () => {
       similar_cases_count: section.similar_cases?.length ?? 0,
       product_count: Array.isArray(section.data?.products) ? section.data.products.length : 0,
     })),
-  }), [includeLitigation, includeRegulatory, material, report]);
+  }), [currentLanguage, includeLitigation, includeRegulatory, material, report, t]);
 
   return (
     <PageChatProvider

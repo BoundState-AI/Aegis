@@ -553,7 +553,8 @@ def build_authoritative_surface(
     evidence_bundle = _build_evidence_bundle(page_id, visible_state)
     surface = AuthoritativeAnswerSurface(
         page_id=page_id,
-        page_label=policy["page_label"],
+        page_label=str(hint.page_label or policy["page_label"]),
+        locale=str(hint.locale or "en"),
         module_version=str(hint.module_version or "1.0"),
         supported_question_types=list(policy["supported_question_types"]),
         forbidden_question_types=list(policy["forbidden_question_types"]),

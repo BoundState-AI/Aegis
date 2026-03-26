@@ -1,11 +1,13 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { ChatUiMessage } from "@/lib/chat/types";
+import { useTranslation } from "react-i18next";
 
 type ChatMessageListProps = {
   messages: ChatUiMessage[];
 };
 
 export function ChatMessageList({ messages }: ChatMessageListProps) {
+  const { t } = useTranslation();
   return (
     <ScrollArea className="h-[calc(100vh-260px)] pr-4">
       <div className="space-y-4">
@@ -22,7 +24,7 @@ export function ChatMessageList({ messages }: ChatMessageListProps) {
               }
             >
               <p className="whitespace-pre-wrap leading-6">
-                {message.content || (message.isStreaming ? "Thinking..." : "")}
+                {message.content || (message.isStreaming ? t("chat.thinking") : "")}
               </p>
               {message.clarificationQuestions.length > 0 && (
                 <div className="mt-3 space-y-1">

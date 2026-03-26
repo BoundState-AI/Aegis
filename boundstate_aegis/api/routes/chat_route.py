@@ -66,7 +66,7 @@ async def stream_chat(request: ChatRequest) -> StreamingResponse:
     history = STORE.history(session_id)
 
     if outcome.status == ChatStatus.REFUSED:
-        decision = refused_response()
+        decision = refused_response(surface.locale)
         llm_result = None
     elif outcome.status == ChatStatus.OUT_OF_SCOPE:
         decision = out_of_scope_response(surface)

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ApiError, apiStream } from "@/lib/apiClient";
 import { fetchAegisChatPing } from "@/lib/chat/api";
@@ -24,6 +25,8 @@ type UseChatArgs = {
 };
 
 export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatUiMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
@@ -40,19 +43,19 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
         if (!active) return;
         setServiceHealthy(true);
         setLlmAvailable(runtime.llm_available);
-        setRuntimeLabel(runtime.llm_available ? null : (runtime.detail ?? null));
+        setRuntimeLabel(runtime.llm_available ? null : t("chat.runtime.degraded"));
       })
       .catch(() => {
         if (!active) return;
         setServiceHealthy(false);
         setLlmAvailable(false);
-        setRuntimeLabel("AegisChat runtime status could not be loaded.");
+        setRuntimeLabel(t("chat.runtime.healthUnavailable"));
       });
 
     return () => {
       active = false;
     };
-  }, []);
+  }, [currentLanguage, t]);
 
   const sendMessage = useCallback(async (raw: string) => {
     const message = raw.trim();
@@ -93,6 +96,7 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
           ...surfaceHint,
           page_id: pageId,
           page_label: pageLabel,
+          locale: surfaceHint.locale ?? currentLanguage,
         },
         session_id: sessionId,
       }, {
@@ -120,7 +124,7 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
               setSessionId(event.session_id);
               if (event.fallback_reason) {
                 setLlmAvailable(false);
-                setRuntimeLabel(event.fallback_reason);
+                setRuntimeLabel(t("chat.runtime.degraded"));
               } else if (event.provider_used) {
                 setLlmAvailable(true);
                 setRuntimeLabel(null);
@@ -139,11 +143,12 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
             }
 
             if (event.type === "error") {
-              setError(event.message);
+              const localizedError = t("chat.runtime.unavailable");
+              setError(localizedError);
               setServiceHealthy(false);
               return {
                 ...entry,
-                content: event.message,
+                content: localizedError,
                 status: "ERROR",
                 isStreaming: false,
               };
@@ -158,7 +163,7 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
         },
       });
     } catch (err) {
-      const detail = err instanceof ApiError ? err.message : "Unable to reach AegisChat right now.";
+      const detail = err instanceof ApiError && err.status === 404 ? err.message : t("chat.runtime.unavailable");
       setError(detail);
       setServiceHealthy(false);
       setMessages((current) => current.map((entry) => (
@@ -174,7 +179,7 @@ export function useChat({ pageId, pageLabel, surfaceHint }: UseChatArgs) {
     } finally {
       setIsSending(false);
     }
-  }, [isSending, pageId, pageLabel, sessionId, surfaceHint]);
+  }, [currentLanguage, isSending, pageId, pageLabel, sessionId, surfaceHint, t]);
 
   return {
     open,

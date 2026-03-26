@@ -618,6 +618,12 @@ const LitigationRisk = () => {
   const settlementEvents = backtest?.key_events.filter(e => e.type === "settlement") || [];
   const industryEvents = backtest?.key_events.filter(e => e.type === "industry") || [];
   const chatSurfaceHint = useMemo(() => createLitigationAnswerSurfaceHint({
+    locale: currentLanguage,
+    starterQuestions: [
+      t("chat.starters.litigation.forecast"),
+      t("chat.starters.litigation.backtest"),
+      t("chat.starters.litigation.cases"),
+    ],
     selectedCompound: formData.compound,
     chartView,
     availableBacktests: availableBacktests.length,
@@ -638,7 +644,7 @@ const LitigationRisk = () => {
     leadTimeYears: backtest?.lead_time_years ?? null,
     paperDrilldownYear: paperDrilldown?.year ?? null,
     paperDrilldownTotal: paperDrilldown?.total ?? null,
-  }), [availableBacktests.length, backtest, chartView, forecast, formData.compound, paperDrilldown]);
+  }), [availableBacktests.length, backtest, chartView, currentLanguage, forecast, formData.compound, paperDrilldown, t]);
 
   return (
     <PageChatProvider
