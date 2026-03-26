@@ -505,6 +505,14 @@
     "citationChain": "引用チェーン",
     "doi": "DOI：",
     "description": "PFAS分解経路を支持する査読付き引用を検索。すべてのエビデンスは原著論文にトレース可能。",
+    "sourceTypes": {
+      "peerReviewed": "査読論文",
+      "regulatoryDocuments": "規制文書",
+      "curatedEvidence": "キュレーション済みエビデンス"
+    },
+    "extractionMethods": {
+      "llmAssistedManual": "LLM支援文献抽出（Claude Haiku）+ 手動キュレーション"
+    },
     "fluoropolymers": "フルオロポリマー",
     "pfasEndpoints": "PFASエンドポイント",
     "foundCitations": "{{material}}について{{count}}件の引用が見つかりました"

@@ -41,6 +41,12 @@ const EvidenceChain = () => {
   const { toast } = useToast();
   const helpContent = useHelpContent();
   const currentLanguage = i18n.resolvedLanguage ?? i18n.language ?? "en";
+  const isJapanese = currentLanguage.startsWith("ja");
+  const te = (key: string, fallbackEn: string, fallbackJa: string, options?: Record<string, unknown>) =>
+    t(key, {
+      ...options,
+      defaultValue: isJapanese ? fallbackJa : fallbackEn,
+    });
   const [material, setMaterial] = useState("PTFE");
   const [maxCitations, setMaxCitations] = useState(20);
   const [evidence, setEvidence] = useState<EvidenceViewResponse | null>(null);
@@ -114,6 +120,30 @@ const EvidenceChain = () => {
     return "text-orange-400";
   };
 
+  const getSourceTypeLabel = (type: string) => {
+    switch (type) {
+      case "peer_reviewed":
+        return te("evidence.sourceTypes.peerReviewed", "Peer Reviewed", "査読論文");
+      case "regulatory_documents":
+        return te("evidence.sourceTypes.regulatoryDocuments", "Regulatory Documents", "規制文書");
+      case "curated_evidence":
+        return te("evidence.sourceTypes.curatedEvidence", "Curated Evidence", "キュレーション済みエビデンス");
+      default:
+        return type.replace(/_/g, " ");
+    }
+  };
+
+  const getExtractionMethodLabel = (value: string) => {
+    if (value === "LLM-assisted literature extraction (Claude Haiku) + manual curation") {
+      return te(
+        "evidence.extractionMethods.llmAssistedManual",
+        "LLM-assisted literature extraction (Claude Haiku) + manual curation",
+        "LLM支援文献抽出（Claude Haiku）+ 手動キュレーション",
+      );
+    }
+    return value;
+  };
+
   return (
     <PageChatProvider
       pageId="evidence"
@@ -184,13 +214,13 @@ const EvidenceChain = () => {
                   <div className="space-y-2">
                     {sourceStats.sources.map((s) => (
                       <div key={s.type} className="flex items-center justify-between">
-                        <span className="text-gray-600 text-sm capitalize">{s.type.replace(/_/g, " ")}</span>
+                        <span className="text-gray-600 text-sm">{getSourceTypeLabel(s.type)}</span>
                         <Badge variant="outline" className="border-gray-400">{s.count}</Badge>
                       </div>
                     ))}
                   </div>
                   <p className="text-xs text-gray-400 mt-2">
-                    {t('evidence.extractedVia')} {sourceStats.extraction_method}
+                    {t('evidence.extractedVia')} {getExtractionMethodLabel(sourceStats.extraction_method)}
                   </p>
                 </div>
               )}

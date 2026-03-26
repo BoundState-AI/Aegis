@@ -504,6 +504,14 @@
     "citationChain": "Citation Chain",
     "doi": "DOI:",
     "description": "Search for peer-reviewed citations supporting PFAS degradation pathways. All evidence is traceable to source publications.",
+    "sourceTypes": {
+      "peerReviewed": "Peer Reviewed",
+      "regulatoryDocuments": "Regulatory Documents",
+      "curatedEvidence": "Curated Evidence"
+    },
+    "extractionMethods": {
+      "llmAssistedManual": "LLM-assisted literature extraction (Claude Haiku) + manual curation"
+    },
     "fluoropolymers": "Fluoropolymers",
     "pfasEndpoints": "PFAS Endpoints",
     "foundCitations": "Found {{count}} citations for {{material}}"
