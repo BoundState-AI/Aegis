@@ -4,18 +4,18 @@ const JA_COUNTRY_LABELS: Record<string, string> = {
   Canada: "カナダ",
   China: "中国",
   Denmark: "デンマーク",
-  European Union: "欧州連合",
+  "European Union": "欧州連合",
   Germany: "ドイツ",
   India: "インド",
   International: "国際",
   Japan: "日本",
   Norway: "ノルウェー",
   Singapore: "シンガポール",
-  South Korea: "韓国",
+  "South Korea": "韓国",
   Sweden: "スウェーデン",
   Taiwan: "台湾",
-  United Kingdom: "英国",
-  United States: "米国",
+  "United Kingdom": "英国",
+  "United States": "米国",
 };
 
 const JA_COMPOUND_CLASS_LABELS: Record<string, string> = {
