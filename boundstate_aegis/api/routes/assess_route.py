@@ -154,6 +154,7 @@ class AnalyzeRequest(BaseModel):
         le=10,
         description="Maximum transformation steps to explore",
     )
+    locale: str = Field(default="en", description="BCP47 locale tag")
 
     def get_compound(self) -> str:
         """Get compound from either field."""
@@ -205,6 +206,10 @@ class AnalyzeResponse(BaseModel):
     data_source: str = "pfas_fate_v2.json"
     papers_in_corpus: int = 353
     disclaimer: str = "SCREENING ONLY: Results are literature-derived estimates from peer-reviewed publications. Analytical confirmation (EPA 537.1/533/8327) required for compliance decisions."
+
+
+def _is_japanese(locale: Optional[str]) -> bool:
+    return (locale or "").lower().startswith("ja")
 
 
 @router.post("/analyze", response_model=AnalyzeResponse)
@@ -378,7 +383,8 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                         source_dois=source_dois,
                     ))
 
-        summary = result.get("summary", "")
+        is_ja = _is_japanese(request.locale)
+        summary = "" if is_ja else result.get("summary", "")
         if not summary:
             if findings:
                 # Count unique papers across all findings
@@ -388,9 +394,15 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
                     all_dois.update(f.source_dois)
                     total_observations += f.observation_count
                 paper_count = len(all_dois) if all_dois else sum(f.paper_count for f in findings)
-                summary = f"Analysis of {compound} identified {len(findings)} degradation pathways from {paper_count} peer-reviewed papers ({total_observations} observations)."
+                if is_ja:
+                    summary = f"{compound} の分析では、{paper_count} 本の査読論文から {len(findings)} 件の分解経路（観測 {total_observations} 件）が確認されました。"
+                else:
+                    summary = f"Analysis of {compound} identified {len(findings)} degradation pathways from {paper_count} peer-reviewed papers ({total_observations} observations)."
             else:
-                summary = f"No documented degradation pathways found for {compound} in the literature corpus (353 papers screened)."
+                if is_ja:
+                    summary = f"{compound} については、文献コーパス（353本を確認）内で文書化された分解経路は見つかりませんでした。"
+                else:
+                    summary = f"No documented degradation pathways found for {compound} in the literature corpus (353 papers screened)."
 
         # Get metadata from fate data
         fate_data = get_fate_data()
@@ -402,15 +414,20 @@ async def analyze_pfas(request: AnalyzeRequest) -> AnalyzeResponse:
             scenario_context=result.get("scenario_context", scenario or {}),
             pfas_findings=findings,
             summary=summary,
-            data_source="pfas_fate_v2.json (732 aggregated pathways from literature extraction)",
+            data_source="pfas_fate_v2.json（文献抽出から集約した732件の経路）" if is_ja else "pfas_fate_v2.json (732 aggregated pathways from literature extraction)",
             papers_in_corpus=papers_in_corpus,
+            disclaimer=(
+                "スクリーニング用途のみ: 結果は査読文献から導出した推定です。コンプライアンス判断には分析確認（EPA 537.1/533/8327）が必要です。"
+                if is_ja
+                else "SCREENING ONLY: Results are literature-derived estimates from peer-reviewed publications. Analytical confirmation (EPA 537.1/533/8327) required for compliance decisions."
+            ),
         )
 
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
+    except Exception:
         logger.exception("Error during PFAS analysis")
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+        raise HTTPException(status_code=500, detail="Analysis failed")
 
 
 # Alias endpoint for backwards compatibility
@@ -446,8 +463,8 @@ async def generate_analysis_pdf(request: PDFRequest):
         analysis = await analyze_pfas(analyze_request)
     except HTTPException as e:
         raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+    except Exception:
+        raise HTTPException(status_code=500, detail="Analysis failed")
 
     # Generate PDF
     pdf = FPDF()

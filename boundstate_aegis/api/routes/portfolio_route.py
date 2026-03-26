@@ -77,6 +77,11 @@ class AssessRequest(BaseModel):
     materials: Optional[List[str]] = None
     items: Optional[List[PortfolioItem]] = None
     include_degradation: bool = True
+    locale: str = "en"
+
+
+def _is_japanese(locale: Optional[str]) -> bool:
+    return (locale or "").lower().startswith("ja")
 
 
 # Material risk profiles
@@ -177,6 +182,7 @@ async def assess_portfolio(request: AssessRequest) -> PortfolioAssessment:
     risk_dist = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
     total_score = 0.0
     total_exposure = 0.0
+    is_ja = _is_japanese(request.locale)
 
     for material in material_list:
         mat_upper = material.upper()
@@ -232,40 +238,50 @@ async def assess_portfolio(request: AssessRequest) -> PortfolioAssessment:
     # Generate recommendations
     recommendations = []
     if risk_dist["CRITICAL"] > 0:
-        recommendations.append("Immediate action required: Critical risk materials should be prioritized for phase-out or substitution")
+        recommendations.append("重大リスク材料は優先的に段階的廃止または代替化が必要です" if is_ja else "Immediate action required: Critical risk materials should be prioritized for phase-out or substitution")
     if risk_dist["HIGH"] > 0:
-        recommendations.append("Review supply chain alternatives for high-risk materials")
+        recommendations.append("高リスク材料についてサプライチェーン上の代替材を検討してください" if is_ja else "Review supply chain alternatives for high-risk materials")
     if any(m.litigation_exposure > 0.5 for m in materials_result):
-        recommendations.append("Consider litigation reserve assessment for materials with high exposure")
+        recommendations.append("エクスポージャーの高い材料について訴訟引当評価を検討してください" if is_ja else "Consider litigation reserve assessment for materials with high exposure")
     if any(m.regulatory_pressure > 0.6 for m in materials_result):
-        recommendations.append("Monitor regulatory developments in EU REACH and US EPA for upcoming restrictions")
+        recommendations.append("今後の制限に備え、EU REACH と米国 EPA の規制動向を監視してください" if is_ja else "Monitor regulatory developments in EU REACH and US EPA for upcoming restrictions")
     if not recommendations:
-        recommendations.append("Portfolio risk profile is within acceptable limits; continue monitoring")
+        recommendations.append("ポートフォリオのリスクプロファイルは許容範囲内です。監視を継続してください" if is_ja else "Portfolio risk profile is within acceptable limits; continue monitoring")
 
     # Build summary paragraphs
     summary_parts = []
 
     # Overview paragraph
     summary_parts.append(
-        f"Assessed {len(material_list)} materials in portfolio."
+        f"ポートフォリオ内の {len(material_list)} 材料を評価しました。" if is_ja else f"Assessed {len(material_list)} materials in portfolio."
     )
 
     # Risk distribution
     if high_risk_count > 0:
         summary_parts.append(
+            (
+                f"リスク分布: 重大 {risk_dist['CRITICAL']} 件、高 {risk_dist['HIGH']} 件、中 {risk_dist['MEDIUM']} 件、低 {risk_dist['LOW']} 件。"
+                f"{high_risk_count} 件の材料に優先対応が必要です。"
+            )
+            if is_ja else
             f"Risk distribution: {risk_dist['CRITICAL']} critical, {risk_dist['HIGH']} high, "
             f"{risk_dist['MEDIUM']} medium, {risk_dist['LOW']} low. "
             f"{high_risk_count} material(s) require priority attention."
         )
     else:
         summary_parts.append(
+            (
+                f"リスク分布: 中 {risk_dist['MEDIUM']} 件、低 {risk_dist['LOW']} 件。"
+                "重大または高リスク材料は確認されませんでした。"
+            )
+            if is_ja else
             f"Risk distribution: {risk_dist['MEDIUM']} medium, {risk_dist['LOW']} low. "
             f"No critical or high-risk materials identified."
         )
 
     # Recommendations paragraph
     if recommendations:
-        summary_parts.append("Recommendations: " + " ".join(recommendations))
+        summary_parts.append(("推奨事項: " if is_ja else "Recommendations: ") + " ".join(recommendations))
 
     return PortfolioAssessment(
         total_materials=len(material_list),
@@ -277,4 +293,9 @@ async def assess_portfolio(request: AssessRequest) -> PortfolioAssessment:
         results=materials_result,  # Alias for frontend
         recommendations=recommendations,
         executive_summary="\n\n".join(summary_parts),
+        methodology_note=(
+            "リスク評価は規制状況、化学物質特性、過去のパターンを組み合わせています。実際の値はサイト固有要因で変動する可能性があります。"
+            if is_ja
+            else "Risk assessments incorporate regulatory status, compound characteristics, and historical patterns. Site-specific factors may affect actual values."
+        ),
     )

@@ -77,7 +77,7 @@ const PortfolioAssessment = () => {
   const [assessment, setAssessment] = useState<PortfolioViewResponse | null>(null);
 
   const assessMutation = useMutation({
-    mutationFn: () => apiPost("/api/v1/portfolio/assess", portfolioResponseSchema, { items }),
+    mutationFn: () => apiPost("/api/v1/portfolio/assess", portfolioResponseSchema, { items, locale: currentLanguage }),
     onSuccess: (data) => {
       const typed = data as PortfolioViewResponse;
       setAssessment(typed);
@@ -95,12 +95,11 @@ const PortfolioAssessment = () => {
     },
   });
 
-  // Auto-assess pre-populated portfolio on mount
+  // Auto-assess on mount and when locale changes so backend-generated copy follows the active language.
   useEffect(() => {
     void handleAssess();
-    // Intentionally run once on mount to pre-populate default portfolio assessment.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentLanguage]);
 
   const addItem = () => {
     if (!newMaterial) return;
@@ -184,7 +183,7 @@ const PortfolioAssessment = () => {
                   <div key={i} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                     <div>
                       <span className="text-daikin-dark font-medium">{item.material}</span>
-                      <span className="text-gray-500 text-sm ml-2">({item.volume_lbs.toLocaleString()} lbs)</span>
+                      <span className="text-gray-500 text-sm ml-2">({item.volume_lbs.toLocaleString()} {t("portfolio.volumeUnitShort")})</span>
                     </div>
                     <Button variant="ghost" size="sm" onClick={() => removeItem(i)}>
                       <Trash2 className="h-4 w-4 text-red-500" />

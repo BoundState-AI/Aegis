@@ -50,6 +50,7 @@ const ExecutiveReports = () => {
         material,
         include_litigation: includeLitigation.toString(),
         include_regulatory: includeRegulatory.toString(),
+        locale: currentLanguage,
       });
       return apiGet(`/api/v1/reports/executive?${params.toString()}`, executiveReportSchema);
     },
@@ -69,12 +70,11 @@ const ExecutiveReports = () => {
     },
   });
 
-  // Auto-generate PTFE report on mount
+  // Auto-generate on mount and when locale changes so backend-generated report copy follows the active language.
   useEffect(() => {
     void handleGenerate();
-    // Intentionally run once on mount to pre-populate default report.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentLanguage]);
 
   const handleGenerate = async () => {
     await generateMutation.mutateAsync();
@@ -87,7 +87,7 @@ const ExecutiveReports = () => {
     const reportTitle = getReportTitle(report);
     let content = `${reportTitle}\n`;
     content += `${"=".repeat(reportTitle.length)}\n\n`;
-    content += `${t('reports.generated')} ${new Date(report.generated).toLocaleString()}\n`;
+    content += `${t('reports.generated')} ${new Date(report.generated).toLocaleString(currentLanguage)}\n`;
     content += `${t('reports.classification')}: ${getReportClassificationLabel(report.classification)}\n\n`;
 
     report.sections.forEach((section) => {
@@ -206,7 +206,7 @@ const ExecutiveReports = () => {
                       <div>
                         <CardTitle className="text-daikin-dark">{getReportTitle(report)}</CardTitle>
                         <CardDescription>
-                          {t('reports.generated')} {new Date(report.generated).toLocaleString()}
+                          {t('reports.generated')} {new Date(report.generated).toLocaleString(currentLanguage)}
                         </CardDescription>
                       </div>
                       <Button variant="outline" onClick={handleDownload} className="border-gray-300 text-gray-600 hover:bg-gray-100">

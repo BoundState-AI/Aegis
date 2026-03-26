@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 import { AlternativeOption } from "@/types/pfas";
 
 interface AlternativesTableProps {
@@ -8,6 +9,8 @@ interface AlternativesTableProps {
 }
 
 const AlternativesTable = ({ alternatives }: AlternativesTableProps) => {
+  const { t } = useTranslation();
+
   if (!alternatives || alternatives.length === 0) {
     return null;
   }
@@ -20,22 +23,22 @@ const AlternativesTable = ({ alternatives }: AlternativesTableProps) => {
   };
 
   const getRiskCategory = (score: number) => {
-    if (score <= 25) return "LOW";
-    if (score <= 50) return "MEDIUM";
-    if (score <= 75) return "HIGH";
-    return "CRITICAL";
+    if (score <= 25) return t("common.riskLevels.low");
+    if (score <= 50) return t("common.riskLevels.medium");
+    if (score <= 75) return t("common.riskLevels.high");
+    return t("common.riskLevels.critical");
   };
 
   return (
     <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Alternative Materials</h2>
+      <h2 className="text-2xl font-bold mb-4">{t("analysis.alternativeMaterials")}</h2>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-semibold">Material</TableHead>
-            <TableHead className="font-semibold">Risk Score</TableHead>
-            <TableHead className="font-semibold">Advantages</TableHead>
-            <TableHead className="font-semibold">Tradeoffs</TableHead>
+            <TableHead className="font-semibold">{t("common.material")}</TableHead>
+            <TableHead className="font-semibold">{t("analysis.overallRiskScore")}</TableHead>
+            <TableHead className="font-semibold">{t("analysis.advantages")}</TableHead>
+            <TableHead className="font-semibold">{t("analysis.tradeoffs")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

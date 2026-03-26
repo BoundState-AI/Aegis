@@ -46,6 +46,7 @@ const PFASAnalysis = () => {
     mutationFn: () =>
       apiPost("/api/pfas/evaluate", analyzeResponseSchema, {
         source_compound: formData.material,
+        locale: currentLanguage,
         context: {
           incident_temp_c: formData.temperature,
           atmosphere: formData.atmosphere,
@@ -68,12 +69,11 @@ const PFASAnalysis = () => {
     },
   });
 
-  // Auto-analyze PTFE on mount
+  // Auto-analyze on mount and when locale changes so backend-generated copy follows the active language.
   useEffect(() => {
     void handleAnalyze();
-    // Intentionally run once on mount to pre-populate default analysis.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentLanguage]);
 
   const handleAnalyze = async () => {
     if (!formData.material) {
@@ -309,7 +309,7 @@ const PFASAnalysis = () => {
                         <p className="text-sm text-gray-500">{t('common.atmosphere')}</p>
                       </div>
                       <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <p className="text-2xl font-bold text-daikin-dark">{formData.time}h</p>
+                        <p className="text-2xl font-bold text-daikin-dark">{formData.time}{t("analysis.hourShort")}</p>
                         <p className="text-sm text-gray-500">{t('common.exposure')}</p>
                       </div>
                     </div>
@@ -384,7 +384,9 @@ const PFASAnalysis = () => {
                               ))}
                               {[...new Set(finding.evidence_refs.map(e => e.doi).filter((doi): doi is string => !!doi))].length > 3 && (
                                 <span className="text-xs text-gray-400">
-                                  +{[...new Set(finding.evidence_refs.map(e => e.doi).filter((doi): doi is string => !!doi))].length - 3} more
+                                  {t("analysis.moreSources", {
+                                    count: [...new Set(finding.evidence_refs.map(e => e.doi).filter((doi): doi is string => !!doi))].length - 3,
+                                  })}
                                 </span>
                               )}
                             </div>

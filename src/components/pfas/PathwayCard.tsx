@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, AlertTriangle, ExternalLink, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { PathwayResult } from "@/types/pfas";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -17,6 +18,7 @@ interface PathwayCardProps {
 }
 
 const PathwayCard = ({ pathway }: PathwayCardProps) => {
+  const { t } = useTranslation();
   const [showRegulatory, setShowRegulatory] = useState(false);
   const [showEvidence, setShowEvidence] = useState(false);
 
@@ -76,7 +78,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center gap-2">
-            <span className="font-medium">Literature Evidence Strength</span>
+            <span className="font-medium">{t("common.confidence")}</span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -84,10 +86,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
                 </TooltipTrigger>
                 <TooltipContent side="top" className="max-w-xs p-3">
                   <SpicyTooltipBody>
-                    <p className="text-sm">
-                      Reflects agreement across peer-reviewed sources that this pathway occurs
-                      under specified conditions. <strong>Not a statistical probability.</strong>
-                    </p>
+                    <p className="text-sm">{t("tooltips.confidence.explanation")}</p>
                   </SpicyTooltipBody>
                 </TooltipContent>
               </Tooltip>
@@ -111,15 +110,15 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
         </div>
 
         <p className="text-xs text-muted-foreground">
-          Literature Agreement Range: [{rangeLow}% – {rangeHigh}%]
-          {pathway.paper_count && ` • ${pathway.paper_count} papers`}
-          {pathway.observation_count && ` • ${pathway.observation_count} observations`}
+          {t("analysis.literatureAgreementRange", { low: rangeLow, high: rangeHigh })}
+          {pathway.paper_count ? ` • ${t("analysis.paperCountShort", { count: pathway.paper_count })}` : ""}
+          {pathway.observation_count ? ` • ${t("analysis.observationCountShort", { count: pathway.observation_count })}` : ""}
         </p>
 
         {/* Source DOI Links */}
         {pathway.evidence.length > 0 && getUniqueDois(pathway.evidence).length > 0 && (
           <div className="flex items-center gap-2 flex-wrap text-sm pt-2">
-            <span className="text-muted-foreground font-medium">Sources:</span>
+            <span className="text-muted-foreground font-medium">{t("common.sources")}:</span>
             {getUniqueDois(pathway.evidence).slice(0, 3).map((doi, idx) => (
               <a
                 key={idx}
@@ -137,7 +136,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
                 onClick={() => setShowEvidence(true)}
                 className="text-xs text-muted-foreground hover:text-primary transition-colors"
               >
-                +{getUniqueDois(pathway.evidence).length - 3} more
+                {t("analysis.moreSources", { count: getUniqueDois(pathway.evidence).length - 3 })}
               </button>
             )}
           </div>
@@ -151,7 +150,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
           onClick={() => setShowRegulatory(!showRegulatory)}
           className="w-full justify-between"
         >
-          <span className="font-semibold">Regulatory Status</span>
+          <span className="font-semibold">{t("analysis.regulatoryStatus")}</span>
           {showRegulatory ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </Button>
         
@@ -170,7 +169,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
                   <div className="bg-risk-high/10 border border-risk-high/20 rounded-lg p-3">
                     <p className="font-semibold text-sm mb-2 flex items-center gap-2">
                       <AlertTriangle className="h-4 w-4" />
-                      Litigation Warnings
+                      {t("analysis.litigationWarnings")}
                     </p>
                     {pathway.regulatory_status.litigation.map((lit, idx) => (
                       <div key={idx} className="text-sm mb-2 last:mb-0">
@@ -181,12 +180,12 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
                 )}
                 {pathway.regulatory_status.effective_date && (
                   <p className="text-sm text-muted-foreground">
-                    Effective Date: {pathway.regulatory_status.effective_date}
+                    {t("regulatory.effective")}: {pathway.regulatory_status.effective_date}
                   </p>
                 )}
               </>
             ) : (
-              <p className="text-sm text-muted-foreground">No current regulatory restrictions</p>
+              <p className="text-sm text-muted-foreground">{t("analysis.noCurrentRegulatoryRestrictions")}</p>
             )}
           </div>
         )}
@@ -199,7 +198,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
           onClick={() => setShowEvidence(!showEvidence)}
           className="w-full justify-between"
         >
-          <span className="font-semibold">Scientific Evidence ({pathway.evidence.length})</span>
+          <span className="font-semibold">{t("analysis.scientificEvidence")} ({pathway.evidence.length})</span>
           {showEvidence ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </Button>
         
@@ -224,7 +223,7 @@ const PathwayCard = ({ pathway }: PathwayCardProps) => {
                   "{ev.fragment}"
                 </p>
                 {ev.page && (
-                  <p className="text-xs text-muted-foreground mt-1">Page {ev.page}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{t("analysis.pageNumber", { page: ev.page })}</p>
                 )}
               </div>
             ))}

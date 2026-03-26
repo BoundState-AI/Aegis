@@ -219,6 +219,12 @@ const getSentimentLabel = (t: TFunction, category: string) =>
 type BacktestLocalization = {
   phases: Record<string, string>;
   events: Record<string, { label: string; description: string }>;
+  industryClaims?: Record<string, { source: string; claim: string; reality: string }>;
+  reconstruction?: {
+    narrative: string;
+    counterfactual: string;
+    key_insight: string;
+  };
 };
 
 const BACKTEST_JA_COPY: Record<string, BacktestLocalization> = {
@@ -288,6 +294,38 @@ const BACKTEST_JA_COPY: Record<string, BacktestLocalization> = {
         description: "EPAがHFPO-DA（GenX）に対する国家一次飲料水規則を最終化し、代替化学物質そのものが規制対象となった。",
       },
     },
+    industryClaims: {
+      "2008:DuPont PMN Submission to EPA (TSCA Section 5(a)):Favorable toxicological profile and very rapid bioelimination.": {
+        source: "デュポンのEPA向けPMN提出書類（TSCA第5条(a)）",
+        claim: "良好な毒性プロファイルと極めて速い生体排出。",
+        reality: "EPAの2021年毒性評価では、低用量でも肝毒性、腎影響、発達毒性、免疫抑制が確認された。",
+      },
+      "2010:DuPont GenX Processing Aid Brochure (Jul 2010):Virtually complete elimination from the body occurs in 12-24 hours in laboratory animals, compared with months for PFOA.": {
+        source: "DuPont GenXプロセシングエイド冊子（2010年7月）",
+        claim: "実験動物では12〜24時間で体内からほぼ完全に排出され、PFOAのように数か月は残留しない。",
+        reality: "血中半減期は短くても、GenXは環境中に事実上残留し続ける。複数大陸の飲料水、地下水、雨水、土壌で検出されている。",
+      },
+      "2010:DuPont GenX Processing Aid Brochure (Jul 2010):Setting a New Industry Standard for Sustainable Replacement Technology.": {
+        source: "DuPont GenXプロセシングエイド冊子（2010年7月）",
+        claim: "持続可能な代替技術の新たな業界標準を打ち立てる。",
+        reality: "EPAは2024年にGenX（HFPO-DA）の国家一次飲料水規則を最終化し、この『持続可能な代替材』自体が規制対象となった。",
+      },
+      "2010:DuPont GenX Processing Aid Brochure (Jul 2010):Unique environmental exposure control technologies.": {
+        source: "DuPont GenXプロセシングエイド冊子（2010年7月）",
+        claim: "独自の環境曝露制御技術を備えている。",
+        reality: "EPA監察総監は、2009年同意命令に違反してGenXが8年間Cape Fear川へ排出され、30万人が汚染水を飲用したと認定した。",
+      },
+      "2009:EPA TSCA Consent Order with DuPont:DuPont required to capture and destroy 99% of GenX compounds during manufacturing.": {
+        source: "EPAとデュポンのTSCA同意命令",
+        claim: "デュポンは製造時にGenX化合物の99%を回収・破壊することが義務付けられている。",
+        reality: "GenXは2012年までにCape Fear川で検出され、2017年には標準処理で除去されないまま完成飲料水でも確認された。",
+      },
+    },
+    reconstruction: {
+      narrative: "2010年、DuPontはGenXを『持続可能な代替技術』であり『良好な毒性プロファイル』を持つとする冊子を公表した。その後5年間、この主張を独立に検証した科学者はゼロ、査読論文もゼロだった。SENTINELはこの沈黙を危険信号として捉えたはずだ。つまり、業界が安全性を主張しながら独立検証が一切存在しないまま製造されていた化学物質である。2015年に最初の論文が現れた時点で、SENTINELはNOVELへ引き上げていたはずだ。すでに6年間生産されていた化合物に対するゼロからの速度イベントであり、最初の訴訟の2年前、最初の10億ドル級和解の7年前だった。",
+      counterfactual: "2012年にSENTINELが稼働していれば、Cape Fear川でのGenX検出は未公表段階でも監視対象になっていた。2015年の最初の論文で警戒レベルは引き上げられていたはずだ。訴訟準備で2年先行できれば、145億ドル規模のエクスポージャーの軌道を変えられた可能性がある。さらに重要なのは、DuPontの2010年の安全性主張と独立検証不在のギャップ、5年間続いた沈黙そのものをSENTINELが可視化できた点だ。",
+      key_insight: "最も危険なシグナルはホッケースティック型の急増ではなく、その前にあった沈黙だった。8年間、ある化学物質は安全と宣伝され、製造され、30万人が利用する河川に排出され続けた。査読論文はゼロ、独立検証もゼロ。『証拠』はDuPont自身の冊子しかなかった。最初の論文が出た時点で、時計はすでに動き始めていた。",
+    },
   },
   pfoa: {
     phases: {
@@ -351,6 +389,11 @@ const BACKTEST_JA_COPY: Record<string, BacktestLocalization> = {
         description: "EPAが飲料水中PFOAの最大汚染物質基準4 pptを最終化した。",
       },
     },
+    reconstruction: {
+      narrative: "PFOA研究は1980年、散発的な工業化学の論文から始まった。その後20年間、この化合物はWATCH段階にとどまり、学術的関心がゆっくり積み上がっていった。変曲点は2002年で、3MによるPFOS撤退がELEVATEDへの移行を引き起こし、業界が何かを把握していたことを示した。2006年にはC8 Science Panelの発足がPFOAをCRITICALへ押し上げ、6.707億ドル和解の11年前に重大警戒域へ入っていた。SENTINELがあれば、企業の意思決定者は10年以上前から撤退、配合変更、あるいは引当計上の判断材料を持てたはずだ。",
+      counterfactual: "2002年にSENTINELが稼働していれば、ELEVATEDシグナルの時点でPFOAはポートフォリオ見直し対象になっていた。2006年のCRITICALでは、引当金設定と代替材料への研究開発転換が必要になっていたはずだ。シグナルを監視していた企業であれば、大規模和解の10年以上前にPFOA製品から退出できた可能性がある。",
+      key_insight: "SENTINELが予測するのは最初の訴訟ではなく、巨額の財務エクスポージャーである。WATCHからELEVATED、そしてCRITICALへの移行は、最終的に法廷の弾薬となる科学的証拠の蓄積そのものを追跡している。",
+    },
   },
 };
 
@@ -363,6 +406,35 @@ const getLocalizedEvent = (language: string, compoundId: string, event: KeyEvent
   if (!language.startsWith("ja")) return event;
   const localized = BACKTEST_JA_COPY[compoundId.toLowerCase()]?.events?.[`${event.year}:${event.type}`];
   return localized ? { ...event, ...localized } : event;
+};
+
+const getIndustryClaimKey = (claim: IndustryClaim) => `${claim.year}:${claim.source}:${claim.claim}`;
+
+const getLocalizedIndustryClaim = (language: string, compoundId: string, claim: IndustryClaim): IndustryClaim => {
+  if (!language.startsWith("ja")) return claim;
+  const localized = BACKTEST_JA_COPY[compoundId.toLowerCase()]?.industryClaims?.[getIndustryClaimKey(claim)];
+  return localized ? { ...claim, ...localized } : claim;
+};
+
+const getLocalizedReconstruction = (
+  language: string,
+  compoundId: string,
+  reconstruction: BacktestData["sentinel_reconstruction"],
+) => {
+  if (!language.startsWith("ja")) return reconstruction;
+  return BACKTEST_JA_COPY[compoundId.toLowerCase()]?.reconstruction ?? reconstruction;
+};
+
+const getLocalizedRiskLevel = (t: TFunction, level: string) => {
+  const key = `common.riskLevels.${level.toLowerCase()}`;
+  const translated = t(key);
+  return translated === key ? level : translated;
+};
+
+const getExposurePathwayLabel = (t: TFunction, pathway: string) => {
+  const key = `litigation.exposurePathwayLabels.${pathway}`;
+  const translated = t(key);
+  return translated === key ? pathway : translated;
 };
 
 // ---------------------------------------------------------------------------
@@ -579,12 +651,13 @@ const LitigationRisk = () => {
         compound: formData.compound,
         production_volume_lbs: formData.volume,
         exposure_pathways: formData.pathways,
+        locale: currentLanguage,
       });
       setForecast(data);
 
       toast({
         title: t('common.forecastComplete'),
-        description: `${data.compound}: ${data.risk_level} risk (${(data.probability_24_months * 100).toFixed(1)}% in 24mo)`,
+        description: `${data.compound}: ${getLocalizedRiskLevel(t, data.risk_level)} ${t('litigation.risk').toLowerCase()} (${(data.probability_24_months * 100).toFixed(1)}% / ${t('litigation.months24')})`,
       });
     } catch {
       toast({
@@ -617,6 +690,9 @@ const LitigationRisk = () => {
   const litigationEvents = backtest?.key_events.filter(e => e.type === "litigation") || [];
   const settlementEvents = backtest?.key_events.filter(e => e.type === "settlement") || [];
   const industryEvents = backtest?.key_events.filter(e => e.type === "industry") || [];
+  const localizedReconstruction = backtest
+    ? getLocalizedReconstruction(currentLanguage, backtest.compound_id, backtest.sentinel_reconstruction)
+    : null;
   const chatSurfaceHint = useMemo(() => createLitigationAnswerSurfaceHint({
     locale: currentLanguage,
     starterQuestions: [
@@ -709,7 +785,7 @@ const LitigationRisk = () => {
                       )}
                       {bt.compound_id.toUpperCase()}
                       <Badge className="ml-2 bg-white/20 text-xs">
-                        {bt.lead_time_years}yr
+                        {t("litigation.leadTimeBadge", { count: bt.lead_time_years })}
                       </Badge>
                     </Button>
                   ))}
@@ -1085,7 +1161,7 @@ const LitigationRisk = () => {
                                     <p className="text-sm text-gray-800 leading-snug">{paper.title}</p>
                                     <p className="text-xs text-gray-400 mt-1">
                                       {paper.journal}
-                                      {paper.reasoning && (
+                                      {paper.reasoning && !currentLanguage.startsWith("ja") && (
                                         <span className="text-gray-300"> &mdash; {paper.reasoning}</span>
                                       )}
                                     </p>
@@ -1125,16 +1201,18 @@ const LitigationRisk = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
-                        {backtest.industry_claims.map((claim, i) => (
-                          <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-3 items-start p-4 rounded-lg bg-gray-50 border border-gray-100">
+                        {backtest.industry_claims.map((claim, i) => {
+                          const localizedClaim = getLocalizedIndustryClaim(currentLanguage, backtest.compound_id, claim);
+                          return (
+                            <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-3 items-start p-4 rounded-lg bg-gray-50 border border-gray-100">
                             {/* The Claim */}
                             <div>
                               <div className="flex items-center gap-2 mb-2">
                                 <Badge className="bg-green-100 text-green-800 text-xs font-medium">{claim.year}</Badge>
                                 <span className="text-xs text-gray-400 uppercase tracking-wide">{t('litigation.claim')}</span>
                               </div>
-                              <p className="text-sm text-gray-800 italic">"{claim.claim}"</p>
-                              <p className="text-xs text-gray-400 mt-1">{claim.source}</p>
+                              <p className="text-sm text-gray-800 italic">"{localizedClaim.claim}"</p>
+                              <p className="text-xs text-gray-400 mt-1">{localizedClaim.source}</p>
                             </div>
                             {/* Arrow */}
                             <div className="hidden md:flex items-center justify-center pt-4">
@@ -1146,10 +1224,11 @@ const LitigationRisk = () => {
                                 <Badge className="bg-red-100 text-red-800 text-xs font-medium">{claim.reality_year}</Badge>
                                 <span className="text-xs text-gray-400 uppercase tracking-wide">{t('litigation.reality')}</span>
                               </div>
-                              <p className="text-sm text-red-900">{claim.reality}</p>
+                              <p className="text-sm text-red-900">{localizedClaim.reality}</p>
                             </div>
-                          </div>
-                        ))}
+                            </div>
+                          );
+                        })}
                       </div>
                     </CardContent>
                   </Card>
@@ -1168,18 +1247,18 @@ const LitigationRisk = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-gray-300 text-sm leading-relaxed">
-                      {backtest.sentinel_reconstruction.narrative}
+                      {localizedReconstruction?.narrative}
                     </p>
                     <div className="p-3 bg-white/5 rounded-lg border border-white/10">
                       <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-1">{t('litigation.keyInsight')}</p>
                       <p className="text-white text-sm">
-                        {backtest.sentinel_reconstruction.key_insight}
+                        {localizedReconstruction?.key_insight}
                       </p>
                     </div>
                     <div className="p-3 bg-white/5 rounded-lg border border-white/10">
                       <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">{t('litigation.counterfactual')}</p>
                       <p className="text-gray-300 text-sm">
-                        {backtest.sentinel_reconstruction.counterfactual}
+                        {localizedReconstruction?.counterfactual}
                       </p>
                     </div>
                   </CardContent>
@@ -1211,7 +1290,8 @@ const LitigationRisk = () => {
                     </div>
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <p className="text-xs text-gray-400">
-                        Sources: {backtest.source_citations.slice(0, 3).join("; ")}; {t('litigation.andMore', { count: backtest.source_citations.length - 3 })}
+                        {t("common.sources")}: {backtest.source_citations.slice(0, 3).join("; ")}
+                        {backtest.source_citations.length > 3 ? `; ${t('litigation.andMore', { count: backtest.source_citations.length - 3 })}` : ""}
                       </p>
                     </div>
                   </CardContent>
@@ -1273,7 +1353,7 @@ const LitigationRisk = () => {
                           className={`cursor-pointer ${formData.pathways.includes(p) ? "bg-daikin-blue text-white" : "border-gray-400 text-gray-600"}`}
                           onClick={() => togglePathway(p)}
                         >
-                          {p}
+                          {getExposurePathwayLabel(t, p)}
                         </Badge>
                       ))}
                     </div>
@@ -1302,7 +1382,7 @@ const LitigationRisk = () => {
                       <CardHeader>
                         <div className="flex items-center justify-between">
                           <CardTitle className="text-daikin-dark">{forecast.compound} {t('litigation.litigationForecast')}</CardTitle>
-                          <Badge className={getRiskColor(forecast.risk_level)}>{forecast.risk_level} {t('litigation.risk')}</Badge>
+                          <Badge className={getRiskColor(forecast.risk_level)}>{getLocalizedRiskLevel(t, forecast.risk_level)} {t('litigation.risk')}</Badge>
                         </div>
                       </CardHeader>
                       <CardContent>

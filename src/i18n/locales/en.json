@@ -24,6 +24,15 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "more": "More",
+    "morePages": "More pages",
+    "toggleSidebar": "Toggle Sidebar",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "breadcrumb": "Breadcrumb",
+    "pagination": "Pagination",
     "yes": "Yes",
     "no": "No",
     "any": "Any",
@@ -249,6 +258,7 @@
     "validationCaseStudies": "Validation Case Studies",
     "riskForecast": "Risk Forecast",
     "selectCompound": "Select Compound:",
+    "leadTimeBadge": "{{count}}yr",
     "strongestValidation": "Strongest Validation - 15yr Lead Time",
     "publications": "Publications",
     "pubmedPapers": "PubMed papers",
@@ -305,6 +315,12 @@
     "compound": "Compound",
     "productionVolume": "Production Volume (lbs/year)",
     "exposurePathways": "Exposure Pathways",
+    "exposurePathwayLabels": {
+      "water": "Water",
+      "air": "Air",
+      "soil": "Soil",
+      "consumer_products": "Consumer Products"
+    },
     "calculateRisk": "Calculate Risk",
     "modelDisclaimer": "",
     "litigationForecast": "Litigation Forecast",
@@ -443,7 +459,8 @@
     "analyzed": "Analyzed {{count}} materials - {{highRisk}} high risk"
     ,
     "materialPlaceholder": "Material",
-    "volumePlaceholder": "Volume"
+    "volumePlaceholder": "Volume",
+    "volumeUnitShort": "lbs"
   },
   "reports": {
     "title": "Executive Reports",
@@ -510,6 +527,8 @@
     "operationalMitigations": "Operational Mitigations",
     "evidenceAndCitations": "Evidence & Citations",
     "highDegradationRisk": "High degradation risk",
+    "hourShort": "h",
+    "moreSources": "+{{count}} more",
     "noPfasProductsDetected": "No PFAS products detected under these conditions.",
     "aboutEvidenceStrength": "About Evidence Strength",
     "evidenceStrength": "Evidence Strength",

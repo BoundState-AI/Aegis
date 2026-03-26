@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import threading
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -36,7 +37,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from boundstate_aegis.config import PFAS_LIT_SUMMARY, EVIDENCE_DIR
+from boundstate_aegis.config import PFAS_LIT_SUMMARY, DATA_DIR, EVIDENCE_DIR
 from boundstate_aegis.analytics.publication_dynamics import PublicationDynamics
 
 logger = logging.getLogger(__name__)
@@ -58,7 +59,7 @@ def get_dynamics() -> PublicationDynamics:
         # Double-check after acquiring lock
         if _dynamics is not None:
             return _dynamics
-        pdf_dir = Path("D:/chemours_PFAS/pfas lit")
+        pdf_dir = Path(os.getenv("AEGIS_LITIGATION_PDF_DIR", str(DATA_DIR / "litigation_pdfs")))
         _dynamics = PublicationDynamics(PFAS_LIT_SUMMARY, pdf_dir if pdf_dir.exists() else None)
         logger.info(f"Initialized publication dynamics with {len(_dynamics.entries)} entries")
     return _dynamics
@@ -109,6 +110,11 @@ class ForecastRequest(BaseModel):
     compound: str
     production_volume_lbs: int = 100000
     exposure_pathways: List[str] = ["water"]
+    locale: str = "en"
+
+
+def _is_japanese(locale: Optional[str]) -> bool:
+    return (locale or "").lower().startswith("ja")
 
 
 # Known litigation settlements (real data)
@@ -169,44 +175,65 @@ def calculate_dynamics_risk(metrics: Dict[str, Any]) -> float:
 def generate_key_drivers(
     compound: str,
     metrics: Dict[str, Any],
-    exposure_pathways: List[str]
+    exposure_pathways: List[str],
+    locale: str = "en",
 ) -> List[str]:
     """Generate key drivers based on publication dynamics and pathways."""
     drivers = []
+    is_ja = _is_japanese(locale)
 
     # Add dynamics-based drivers
     if metrics["velocity"] > 10:
-        drivers.append(f"High research velocity: {metrics['velocity']:.1f} papers/year on {compound}")
+        if is_ja:
+            drivers.append(f"研究速度が高い: {compound} に関する論文が年 {metrics['velocity']:.1f} 本")
+        else:
+            drivers.append(f"High research velocity: {metrics['velocity']:.1f} papers/year on {compound}")
 
     if metrics["acceleration"] > 5:
-        drivers.append(f"Accelerating research attention: +{metrics['acceleration']:.1f} papers/year growth")
+        if is_ja:
+            drivers.append(f"研究注目度が加速: 年あたり +{metrics['acceleration']:.1f} 本の増加")
+        else:
+            drivers.append(f"Accelerating research attention: +{metrics['acceleration']:.1f} papers/year growth")
 
     if metrics["jerk"] > 5:
-        drivers.append(f"Emerging inflection point: research momentum increasing rapidly")
+        drivers.append("新たな変曲点: 研究モメンタムが急速に上昇中" if is_ja else "Emerging inflection point: research momentum increasing rapidly")
 
     content = metrics.get("content_signals", {})
     if content.get("health", 0) > 5:
-        drivers.append(f"Health effects documented in {content['health']} studies")
+        if is_ja:
+            drivers.append(f"健康影響が {content['health']} 件の研究で報告")
+        else:
+            drivers.append(f"Health effects documented in {content['health']} studies")
 
     if content.get("regulatory", 0) > 10:
-        drivers.append(f"Regulatory attention: {content['regulatory']} papers discuss regulations")
+        if is_ja:
+            drivers.append(f"規制上の注目: {content['regulatory']} 本の論文が規制を扱っている")
+        else:
+            drivers.append(f"Regulatory attention: {content['regulatory']} papers discuss regulations")
 
     if content.get("contamination", 0) > 5:
-        drivers.append(f"Contamination studies: {content['contamination']} papers on environmental presence")
+        if is_ja:
+            drivers.append(f"汚染研究: {content['contamination']} 本の論文が環境中の存在を扱っている")
+        else:
+            drivers.append(f"Contamination studies: {content['contamination']} papers on environmental presence")
 
     # Add pathway-based drivers
     if "water" in exposure_pathways:
-        drivers.append("EPA drinking water MCL enforcement (4 ppt PFOA/PFOS)")
-        drivers.append("Public water utility class actions expanding")
+        if is_ja:
+            drivers.append("EPA飲料水MCL執行（PFOA/PFOS 4 ppt）")
+            drivers.append("公共水道事業者に対する集団訴訟が拡大中")
+        else:
+            drivers.append("EPA drinking water MCL enforcement (4 ppt PFOA/PFOS)")
+            drivers.append("Public water utility class actions expanding")
 
     if "air" in exposure_pathways:
-        drivers.append("Stack emission monitoring requirements expanding")
+        drivers.append("排ガス監視要件が拡大中" if is_ja else "Stack emission monitoring requirements expanding")
 
     if "soil" in exposure_pathways:
-        drivers.append("CERCLA hazardous substance designation pending")
+        drivers.append("CERCLA有害物質指定が係属中" if is_ja else "CERCLA hazardous substance designation pending")
 
     if "consumer_products" in exposure_pathways:
-        drivers.append("Consumer product liability exposure increasing")
+        drivers.append("消費者製品の製造物責任エクスポージャーが増加中" if is_ja else "Consumer product liability exposure increasing")
 
     # Limit to top 5
     return drivers[:5]
@@ -264,7 +291,7 @@ async def forecast_litigation(request: ForecastRequest) -> LitigationForecast:
     exposure = int(base_exposure * volume_factor * pathway_multiplier)
 
     # Generate key drivers
-    key_drivers = generate_key_drivers(compound, metrics, request.exposure_pathways)
+    key_drivers = generate_key_drivers(compound, metrics, request.exposure_pathways, request.locale)
 
     # Select relevant similar cases
     cases = [c for c in SIMILAR_CASES if c.relevance > 0.7][:4]
